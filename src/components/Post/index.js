@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import * as axios from "axios";
 import * as moment from 'moment';
+import Mastodon from 'megalodon';
 
 class Avatar extends Component {
     render() {
@@ -35,7 +36,7 @@ class PostContent extends Component {
 class PostDate extends Component {
     render() {
         return (
-            <small class = "text-muted">{this.props.date}</small>
+            <small className = "text-muted">{this.props.date}</small>
         );
     }
 }
@@ -133,7 +134,7 @@ class PostSensitive extends React.Component {
                                                 }
                                                 <br/>
                                             </div>:
-                                            <span></span>
+                                            <span/>
                                     }
                                 </div>
                             </div>
@@ -146,8 +147,14 @@ class PostSensitive extends React.Component {
 }
 
 class PostRoll extends Component {
+    client;
+    streamListener;
     constructor(props) {
         super(props);
+        this.client = new Mastodon(
+            '211c493cb4e02011273c832385a4756d4712da6c024fb2c92e603acdcf3bb5b6',
+            'https://mastodon.social/api/v1'
+        );
         this.state = {
             statuses: []
         }
@@ -155,13 +162,94 @@ class PostRoll extends Component {
 
     componentWillMount() {
         let _this = this;
-        axios.default
-            .get(this.props.timeline)
-            .then(function(result) {
-                _this.setState({
-                    statuses: result.data
+        if (this.props.timeline === "home") {
+            this.client.get('/timelines/home')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
                 });
+
+            this.streamListener = this.client.stream('/timelines/home');
+
+            this.streamListener.on('update', function() {
+                _this.forceUpdate()
             })
+
+
+        } else if (this.props.timeline === "local") {
+            this.client.get('/timelines/public/local')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
+                });
+
+            this.streamListener = this.client.stream('/timelines/public/local');
+
+            this.streamListener.on('update', function() {
+                _this.forceUpdate()
+            })
+        } else if (this.props.timeline === "public") {
+            this.client.get('/timelines/public')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
+                });
+
+            this.streamListener = this.client.stream('/timelines/public');
+
+            this.streamListener.on('update', () => {
+                _this.forceUpdate()
+            })
+        }
+        else {
+            axios.default
+                .get(this.props.timeline)
+                .then(function(result) {
+                    _this.setState({
+                        statuses: result.data
+                    });
+                })
+        }
+
+    }
+
+    componentWillUpdate() {
+        let _this = this;
+        if (this.props.timeline === "home") {
+            this.client.get('/timelines/home')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
+                })
+        } else if (this.props.timeline === "local") {
+            this.client.get('/timelines/public/local')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
+                })
+
+        } else if (this.props.timeline === "public") {
+            this.client.get('/timelines/public')
+                .then((resp) => {
+                    _this.setState({
+                        statuses: resp.data
+                    })
+                })
+        }
+        else {
+            axios.default
+                .get(this.props.timeline)
+                .then(function(result) {
+                    _this.setState({
+                        statuses: result.data
+                    });
+                })
+        }
     }
 
     render() {
@@ -190,7 +278,7 @@ class PostRoll extends Component {
                                                                 })
                                                             }
                                                         </div>:
-                                                        <span></span>
+                                                        <span/>
                                                 }
                                             </div>
                                     }
@@ -199,7 +287,7 @@ class PostRoll extends Component {
                                 <PostToolbar
                                     replies={
                                         status.in_reply_to_id ?
-                                            <span>1</span>: <span></span>
+                                            <span>1</span>: <span/>
                                     }
                                     favorites={status.favourites_count}
                                     boosts={status.reblogs_count}

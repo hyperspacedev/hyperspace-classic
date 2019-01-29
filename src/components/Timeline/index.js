@@ -7,22 +7,22 @@ class Timeline extends Component {
         return (
             <div style={{ width: '100%'}}>
                 <Tabs className="nav-pills nav-fill timeline-nav">
-                    <Tab label="Home">
+                    <Tab label="Your Feed">
                         <div className = "container">
-                            <PostRoll timeline="https://mastodon.social/api/v1/timelines/home"/>
+                            <PostRoll timeline="home"/>
                         </div>
                     </Tab>
                     <Tab label="Local">
                         <div className = "container">
-                            <PostRoll timeline="https://mastodon.social/api/v1/timelines/public?local=true"/>
+                            <PostRoll timeline="local"/>
                         </div>
                     </Tab>
-                    <Tab label="Global">
-                        <p> </p>
-                        <div className = "container">
-                            <PostRoll timeline="https://mastodon.social/api/v1/timelines/public"/>
-                        </div>
-                    </Tab>
+                    {/*<Tab label="Global">*/}
+                        {/*<p> </p>*/}
+                        {/*<div className = "container">*/}
+                            {/*<PostRoll timeline="public"/>*/}
+                        {/*</div>*/}
+                    {/*</Tab>*/}
                 </Tabs>
             </div>
         );

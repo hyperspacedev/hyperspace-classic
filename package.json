@@ -8,15 +8,14 @@
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
     "electron": "latest",
-    "mastodon-api": "latest",
     "node-sass": "latest",
     "axios": "latest",
     "reactstrap": "latest",
     "jquery": "latest",
     "popper.js": "latest",
     "react-bootstrap-tabs": "latest",
-    "reactstrap": "latest",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "megalodon": "latest"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",

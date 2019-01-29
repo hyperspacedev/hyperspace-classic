@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Tabs, Tab } from 'react-bootstrap-tabs';
 import ComposeWindow from './components/ComposeWindow';
 import Navbar from './components/Navbar/';
 import Timeline from './components/Timeline/';
@@ -12,11 +11,11 @@ import './assets/css/bootstrap-reboot.css';
 import './assets/css/default.css'; // This must be compiled first!
 
 class App extends Component {
-  render() {
+    render() {
     return (
         <div>
           <nav>
-            <Navbar></Navbar>
+            <Navbar/>
           </nav>
           <div className = "container app-container">
             <div className = "row">
