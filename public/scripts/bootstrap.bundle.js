@@ -4058,7 +4058,7 @@
 
         if (showEvent.isDefaultPrevented()) {
           return;
-        } // Disable totally Popper.js for Dropdown in Navbar
+        } // Disable totally Popper.js for Dropdown in Index
 
 
         if (!this._inNavbar) {
