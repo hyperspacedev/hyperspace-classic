@@ -1,0 +1,171 @@
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Black.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-BlackItalic.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Bold.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-BoldItalic.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Hairline.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-HairlineItalic.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Italic.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Light.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-LightItalic.ttf"); }
+
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Regular.ttf"); }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/icons/MaterialIcons-Regular.eot);
+  /* For IE6-8 */
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url(../fonts/icons/MaterialIcons-Regular.woff2) format("woff2"), url(../fonts/icons/MaterialIcons-Regular.woff) format("woff"), url(../fonts/icons/MaterialIcons-Regular.ttf) format("truetype"); }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga'; }
+
+.material-icons.md-18 {
+  font-size: 18px; }
+
+.material-icons.md-24 {
+  font-size: 24px; }
+
+.material-icons.md-36 {
+  font-size: 36px; }
+
+.material-icons.md-48 {
+  font-size: 48px; }
+
+@font-face {
+  font-family: 'NotoEmojiColor';
+  src: url("../fonts/emoji/NotoColorEmoji.ttf"); }
+
+@font-face {
+  font-family: 'NotoEmoji';
+  src: url("../fonts/emoji/NotoEmoji-Regular.ttf"); }
+
+.emoji {
+  font-family: 'NotoEmojiColor', 'NotoEmoji', sans-serif; }
+
+html, body {
+  font-family: "Lato", "NotoEmojiColor", "NotoEmoji", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; }
+
+.navbar-app {
+  box-shadow: 0px 2px 4px #a2a2a2;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  background-color: #fff; }
+
+li.nav-item.active a.nav-link {
+  color: #7981e2 !important; }
+
+li.nav-item a.nav-link i.material-icons {
+  vertical-align: middle; }
+
+.btn i.material-icons {
+  vertical-align: middle; }
+
+.app-container {
+  padding-top: 64px; }
+
+.btn-accent {
+  background-color: #2B37CA;
+  box-shadow: 0px 0px 4px #a2a2a2;
+  color: white; }
+
+.timeline-nav .nav-item .nav-link {
+  color: #2B37CA; }
+
+.timeline-nav .nav-item .nav-link.active {
+  background-color: #2B37CA;
+  color: white; }
+
+.post-content a {
+  color: #4f59d9;
+  font-weight: bold; }
+
+.post .toolbar-area .material-icons {
+  vertical-align: middle; }
+
+.post .toolbar-area .toolbar {
+  padding-left: 8px;
+  padding-right: 8px; }
+
+.avatar {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px; }
+
+.profile-container {
+  height: 100%;
+  width: 100%; }
+
+.profile-container-avatar {
+  text-align: center;
+  display: block;
+  margin: 0; }
+
+.profile-container-avatar-image {
+  text-align: center;
+  width: 96px;
+  height: 96px;
+  display: block;
+  margin: 0 auto; }
+
+.profile-container-header {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 156px;
+  margin: 0;
+  padding: 0; }
+
+.profile-container-bio {
+  text-align: center; }

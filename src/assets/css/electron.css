@@ -1,0 +1,7 @@
+.navbar-brand {
+    display: none !important;
+}
+
+#fediverse-nav {
+    margin-left: 64px !important;
+}
