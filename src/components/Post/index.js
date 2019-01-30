@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import * as axios from "axios";
 import * as moment from 'moment';
-import Mastodon from 'megalodon';
+import * as axios from 'axios';
+import { Status } from 'megalodon';
 
 class Avatar extends Component {
     render() {
@@ -104,6 +104,7 @@ class PostSensitive extends React.Component {
         this.setState({
             modal: !this.state.modal
         });
+
     }
 
     render() {
@@ -151,105 +152,97 @@ class PostRoll extends Component {
     streamListener;
     constructor(props) {
         super(props);
-        this.client = new Mastodon(
-            '211c493cb4e02011273c832385a4756d4712da6c024fb2c92e603acdcf3bb5b6',
-            'https://mastodon.social/api/v1'
-        );
+        this.client = this.props.client;
         this.state = {
-            statuses: []
+            statuses: [],
+            statusCount: 150
         }
     }
 
     componentWillMount() {
         let _this = this;
         if (this.props.timeline === "home") {
-            this.client.get('/timelines/home')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                });
+            this.streamListener = this.client.stream('/streaming/user');
 
-            this.streamListener = this.client.stream('/timelines/home');
-
-            this.streamListener.on('update', function() {
-                _this.forceUpdate()
+            this.streamListener.on('connect', () => {
+                this.client.get('/timelines/home', {"limit": _this.state.statusCount, 'local': true})
+                    .then((resp) => {
+                        _this.setState({
+                            statuses: resp.data,
+                            statusCount: _this.state.statusCount + 1
+                        })
+                    });
             })
 
+            this.streamListener.on('update', (status: Status) => {
+                let old_statuses = _this.state.statuses;
+                old_statuses.unshift(status);
+                _this.setState({
+                    statuses: old_statuses
+                })
+                this.forceUpdate()
+            })
+
+            this.streamListener.on('connection-limit-exceeded', err => {
+                console.error(err)
+            })
 
         } else if (this.props.timeline === "local") {
-            this.client.get('/timelines/public/local')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                });
+            this.streamListener = this.client.stream('/streaming/public/local');
 
-            this.streamListener = this.client.stream('/timelines/public/local');
+            this.streamListener.on('connect', () => {
+                this.client.get('/timelines/public', {"limit": _this.state.statusCount, 'local': true})
+                    .then((resp) => {
+                        _this.setState({
+                            statuses: resp.data,
+                            statusCount: _this.state.statusCount + 1
+                        })
+                    });
+            })
 
-            this.streamListener.on('update', function() {
-                _this.forceUpdate()
+            this.streamListener.on('update', (status: Status) => {
+                let old_statuses = _this.state.statuses;
+                old_statuses.unshift(status);
+                _this.setState({
+                    statuses: old_statuses
+                })
+                this.forceUpdate()
+            })
+
+            this.streamListener.on('connection-limit-exceeded', err => {
+                console.error(err)
             })
         } else if (this.props.timeline === "public") {
-            this.client.get('/timelines/public')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                });
+            this.streamListener = this.client.stream('/streaming/public');
 
-            this.streamListener = this.client.stream('/timelines/public');
-
-            this.streamListener.on('update', () => {
-                _this.forceUpdate()
-            })
-        }
-        else {
-            axios.default
-                .get(this.props.timeline)
-                .then(function(result) {
-                    _this.setState({
-                        statuses: result.data
+            this.streamListener.on('connect', () => {
+                this.client.get('/timelines/public', {"limit": _this.state.statusCount, 'local': false})
+                    .then((resp) => {
+                        _this.setState({
+                            statuses: resp.data,
+                            statusCount: _this.state.statusCount + 1
+                        })
                     });
+            })
+
+            this.streamListener.on('update', (status: Status) => {
+                let old_statuses = _this.state.statuses;
+                old_statuses.unshift(status);
+                _this.setState({
+                    statuses: old_statuses
                 })
+                this.forceUpdate()
+            })
+
+            this.streamListener.on('connection-limit-exceeded', err => {
+                console.error(err)
+            })
         }
 
     }
 
     componentWillUpdate() {
-        let _this = this;
-        if (this.props.timeline === "home") {
-            this.client.get('/timelines/home')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                })
-        } else if (this.props.timeline === "local") {
-            this.client.get('/timelines/public/local')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                })
 
-        } else if (this.props.timeline === "public") {
-            this.client.get('/timelines/public')
-                .then((resp) => {
-                    _this.setState({
-                        statuses: resp.data
-                    })
-                })
-        }
-        else {
-            axios.default
-                .get(this.props.timeline)
-                .then(function(result) {
-                    _this.setState({
-                        statuses: result.data
-                    });
-                })
-        }
     }
 
     render() {
@@ -296,7 +289,15 @@ class PostRoll extends Component {
                             </Index>
                         );
                     })}</div>:
-                    <p>Nothing found!</p>}
+                    <div className="row p-4">
+                        <div class = "row">
+                            <div class = "col">
+                                <h3>That's not fair!</h3>
+                                <p>An error occurred when trying to get this timeline.</p>
+                            </div>
+                        </div>
+
+                    </div>}
 
             </div>
         );
