@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupButton, Modal, ModalHeader, ModalBody }  from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon, Modal, ModalHeader, ModalBody }  from 'reactstrap';
 import Mastodon from 'megalodon';
-import InputGroupAddon from "reactstrap/es/InputGroupAddon";
-
 class RegisterWindow extends Component {
 
     constructor(props) {
@@ -83,13 +81,13 @@ class RegisterWindow extends Component {
             <div className = "container shadow-sm rounded p-4">
                 <h2><b>Sign in to Hyperspace</b></h2>
                 <p>Welcome to Hyperspace, the fluffy client for Mastodon! To get started, please sign in to your Mastodon account by typing your instance name here:</p>
-                <p>
+                <div>
                     <InputGroup>
                     <Input placeholder = "Instance name (ex.: mastodon.social)" onBlur={e => this.updateInstanceUrl(e)}/>
                     <InputGroupAddon addonType="append">
                         <Button className="btn-accent" onClick={this.toggle}> Sign in</Button></InputGroupAddon>
                     </InputGroup>
-                </p>
+                </div>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Sign in to <b>{this.state.instanceUrl}</b></ModalHeader>
@@ -99,7 +97,7 @@ class RegisterWindow extends Component {
                                 <div>
                                     <p>Great! You've selected the instance to sign in to. We'll need you to authorize Hyperspace access to your Mastodon account. To do so, click 'Get code' and then type in your authorization code in the field below.</p>
                                     <p>
-                                        <a href={this.state.authUrl} target='_blank' className='btn btn-sm btn-accent'>Get code</a>
+                                        <a href={this.state.authUrl} target='_blank' rel="noopener noreferrer" className='btn btn-sm btn-accent'>Get code</a>
                                     </p>
                                     <p>
                                         <InputGroup>
