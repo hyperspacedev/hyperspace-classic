@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Mastodon from 'megalodon';
 
 class ComposeWindow extends Component {
 
@@ -38,7 +39,7 @@ class ComposeWindow extends Component {
                                 </h5>
                                 <p>
                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
-                              placeholder="What's on your mind?" value={this.state.status} onBlur={e => {this.updateStatus(e)}}/>
+                              placeholder="What's on your mind?" defaultValue={this.state.status} onBlur={e => {this.updateStatus(e)}}/>
                                 </p>
                             </div>
                         </div>
