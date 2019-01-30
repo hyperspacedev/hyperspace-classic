@@ -254,7 +254,41 @@ class PostRoll extends Component {
                                 <PostAuthor name={status.account.display_name} handle={status.account.acct}/>
                                 <PostContent>
                                     {
-                                        status.sensitive === true ?
+
+                                        status.reblog ?
+                                            <div>
+                                                <span className="media rounded">
+                                                    <img src = {status.reblog.account.avatar} className="rounded-circle shadow-sm mr-2" style = {{ width: '24px', height: '24px'}}/>
+                                                    <span className="media-body">
+                                                        <b>Boosted from: </b> {status.reblog.account.display_name} <small class = "text-muted">(@ {status.reblog.account.username})</small>
+                                                    </span>
+                                                </span>
+                                                <div>
+                                                    { status.sensitive === true ?
+                                                        <PostSensitive status={status}/>:
+                                                        <div>
+                                                            <p dangerouslySetInnerHTML={{__html: status.content}} />
+                                                            {
+                                                                status.media_attachments.length ?
+                                                                    <div className = "row">
+                                                                        {
+                                                                            status.media_attachments.map( function(media) {
+                                                                                return(
+                                                                                    <div className="col">
+                                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                                    </div>
+                                                                                );
+                                                                            })
+                                                                        }
+                                                                    </div>:
+                                                                    <span/>
+                                                            }
+                                                        </div>}
+                                                </div>
+                                            </div>:
+
+                                        <div>
+                                            { status.sensitive === true ?
                                             <PostSensitive status={status}/>:
                                             <div>
                                                 <p dangerouslySetInnerHTML={{__html: status.content}} />
@@ -273,14 +307,15 @@ class PostRoll extends Component {
                                                         </div>:
                                                         <span/>
                                                 }
-                                            </div>
+                                            </div>}
+                                        </div>
                                     }
 
                                 </PostContent>
                                 <PostToolbar
                                     replies={
-                                        status.in_reply_to_id ?
-                                            <span>1</span>: <span/>
+                                        status.replies_count ?
+                                            <span>{status.replies_count}</span>: <span/>
                                     }
                                     favorites={status.favourites_count}
                                     boosts={status.reblogs_count}
