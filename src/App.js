@@ -65,7 +65,7 @@ class App extends Component {
           <div className = "container app-container">
             <div className = "row">
               <div className = "col-sm-12 col-md-8">
-                <ComposeWindow className="fixed-top"/>
+                <ComposeWindow className="fixed-top" client={this.client}/>
                 <hr/>
                 <div className="container">
                     {

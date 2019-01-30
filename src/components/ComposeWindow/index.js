@@ -1,6 +1,31 @@
 import React, { Component } from 'react';
 
 class ComposeWindow extends Component {
+
+    client;
+
+    constructor(props) {
+        super(props);
+
+        this.client = this.props.client;
+
+        this.state = {
+            status: ''
+        }
+    }
+
+    updateStatus(e) {
+        this.setState({
+            status: e.target.value
+        });
+    }
+
+    postStatus() {
+        this.client.post('/statuses', {
+            status: this.state.status
+        })
+    }
+
     render() {
         return (
             <div className="container shadow rounded my-2">
@@ -13,7 +38,7 @@ class ComposeWindow extends Component {
                                 </h5>
                                 <p>
                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
-                              placeholder="What's on your mind?"/>
+                              placeholder="What's on your mind?" value={this.state.status} onBlur={e => {this.updateStatus(e)}}/>
                                 </p>
                             </div>
                         </div>
@@ -35,7 +60,7 @@ class ComposeWindow extends Component {
                                 </ul>
                             </div>
                             <div className="col">
-                                <button className="btn btn-sm btn-accent float-right pl-4 pr-4">Toot</button>
+                                <button className="btn btn-sm btn-accent float-right pl-4 pr-4" onMouseDown={this.postStatus()}>Toot</button>
                             </div>
                         </div>
 
