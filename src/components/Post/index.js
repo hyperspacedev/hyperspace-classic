@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import * as moment from 'moment';
-import * as axios from 'axios';
 import { Status } from 'megalodon';
 
 class Avatar extends Component {
@@ -267,7 +266,7 @@ class PostRoll extends Component {
                                                     { status.sensitive === true ?
                                                         <PostSensitive status={status}/>:
                                                         <div>
-                                                            <p dangerouslySetInnerHTML={{__html: status.content}} />
+                                                            <div dangerouslySetInnerHTML={{__html: status.content}} />
                                                             {
                                                                 status.media_attachments.length ?
                                                                     <div className = "row">
