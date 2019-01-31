@@ -12,12 +12,10 @@ class Avatar extends Component {
 }
 
 class PostAuthor extends Component {
-    name;
-    handle;
     render() {
         return (
-            <h5 className="mt-0">
-                <b>{this.props.name}</b>
+            <h5 className="mt-0 post-author">
+                <a href={this.props.url}><b>{this.props.name}</b></a>
                 <span className="text-muted"> @{this.props.handle}</span>
             </h5>
         );
@@ -41,22 +39,102 @@ class PostDate extends Component {
 }
 
 class PostToolbar extends Component {
-    replies;
-    favorites;
-    boosts;
+
+    client;
+
+    constructor(props) {
+        super(props);
+
+        this.client = this.props.client;
+
+        this.state = {
+            id: this.props.status.id,
+            replies: this.props.status.replies_count,
+            favorites: this.props.status.favourites_count,
+            boosts: this.props.status.reblogs_count,
+            favorited: this.props.status.favourited,
+            boosted: this.props.status.reblogged,
+            favorite_toggle: this.props.status.favourited,
+            url: this.props.status.url
+        }
+
+        this.toggle_favorite = this.toggle_favorite.bind(this);
+        this.toggle_boost = this.toggle_boost.bind(this);
+    }
+
+    toggle_favorite() {
+        if (this.state.favorited) {
+            this.client.post('/statuses/' + this.state.id + '/unfavourite')
+                .then((status) => {
+                    this.setState({
+                        favorited: status.data.favourited,
+                        favorites: status.data.favourites_count
+                    });
+                });
+        } else {
+            this.client.post('/statuses/' + this.state.id + '/favourite')
+                .then((status) => {
+                    this.setState({
+                        favorited: status.data.favourited,
+                        favorites: status.data.favourites_count
+                    });
+                });
+        }
+    }
+
+    toggle_boost() {
+        if (this.state.reblogged) {
+            this.client.post('/statuses/' + this.state.id + '/unreblog')
+                .then((status) => {
+                    this.setState({
+                        boosted: status.data.reblogged,
+                        boosts: status.data.reblogs_count
+                    });
+                });
+        } else {
+            this.client.post('/statuses/' + this.state.id + '/reblog')
+                .then((status) => {
+                    this.setState({
+                        boosted: status.data.reblogged,
+                        boosts: status.data.reblogs_count
+                    });
+                });
+        }
+    }
+
     render() {
         return (
             <div className="col">
                 <ul className="nav toolbar-area">
                     <li className="nav-item toolbar">
-                        <i className="material-icons md-18">reply</i> {this.props.replies}
+                        <button className = 'btn btn-sm btn-outline-dark'><i className="material-icons md-18">reply_all</i> {this.state.replies}</button>
+                    </li>
+                    <li className="nav-item toolbar" toggle={this.toggle}>
+                        {
+                            this.state.favorited === (true) ?
+                                <button onClick={() => this.toggle_favorite()} className = 'btn btn-sm btn-outline-warning'><i className="material-icons md-18">favorite</i> {this.state.favorites}</button>:
+                                <button onClick={() => this.toggle_favorite()} className = 'btn btn-sm btn-outline-dark'><i className="material-icons md-18">favorite</i> {this.state.favorites}</button>
+                        }
+
                     </li>
                     <li className="nav-item toolbar">
-                        <i className="material-icons md-18">favorite</i> {this.props.favorites}
+                        {
+                            this.state.boosted === (true) ?
+                                <button onClick={() => this.toggle_boost()} className = 'btn btn-sm btn-outline-danger'><i className="material-icons md-18">cached</i> {this.state.boosts}</button>:
+                                <button onClick={() => this.toggle_boost()} className = 'btn btn-sm btn-outline-dark'><i className="material-icons md-18">cached</i> {this.state.boosts}</button>
+                        }
+
                     </li>
-                    <li className="nav-item toolbar">
-                        <i className="material-icons md-18">share</i> {this.props.boosts}
-                    </li>
+                    {
+                        this.state.url ?
+                            <li className="nav-item toolbar">
+                                <a className = 'btn btn-sm btn-outline-dark' href={this.state.url} target="_blank" rel="nofollow noreferrer"><i className="material-icons md-18">open_in_new</i></a>
+                            </li>:
+                            <li className="nav-item toolbar">
+                                <a className = 'btn btn-sm btn-outline-light' id="disabled-external" disabled target="_blank" rel="nofollow noreferrer"><i className="material-icons md-18" style={{ color: '#a2a2a2'}}>open_in_new</i></a>
+                            </li>
+                    }
+
                 </ul>
             </div>
         );
@@ -245,17 +323,18 @@ class PostRoll extends Component {
     }
 
     render() {
+        let _this = this;
         return (
             <div>
                 {this.state.statuses.length > 0 ? <div>{this.state.statuses.map(function (status) {
                         return (<Index>
                                 <Avatar src = {status.account.avatar}/>
-                                <PostAuthor name={status.account.display_name} handle={status.account.acct}/>
+                                <PostAuthor name={status.account.display_name} handle={status.account.acct} url={status.account.url}/>
                                 <PostContent>
                                     {
 
                                         status.reblog ?
-                                            <div>
+                                            <div className='mb-2'>
                                                 <span className="media rounded">
                                                     <img src = {status.reblog.account.avatar} className="rounded-circle shadow-sm mr-2" style = {{ width: '24px', height: '24px'}}/>
                                                     <span className="media-body">
@@ -268,13 +347,17 @@ class PostRoll extends Component {
                                                         <div>
                                                             <div dangerouslySetInnerHTML={{__html: status.content}} />
                                                             {
-                                                                status.media_attachments.length ?
+                                                                status.reblog.media_attachments.length ?
                                                                     <div className = "row">
                                                                         {
-                                                                            status.media_attachments.map( function(media) {
+                                                                            status.reblog.media_attachments.map( function(media) {
                                                                                 return(
                                                                                     <div className="col">
-                                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                                        {
+                                                                                            (media.type === "image") ?
+                                                                                                <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
+                                                                                                <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                                        }
                                                                                     </div>
                                                                                 );
                                                                             })
@@ -286,7 +369,7 @@ class PostRoll extends Component {
                                                 </div>
                                             </div>:
 
-                                        <div>
+                                        <div className='mb-2'>
                                             { status.sensitive === true ?
                                             <PostSensitive status={status}/>:
                                             <div>
@@ -298,7 +381,11 @@ class PostRoll extends Component {
                                                                 status.media_attachments.map( function(media) {
                                                                     return(
                                                                         <div className="col">
-                                                                            <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                            {
+                                                                                (media.type === "image") ?
+                                                                                    <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
+                                                                                        <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                            }
                                                                         </div>
                                                                     );
                                                                 })
@@ -312,12 +399,8 @@ class PostRoll extends Component {
 
                                 </PostContent>
                                 <PostToolbar
-                                    replies={
-                                        status.replies_count ?
-                                            <span>{status.replies_count}</span>: <span/>
-                                    }
-                                    favorites={status.favourites_count}
-                                    boosts={status.reblogs_count}
+                                    client={_this.client}
+                                    status={status}
                                 />
                                 <PostDate date={moment(status.created_at).format('MM/DD/YYYY [at] h:mm a')}/>
                             </Index>
