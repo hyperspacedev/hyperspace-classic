@@ -47,6 +47,10 @@ li.nav-item a.nav-link i.material-icons {
     font-weight: bold;
 }
 
+.post-author a {
+    color: darken($theme-accent-color, 20%);
+}
+
 .post .toolbar-area .material-icons {
     vertical-align: middle;
 }

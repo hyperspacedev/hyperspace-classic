@@ -128,6 +128,9 @@ li.nav-item a.nav-link i.material-icons {
   color: #4f59d9;
   font-weight: bold; }
 
+.post-author a {
+  color: #192076; }
+
 .post .toolbar-area .material-icons {
   vertical-align: middle; }
 
