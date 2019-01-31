@@ -23,6 +23,7 @@ class App extends Component {
         this.createMastodonApp = this.createMastodonApp.bind(this);
 
         if (this.checkLocalStorage()) {
+
             this.createMastodonApp();
 
             this.state = {
@@ -37,7 +38,6 @@ class App extends Component {
                         account: resp.data
                     });
                     localStorage.setItem("account", JSON.stringify(resp.data))
-
                 })
         }
     }
@@ -54,15 +54,7 @@ class App extends Component {
         let token = localStorage.getItem('access_token');
         let url = localStorage.getItem('baseurl');
         let client = new Mastodon(token, url + '/api/v1');
-        console.log(client);
-
-        let _this = this;
-
-        if (client === undefined) {
-            throw "Init failed!";
-        } else {
-            _this.client = client;
-        }
+        this.client = client;
     }
 
     render() {
@@ -74,8 +66,13 @@ class App extends Component {
               <div className = "container app-container">
                 <div className = "row">
                   <div className = "col-sm-12 col-md-8">
-                    <ComposeWindow className="fixed-top" client={this.client}/>
-                    <hr/>
+                      {
+                          this.client ?
+                              <div><ComposeWindow className="fixed-top" client={this.client}/>
+                                  <hr/></div>:
+                              <span/>
+                      }
+
                     <div className="container">
                         {
                             this.checkLocalStorage() ? <Timeline client={this.client}/>: <RegisterWindow/>
@@ -88,7 +85,7 @@ class App extends Component {
                                 avatar = {JSON.parse(localStorage.getItem("account")).avatar}
                                 headerImage = {JSON.parse(localStorage.getItem("account")).header_static}
                                 name = {JSON.parse(localStorage.getItem("account")).display_name}
-                                handle = {<p>@ {JSON.parse(localStorage.getItem("account")).username}</p>}
+                                handle = {<p>@{JSON.parse(localStorage.getItem("account")).username}</p>}
                                 bio = {JSON.parse(localStorage.getItem("account")).source.note}
                             />
                             <hr/>
