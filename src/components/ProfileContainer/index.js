@@ -1,45 +1,110 @@
 import React, { Component } from 'react';
+import {
+    Persona,
+    PersonaSize,
+    Label,
+    DetailsList,
+    DetailsListLayoutMode,
+    SelectionMode
+} from 'office-ui-fabric-react';
 
 class ProfileUser extends Component {
+    who;
+    persona;
+
+    constructor(props) {
+        super(props);
+
+        this.who = this.props.who;
+
+        this.persona = {
+            imageUrl: this.who.avatar,
+            text: this.who.display_name,
+            secondaryText: '@' + this.who.acct,
+            tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following'
+        }
+    }
     render() {
-        return(
-            <div className = "profile-container-bio">
-                <p className="h5"><b>{this.props.name}</b></p>
-                <p>{this.props.handle}</p>
-                <small>{this.props.bio}</small>
-            </div>
+        return (
+            <Persona
+                {... this.persona}
+                size={PersonaSize.size72}
+            />
         );
     }
 }
 
+class ProfileList extends Component {
+
+    columns;
+    rows;
+    profile;
+
+    constructor(props) {
+        super(props);
+
+        this.profile = this.props.who;
+
+        this.columns = [
+            {
+                key: 'key',
+                fieldName: 'key',
+                data: "string",
+                maxWidth: 24,
+                isPadded: true
+
+            },
+            {
+                key: 'value',
+                fieldName: 'value',
+                data: 'string',
+                isPadded: true
+            }]
+
+        this.rows = [];
+
+        for (let item in this.props.who.fields) {
+            let value = this.props.who.fields[item].value.replace("class=\"invisible\"", '');
+            this.rows.push({'key': this.props.who.fields[item].name, 'value': <p dangerouslySetInnerHTML={{__html: value}}/>})
+        }
+    }
+
+    render() {
+        return(
+            <DetailsList
+                columns={this.columns}
+                items={this.rows}
+                selectionMode={SelectionMode.none}
+                layoutMode={DetailsListLayoutMode.justified}
+            />
+            );
+    }
+}
+
 class ProfileContainer extends Component {
+    who;
+
+    constructor(props) {
+        super(props);
+
+        this.who = this.props.who;
+    }
     render() {
         return (
             <div className="profile-container">
                 <div className="profile-container-header"
                      style={{
-                         backgroundImage: 'url("' + this.props.headerImage + '")'
+                         backgroundImage: 'url("' + this.who.header + '")'
                      }}>
-                    <div className="py-4"
-                    >
-                        <i className = "material-icons profile-container-avatar">
-                            <img
-                                src={this.props.avatar}
-                                className="shadow-sm rounded-circle profile-container-avatar-image"
-                                alt="person"
-                                style={{textAlign: 'center'}}
-                            />
-                        </i>
-                    </div>
                 </div>
                 <div className="container">
                     <div className="my-4">
                         <ProfileUser
-                            name={this.props.name}
-                            handle={this.props.handle}
-                            bio={this.props.bio}
+                            who={this.who}
                         />
                     </div>
+                    <Label>{this.who.source.note}</Label>
+                    <ProfileList who={this.who}/>
                 </div>
             </div>
         );

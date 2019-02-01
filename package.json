@@ -15,7 +15,9 @@
     "popper.js": "latest",
     "react-bootstrap-tabs": "latest",
     "moment": "^2.24.0",
-    "megalodon": "latest"
+    "megalodon": "latest",
+    "office-ui-fabric-react": "^6.132.0",
+    "@uifabric/icons": "^6.3.0"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",

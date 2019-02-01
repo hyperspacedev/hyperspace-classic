@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import Mastodon from 'megalodon';
+import {TextField, CommandBar, Dialog, DialogFooter, DialogType, PrimaryButton, DefaultButton, ChoiceGroup} from "office-ui-fabric-react";
+import {initializeIcons} from "@uifabric/icons";
+
+initializeIcons();
 
 class ComposeWindow extends Component {
 
@@ -9,10 +12,12 @@ class ComposeWindow extends Component {
         super(props);
 
         this.state = {
-            status: ''
+            status: '',
+            hideDialog: true
         }
 
         this.client = this.props.client;
+        this.toggleVisibilityDialog = this.toggleVisibilityDialog.bind(this);
     }
 
     updateStatus(e) {
@@ -27,46 +32,117 @@ class ComposeWindow extends Component {
         })
     }
 
+    getItems(){
+        return [
+            {
+                key: 'upload',
+                name: 'Upload media',
+                iconProps: {
+                    iconName: 'FabricPictureLibrary'
+                }
+            },
+            {
+                key: 'visibility',
+                name: 'Set visibility',
+                iconProps: {
+                    iconName: 'Hide2'
+                },
+                onClick: () => this.toggleVisibilityDialog()
+            },
+            {
+                key: 'spoiler',
+                name: 'Mark spoiler',
+                iconProps: {
+                    iconName: 'Warning'
+                },
+                onClick: () => console.log('Download')
+            }
+        ];
+    };
+
+    getFarItems(){
+        return [
+            {
+                key: 'post',
+                name: 'Post status',
+                iconProps: {
+                    iconName: 'Edit'
+                },
+                onClick: () => this.postStatus()
+            }
+        ];
+    };
+
+    toggleVisibilityDialog() {
+        this.setState({
+            hideDialog: !this.state.hideDialog
+        });
+    }
+
+    _onChoiceChanged(e) {
+        console.log('Choice option change: ' + e.target.id.replace('ChoiceGroup44-', ''));
+    }
+
     render() {
         return (
-            <div className="container shadow rounded my-2">
-                <div className="row">
-                    <div className="col p-4 post">
-                        <div className="media">
-                            <div className="media-body">
-                                <h5 className="mt-0">
-                                    <b>Make a new post</b>
-                                </h5>
-                                <p>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
-                              placeholder="What's on your mind?" defaultValue={this.state.status} onBlur={e => {this.updateStatus(e)}}/>
-                                </p>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <ul className="nav toolbar-area">
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">camera_alt</i></button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">public</i> Public</button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">warning</i></button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">tag_faces</i></button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col">
-                                <button className="btn btn-sm btn-accent float-right pl-4 pr-4" onMouseDown={this.postStatus()}>Toot</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div>
+                <CommandBar
+                    items={this.getItems()}
+                    farItems={this.getFarItems()}
+                    ariaLabel={'Use left and right arrow keys to navigate between commands'}
+                />
+                <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={e => this.updateStatus(e)}
+                    placeholder="What's on your mind?"
+                />
+                <Dialog
+                    hidden={this.state.hideDialog}
+                    onDismiss={() => this.toggleVisibilityDialog()}
+                    dialogContentProps={{
+                        type: DialogType.largeHeader,
+                        title: 'Set your visibility',
+                        subText: 'Choose who gets to see your status. By default, new statuses are posted publicly.'
+                    }}
+                    modalProps={{
+                        isBlocking: false,
+                        containerClassName: 'ms-dialogMainOverride'
+                    }}
+                >
+                    <ChoiceGroup
+                        options={[
+                            {
+                                key: 'message',
+                                id: 'message',
+                                text: 'Direct message'
+                            },
+                            {
+                                key: 'followers',
+                                id: 'followers',
+                                text: 'Followers only',
+                            },
+                            {
+                                key: 'unlisted',
+                                id: 'unlisted',
+                                text: 'Public (unlisted)',
+                            },
+                            {
+                                key: 'public',
+                                id: 'public',
+                                text: 'Public (fediverse)',
+                                checked: true
+                            }
+                        ]}
+                        onChange={e => this._onChoiceChanged(e)}
+                    />
+                    <DialogFooter>
+                        <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Save" />
+                        <DefaultButton onClick={() => this.toggleVisibilityDialog()} text="Cancel" />
+                    </DialogFooter>
+                </Dialog>
             </div>
         );
     }
