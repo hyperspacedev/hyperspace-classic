@@ -402,7 +402,7 @@ class PostRoll extends Component {
                                     client={_this.client}
                                     status={status}
                                 />
-                                <PostDate date={moment(status.created_at).format('MM/DD/YYYY [at] h:mm a')}/>
+                                <PostDate date={moment(status.created_at).format('MM/DD/YYYY [at] h:mm A')}/>
                             </Index>
                         );
                     })}</div>:

@@ -47,16 +47,16 @@ class ComposeWindow extends Component {
                             <div className="col">
                                 <ul className="nav toolbar-area">
                                     <li className="nav-item toolbar">
-                                        <i className="material-icons md-18">camera_alt</i>
+                                        <button className = "btn btn-sm"><i className="material-icons md-18">camera_alt</i></button>
                                     </li>
                                     <li className="nav-item toolbar">
-                                        <i className="material-icons md-18">public</i> Public
+                                        <button className = "btn btn-sm"><i className="material-icons md-18">public</i> Public</button>
                                     </li>
                                     <li className="nav-item toolbar">
-                                        <i className="material-icons md-18">warning</i>
+                                        <button className = "btn btn-sm"><i className="material-icons md-18">warning</i></button>
                                     </li>
                                     <li className="nav-item toolbar">
-                                        <i className="material-icons md-18">tag_faces</i>
+                                        <button className = "btn btn-sm"><i className="material-icons md-18">tag_faces</i></button>
                                     </li>
                                 </ul>
                             </div>
