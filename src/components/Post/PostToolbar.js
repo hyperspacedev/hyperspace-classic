@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ActionButton, TooltipHost} from "office-ui-fabric-react";
+import ReplyWindow from '../ReplyWindow';
 
 class PostToolbar extends Component {
 
@@ -80,21 +81,16 @@ class PostToolbar extends Component {
         }
     }
 
+    startReply() {
+        return(<ReplyWindow to={this.state.id}/>);
+    }
+
     render() {
         return (
             <div>
                 <ul className="nav">
                     <li>
-                        <ActionButton
-                            data-automation-id="test"
-                            iconProps={{ iconName: 'Reply' }}
-                            allowDisabledFocus={true}
-                            disabled={false}
-                            checked={false}
-                            onClick={() => this.toggle_favorite()}
-                        >
-                            Reply ({this.state.replies})
-                        </ActionButton>
+                        <ReplyWindow status={this.props.status} client={this.props.client}/>
                     </li>
                     <li toggle={this.toggle}>
                         {
