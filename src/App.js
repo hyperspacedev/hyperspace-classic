@@ -57,16 +57,6 @@ class App extends Component {
             this.state = {
                 account: ''
             };
-
-            let _this = this;
-
-            this.client.get("/accounts/verify_credentials")
-                .then((resp) => {
-                    _this.setState({
-                        account: resp.data
-                    });
-                    localStorage.setItem("account", JSON.stringify(resp.data))
-                })
         }
     }
 
@@ -83,6 +73,15 @@ class App extends Component {
         let url = localStorage.getItem('baseurl');
         let client = new Mastodon(token, url + '/api/v1');
         this.client = client;
+    }
+
+    componentWillMount() {
+        if (this.client != null) {
+            this.client.get("/accounts/verify_credentials")
+                .then((resp) => {
+                    localStorage.setItem("account", JSON.stringify(resp.data))
+                });
+        }
     }
 
     render() {

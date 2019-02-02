@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Pivot, PivotItem, PivotLinkSize} from "office-ui-fabric-react";
-import PostRoll from "../Post/index.js";
+import PostRoll from "../Post/PostRoll";
 
 class Timeline extends Component {
     client;
