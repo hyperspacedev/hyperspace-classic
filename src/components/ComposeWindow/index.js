@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
-import {TextField, CommandBar, Dialog, DialogFooter, DialogType, PrimaryButton, DefaultButton, ChoiceGroup} from "office-ui-fabric-react";
+import {
+    TextField,
+    CommandBar,
+    Dialog,
+    DialogFooter,
+    DialogType,
+    PrimaryButton,
+    DefaultButton,
+    ChoiceGroup,
+    DetailsList,
+    DetailsListLayoutMode,
+    SelectionMode,
+    Icon
+} from "office-ui-fabric-react";
 import {initializeIcons} from "@uifabric/icons";
+import filedialog from 'file-dialog';
 
 initializeIcons();
 
@@ -13,6 +27,8 @@ class ComposeWindow extends Component {
 
         this.state = {
             status: '',
+            media: [],
+            media_data: [],
             hideDialog: true
         }
 
@@ -26,20 +42,102 @@ class ComposeWindow extends Component {
         });
     }
 
+    postMediaForStatus() {
+        let _this = this;
+        filedialog({
+            multiple: false,
+            accept: 'image/*'
+        }).then((images) => {
+            let uploadData = new FormData();
+
+            uploadData.append('file', images[0]);
+
+            _this.client.post('/media', uploadData)
+                .then((resp) => {
+                    console.log('Media uploaded!');
+                    let id = resp.data.id;
+                    let media_id_array = _this.state.media;
+                    let media_data_array = this.state.media_data;
+                    media_id_array.push(id);
+                    media_data_array.push(resp.data);
+                    _this.setState({
+                        media: media_id_array,
+                        media_data: media_data_array
+                    })
+                })
+        })
+    }
+
+    getMediaItemColums() {
+        return [
+            {
+                key: 'fileIcon',
+                fieldName: 'fileIcon',
+                value: 'File Icon',
+                iconName: 'Page',
+                isIconOnly: false,
+                minWidth: 16,
+                maxWidth: 16,
+                isPadded: true
+
+            },
+            {
+                key: 'fileUrl',
+                fieldName: 'fileUrl',
+                iconName: 'Link',
+                value: 'File URL',
+                minWidth: 24,
+                isPadded: true,
+                isIconOnly: false
+            }
+        ];
+    }
+
+    getMediaItemRows() {
+        let rows = [];
+        if (this.state.media_data.length === 0) {
+            let c = {
+                'fileIcon': <span><Icon iconName='SurveyQuestions'/></span>,
+                'fileUrl': 'No media uploaded'
+            };
+            let rows = [];
+            rows.push(c);
+            return rows;
+        } else {
+            for (var i in this.state.media_data) {
+                let c = {
+                    'fileIcon': <span><Icon iconName='Picture'/></span>,
+                    'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
+                };
+                rows.push(c);
+            }
+        }
+
+        return rows;
+    }
+
     postStatus() {
         this.client.post('/statuses', {
-            status: this.state.status
+            status: this.state.status,
+            media_ids: this.state.media
+        })
+
+        this.setState({
+            media: [],
+            media_data: [],
+            status: ''
         })
     }
 
     getItems(){
         return [
             {
-                key: 'upload',
+                key: 'media',
                 name: 'Upload media',
                 iconProps: {
                     iconName: 'FabricPictureLibrary'
-                }
+                },
+                onClick: () => this.postMediaForStatus()
             },
             {
                 key: 'visibility',
@@ -99,6 +197,14 @@ class ComposeWindow extends Component {
                     onBlur={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
                 />
+                <DetailsList
+                    columns={this.getMediaItemColums()}
+                    items={this.getMediaItemRows()}
+                    selectionMode={SelectionMode.none}
+                    layoutMode={DetailsListLayoutMode.justified}
+                />
+
+
                 <Dialog
                     hidden={this.state.hideDialog}
                     onDismiss={() => this.toggleVisibilityDialog()}
