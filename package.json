@@ -2,6 +2,7 @@
   "name": "hyperspace",
   "version": "0.1.0",
   "description": "A fluffy client for Mastodon in React",
+  "author": "Marquis Kurt <software@marquiskurt.net>",
   "private": true,
   "homepage": "./",
   "main": "src/electron.js",
@@ -20,11 +21,15 @@
     "@uifabric/icons": "^6.3.0",
     "file-dialog": "^0.0.7"
   },
+  "devDependencies": {
+    "electron-builder": "^20.38.5"
+  },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
     "start": "npm run compile-sass; react-scripts start",
     "start-electron": "npm run build; electron .",
     "build": "npm run compile-sass; react-scripts build",
+    "build-electron":  "npm run build; build",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
   },
@@ -36,5 +41,26 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "build": {
+    "id": "net.marquiskurt.hyperspace",
+    "buildResources": "electron",
+    "mac": {
+      "cagetory": "public.app-category.social-networking",
+      "icon": "electron/app.icns",
+      "target": [
+        "dmg",
+        "mas"
+      ]
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "electron/app.ico"
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "rpm"],
+      "icon": "linux",
+      "category": "Network"
+    }
+  }
 }
