@@ -29,7 +29,7 @@ class ComposeWindow extends Component {
             status: '',
             media: [],
             media_data: [],
-            visibility: '',
+            visibility: 'public',
             hideDialog: true
         };
 
@@ -69,7 +69,7 @@ class ComposeWindow extends Component {
         })
     }
 
-    getMediaItemColums() {
+    getMediaItemColumns() {
         return [
             {
                 key: 'fileIcon',
@@ -128,8 +128,20 @@ class ComposeWindow extends Component {
             media: [],
             media_data: [],
             status: '',
-            visibility: ''
+            visibility: 'public'
         });
+    }
+
+    getVisibilityIcon() {
+        if (this.state.visibility === 'public') {
+            return 'Globe';
+        } else if (this.state.visibility === 'unlisted') {
+            return 'Unlock';
+        } else if (this.state.visibility === 'private') {
+            return 'Lock';
+        } else {
+            return 'Message';
+        }
     }
 
     getItems(){
@@ -146,7 +158,7 @@ class ComposeWindow extends Component {
                 key: 'visibility',
                 name: 'Set visibility',
                 iconProps: {
-                    iconName: 'Hide2'
+                    iconName: this.getVisibilityIcon()
                 },
                 onClick: () => this.toggleVisibilityDialog()
             },
@@ -204,7 +216,7 @@ class ComposeWindow extends Component {
                     placeholder="What's on your mind?"
                 />
                 <DetailsList
-                    columns={this.getMediaItemColums()}
+                    columns={this.getMediaItemColumns()}
                     items={this.getMediaItemRows()}
                     selectionMode={SelectionMode.none}
                     layoutMode={DetailsListLayoutMode.justified}
@@ -251,8 +263,7 @@ class ComposeWindow extends Component {
                         onChange={(event, option) => this._onChoiceChanged(event, option)}
                     />
                     <DialogFooter>
-                        <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Save" />
-                        <DefaultButton onClick={() => this.toggleVisibilityDialog()} text="Cancel" />
+                        <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Set" />
                     </DialogFooter>
                 </Dialog>
             </div>
