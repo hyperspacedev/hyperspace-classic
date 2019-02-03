@@ -8,3 +8,18 @@ Hyperspace is a client for Mastodon and the fediverse written in ReactJS. It aim
 ## Building from source
 
 To get the packages and environment set up, run `npm install`. Most commands and scripts derive from `create-react-app` and should be easy enough to use.
+
+```bash
+npm install
+npm run build
+serve build
+```
+
+## Modules used
+Hyperspace makes use of the following modules and components to make it as fluffy as possible:
+
+- `megalodon` - the handler for Mastodon API calls
+- `office-ui-fabric-react` - React components from Microsoft that offer Modern/Fluent design
+- `@uifabric/icons` - Icon pack that goes with Fabric UI
+- `moment` - for date formatting
+- `node-sass` - for compiling the Sass files needed

@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupAddon, Modal, ModalHeader, ModalBody }  from 'reactstrap';
+import {
+    TextField,
+    PrimaryButton,
+    Dialog,
+    DialogFooter,
+    DialogType,
+    DefaultButton,
+    Panel,
+    PanelType
+} from "office-ui-fabric-react";
 import Mastodon from 'megalodon';
 class RegisterWindow extends Component {
 
@@ -16,6 +25,8 @@ class RegisterWindow extends Component {
         }
 
         this.toggle = this.toggle.bind(this);
+        this._getErrorMessage = this._getErrorMessage.bind(this);
+        this._getErrorMessagePromise = this._getErrorMessagePromise.bind(this);
     }
 
     toggle() {
@@ -30,11 +41,28 @@ class RegisterWindow extends Component {
         });
     }
 
+    closePanel() {
+        let _this = this;
+        this.setState({
+            modal: false
+        })
+    }
+
     updateInstanceUrl(e) {
         let _this = this;
         _this.setState({
             instanceUrl: e.target.value
         })
+    }
+
+    _getErrorMessage(value: string) {
+        return value.length > 0 ? '': 'This field cannot be blank.';
+    }
+
+    _getErrorMessagePromise(value: string): Promise<string> {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(this._getErrorMessage(value)), 3000);
+        });
     }
 
     updateAuthCode(e) {
@@ -77,45 +105,58 @@ class RegisterWindow extends Component {
 
 
     render() {
+        let _this = this;
         return (
-            <div className = "container shadow-sm rounded p-4">
-                <h2><b>Sign in to Hyperspace</b></h2>
-                <p>Welcome to Hyperspace, the fluffy client for Mastodon! To get started, please sign in to your Mastodon account by typing your instance name here:</p>
+            <div className = "container p-4">
+                <h2>Sign in to Hyperspace</h2>
+                <p>Welcome to Hyperspace, the fluffy client for Mastodon! We're more than happy to make your Mastodon experience pleasant, but we'll need you to sign in first.</p>
+                <p>
+                    Please sign in by entering your instance's domain.
+                </p>
                 <div>
-                    <InputGroup>
-                    <Input placeholder = "Instance name (ex.: mastodon.social)" onBlur={e => this.updateInstanceUrl(e)}/>
-                    <InputGroupAddon addonType="append">
-                        <Button className="btn-accent" onClick={this.toggle}> Sign in</Button></InputGroupAddon>
-                    </InputGroup>
+                    <TextField
+                        prefix="https://"
+                        label="Host domain name"
+                        description="The base URL of your Mastodon instance"
+                        onBlur={e => this.updateInstanceUrl(e)}
+                        required={true}
+                        onGetErrorMessage={this._getErrorMessage}
+                        validateOnFocusOut
+                    />
+                    <br/>
+                    <PrimaryButton onClick={this.toggle}>Sign in</PrimaryButton>
                 </div>
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>Sign in to <b>{this.state.instanceUrl}</b></ModalHeader>
-                    <ModalBody>
-                        <div className="container-fluid">
-                            <div>
-                                <div>
-                                    <p>Great! You've selected the instance to sign in to. We'll need you to authorize Hyperspace access to your Mastodon account. To do so, click 'Get code' and then type in your authorization code in the field below.</p>
-                                    <p>
-                                        <a href={this.state.authUrl} target='_blank' rel="noopener noreferrer" className='btn btn-sm btn-accent'>Get code</a>
-                                    </p>
-                                    <p>
-                                        <InputGroup>
-                                            <Input placeholder = "Authorization code (ex.: 687970657273706163652e736572766572)" onBlur={e => this.updateAuthCode(e)}/>
-                                            <InputGroupAddon addonType="append">
-                                                <Button className="btn-accent" onclick={this.getAccessToken()}>Authorize</Button>
-                                            </InputGroupAddon>
-                                        </InputGroup>
-                                    </p>
-                                    <small class = "text-muted">
-                                        For your convenience, we'll store app data into your browser cookies.
-                                    </small>
-                                </div>
-                            </div>
+                <Panel
+                    isOpen={this.state.modal}
+                    type={PanelType.medium}
+                    onDismiss={() => this.closePanel()}
+                    headerText="Give authorization access"
+                    closeButtonAriaLabel="Close"
+                    onRenderFooterContent = { () => {return(
+                        <div>
+                            <PrimaryButton
+                                onClick={() => this.getAccessToken()}
+                                style={{ marginRight: '8px' }}
+                                text="Authorize" />
+                            <DefaultButton
+                                onClick={() => this.closePanel()}
+                                text="Cancel" />
                         </div>
-                    </ModalBody>
-                </Modal>
-
+                        );}
+                    }
+                >
+                    <p>We'll need you to grant Hyperspace authorization to access your Mastodon account on <b>{_this.state.instanceUrl}</b>. Click 'Get Code' to authorize and then paste the authorization code here.</p>
+                    <DefaultButton
+                        href={this.state.authUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >Get code</DefaultButton>
+                    <TextField
+                        label="Authorization code"
+                        onBlur={e => this.updateAuthCode(e)}
+                    />
+                </Panel>
             </div>
         );
     }

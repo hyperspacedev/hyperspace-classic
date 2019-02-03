@@ -1,5 +1,23 @@
 import React, { Component } from 'react';
-import Mastodon from 'megalodon';
+import {
+    TextField,
+    CommandBar,
+    Dialog,
+    DialogFooter,
+    DialogType,
+    PrimaryButton,
+    DefaultButton,
+    ChoiceGroup,
+    DetailsList,
+    DetailsListLayoutMode,
+    SelectionMode,
+    Icon,
+    Toggle
+} from "office-ui-fabric-react";
+import {initializeIcons} from "@uifabric/icons";
+import filedialog from 'file-dialog';
+
+initializeIcons();
 
 class ComposeWindow extends Component {
 
@@ -9,10 +27,18 @@ class ComposeWindow extends Component {
         super(props);
 
         this.state = {
-            status: ''
-        }
+            status: '',
+            media: [],
+            media_data: [],
+            visibility: 'public',
+            spoiler_text: '',
+            sensitive: false,
+            hideDialog: true,
+            hideSpoilerDialog: true
+        };
 
         this.client = this.props.client;
+        this.toggleVisibilityDialog = this.toggleVisibilityDialog.bind(this);
     }
 
     updateStatus(e) {
@@ -21,52 +47,318 @@ class ComposeWindow extends Component {
         });
     }
 
+    postMediaForStatus() {
+        let _this = this;
+        filedialog({
+            multiple: false,
+            accept: 'image/*'
+        }).then((images) => {
+            let uploadData = new FormData();
+
+            uploadData.append('file', images[0]);
+
+            _this.client.post('/media', uploadData)
+                .then((resp) => {
+                    console.log('Media uploaded!');
+                    let id = resp.data.id;
+                    let media_id_array = _this.state.media;
+                    let media_data_array = this.state.media_data;
+                    media_id_array.push(id);
+                    media_data_array.push(resp.data);
+                    _this.setState({
+                        media: media_id_array,
+                        media_data: media_data_array
+                    })
+                })
+        })
+    }
+
+    getMediaItemColumns() {
+        return [
+            {
+                key: 'fileIcon',
+                fieldName: 'fileIcon',
+                value: 'File Icon',
+                iconName: 'Page',
+                isIconOnly: false,
+                minWidth: 16,
+                maxWidth: 16,
+                isPadded: true
+
+            },
+            {
+                key: 'fileUrl',
+                fieldName: 'fileUrl',
+                iconName: 'Link',
+                value: 'File URL',
+                minWidth: 24,
+                isPadded: true,
+                isIconOnly: false
+            }
+        ];
+    }
+
+    getMediaItemRows() {
+        let rows = [];
+        if (this.state.media_data.length === 0) {
+            let c = {
+                'fileIcon': <span><Icon iconName='SurveyQuestions'/></span>,
+                'fileUrl': 'No media uploaded'
+            };
+            let rows = [];
+            rows.push(c);
+            return rows;
+        } else {
+            for (var i in this.state.media_data) {
+                let c = {
+                    'fileIcon': <span><Icon iconName='Picture'/></span>,
+                    'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
+                };
+                rows.push(c);
+            }
+        }
+
+        return rows;
+    }
+
     postStatus() {
         this.client.post('/statuses', {
-            status: this.state.status
+            status: this.state.status,
+            media_ids: this.state.media,
+            visibility: this.state.visibility,
+            sensitive: this.state.sensitive,
+            spoiler_text: this.state.spoiler_text
+        });
+
+        this.setState({
+            media: [],
+            media_data: [],
+            status: '',
+            visibility: 'public',
+            sensitive: false,
+            spoiler_text: ''
+        });
+    }
+
+    getVisibilityIcon() {
+        if (this.state.visibility === 'public') {
+            return 'Globe';
+        } else if (this.state.visibility === 'unlisted') {
+            return 'Unlock';
+        } else if (this.state.visibility === 'private') {
+            return 'Lock';
+        } else {
+            return 'Message';
+        }
+    }
+
+    getSpoilerText() {
+        if (this.state.sensitive) {
+            return (<span><Icon iconName = "Warning"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
+        } else {
+            return (<span></span>);
+        }
+    }
+
+    getItems(){
+        return [
+            {
+                key: 'media',
+                name: 'Upload media',
+                iconProps: {
+                    iconName: 'FabricPictureLibrary'
+                },
+                onClick: () => this.postMediaForStatus()
+            },
+            {
+                key: 'visibility',
+                name: 'Set visibility',
+                iconProps: {
+                    iconName: this.getVisibilityIcon()
+                },
+                onClick: () => this.toggleVisibilityDialog()
+            },
+            {
+                key: 'spoiler',
+                name: this.setWarningButtonText(),
+                iconProps: {
+                    iconName: 'Warning'
+                },
+                onClick: () => this.toggleSpoilerDialog()
+            }
+        ];
+    };
+
+    getFarItems(){
+        return [
+            {
+                key: 'post',
+                name: 'Post status',
+                iconProps: {
+                    iconName: 'Edit'
+                },
+                onClick: () => this.postStatus()
+            }
+        ];
+    };
+
+    toggleVisibilityDialog() {
+        this.setState({
+            hideDialog: !this.state.hideDialog
+        });
+    }
+
+    _onChoiceChanged(event, option) {
+        let _this = this;
+        _this.setState({
+            visibility: option.key
+        });
+    }
+
+    toggleSpoilerDialog() {
+        this.setState({
+            hideSpoilerDialog: !this.state.hideSpoilerDialog
         })
+    }
+
+    onSpoilerVisibilityChange(event, checked) {
+        this.setState({
+            sensitive: checked ? true: false
+        })
+    }
+
+    onSpoilerTextChange(e) {
+        this.setState({
+            spoiler_text: e.target.value
+        })
+    }
+
+    setWarningButtonText() {
+        if (this.state.sensitive) {
+            return 'Change warning';
+        } else {
+            return 'Add warning';
+        }
+    }
+
+    setWarningHeaderText() {
+        if (this.state.sensitive) {
+            return 'Change or remove your warning';
+        } else {
+            return 'Add a warning';
+        }
+    }
+
+    setWarningContentText() {
+        if (this.state.sensitive) {
+            return 'Change or remove the warning on your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
+        } else {
+            return 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
+        }
     }
 
     render() {
         return (
-            <div className="container shadow rounded my-2">
-                <div className="row">
-                    <div className="col p-4 post">
-                        <div className="media">
-                            <div className="media-body">
-                                <h5 className="mt-0">
-                                    <b>Make a new post</b>
-                                </h5>
-                                <p>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
-                              placeholder="What's on your mind?" defaultValue={this.state.status} onBlur={e => {this.updateStatus(e)}}/>
-                                </p>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <ul className="nav toolbar-area">
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">camera_alt</i></button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">public</i> Public</button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">warning</i></button>
-                                    </li>
-                                    <li className="nav-item toolbar">
-                                        <button className = "btn btn-sm"><i className="material-icons md-18">tag_faces</i></button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col">
-                                <button className="btn btn-sm btn-accent float-right pl-4 pr-4" onMouseDown={this.postStatus()}>Toot</button>
-                            </div>
-                        </div>
+            <div>
+                <CommandBar
+                    items={this.getItems()}
+                    farItems={this.getFarItems()}
+                    ariaLabel={'Use left and right arrow keys to navigate between commands'}
+                />
+                <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={e => this.updateStatus(e)}
+                    placeholder="What's on your mind?"
+                />
+                <p className="mt-1">{this.getSpoilerText()}</p>
+                <DetailsList
+                    columns={this.getMediaItemColumns()}
+                    items={this.getMediaItemRows()}
+                    selectionMode={SelectionMode.none}
+                    layoutMode={DetailsListLayoutMode.justified}
+                />
 
-                    </div>
-                </div>
+                {/* Visibility Dialog */}
+                <Dialog
+                    hidden={this.state.hideDialog}
+                    onDismiss={() => this.toggleVisibilityDialog()}
+                    dialogContentProps={{
+                        type: DialogType.largeHeader,
+                        title: 'Set your visibility',
+                        subText: 'Choose who gets to see your status. By default, new statuses are posted publicly.'
+                    }}
+                    modalProps={{
+                        isBlocking: false,
+                        containerClassName: 'ms-dialogMainOverride'
+                    }}
+                >
+                    <ChoiceGroup
+                        options={[
+                            {
+                                key: 'direct',
+                                id: 'message',
+                                text: 'Direct message'
+                            },
+                            {
+                                key: 'private',
+                                id: 'followers',
+                                text: 'Followers only',
+                            },
+                            {
+                                key: 'unlisted',
+                                id: 'unlisted',
+                                text: 'Public (unlisted)',
+                            },
+                            {
+                                key: 'public',
+                                id: 'public',
+                                text: 'Public (fediverse)',
+                                checked: true
+                            }
+                        ]}
+                        onChange={(event, option) => this._onChoiceChanged(event, option)}
+                    />
+                    <DialogFooter>
+                        <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Set" />
+                    </DialogFooter>
+                </Dialog>
+
+                {/* Spoiler Dialog */}
+                <Dialog
+                    hidden={this.state.hideSpoilerDialog}
+                    onDismiss={() => this.toggleSpoilerDialog()}
+                    dialogContentProps={{
+                        type: DialogType.largeHeader,
+                        title: this.setWarningHeaderText(),
+                        subText: this.setWarningContentText()
+                    }}
+                    modalProps={{
+                        isBlocking: true,
+                        containerClassName: 'ms-dialogMainOverride'
+                    }}
+                    minWidth={500}
+                >
+                    <Toggle
+                        defaultChecked={false}
+                        label="Mark as a spoiler"
+                        onText="On"
+                        offText="Off"
+                        onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked)}
+                    />
+                    <TextField
+                        multiline={true}
+                        rows={5}
+                        resizable={false}
+                        label="Warning text"
+                        onBlur={(e) => this.onSpoilerTextChange(e)}
+                    />
+                    <DialogFooter>
+                        <PrimaryButton onClick={() => this.toggleSpoilerDialog()} text="Save" />
+                    </DialogFooter>
+                </Dialog>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Tab, Tabs} from "react-bootstrap-tabs";
-import PostRoll from "../Post/index.js";
+import {Pivot, PivotItem, PivotLinkSize} from "office-ui-fabric-react";
+import PostRoll from "../Post/PostRoll";
 
 class Timeline extends Component {
     client;
@@ -13,24 +13,24 @@ class Timeline extends Component {
     render() {
         return (
             <div style={{ width: '100%'}}>
-                <Tabs className="nav-pills nav-fill timeline-nav">
-                    <Tab label="Your Feed">
-                        <div className = "container">
+                <Pivot linkSize={PivotLinkSize.large}>
+                    <PivotItem linkText="My feed" itemIcon="home">
+                        <div className = "container mt-2">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
-                    </Tab>
-                    <Tab label="Community">
-                        <div className = "container">
+                    </PivotItem>
+                    <PivotItem linkText="This community" itemIcon="NetworkTower">
+                        <div className = "container mt-2">
                             <PostRoll timeline="local" client={this.client}/>
                         </div>
-                    </Tab>
-                    <Tab label="Fediverse">
+                    </PivotItem>
+                    <PivotItem linkText="Public" itemIcon="Globe">
                         <p> </p>
-                        <div className = "container">
+                        <div className = "container mt-2">
                             <PostRoll timeline="public" client={this.client}/>
                         </div>
-                    </Tab>
-                </Tabs>
+                    </PivotItem>
+                </Pivot>
             </div>
         );
     }

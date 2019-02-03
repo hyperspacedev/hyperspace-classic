@@ -5,12 +5,41 @@ import Timeline from './components/Timeline/';
 import ProfileContainer from './components/ProfileContainer/';
 import RegisterWindow from './components/RegisterWindow';
 import Mastodon from 'megalodon';
+import {loadTheme} from 'office-ui-fabric-react';
 import 'jquery';
 import 'popper.js';
 import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
-import './assets/css/default.css'; // This must be compiled first!
+import './assets/css/default.css';
+import {locale} from "moment"; // This must be compiled first!
+
+loadTheme({
+    palette: {
+        themePrimary: '#5c2d91',
+        themeLighterAlt: '#f7f4fb',
+        themeLighter: '#dfd3ed',
+        themeLight: '#c6b0de',
+        themeTertiary: '#936fbd',
+        themeSecondary: '#6b3e9f',
+        themeDarkAlt: '#532983',
+        themeDark: '#46226e',
+        themeDarker: '#331951',
+        neutralLighterAlt: '#f8f8f8',
+        neutralLighter: '#f4f4f4',
+        neutralLight: '#eaeaea',
+        neutralQuaternaryAlt: '#dadada',
+        neutralQuaternary: '#d0d0d0',
+        neutralTertiaryAlt: '#c8c8c8',
+        neutralTertiary: '#c2c2c2',
+        neutralSecondary: '#858585',
+        neutralPrimaryAlt: '#4b4b4b',
+        neutralPrimary: '#333333',
+        neutralDark: '#272727',
+        black: '#1d1d1d',
+        white: '#ffffff',
+    }
+});
 
 class App extends Component {
 
@@ -29,16 +58,6 @@ class App extends Component {
             this.state = {
                 account: ''
             };
-
-            let _this = this;
-
-            this.client.get("/accounts/verify_credentials")
-                .then((resp) => {
-                    _this.setState({
-                        account: resp.data
-                    });
-                    localStorage.setItem("account", JSON.stringify(resp.data))
-                })
         }
     }
 
@@ -57,6 +76,20 @@ class App extends Component {
         this.client = client;
     }
 
+    getAccountDetails() {
+        if (this.client != null) {
+            this.client.get("/accounts/verify_credentials")
+                .then((resp) => {
+                    localStorage.setItem("account", JSON.stringify(resp.data))
+                });
+        }
+        return JSON.parse(localStorage.getItem('account'));
+    }
+
+    componentWillMount() {
+        this.getAccountDetails();
+    }
+
     render() {
         return (
             <div>
@@ -68,8 +101,10 @@ class App extends Component {
                   <div className = "col-sm-12 col-md-8">
                       {
                           this.client ?
-                              <div><ComposeWindow className="fixed-top" client={this.client}/>
-                                  <hr/></div>:
+                              <div>
+                                  <ComposeWindow className="fixed-top" client={this.client}/>
+                                  <hr/>
+                              </div>:
                               <span/>
                       }
 
@@ -81,20 +116,7 @@ class App extends Component {
                   </div>
                     {
                         this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 shadow rounded profile-container">
-                            <ProfileContainer
-                                avatar = {JSON.parse(localStorage.getItem("account")).avatar}
-                                headerImage = {JSON.parse(localStorage.getItem("account")).header_static}
-                                name = {JSON.parse(localStorage.getItem("account")).display_name}
-                                handle = {<p>@{JSON.parse(localStorage.getItem("account")).username}</p>}
-                                bio = {JSON.parse(localStorage.getItem("account")).source.note}
-                            />
-                            <hr/>
-                            <div className="container" style={{textAlign: 'center'}}>
-                                <small style={{textAlign: 'center'}}>
-                                    <b>Hyperspace (alpha)</b>
-                                    <p>A fluffy client for Mastodon written in React.</p>
-                                </small>
-                            </div>
+                            <ProfileContainer who = {this.getAccountDetails()}/>
                         </div>:
                             <span/>
                     }
