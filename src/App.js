@@ -11,7 +11,8 @@ import 'popper.js';
 import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
-import './assets/css/default.css'; // This must be compiled first!
+import './assets/css/default.css';
+import {locale} from "moment"; // This must be compiled first!
 
 loadTheme({
     palette: {
@@ -75,13 +76,18 @@ class App extends Component {
         this.client = client;
     }
 
-    componentWillMount() {
+    getAccountDetails() {
         if (this.client != null) {
             this.client.get("/accounts/verify_credentials")
                 .then((resp) => {
                     localStorage.setItem("account", JSON.stringify(resp.data))
                 });
         }
+        return JSON.parse(localStorage.getItem('account'));
+    }
+
+    componentWillMount() {
+        this.getAccountDetails();
     }
 
     render() {
@@ -110,7 +116,7 @@ class App extends Component {
                   </div>
                     {
                         this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 shadow rounded profile-container">
-                            <ProfileContainer who = {JSON.parse(localStorage.getItem("account"))}/>
+                            <ProfileContainer who = {this.getAccountDetails()}/>
                         </div>:
                             <span/>
                     }
