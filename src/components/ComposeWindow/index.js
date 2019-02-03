@@ -29,8 +29,9 @@ class ComposeWindow extends Component {
             status: '',
             media: [],
             media_data: [],
+            visibility: '',
             hideDialog: true
-        }
+        };
 
         this.client = this.props.client;
         this.toggleVisibilityDialog = this.toggleVisibilityDialog.bind(this);
@@ -119,14 +120,16 @@ class ComposeWindow extends Component {
     postStatus() {
         this.client.post('/statuses', {
             status: this.state.status,
-            media_ids: this.state.media
-        })
+            media_ids: this.state.media,
+            visibility: this.state.visibility
+        });
 
         this.setState({
             media: [],
             media_data: [],
-            status: ''
-        })
+            status: '',
+            visibility: ''
+        });
     }
 
     getItems(){
@@ -149,7 +152,7 @@ class ComposeWindow extends Component {
             },
             {
                 key: 'spoiler',
-                name: 'Mark spoiler',
+                name: 'Add warning',
                 iconProps: {
                     iconName: 'Warning'
                 },
@@ -177,8 +180,11 @@ class ComposeWindow extends Component {
         });
     }
 
-    _onChoiceChanged(e) {
-        console.log('Choice option change: ' + e.target.id.replace('ChoiceGroup44-', ''));
+    _onChoiceChanged(event, option) {
+        let _this = this;
+        _this.setState({
+            visibility: option.key
+        });
     }
 
     render() {
@@ -221,12 +227,12 @@ class ComposeWindow extends Component {
                     <ChoiceGroup
                         options={[
                             {
-                                key: 'message',
+                                key: 'direct',
                                 id: 'message',
                                 text: 'Direct message'
                             },
                             {
-                                key: 'followers',
+                                key: 'private',
                                 id: 'followers',
                                 text: 'Followers only',
                             },
@@ -242,7 +248,7 @@ class ComposeWindow extends Component {
                                 checked: true
                             }
                         ]}
-                        onChange={e => this._onChoiceChanged(e)}
+                        onChange={(event, option) => this._onChoiceChanged(event, option)}
                     />
                     <DialogFooter>
                         <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Save" />
