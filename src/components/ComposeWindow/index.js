@@ -11,7 +11,8 @@ import {
     DetailsList,
     DetailsListLayoutMode,
     SelectionMode,
-    Icon
+    Icon,
+    Toggle
 } from "office-ui-fabric-react";
 import {initializeIcons} from "@uifabric/icons";
 import filedialog from 'file-dialog';
@@ -30,7 +31,10 @@ class ComposeWindow extends Component {
             media: [],
             media_data: [],
             visibility: 'public',
-            hideDialog: true
+            spoiler_text: '',
+            sensitive: false,
+            hideDialog: true,
+            hideSpoilerDialog: true
         };
 
         this.client = this.props.client;
@@ -121,14 +125,18 @@ class ComposeWindow extends Component {
         this.client.post('/statuses', {
             status: this.state.status,
             media_ids: this.state.media,
-            visibility: this.state.visibility
+            visibility: this.state.visibility,
+            sensitive: this.state.sensitive,
+            spoiler_text: this.state.spoiler_text
         });
 
         this.setState({
             media: [],
             media_data: [],
             status: '',
-            visibility: 'public'
+            visibility: 'public',
+            sensitive: false,
+            spoiler_text: ''
         });
     }
 
@@ -141,6 +149,14 @@ class ComposeWindow extends Component {
             return 'Lock';
         } else {
             return 'Message';
+        }
+    }
+
+    getSpoilerText() {
+        if (this.state.sensitive) {
+            return (<span><Icon iconName = "Warning"/> {this.state.spoiler_text} </span>);
+        } else {
+            return (<span></span>);
         }
     }
 
@@ -168,7 +184,7 @@ class ComposeWindow extends Component {
                 iconProps: {
                     iconName: 'Warning'
                 },
-                onClick: () => console.log('Download')
+                onClick: () => this.toggleSpoilerDialog()
             }
         ];
     };
@@ -199,6 +215,24 @@ class ComposeWindow extends Component {
         });
     }
 
+    toggleSpoilerDialog() {
+        this.setState({
+            hideSpoilerDialog: !this.state.hideSpoilerDialog
+        })
+    }
+
+    onSpoilerVisibilityChange(event, checked) {
+        this.setState({
+            sensitive: checked ? true: false
+        })
+    }
+
+    onSpoilerTextChange(e) {
+        this.setState({
+            spoiler_text: e.target.value
+        })
+    }
+
     render() {
         return (
             <div>
@@ -215,6 +249,7 @@ class ComposeWindow extends Component {
                     onBlur={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
                 />
+                <p className="mt-1">{this.getSpoilerText()}</p>
                 <DetailsList
                     columns={this.getMediaItemColumns()}
                     items={this.getMediaItemRows()}
@@ -222,7 +257,7 @@ class ComposeWindow extends Component {
                     layoutMode={DetailsListLayoutMode.justified}
                 />
 
-
+                {/* Visibility Dialog */}
                 <Dialog
                     hidden={this.state.hideDialog}
                     onDismiss={() => this.toggleVisibilityDialog()}
@@ -264,6 +299,40 @@ class ComposeWindow extends Component {
                     />
                     <DialogFooter>
                         <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Set" />
+                    </DialogFooter>
+                </Dialog>
+
+                {/* Spoiler Dialog */}
+                <Dialog
+                    hidden={this.state.hideSpoilerDialog}
+                    onDismiss={() => this.toggleSpoilerDialog()}
+                    dialogContentProps={{
+                        type: DialogType.largeHeader,
+                        title: 'Add a warning',
+                        subText: 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.'
+                    }}
+                    modalProps={{
+                        isBlocking: false,
+                        containerClassName: 'ms-dialogMainOverride'
+                    }}
+                    minWidth={500}
+                >
+                    <Toggle
+                        defaultChecked={false}
+                        label="Mark as a spoiler"
+                        onText="On"
+                        offText="Off"
+                        onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked)}
+                    />
+                    <TextField
+                        multiline={true}
+                        rows={5}
+                        resizable={false}
+                        label="Warning text"
+                        onBlur={(e) => this.onSpoilerTextChange(e)}
+                    />
+                    <DialogFooter>
+                        <PrimaryButton onClick={() => this.toggleSpoilerDialog()} text="Save" />
                     </DialogFooter>
                 </Dialog>
             </div>
