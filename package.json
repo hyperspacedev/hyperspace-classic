@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "A fluffy client for Mastodon in React",
   "private": true,
+  "homepage": "./",
+  "main": "src/electron.js",
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -21,6 +23,7 @@
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
     "start": "npm run compile-sass; react-scripts start",
+    "start-electron": "npm run build; electron .",
     "build": "npm run compile-sass; react-scripts build",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
