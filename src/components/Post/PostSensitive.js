@@ -53,6 +53,7 @@ class PostSensitive extends Component {
                                 }
                             </div>
                     }}
+                    minWidth={600}
                 >
                 </Dialog>
             </div>
