@@ -40,6 +40,18 @@ class Post extends Component {
         }
     }
 
+    getVisibility(status) {
+        if (status.visibility === 'public') {
+            return 'Public';
+        } else if (status.visibility === 'unlisted') {
+            return 'Unlisted';
+        } else if (status.visibility === 'private') {
+            return 'Followers only';
+        } else {
+            return 'Direct message';
+        }
+    }
+
     render() {
         return (<div className="container shadow-sm rounded p-3">
                 {
@@ -132,7 +144,7 @@ class Post extends Component {
                     client={this.props.client}
                     status={this.props.status}
                 />
-                <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)}</span>}/>
+                <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span>}/>
             </div>
         );
     }
