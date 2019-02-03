@@ -71,7 +71,7 @@ class Post extends Component {
                                         <PostSensitive status={this.props.status}/>:
 
                                         <div className='ml-4 mb-2'>
-                                            <DocumentCard type={DocumentCardType.compact} onClickHref={this.props.status.reblog.url}>
+                                            <DocumentCard type={DocumentCardType.compact} onClick={() => {window.open(this.props.status.reblog.url)}}>
                                                 <DocumentCardDetails>
                                                     <DocumentCardTitle
                                                         title={
