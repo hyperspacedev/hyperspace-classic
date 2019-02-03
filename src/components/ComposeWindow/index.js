@@ -154,7 +154,7 @@ class ComposeWindow extends Component {
 
     getSpoilerText() {
         if (this.state.sensitive) {
-            return (<span><Icon iconName = "Warning"/> {this.state.spoiler_text} </span>);
+            return (<span><Icon iconName = "Warning"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
         } else {
             return (<span></span>);
         }
@@ -180,7 +180,7 @@ class ComposeWindow extends Component {
             },
             {
                 key: 'spoiler',
-                name: 'Add warning',
+                name: this.setWarningButtonText(),
                 iconProps: {
                     iconName: 'Warning'
                 },
@@ -231,6 +231,30 @@ class ComposeWindow extends Component {
         this.setState({
             spoiler_text: e.target.value
         })
+    }
+
+    setWarningButtonText() {
+        if (this.state.sensitive) {
+            return 'Change warning';
+        } else {
+            return 'Add warning';
+        }
+    }
+
+    setWarningHeaderText() {
+        if (this.state.sensitive) {
+            return 'Change or remove your warning';
+        } else {
+            return 'Add a warning';
+        }
+    }
+
+    setWarningContentText() {
+        if (this.state.sensitive) {
+            return 'Change or remove the warning on your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
+        } else {
+            return 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
+        }
     }
 
     render() {
@@ -308,11 +332,11 @@ class ComposeWindow extends Component {
                     onDismiss={() => this.toggleSpoilerDialog()}
                     dialogContentProps={{
                         type: DialogType.largeHeader,
-                        title: 'Add a warning',
-                        subText: 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.'
+                        title: this.setWarningHeaderText(),
+                        subText: this.setWarningContentText()
                     }}
                     modalProps={{
-                        isBlocking: false,
+                        isBlocking: true,
                         containerClassName: 'ms-dialogMainOverride'
                     }}
                     minWidth={500}
