@@ -21,7 +21,7 @@ class ProfileUser extends Component {
             imageUrl: this.who.avatar,
             text: this.who.display_name,
             secondaryText: '@' + this.who.acct,
-            tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following'
+            tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
         }
     }
     render() {
