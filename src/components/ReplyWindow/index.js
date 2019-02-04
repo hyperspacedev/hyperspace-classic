@@ -6,7 +6,9 @@ import {
     PrimaryButton,
     DefaultButton,
     ActionButton,
-    TextField, CommandBar
+    TextField,
+    CommandBar,
+    Link
 } from 'office-ui-fabric-react';
 import {Status} from 'megalodon';
 
@@ -64,56 +66,77 @@ class ReplyWindow extends Component {
         }
     }
 
-    render() {
+    giveDialogBox() {
         return (
-            <div>
-                <ActionButton
-                    data-automation-id="test"
-                    iconProps={{ iconName: 'replyApp', className: 'post-toolbar-icon' }}
-                    allowDisabledFocus={true}
-                    disabled={false}
-                    checked={false}
-                    onClick={() => this.toggleVisibilityDialog()}
-                    className='post-toolbar-icon'
-                >
-                    {this.replyOrThread()} ({this.state.reply_count})
-                </ActionButton>
-                <Dialog
-                    hidden={this.state.hideDialog}
-                    onDismiss={() => this.toggleVisibilityDialog()}
-                    dialogContentProps={{
-                        type: DialogType.largeHeader,
-                        title: 'Reply to ' + this.state.author,
-                        subText: <div dangerouslySetInnerHTML={{__html: this.state.original_status}}></div>
-                    }}
-                    modalProps={{
-                        isBlocking: false,
-                        containerClassName: 'ms-dialogMainOverride'
-                    }}
-                    minWidth={500}
-                >
-                    {/*<CommandBar*/}
-                        {/*items={this.getItems()}*/}
-                        {/*farItems={this.getFarItems()}*/}
-                        {/*ariaLabel={'Use left and right arrow keys to navigate between commands'}*/}
-                    {/*/>*/}
-                    <TextField
-                        multiline={true}
-                        rows={5}
-                        resizable={false}
-                        maxLength={500}
-                        onBlur={e => this.updateStatus(e)}
-                        placeholder="What's on your mind?"
-                        defaultValue={this.state.reply_contents}
-                    />
+            <Dialog
+                hidden={this.state.hideDialog}
+                onDismiss={() => this.toggleVisibilityDialog()}
+                dialogContentProps={{
+                    type: DialogType.largeHeader,
+                    title: 'Reply to ' + this.state.author,
+                    subText: <div dangerouslySetInnerHTML={{__html: this.state.original_status}}></div>
+                }}
+                modalProps={{
+                    isBlocking: false,
+                    containerClassName: 'ms-dialogMainOverride'
+                }}
+                minWidth={500}
+            >
+                {/*<CommandBar*/}
+                {/*items={this.getItems()}*/}
+                {/*farItems={this.getFarItems()}*/}
+                {/*ariaLabel={'Use left and right arrow keys to navigate between commands'}*/}
+                {/*/>*/}
+                <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={e => this.updateStatus(e)}
+                    placeholder="What's on your mind?"
+                    defaultValue={this.state.reply_contents}
+                />
 
-                    <DialogFooter>
-                        <PrimaryButton onClick={() => this.postReply()} text="Reply" />
-                        <DefaultButton onClick={() => this.toggleVisibilityDialog()} text="Cancel" />
-                    </DialogFooter>
-                </Dialog>
-            </div>
+                <DialogFooter>
+                    <PrimaryButton onClick={() => this.postReply()} text="Reply" />
+                    <DefaultButton onClick={() => this.toggleVisibilityDialog()} text="Cancel" />
+                </DialogFooter>
+            </Dialog>
         );
+    }
+
+    giveFullActionButton() {
+        return (<div>
+            <ActionButton
+                data-automation-id="test"
+                iconProps={{ iconName: 'replyApp', className: 'post-toolbar-icon' }}
+                allowDisabledFocus={true}
+                disabled={false}
+                checked={false}
+                onClick={() => this.toggleVisibilityDialog()}
+                className='post-toolbar-icon'
+            >
+                {this.replyOrThread()} ({this.state.reply_count})
+            </ActionButton>
+            {this.giveDialogBox()}
+        </div>);
+    }
+
+    giveSmallButton() {
+        return (
+            <span>
+                <Link onClick={() => this.toggleVisibilityDialog()}><b>&nbsp;Reply</b></Link>
+                {this.giveDialogBox()}
+            </span>
+        );
+    }
+
+    render() {
+        if (this.props.fullButton == true) {
+            return this.giveFullActionButton();
+        } else {
+            return this.giveSmallButton();
+        }
     }
 }
 
