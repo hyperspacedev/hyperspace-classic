@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogType,
     PrimaryButton,
-    DefaultButton,
     ChoiceGroup,
     DetailsList,
     DetailsListLayoutMode,
@@ -80,6 +79,7 @@ class ComposeWindow extends Component {
                 fieldName: 'fileIcon',
                 value: 'File Icon',
                 iconName: 'attachedFile',
+                iconClassName: 'media-file-header-icon',
                 isIconOnly: false,
                 minWidth: 16,
                 maxWidth: 16,
@@ -90,6 +90,7 @@ class ComposeWindow extends Component {
                 key: 'fileUrl',
                 fieldName: 'fileUrl',
                 iconName: 'linkApp',
+                iconClassName: 'media-file-header-icon',
                 value: 'File URL',
                 minWidth: 24,
                 isPadded: true,
@@ -102,7 +103,7 @@ class ComposeWindow extends Component {
         let rows = [];
         if (this.state.media_data.length === 0) {
             let c = {
-                'fileIcon': <span><Icon iconName='helpApp'/></span>,
+                'fileIcon': <span><Icon iconName='helpApp' className="media-file-icon"/></span>,
                 'fileUrl': 'No media uploaded'
             };
             let rows = [];
@@ -111,7 +112,7 @@ class ComposeWindow extends Component {
         } else {
             for (var i in this.state.media_data) {
                 let c = {
-                    'fileIcon': <span><Icon iconName='attachedFile'/></span>,
+                    'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
                     'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
                 };
                 rows.push(c);
@@ -166,7 +167,8 @@ class ComposeWindow extends Component {
                 key: 'media',
                 name: 'Upload media',
                 iconProps: {
-                    iconName: 'uploadMedia'
+                    iconName: 'uploadMedia',
+                    className: 'toolbar-icon'
                 },
                 onClick: () => this.postMediaForStatus()
             },
@@ -174,7 +176,8 @@ class ComposeWindow extends Component {
                 key: 'visibility',
                 name: 'Set visibility',
                 iconProps: {
-                    iconName: this.getVisibilityIcon()
+                    iconName: this.getVisibilityIcon(),
+                    className: 'toolbar-icon'
                 },
                 onClick: () => this.toggleVisibilityDialog()
             },
@@ -182,7 +185,8 @@ class ComposeWindow extends Component {
                 key: 'spoiler',
                 name: this.setWarningButtonText(),
                 iconProps: {
-                    iconName: 'warningApp'
+                    iconName: 'warningApp',
+                    className: 'toolbar-icon'
                 },
                 onClick: () => this.toggleSpoilerDialog()
             }
@@ -195,7 +199,8 @@ class ComposeWindow extends Component {
                 key: 'post',
                 name: 'Post status',
                 iconProps: {
-                    iconName: 'postStatus'
+                    iconName: 'postStatus',
+                    className: 'toolbar-icon'
                 },
                 onClick: () => this.postStatus()
             }

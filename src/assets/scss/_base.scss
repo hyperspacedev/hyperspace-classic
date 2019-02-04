@@ -104,3 +104,26 @@ li.nav-item a.nav-link i.material-icons {
 .invisible {
     display: none;
 }
+
+/* Custom Icon SVGs */
+.toolbar-icon svg {
+    fill: $theme-accent-color;
+    width: 20px;
+    height: 20px;
+}
+
+.post-toolbar-icon svg {
+    fill: $theme-accent-color;
+    width: 20px;
+    height: 20px;
+}
+
+.media-file-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.media-file-header-icon svg {
+    width: 12px;
+    height: 12px;
+}

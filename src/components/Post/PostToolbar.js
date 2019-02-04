@@ -97,7 +97,7 @@ class PostToolbar extends Component {
                             this.state.favorited === (true) ?
                                 <ActionButton
                                     data-automation-id="test"
-                                    iconProps={{ iconName: 'favoriteFill' }}
+                                    iconProps={{ iconName: 'favoriteFill', className: 'post-toolbar-icon' }}
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
@@ -107,7 +107,7 @@ class PostToolbar extends Component {
                                 </ActionButton>:
                                 <ActionButton
                                     data-automation-id="test"
-                                    iconProps={{ iconName: 'favorite' }}
+                                    iconProps={{ iconName: 'favorite', className: 'post-toolbar-icon' }}
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
@@ -123,7 +123,7 @@ class PostToolbar extends Component {
                             this.state.boosted === (true) ?
                                 <ActionButton
                                     data-automation-id="test"
-                                    iconProps={{ iconName: 'boostFill' }}
+                                    iconProps={{ iconName: 'boostFill', className: 'post-toolbar-icon' }}
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
@@ -133,7 +133,7 @@ class PostToolbar extends Component {
                                 </ActionButton>:
                                 <ActionButton
                                     data-automation-id="test"
-                                    iconProps={{ iconName: 'boost' }}
+                                    iconProps={{ iconName: 'boost', className: 'post-toolbar-icon' }}
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
@@ -149,7 +149,7 @@ class PostToolbar extends Component {
                             this.state.url ?
                                 <ActionButton
                                     data-automation-id="test"
-                                    iconProps={{ iconName: 'linkApp' }}
+                                    iconProps={{ iconName: 'linkApp', className: 'post-toolbar-icon' }}
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
@@ -160,7 +160,7 @@ class PostToolbar extends Component {
                                 <TooltipHost content={this.checkIfUnlisted()}>
                                     <ActionButton
                                         data-automation-id="test"
-                                        iconProps={{ iconName: 'unlinkApp' }}
+                                        iconProps={{ iconName: 'unlinkApp', className: 'post-toolbar-icon' }}
                                         allowDisabledFocus={true}
                                         disabled={false}
                                         checked={false}
