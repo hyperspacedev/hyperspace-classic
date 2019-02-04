@@ -1,12 +1,13 @@
 {
   "name": "hyperspace",
   "productName": "Hyperspace",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A fluffy client for Mastodon in React",
   "author": "Marquis Kurt <software@marquiskurt.net>",
+  "repository": "https://github.com/alicerunsonfedora/hyperspace.git",
   "private": true,
   "homepage": "./",
-  "main": "public/electron.js" ,
+  "main": "public/electron.js",
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -19,7 +20,8 @@
     "megalodon": "latest",
     "office-ui-fabric-react": "^6.132.0",
     "@uifabric/icons": "^6.3.0",
-    "file-dialog": "^0.0.7"
+    "file-dialog": "^0.0.7",
+    "update-electron-app": "^1.3.0"
   },
   "devDependencies": {
     "electron-builder": "^20.38.5",
@@ -29,8 +31,9 @@
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
     "start": "npm run compile-sass; react-scripts start",
     "start-electron": "npm run build; electron .",
+    "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
-    "build-electron":  "npm run purge-dirs; npm run build; build -mwl",
+    "build-electron": "npm run purge-dirs; npm run build; build -mwl",
     "purge-dirs": "rm -rf  build dist",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
@@ -58,11 +61,17 @@
       ]
     },
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "electron/app.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb", "rpm"],
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
       "icon": "linux",
       "category": "Network"
     }
