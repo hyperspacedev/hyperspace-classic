@@ -56,6 +56,12 @@ class PostRoll extends Component {
                     });
             });
 
+        } else if (this.props.timeline === "messages") {
+            this.streamListener = this.client.stream('/streaming/direct');
+
+            this.streamListener.on('connect', (data) => {
+
+            });
         }
 
         this.streamListener.on('update', (status: Status) => {
@@ -67,9 +73,17 @@ class PostRoll extends Component {
             this.forceUpdate()
         });
 
+        this.streamListener.on('message', msg => {
+            console.log(msg);
+        })
+
         this.streamListener.on('connection-limit-exceeded', err => {
             console.error(err)
         });
+
+        this.streamListener.on('not-event-stream', mes => {
+            console.log(mes)
+        })
     }
 
     render() {

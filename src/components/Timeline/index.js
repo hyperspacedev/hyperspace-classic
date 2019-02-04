@@ -25,11 +25,15 @@ class Timeline extends Component {
                         </div>
                     </PivotItem>
                     <PivotItem linkText="Public" itemIcon="public">
-                        <p> </p>
                         <div className = "container mt-2">
                             <PostRoll timeline="public" client={this.client}/>
                         </div>
                     </PivotItem>
+                    {/*<PivotItem linkText="My messages" itemIcon="directMessage">*/}
+                        {/*<div className = "container mt-2">*/}
+                            {/*<PostRoll timeline="messages" client={this.client}/>*/}
+                        {/*</div>*/}
+                    {/*</PivotItem>*/}
                 </Pivot>
             </div>
         );

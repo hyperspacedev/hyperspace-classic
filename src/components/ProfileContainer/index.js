@@ -91,7 +91,7 @@ class ProfileContainer extends Component {
     }
     render() {
         return (
-            <div className="profile-container">
+            <div className="profile-container shadow rounded">
                 <div className="profile-container-header"
                      style={{
                          backgroundImage: 'url("' + this.who.header + '")'

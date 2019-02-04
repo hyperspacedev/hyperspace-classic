@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/';
 import Timeline from './components/Timeline/';
 import ProfileContainer from './components/ProfileContainer/';
 import RegisterWindow from './components/RegisterWindow';
+import NotificationPane from './components/NotificationPane';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
 import './components/CustomIcons';
@@ -116,8 +117,9 @@ class App extends Component {
                     </div>
                   </div>
                     {
-                        this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 shadow rounded profile-container">
+                        this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 profile-container">
                             <ProfileContainer who = {this.getAccountDetails()}/>
+                            <NotificationPane client = {this.client}/>
                         </div>:
                             <span/>
                     }

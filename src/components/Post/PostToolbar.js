@@ -90,7 +90,7 @@ class PostToolbar extends Component {
             <div>
                 <ul className="nav">
                     <li>
-                        <ReplyWindow status={this.props.status} client={this.props.client}/>
+                        <ReplyWindow status={this.props.status} client={this.props.client} fullButton={true}/>
                     </li>
                     <li toggle={this.toggle}>
                         {
