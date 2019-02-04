@@ -15,6 +15,8 @@ npm run build
 serve build
 ```
 
+> Note: if you want to build the desktop version, run `npm run build-electron` instead of `npm run build`.
+
 ## Modules used
 Hyperspace makes use of the following modules and components to make it as fluffy as possible:
 
@@ -23,3 +25,4 @@ Hyperspace makes use of the following modules and components to make it as fluff
 - `@uifabric/icons` - Icon pack that goes with Fabric UI
 - `moment` - for date formatting
 - `node-sass` - for compiling the Sass files needed
+- `electron` - for making the desktop versions
