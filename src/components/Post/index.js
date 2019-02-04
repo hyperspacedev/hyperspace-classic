@@ -29,10 +29,10 @@ class Post extends Component {
     }
 
     getApplicationName(status) {
-        if (status.application === null) {
+        if (status.application === null || status.application === undefined) {
             return (
                 <TooltipHost content="We couldn't identify the application used to post this status.">
-                    <span><b>magic</b></span>
+                    <span><b>determination (Web)</b></span>
                 </TooltipHost>
             );
         } else {
