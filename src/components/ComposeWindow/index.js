@@ -79,7 +79,7 @@ class ComposeWindow extends Component {
                 key: 'fileIcon',
                 fieldName: 'fileIcon',
                 value: 'File Icon',
-                iconName: 'Page',
+                iconName: 'attachedFile',
                 isIconOnly: false,
                 minWidth: 16,
                 maxWidth: 16,
@@ -89,7 +89,7 @@ class ComposeWindow extends Component {
             {
                 key: 'fileUrl',
                 fieldName: 'fileUrl',
-                iconName: 'Link',
+                iconName: 'linkApp',
                 value: 'File URL',
                 minWidth: 24,
                 isPadded: true,
@@ -102,7 +102,7 @@ class ComposeWindow extends Component {
         let rows = [];
         if (this.state.media_data.length === 0) {
             let c = {
-                'fileIcon': <span><Icon iconName='SurveyQuestions'/></span>,
+                'fileIcon': <span><Icon iconName='helpApp'/></span>,
                 'fileUrl': 'No media uploaded'
             };
             let rows = [];
@@ -111,7 +111,7 @@ class ComposeWindow extends Component {
         } else {
             for (var i in this.state.media_data) {
                 let c = {
-                    'fileIcon': <span><Icon iconName='Picture'/></span>,
+                    'fileIcon': <span><Icon iconName='attachedFile'/></span>,
                     'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
                 };
                 rows.push(c);
@@ -142,19 +142,19 @@ class ComposeWindow extends Component {
 
     getVisibilityIcon() {
         if (this.state.visibility === 'public') {
-            return 'Globe';
+            return 'public';
         } else if (this.state.visibility === 'unlisted') {
-            return 'Unlock';
+            return 'unlisted';
         } else if (this.state.visibility === 'private') {
-            return 'Lock';
+            return 'private';
         } else {
-            return 'Message';
+            return 'directMessage';
         }
     }
 
     getSpoilerText() {
         if (this.state.sensitive) {
-            return (<span><Icon iconName = "Warning"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
+            return (<span><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
         } else {
             return (<span></span>);
         }
@@ -166,7 +166,7 @@ class ComposeWindow extends Component {
                 key: 'media',
                 name: 'Upload media',
                 iconProps: {
-                    iconName: 'FabricPictureLibrary'
+                    iconName: 'uploadMedia'
                 },
                 onClick: () => this.postMediaForStatus()
             },
@@ -182,7 +182,7 @@ class ComposeWindow extends Component {
                 key: 'spoiler',
                 name: this.setWarningButtonText(),
                 iconProps: {
-                    iconName: 'Warning'
+                    iconName: 'warningApp'
                 },
                 onClick: () => this.toggleSpoilerDialog()
             }
@@ -195,7 +195,7 @@ class ComposeWindow extends Component {
                 key: 'post',
                 name: 'Post status',
                 iconProps: {
-                    iconName: 'Edit'
+                    iconName: 'postStatus'
                 },
                 onClick: () => this.postStatus()
             }

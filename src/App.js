@@ -6,6 +6,7 @@ import ProfileContainer from './components/ProfileContainer/';
 import RegisterWindow from './components/RegisterWindow';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
+import './components/CustomIcons';
 import 'jquery';
 import 'popper.js';
 import './assets/css/bootstrap.css';

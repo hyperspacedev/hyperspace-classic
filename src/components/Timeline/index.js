@@ -14,17 +14,17 @@ class Timeline extends Component {
         return (
             <div style={{ width: '100%'}}>
                 <Pivot linkSize={PivotLinkSize.large}>
-                    <PivotItem linkText="My feed" itemIcon="home">
+                    <PivotItem linkText="My feed" itemIcon="homeApp">
                         <div className = "container mt-2">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem linkText="This community" itemIcon="NetworkTower">
+                    <PivotItem linkText="This community" itemIcon="localCommunity">
                         <div className = "container mt-2">
                             <PostRoll timeline="local" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem linkText="Public" itemIcon="Globe">
+                    <PivotItem linkText="Public" itemIcon="public">
                         <p> </p>
                         <div className = "container mt-2">
                             <PostRoll timeline="public" client={this.client}/>

@@ -69,7 +69,7 @@ class ReplyWindow extends Component {
             <div>
                 <ActionButton
                     data-automation-id="test"
-                    iconProps={{ iconName: 'Reply' }}
+                    iconProps={{ iconName: 'replyApp' }}
                     allowDisabledFocus={true}
                     disabled={false}
                     checked={false}

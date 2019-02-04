@@ -8,7 +8,7 @@ const url = require('url');
 let mainWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({ width: 800, height: 600, titleBarStyle: 'hidden' });
+    mainWindow = new BrowserWindow({ width: 1000, height: 600, titleBarStyle: 'hidden' });
 
     mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
 
