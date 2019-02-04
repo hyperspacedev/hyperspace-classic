@@ -170,6 +170,7 @@ class ComposeWindow extends Component {
                     iconName: 'uploadMedia',
                     className: 'toolbar-icon'
                 },
+                className: 'toolbar-icon',
                 onClick: () => this.postMediaForStatus()
             },
             {
@@ -179,6 +180,7 @@ class ComposeWindow extends Component {
                     iconName: this.getVisibilityIcon(),
                     className: 'toolbar-icon'
                 },
+                className: 'toolbar-icon',
                 onClick: () => this.toggleVisibilityDialog()
             },
             {
@@ -188,6 +190,7 @@ class ComposeWindow extends Component {
                     iconName: 'warningApp',
                     className: 'toolbar-icon'
                 },
+                className: 'toolbar-icon',
                 onClick: () => this.toggleSpoilerDialog()
             }
         ];
@@ -202,6 +205,7 @@ class ComposeWindow extends Component {
                     iconName: 'postStatus',
                     className: 'toolbar-icon'
                 },
+                className: 'toolbar-icon',
                 onClick: () => this.postStatus()
             }
         ];

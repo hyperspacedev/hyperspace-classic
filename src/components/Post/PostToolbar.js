@@ -102,6 +102,7 @@ class PostToolbar extends Component {
                                     disabled={false}
                                     checked={false}
                                     onClick={() => this.toggle_favorite()}
+                                    className='post-toolbar-icon'
                                 >
                                     Unfavorite ({this.state.favorites})
                                 </ActionButton>:
@@ -112,6 +113,7 @@ class PostToolbar extends Component {
                                     disabled={false}
                                     checked={false}
                                     onClick={() => this.toggle_favorite()}
+                                    className='post-toolbar-icon'
                                 >
                                     Favorite ({this.state.favorites})
                                 </ActionButton>
@@ -128,6 +130,7 @@ class PostToolbar extends Component {
                                     disabled={false}
                                     checked={false}
                                     onClick={() => this.toggle_boost()}
+                                    className='post-toolbar-icon'
                                 >
                                     Unboost ({this.state.boosts})
                                 </ActionButton>:
@@ -138,6 +141,7 @@ class PostToolbar extends Component {
                                     disabled={false}
                                     checked={false}
                                     onClick={() => this.toggle_boost()}
+                                    className='post-toolbar-icon'
                                 >
                                     Boost ({this.state.boosts})
                                 </ActionButton>
@@ -154,6 +158,7 @@ class PostToolbar extends Component {
                                     disabled={false}
                                     checked={false}
                                     href={this.state.url}
+                                    className='post-toolbar-icon'
                                 >
                                     Link
                                 </ActionButton>:
@@ -164,6 +169,7 @@ class PostToolbar extends Component {
                                         allowDisabledFocus={true}
                                         disabled={false}
                                         checked={false}
+                                        className='post-toolbar-icon'
                                     >
                                         Link
                                     </ActionButton>

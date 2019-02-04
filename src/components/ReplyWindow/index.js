@@ -74,6 +74,7 @@ class ReplyWindow extends Component {
                     disabled={false}
                     checked={false}
                     onClick={() => this.toggleVisibilityDialog()}
+                    className='post-toolbar-icon'
                 >
                     {this.replyOrThread()} ({this.state.reply_count})
                 </ActionButton>

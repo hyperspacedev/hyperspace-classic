@@ -116,6 +116,9 @@ li.nav-item a.nav-link i.material-icons {
 .app-container {
   padding-top: 76px; }
 
+a {
+  color: #5c2d91; }
+
 .btn-accent {
   background-color: #5c2d91;
   box-shadow: 0px 0px 4px #a2a2a2;
@@ -186,8 +189,18 @@ li.nav-item a.nav-link i.material-icons {
   width: 20px;
   height: 20px; }
 
+.toolbar-icon:hover div i svg {
+  fill: #a980d7;
+  width: 20px;
+  height: 20px; }
+
 .post-toolbar-icon svg {
   fill: #5c2d91;
+  width: 20px;
+  height: 20px; }
+
+.post-toolbar-icon:hover div i svg {
+  fill: #a980d7;
   width: 20px;
   height: 20px; }
 
