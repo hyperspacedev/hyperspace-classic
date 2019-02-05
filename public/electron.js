@@ -42,7 +42,13 @@ function createMenubar() {
             submenu: [
                 { role: 'reload' },
                 { role: 'forcereload' },
-                { role: 'toggledevtools' },
+                {
+                    label: 'Open Dev Tools',
+                    click () {
+                        mainWindow.webContents.openDevTools({mode: 'undocked'});
+                    },
+                    accelerator: 'Shift+CmdOrCtrl+I'
+                },
                 { type: 'separator' },
                 { role: 'togglefullscreen' }
             ]
