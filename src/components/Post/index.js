@@ -53,7 +53,7 @@ class Post extends Component {
     }
 
     render() {
-        return (<div className="container shadow-sm rounded p-3">
+        return (<div className="container shadow-sm rounded p-3 marked-area">
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,

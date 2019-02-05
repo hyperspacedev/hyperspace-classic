@@ -27,6 +27,14 @@ li.nav-item a.nav-link i.material-icons {
     padding-top: 76px;
 }
 
+div#root {
+    background-color: lighten($theme-accent-color, 59%);
+}
+
+.marked-area {
+    background-color: white;
+}
+
 a {
     color: $theme-accent-color;
 }
@@ -95,6 +103,7 @@ a {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    box-shadow: inset 0px -2px 4px -4px $shadow-color;
     width: 100%;
     height: 156px;
     margin: 0;

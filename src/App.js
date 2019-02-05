@@ -110,7 +110,7 @@ class App extends Component {
                       {
                           this.client ?
                               <div>
-                                  <ComposeWindow className="fixed-top" client={this.client}/>
+                                  <ComposeWindow client={this.client}/>
                                   <hr/>
                               </div>:
                               <span/>

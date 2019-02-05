@@ -296,7 +296,7 @@ class ComposeWindow extends Component {
 
     render() {
         return (
-            <div>
+            <div className = "marked-area shadow-sm rounded p-1">
                 <CommandBar
                     items={this.getItems()}
                     farItems={this.getFarItems()}
