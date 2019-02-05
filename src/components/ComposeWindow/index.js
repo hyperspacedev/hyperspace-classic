@@ -75,7 +75,7 @@ class ComposeWindow extends Component {
         })
     }
 
-    static getMediaItemColumns() {
+    getMediaItemColumns() {
         return [
             {
                 key: 'fileIcon',
