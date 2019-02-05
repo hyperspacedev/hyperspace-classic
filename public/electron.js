@@ -17,7 +17,8 @@ function createWindow() {
 
     mainWindow.on('closed', () => {
         mainWindow = null
-    })
+    });
+
 }
 
 function createMenubar() {
@@ -41,7 +42,13 @@ function createMenubar() {
             submenu: [
                 { role: 'reload' },
                 { role: 'forcereload' },
-                { role: 'toggledevtools' },
+                {
+                    label: 'Open Dev Tools',
+                    click () {
+                        mainWindow.webContents.openDevTools({mode: 'undocked'});
+                    },
+                    accelerator: 'Shift+CmdOrCtrl+I'
+                },
                 { type: 'separator' },
                 { role: 'togglefullscreen' }
             ]
@@ -57,8 +64,8 @@ function createMenubar() {
             role: 'help',
             submenu: [
                 {
-                    label: 'Learn More',
-                    click () { require('electron').shell.openExternal('https://electronjs.org') }
+                    label: 'Report a Bug',
+                    click () { require('electron').shell.openExternal('https://github.com/alicerunsonfedora/hyperspace/issues') }
                 }
             ]
         }

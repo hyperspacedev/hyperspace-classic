@@ -24,6 +24,7 @@ class ProfileUser extends Component {
             tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
         }
     }
+
     render() {
         return (
             <Persona
