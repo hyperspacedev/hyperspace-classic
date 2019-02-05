@@ -17,7 +17,8 @@ function createWindow() {
 
     mainWindow.on('closed', () => {
         mainWindow = null
-    })
+    });
+
 }
 
 function createMenubar() {
@@ -57,8 +58,8 @@ function createMenubar() {
             role: 'help',
             submenu: [
                 {
-                    label: 'Learn More',
-                    click () { require('electron').shell.openExternal('https://electronjs.org') }
+                    label: 'Report a Bug',
+                    click () { require('electron').shell.openExternal('https://github.com/alicerunsonfedora/hyperspace/issues') }
                 }
             ]
         }
