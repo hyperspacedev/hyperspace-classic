@@ -60,11 +60,14 @@ class App extends Component {
             this.state = {
                 account: ''
             };
+
+            this.getAccountDetails();
+
         }
     }
 
     checkLocalStorage() {
-        if (localStorage.length > 1) {
+        if (localStorage.getItem("baseurl") != null && localStorage.getItem("access_token") != null) {
             return true;
         } else {
             return false;
@@ -79,16 +82,19 @@ class App extends Component {
     }
 
     getAccountDetails() {
+        let _this = this;
         if (this.client != null) {
             this.client.get("/accounts/verify_credentials")
                 .then((resp) => {
-                    localStorage.setItem("account", JSON.stringify(resp.data))
+                    localStorage.setItem("account", JSON.stringify(resp.data));
+                    _this.setState({
+                        account: resp.data
+                    });
                 });
         }
-        return JSON.parse(localStorage.getItem('account'));
     }
 
-    componentWillMount() {
+    componentWillMount(): void {
         this.getAccountDetails();
     }
 
@@ -118,7 +124,15 @@ class App extends Component {
                   </div>
                     {
                         this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 profile-container">
-                            <ProfileContainer who = {this.getAccountDetails()}/>
+                                {
+                                    localStorage.getItem('account') ?
+                                        <ProfileContainer who={JSON.parse(localStorage.getItem('account'))}/>:
+                                        <div>
+                                            <h3>Hang tight!</h3>
+                                            <p>Reload Hyperspace for your profile to take effect.</p>
+                                        </div>
+
+                                }
                             <NotificationPane client = {this.client}/>
                         </div>:
                             <span/>

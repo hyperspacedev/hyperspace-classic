@@ -86,9 +86,12 @@ class ProfileContainer extends Component {
 
     constructor(props) {
         super(props);
+    }
 
+    componentWillMount() {
         this.who = this.props.who;
     }
+
     render() {
         return (
             <div className="profile-container shadow rounded">
