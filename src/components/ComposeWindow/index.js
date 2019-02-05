@@ -11,10 +11,12 @@ import {
     DetailsListLayoutMode,
     SelectionMode,
     Icon,
-    Toggle
+    Toggle,
+    Callout
 } from "office-ui-fabric-react";
 import {initializeIcons} from "@uifabric/icons";
 import filedialog from 'file-dialog';
+import EmojiPicker from 'emoji-picker-react';
 
 initializeIcons();
 
@@ -33,7 +35,8 @@ class ComposeWindow extends Component {
             spoiler_text: '',
             sensitive: false,
             hideDialog: true,
-            hideSpoilerDialog: true
+            hideSpoilerDialog: true,
+            hideEmojiPicker: true
         };
 
         this.client = this.props.client;
@@ -72,7 +75,7 @@ class ComposeWindow extends Component {
         })
     }
 
-    getMediaItemColumns() {
+    static getMediaItemColumns() {
         return [
             {
                 key: 'fileIcon',
@@ -157,7 +160,7 @@ class ComposeWindow extends Component {
         if (this.state.sensitive) {
             return (<span><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
         } else {
-            return (<span></span>);
+            return (<span/>);
         }
     }
 
@@ -192,6 +195,17 @@ class ComposeWindow extends Component {
                 },
                 className: 'toolbar-icon',
                 onClick: () => this.toggleSpoilerDialog()
+            },
+            {
+                key: 'emoji',
+                name: 'Add emoji',
+                iconProps: {
+                    iconName: 'emojiPicker',
+                    className: 'toolbar-icon'
+                },
+                className: 'toolbar-icon',
+                id: 'emojiPickerButton',
+                onClick: () => this.toggleEmojiPicker()
             }
         ];
     };
@@ -232,7 +246,7 @@ class ComposeWindow extends Component {
 
     onSpoilerVisibilityChange(event, checked) {
         this.setState({
-            sensitive: checked ? true: false
+            sensitive: !!checked
         })
     }
 
@@ -266,6 +280,20 @@ class ComposeWindow extends Component {
         }
     }
 
+    toggleEmojiPicker() {
+        this.setState({
+            hideEmojiPicker: !this.state.hideEmojiPicker
+        })
+    }
+
+    addEmojiToStatus(e) {
+        let emojiInsert = String.fromCodePoint("0x" + e);
+        console.log(e);
+        this.setState({
+            status: this.state.status + emojiInsert
+        });
+    }
+
     render() {
         return (
             <div>
@@ -273,6 +301,7 @@ class ComposeWindow extends Component {
                     items={this.getItems()}
                     farItems={this.getFarItems()}
                     ariaLabel={'Use left and right arrow keys to navigate between commands'}
+                    overflowButtonProps={{ iconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
                 />
                 <TextField
                     multiline={true}
@@ -281,6 +310,8 @@ class ComposeWindow extends Component {
                     maxLength={500}
                     onBlur={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
+                    data-emojiable={true}
+                    defaultValue={this.state.status}
                 />
                 <p className="mt-1">{this.getSpoilerText()}</p>
                 <DetailsList
@@ -368,6 +399,18 @@ class ComposeWindow extends Component {
                         <PrimaryButton onClick={() => this.toggleSpoilerDialog()} text="Save" />
                     </DialogFooter>
                 </Dialog>
+
+                {/* Emoji Callout */}
+                <Callout
+                    ariaLabelledBy={'callout-label-1'}
+                    ariaDescribedBy={'callout-description-1'}
+                    role={'alertdialog'}
+                    gapSpace={0}
+                    hidden={this.state.hideEmojiPicker}
+                    target={document.getElementById('emojiPickerButton')}
+                >
+                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)}/>
+                </Callout>
             </div>
         );
     }
