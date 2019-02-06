@@ -26,3 +26,4 @@ Hyperspace makes use of the following modules and components to make it as fluff
 - `moment` - for date formatting
 - `node-sass` - for compiling the Sass files needed
 - `electron` - for making the desktop versions
+- `emoji-picker-react` - for adding an emoji picker
