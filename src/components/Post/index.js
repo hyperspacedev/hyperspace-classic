@@ -68,7 +68,7 @@ class Post extends Component {
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
-                            text: <a href={this.props.status.account.url} style={{ color: '#212529' }} rel="nofollow noopener" target="_blank"><b>{this.getAuthorName(this.props.status.account)}</b></a>,
+                            text: <a href={this.props.status.account.url} style={{ color: '#212529' }} rel="noreferrer noopener" target="_blank"><b>{this.getAuthorName(this.props.status.account)}</b></a>,
                             imageInitials: this.getInitialsOfUser(this.props.status.account),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />

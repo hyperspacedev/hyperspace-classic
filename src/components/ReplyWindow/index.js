@@ -27,7 +27,7 @@ class ReplyWindow extends Component {
             original_status: this.getReplyOrMessage(this.props.status),
             reply_contents: '@' + this.props.status.account.acct + ': ',
             visibility: this.props.status.visibility
-        }
+        };
 
         this.client = this.props.client;
     }
@@ -57,14 +57,14 @@ class ReplyWindow extends Component {
             status: this.state.reply_contents,
             in_reply_to_id: this.state.to,
             visibility: this.state.visibility
-        })
+        });
         this.setState({
             hideDialog: true
         })
     }
 
     replyOrThread() {
-        if (this.state.author_id == JSON.parse(localStorage.getItem('account')).acct) {
+        if (this.state.author_id === JSON.parse(localStorage.getItem('account')).acct) {
             if (this.state.reply_count <= 0) {
                 return 'Start thread';
             } else {
@@ -145,7 +145,7 @@ class ReplyWindow extends Component {
     }
 
     render() {
-        if (this.props.fullButton == true) {
+        if (this.props.fullButton === true) {
             return this.giveFullActionButton();
         } else {
             return this.giveSmallButton();

@@ -67,11 +67,7 @@ class App extends Component {
     }
 
     checkLocalStorage() {
-        if (localStorage.getItem("baseurl") != null && localStorage.getItem("access_token") != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return localStorage.getItem("baseurl") != null && localStorage.getItem("access_token") != null;
     }
 
     createMastodonApp() {

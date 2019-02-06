@@ -114,7 +114,7 @@ class ComposeWindow extends Component {
             rows.push(c);
             return rows;
         } else {
-            for (var i in this.state.media_data) {
+            for (let i in this.state.media_data) {
                 let c = {
                     'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
                     'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>

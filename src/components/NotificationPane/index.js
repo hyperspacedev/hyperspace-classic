@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityItem, Link } from "office-ui-fabric-react";
+import { ActivityItem } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import moment from 'moment';
 
@@ -40,7 +40,7 @@ class NotificationPane extends Component {
             notif_set.splice(-1, 1);
             _this.setState({
                 notifications: notif_set
-            })
+            });
 
             this.sendDesktopNotification(notification)
 
@@ -75,13 +75,13 @@ class NotificationPane extends Component {
             title += " boosted your status."
         }
 
-        if (notification.status != null || notification.status != undefined) {
+        if (notification.status !== null || notification.status !== undefined) {
             let tempDivElement = document.createElement('tempDiv');
             tempDivElement.innerHTML = notification.status.content;
             body = tempDivElement.textContent || tempDivElement.innerText || "";
         }
 
-        let desktop_notification = new Notification(title, {
+        new Notification(title, {
             body: body
         })
     }
@@ -103,7 +103,6 @@ class NotificationPane extends Component {
     }
 
     getActivityComment(status, type) {
-        let _this = this;
         if (status === null || status === undefined) {
             return '';
         } else {

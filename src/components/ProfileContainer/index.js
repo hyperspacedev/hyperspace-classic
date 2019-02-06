@@ -70,7 +70,7 @@ class ProfileList extends Component {
                 fieldName: 'value',
                 data: 'string',
                 isPadded: true
-            }]
+            }];
 
         this.rows = [];
 
@@ -94,10 +94,6 @@ class ProfileList extends Component {
 
 class ProfileContainer extends Component {
     who;
-
-    constructor(props) {
-        super(props);
-    }
 
     componentWillMount() {
         this.who = this.props.who;

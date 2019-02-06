@@ -87,7 +87,7 @@ class PostRoll extends Component {
 
         this.streamListener.on('message', msg => {
             console.log(msg);
-        })
+        });
 
         this.streamListener.on('connection-limit-exceeded', err => {
             console.error(err)
