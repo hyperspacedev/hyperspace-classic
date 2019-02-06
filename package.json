@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "electron-builder": "^20.38.5",
-    "electron": "latest"
+    "electron": "latest" ,
+    "@uifabric/utilities": "latest"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",

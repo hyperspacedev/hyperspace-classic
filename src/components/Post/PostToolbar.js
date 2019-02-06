@@ -20,7 +20,7 @@ class PostToolbar extends Component {
             boosted: this.props.status.reblogged,
             favorite_toggle: this.props.status.favourited,
             url: this.props.status.url
-        }
+        };
 
         this.toggle_favorite = this.toggle_favorite.bind(this);
         this.toggle_boost = this.toggle_boost.bind(this);

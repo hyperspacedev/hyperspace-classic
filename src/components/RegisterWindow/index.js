@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import {
     TextField,
     PrimaryButton,
-    Dialog,
-    DialogFooter,
-    DialogType,
     DefaultButton,
     Panel,
     PanelType
@@ -22,7 +19,7 @@ class RegisterWindow extends Component {
             clientSecret: '',
             authUrl: '',
             authCode: ''
-        }
+        };
 
         this.toggle = this.toggle.bind(this);
         this._getErrorMessage = this._getErrorMessage.bind(this);
@@ -42,7 +39,6 @@ class RegisterWindow extends Component {
     }
 
     closePanel() {
-        let _this = this;
         this.setState({
             modal: false
         })
@@ -86,7 +82,7 @@ class RegisterWindow extends Component {
                 clientSecret: appData.client_secret,
                 authUrl: appData.url
             })
-        })
+        });
 
         localStorage.setItem("baseurl", baseurl);
     }

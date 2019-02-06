@@ -7,10 +7,8 @@ import {
     DefaultButton,
     ActionButton,
     TextField,
-    CommandBar,
     Link
 } from 'office-ui-fabric-react';
-import {Status} from 'megalodon';
 
 class ReplyWindow extends Component {
 
@@ -25,11 +23,20 @@ class ReplyWindow extends Component {
             reply_count: this.props.status.replies_count,
             author: this.props.status.account.display_name,
             author_id: this.props.status.account.acct,
-            original_status: this.props.status.account.display_name + ' originally posted: ' + this.props.status.content,
-            reply_contents: '@' + this.props.status.account.acct + ': '
-        }
+            original_status: this.getReplyOrMessage(this.props.status),
+            reply_contents: '@' + this.props.status.account.acct + ': ',
+            visibility: this.props.status.visibility
+        };
 
         this.client = this.props.client;
+    }
+
+    getReplyOrMessage(status) {
+        if (status.visibility === "direct") {
+            return status.account.display_name + ' messaged you: ' + status.content;
+        } else {
+            return status.account.display_name + ' originally posted: ' + status.content;
+        }
     }
 
     toggleVisibilityDialog() {
@@ -47,15 +54,16 @@ class ReplyWindow extends Component {
     postReply() {
         this.client.post('/statuses', {
             status: this.state.reply_contents,
-            in_reply_to_id: this.state.to
-        })
+            in_reply_to_id: this.state.to,
+            visibility: this.state.visibility
+        });
         this.setState({
             hideDialog: true
         })
     }
 
     replyOrThread() {
-        if (this.state.author_id == JSON.parse(localStorage.getItem('account')).acct) {
+        if (this.state.author_id === JSON.parse(localStorage.getItem('account')).acct) {
             if (this.state.reply_count <= 0) {
                 return 'Start thread';
             } else {
@@ -63,6 +71,14 @@ class ReplyWindow extends Component {
             }
         } else {
             return 'Reply'
+        }
+    }
+
+    discernVisibilityNoticeKeyword() {
+        if (this.state.visibility === "direct") {
+            return 'private message';
+        } else {
+            return this.state.visibility + ' status';
         }
     }
 
@@ -82,18 +98,14 @@ class ReplyWindow extends Component {
                 }}
                 minWidth={500}
             >
-                {/*<CommandBar*/}
-                {/*items={this.getItems()}*/}
-                {/*farItems={this.getFarItems()}*/}
-                {/*ariaLabel={'Use left and right arrow keys to navigate between commands'}*/}
-                {/*/>*/}
+                <p>Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
                 <TextField
                     multiline={true}
                     rows={5}
                     resizable={false}
                     maxLength={500}
                     onBlur={e => this.updateStatus(e)}
-                    placeholder="What's on your mind?"
+                    placeholder="Type your reply here..."
                     defaultValue={this.state.reply_contents}
                 />
 
@@ -132,7 +144,7 @@ class ReplyWindow extends Component {
     }
 
     render() {
-        if (this.props.fullButton == true) {
+        if (this.props.fullButton === true) {
             return this.giveFullActionButton();
         } else {
             return this.giveSmallButton();

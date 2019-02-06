@@ -1,52 +1,4 @@
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Black.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-BlackItalic.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Bold.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-BoldItalic.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Hairline.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-HairlineItalic.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Italic.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Light.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-LightItalic.ttf')
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Regular.ttf')
-}
+@charset "UTF-8";
 
 @font-face {
     font-family: 'Material Icons';
@@ -89,22 +41,3 @@
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
-
-@font-face {
-    font-family: 'NotoEmojiColor';
-    src: url('../fonts/emoji/NotoColorEmoji.ttf')
-}
-
-@font-face {
-    font-family: 'NotoEmoji';
-    src: url('../fonts/emoji/NotoEmoji-Regular.ttf')
-}
-
-@font-face {
-  font-family: 'NotoCJK';
-  src: url('../fonts/cjk.otf')
-}
-
-.emoji {
-    font-family: 'NotoEmojiColor', 'NotoEmoji', sans-serif;
-}

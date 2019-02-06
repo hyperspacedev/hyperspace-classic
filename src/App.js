@@ -67,18 +67,13 @@ class App extends Component {
     }
 
     checkLocalStorage() {
-        if (localStorage.getItem("baseurl") != null && localStorage.getItem("access_token") != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return localStorage.getItem("baseurl") != null && localStorage.getItem("access_token") != null;
     }
 
     createMastodonApp() {
         let token = localStorage.getItem('access_token');
         let url = localStorage.getItem('baseurl');
-        let client = new Mastodon(token, url + '/api/v1');
-        this.client = client;
+        this.client = new Mastodon(token, url + '/api/v1');
     }
 
     getAccountDetails() {
@@ -110,7 +105,7 @@ class App extends Component {
                       {
                           this.client ?
                               <div>
-                                  <ComposeWindow className="fixed-top" client={this.client}/>
+                                  <ComposeWindow client={this.client}/>
                                   <hr/>
                               </div>:
                               <span/>

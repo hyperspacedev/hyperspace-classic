@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityItem, Link } from "office-ui-fabric-react";
+import { ActivityItem } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import moment from 'moment';
 
@@ -40,7 +40,7 @@ class NotificationPane extends Component {
             notif_set.splice(-1, 1);
             _this.setState({
                 notifications: notif_set
-            })
+            });
 
             this.sendDesktopNotification(notification)
 
@@ -64,38 +64,45 @@ class NotificationPane extends Component {
         if (notification.type === "follow") {
             title += " followed you.";
         } else if (notification.type === "mention") {
-            title += " mentioned you in a status.";
+            if (notification.status.visibility === "direct") {
+                title += " messaged you.";
+            } else {
+                title += " mentioned you in a status.";
+            }
         } else if (notification.type === "favourite") {
             title += " favorited your status.";
         } else if (notification.type === "reblog") {
             title += " boosted your status."
         }
 
-        if (notification.status != null || notification.status != undefined) {
+        if (notification.status !== null || notification.status !== undefined) {
             let tempDivElement = document.createElement('tempDiv');
             tempDivElement.innerHTML = notification.status.content;
             body = tempDivElement.textContent || tempDivElement.innerText || "";
         }
 
-        let desktop_notification = new Notification(title, {
+        new Notification(title, {
             body: body
         })
     }
 
-    getActivityDescription(type) {
+    getActivityDescription(type, visibility) {
         if (type === "follow") {
             return <span><b>followed</b> you.</span>;
         } else if (type === "favourite") {
             return <span><b>favorited</b> your status.</span>;
         } else if (type === "mention") {
-            return <span><b>mentioned</b> you in a status.</span>;
+            if (visibility === "direct") {
+                return <span><b>messaged</b> you.</span>;
+            } else {
+                return <span><b>mentioned</b> you in a status.</span>;
+            }
         } else if (type === "reblog") {
             return <span><b>boosted</b> your status.</span>;
         }
     }
 
     getActivityComment(status, type) {
-        let _this = this;
         if (status === null || status === undefined) {
             return '';
         } else {
@@ -112,6 +119,7 @@ class NotificationPane extends Component {
         }
     }
 
+    // noinspection JSMethodCanBeStatic
     getActivityDate(date) {
         return moment(date).format("MMM Do, YYYY [at] h:mm A");
     }
@@ -124,9 +132,9 @@ class NotificationPane extends Component {
                     key: notification.id,
                     activityDescription: [
                         <span>
-                            <a href={notification.account.url}><b>{notification.account.display_name}</b></a>
+                            <a href={notification.account.url}><b>{notification.account.display_name || notification.account.username}</b></a>
                             <span>
-                                &nbsp;{this.getActivityDescription(notification.type)}
+                                &nbsp;{this.getActivityDescription(notification.type, notification.status.visibility)}
                             </span>
                         </span>
 
@@ -157,7 +165,7 @@ class NotificationPane extends Component {
 
     render(){
         return (
-            <div className = "container-fluid shadow rounded mt-4 p-4">
+            <div className = "container-fluid shadow rounded mt-4 p-4 marked-area">
                 <h5><b>Notifications</b></h5>
                 {this.createActivityList()}
             </div>
