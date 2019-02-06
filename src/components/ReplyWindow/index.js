@@ -9,7 +9,6 @@ import {
     TextField,
     Link
 } from 'office-ui-fabric-react';
-import {Status} from 'megalodon';
 
 class ReplyWindow extends Component {
 

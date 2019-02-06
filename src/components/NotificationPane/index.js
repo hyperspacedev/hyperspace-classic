@@ -119,6 +119,7 @@ class NotificationPane extends Component {
         }
     }
 
+    // noinspection JSMethodCanBeStatic
     getActivityDate(date) {
         return moment(date).format("MMM Do, YYYY [at] h:mm A");
     }

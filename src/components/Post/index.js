@@ -16,6 +16,8 @@ class Post extends Component {
         this.id = this.props.key;
     }
 
+    // noinspection JSMethodCanBeStatic
+    // noinspection JSMethodCanBeStatic
     getAuthorName(account) {
         let x;
         try {

@@ -73,8 +73,7 @@ class App extends Component {
     createMastodonApp() {
         let token = localStorage.getItem('access_token');
         let url = localStorage.getItem('baseurl');
-        let client = new Mastodon(token, url + '/api/v1');
-        this.client = client;
+        this.client = new Mastodon(token, url + '/api/v1');
     }
 
     getAccountDetails() {
