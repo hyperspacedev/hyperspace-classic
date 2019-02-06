@@ -91,20 +91,6 @@
 .material-icons.md-48 { font-size: 48px; }
 
 @font-face {
-    font-family: 'NotoEmojiColor';
-    src: url('../fonts/emoji/NotoColorEmoji.ttf')
-}
-
-@font-face {
-    font-family: 'NotoEmoji';
-    src: url('../fonts/emoji/NotoEmoji-Regular.ttf')
-}
-
-@font-face {
   font-family: 'NotoCJK';
   src: url('../fonts/cjk.otf')
-}
-
-.emoji {
-    font-family: 'NotoEmojiColor', 'NotoEmoji', sans-serif;
 }

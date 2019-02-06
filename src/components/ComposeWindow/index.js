@@ -17,6 +17,7 @@ import {
 import {initializeIcons} from "@uifabric/icons";
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
+import 'emoji-picker-react/dist/universal/style.scss';
 
 initializeIcons();
 
@@ -409,7 +410,7 @@ class ComposeWindow extends Component {
                     hidden={this.state.hideEmojiPicker}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)}/>
+                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)} emojiResolution="64"/>
                 </Callout>
             </div>
         );
