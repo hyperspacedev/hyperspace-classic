@@ -54,7 +54,7 @@ class ComposeWindow extends Component {
         let _this = this;
         filedialog({
             multiple: false,
-            accept: 'image/*'
+            accept: 'image/*, video/*'
         }).then((images) => {
             let uploadData = new FormData();
 
@@ -188,16 +188,6 @@ class ComposeWindow extends Component {
                 onClick: () => this.toggleVisibilityDialog()
             },
             {
-                key: 'spoiler',
-                name: this.setWarningButtonText(),
-                iconProps: {
-                    iconName: 'warningApp',
-                    className: 'toolbar-icon'
-                },
-                className: 'toolbar-icon',
-                onClick: () => this.toggleSpoilerDialog()
-            },
-            {
                 key: 'emoji',
                 name: 'Add emoji',
                 iconProps: {
@@ -210,6 +200,21 @@ class ComposeWindow extends Component {
             }
         ];
     };
+
+    getOverflowItems() {
+        return [
+            {
+                key: 'spoiler',
+                name: this.setWarningButtonText(),
+                iconProps: {
+                    iconName: 'warningApp',
+                    className: 'toolbar-icon'
+                },
+                className: 'toolbar-icon',
+                onClick: () => this.toggleSpoilerDialog()
+            }
+        ];
+    }
 
     getFarItems(){
         return [
@@ -257,6 +262,16 @@ class ComposeWindow extends Component {
         })
     }
 
+    setVisibilityContentText() {
+        let text = <p>Choose who gets to see your status. By default, new statuses are posted publicly.</p>;
+        let altText = '';
+        if (this.state.visibility === "direct") {
+            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p>
+        }
+
+        return <span>{text}{altText !== '' ? altText: <span/>}</span>;
+    }
+
     setWarningButtonText() {
         if (this.state.sensitive) {
             return 'Change warning';
@@ -300,9 +315,10 @@ class ComposeWindow extends Component {
             <div className = "marked-area shadow-sm rounded p-1">
                 <CommandBar
                     items={this.getItems()}
+                    overflowItems={this.getOverflowItems()}
                     farItems={this.getFarItems()}
                     ariaLabel={'Use left and right arrow keys to navigate between commands'}
-                    overflowButtonProps={{ iconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
+                    overflowButtonProps={{ menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
                 />
                 <TextField
                     multiline={true}
@@ -329,12 +345,13 @@ class ComposeWindow extends Component {
                     dialogContentProps={{
                         type: DialogType.largeHeader,
                         title: 'Set your visibility',
-                        subText: 'Choose who gets to see your status. By default, new statuses are posted publicly.'
+                        subText: this.setVisibilityContentText()
                     }}
                     modalProps={{
                         isBlocking: false,
                         containerClassName: 'ms-dialogMainOverride'
                     }}
+                    minWidth={500}
                 >
                     <ChoiceGroup
                         options={[
@@ -383,7 +400,7 @@ class ComposeWindow extends Component {
                     minWidth={500}
                 >
                     <Toggle
-                        defaultChecked={false}
+                        defaultChecked={this.state.sensitive}
                         label="Mark as a spoiler"
                         onText="On"
                         offText="Off"
@@ -410,7 +427,7 @@ class ComposeWindow extends Component {
                     hidden={this.state.hideEmojiPicker}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)} emojiResolution="64"/>
+                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)} emojiResolution={64}/>
                 </Callout>
             </div>
         );

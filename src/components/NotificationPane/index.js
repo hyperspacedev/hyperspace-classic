@@ -64,7 +64,11 @@ class NotificationPane extends Component {
         if (notification.type === "follow") {
             title += " followed you.";
         } else if (notification.type === "mention") {
-            title += " mentioned you in a status.";
+            if (notification.status.visibility === "direct") {
+                title += " messaged you.";
+            } else {
+                title += " mentioned you in a status.";
+            }
         } else if (notification.type === "favourite") {
             title += " favorited your status.";
         } else if (notification.type === "reblog") {
@@ -82,13 +86,17 @@ class NotificationPane extends Component {
         })
     }
 
-    getActivityDescription(type) {
+    getActivityDescription(type, visibility) {
         if (type === "follow") {
             return <span><b>followed</b> you.</span>;
         } else if (type === "favourite") {
             return <span><b>favorited</b> your status.</span>;
         } else if (type === "mention") {
-            return <span><b>mentioned</b> you in a status.</span>;
+            if (visibility === "direct") {
+                return <span><b>messaged</b> you.</span>;
+            } else {
+                return <span><b>mentioned</b> you in a status.</span>;
+            }
         } else if (type === "reblog") {
             return <span><b>boosted</b> your status.</span>;
         }
@@ -124,9 +132,9 @@ class NotificationPane extends Component {
                     key: notification.id,
                     activityDescription: [
                         <span>
-                            <a href={notification.account.url}><b>{notification.account.display_name}</b></a>
+                            <a href={notification.account.url}><b>{notification.account.display_name || notification.account.username}</b></a>
                             <span>
-                                &nbsp;{this.getActivityDescription(notification.type)}
+                                &nbsp;{this.getActivityDescription(notification.type, notification.status.visibility)}
                             </span>
                         </span>
 

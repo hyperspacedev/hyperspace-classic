@@ -7,6 +7,7 @@ import {
     DetailsListLayoutMode,
     SelectionMode
 } from 'office-ui-fabric-react';
+import { getInitials } from "@uifabric/utilities/lib/initials.js";
 
 class ProfileUser extends Component {
     who;
@@ -19,9 +20,18 @@ class ProfileUser extends Component {
 
         this.persona = {
             imageUrl: this.who.avatar,
-            text: this.who.display_name,
+            imageInitials: this.getInitialsOfUser(this.who),
+            text: <b>{this.who.display_name}</b>,
             secondaryText: '@' + this.who.acct,
             tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
+        }
+    }
+
+    getInitialsOfUser(account) {
+        try {
+            return getInitials(account.display_name);
+        } catch {
+            return 'MU';
         }
     }
 

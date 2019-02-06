@@ -6,6 +6,7 @@ import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
+import { getInitials } from '@uifabric/utilities/lib/initials.js';
 
 class Post extends Component {
     id;
@@ -22,10 +23,20 @@ class Post extends Component {
             if (x === '') {
                 x = account.acct;
             }
-        } catch {
+            getInitials(x);
+        } catch (error) {
+            console.err(error);
             x = account.acct;
         }
         return x
+    }
+
+    getInitialsOfUser(account) {
+        try {
+            return getInitials(account.display_name);
+        } catch (error) {
+            return 'MU'
+        }
     }
 
     getApplicationName(status) {
@@ -57,7 +68,8 @@ class Post extends Component {
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
-                            text: <a href={this.props.status.account.url} style={{ color: '#212529' }}>{this.getAuthorName(this.props.status.account)}</a>,
+                            text: <a href={this.props.status.account.url} style={{ color: '#212529' }} rel="nofollow noopener" target="_blank"><b>{this.getAuthorName(this.props.status.account)}</b></a>,
+                            imageInitials: this.getInitialsOfUser(this.props.status.account),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
                 }

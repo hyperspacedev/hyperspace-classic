@@ -59,8 +59,20 @@ class PostRoll extends Component {
         } else if (this.props.timeline === "messages") {
             this.streamListener = this.client.stream('/streaming/direct');
 
-            this.streamListener.on('connect', (data) => {
+            this.streamListener.on('connect', () => {
+                this.client.get('/conversations', {"limit": _this.state.statusCount, 'local': false})
+                    .then((resp) => {
+                        let data = resp.data;
+                        let messages = [];
+                        for (let i in data) {
+                            messages.push(data[i].last_status);
+                        }
 
+                        _this.setState({
+                            statuses: messages,
+                            statusCount: messages.length
+                        });
+                    });
             });
         }
 
