@@ -6,14 +6,21 @@ import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
+import ProfilePanel from '../ProfilePanel';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
 
 class Post extends Component {
     id;
+    client;
 
     constructor(props) {
         super(props);
         this.id = this.props.key;
+        this.client = this.props.client;
+
+        this.state = {
+            noLink: this.props.nolink
+        }
     }
 
     // noinspection JSMethodCanBeStatic
@@ -65,12 +72,20 @@ class Post extends Component {
         }
     }
 
+    getPersonaText() {
+        if (this.state.noLink) {
+            return <b>{this.getAuthorName(this.props.status.account)}</b>;
+        } else {
+            return <ProfilePanel account={this.props.status.account} client={this.client}/>;
+        }
+    }
+
     render() {
         return (<div className="container shadow-sm rounded p-3 marked-area">
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
-                            text: <a href={this.props.status.account.url} style={{ color: '#212529' }} rel="noreferrer noopener" target="_blank"><b>{this.getAuthorName(this.props.status.account)}</b></a>,
+                            text: this.getPersonaText(),
                             imageInitials: this.getInitialsOfUser(this.props.status.account),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
