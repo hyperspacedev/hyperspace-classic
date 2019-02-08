@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Panel, PanelType, Link, Persona, PersonaSize, DetailsList } from 'office-ui-fabric-react';
+import { Panel, PanelType, Link, Persona, PersonaSize, DetailsList, PrimaryButton } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {getInitials} from '@uifabric/utilities/lib/initials';
 
@@ -15,6 +15,7 @@ class ProfilePanel extends Component {
         this.state = {
             account: this.props.account,
             account_statuses: [],
+            following: false,
             openPanel: false
         }
 
@@ -24,7 +25,8 @@ class ProfilePanel extends Component {
         this.setState({
             openPanel: !this.state.openPanel
         });
-        this.getAllRecentStatuses()
+        this.getAllRecentStatuses();
+        this.getFollowStatus();
     }
 
     closeProfilePanel() {
@@ -81,6 +83,46 @@ class ProfilePanel extends Component {
         );
     }
 
+    getFollowStatus() {
+        let _this = this;
+        this.client.get('/accounts/relationships', {id: this.state.account.id})
+            .then(
+                (resp) => {
+                    _this.setState({
+                        following: resp.data[0].following
+                    })
+                }
+            );
+        console.log(this.state.following);
+    }
+
+    returnFollowStatusText() {
+        if (this.state.following) {
+            return 'Unfollow';
+        } else {
+            return 'Follow';
+        }
+    }
+
+    toggleFollow() {
+        let _this = this;
+        if (this.state.following) {
+            this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
+                .then((resp) => {
+                    _this.setState({
+                        following: resp.data[0].following
+                    });
+                })
+        } else {
+            this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
+                .then((resp) => {
+                    _this.setState({
+                        following: resp.data[0].following
+                    });
+                })
+        }
+    }
+
     getAllRecentStatuses() {
         let _this = this;
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {limit: 150})
@@ -110,6 +152,26 @@ class ProfilePanel extends Component {
         }
     }
 
+    getStyles() {
+        return {
+            content: {
+                marginTop: 0
+            },
+            header: {
+                backgroundImage: 'url(' + this.state.account.header + ')',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                margin: 0,
+                height: 200
+            },
+            headerText: {
+                color: 'transparent',
+                height: 200,
+                margin: 0
+            }
+        };
+    }
+
     render() {
         return(<span>
             {this.createProfileLinkByName()}
@@ -118,16 +180,19 @@ class ProfilePanel extends Component {
                 type={PanelType.medium}
                 onDismiss={() => this.closeProfilePanel()}
                 closeButtonAriaLabel="Close"
+                styles={this.getStyles()}
+                headerText="View profile"
             >
-                <div
-                    className="profile-container-header"
-                    style={{backgroundImage: 'url(' + this.state.account.header + ')'}}/>
                 <div className="mt-4">
-                    {this.createProfilePersona()}
-                    <div
-                        dangerouslySetInnerHTML={{__html: this.state.account.note}}
-                        className="mt-2"
-                    />
+                        {this.createProfilePersona()}
+                        <PrimaryButton
+                            text={this.returnFollowStatusText()}
+                            onClick = {() => this.toggleFollow()}
+                            className="mt-2"/>
+                        <div
+                            dangerouslySetInnerHTML={{__html: this.state.account.note}}
+                            className="mt-2"
+                        />
                 </div>
                 <div className="my-2">
                     {this.showRecentStatuses()}
