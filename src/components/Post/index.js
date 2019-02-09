@@ -22,9 +22,6 @@ class Post extends Component {
             noLink: this.props.nolink
         }
     }
-
-    // noinspection JSMethodCanBeStatic
-    // noinspection JSMethodCanBeStatic
     getAuthorName(account) {
         let x;
         try {
@@ -80,6 +77,79 @@ class Post extends Component {
         }
     }
 
+    getBoostCard(status) {
+        if (status.reblog) {
+
+            let documentCardStyles = {};
+
+            let temporaryDiv = document.createElement("div");
+            temporaryDiv.innerHTML = status.reblog.content;
+            let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
+            console.log(actualContent.length);
+
+            if (status.reblog.media_attachments.length !== 0 || actualContent.length > 150) {
+                documentCardStyles = {
+                    root: {
+                        height: 200
+                    }
+                }
+            }
+
+            return (
+                <div className='mt-1 ml-4 mb-1'>
+                    <div>
+                        { status.sensitive === true ?
+                            <PostSensitive status={this.props.status}/>:
+
+                            <div className='ml-4 mb-2'>
+                                <DocumentCard
+                                    type={DocumentCardType.compact}
+                                    onClick={() => {window.open(status.reblog.url)}}
+                                    styles={documentCardStyles}
+                                >
+                                    <DocumentCardDetails>
+                                        <DocumentCardTitle
+                                            title={
+                                                <div>
+                                                    <div dangerouslySetInnerHTML={{__html: status.reblog.content}}/>
+                                                    {
+                                                        status.reblog.media_attachments.length ?
+                                                            <div className = "row">
+                                                                {
+                                                                    status.reblog.media_attachments.map( function(media) {
+                                                                        return(
+                                                                            <div className="col" key={'media' + media.id}>
+                                                                                {
+                                                                                    (media.type === "image") ?
+                                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
+                                                                                        <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                                }
+                                                                            </div>
+                                                                        );
+                                                                    })
+                                                                }
+                                                            </div>:
+                                                            <span/>
+                                                    }
+                                                </div>
+                                            }
+                                            shouldTruncate={true}
+                                            showAsSecondaryTitle={true}
+                                            styles={documentCardStyles}
+                                        />
+                                        <DocumentCardActivity
+                                            activity={"Originally posted on " + moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")}
+                                            people={[{ name: this.props.status.reblog.account.acct, profileImageSrc: this.props.status.reblog.account.avatar}]}
+                                        />
+                                    </DocumentCardDetails>
+                                </DocumentCard>
+                            </div>}
+                    </div>
+                </div>
+            );
+        }
+    }
+
     render() {
         return (<div className="container shadow-sm rounded p-3 marked-area">
                 {
@@ -94,51 +164,7 @@ class Post extends Component {
                     {
 
                         this.props.status.reblog ?
-                            <div className='mt-1 ml-4 mb-1'>
-                                <div>
-                                    { this.props.status.sensitive === true ?
-                                        <PostSensitive status={this.props.status}/>:
-
-                                        <div className='ml-4 mb-2'>
-                                            <DocumentCard type={DocumentCardType.compact} onClick={() => {window.open(this.props.status.reblog.url)}}>
-                                                <DocumentCardDetails>
-                                                    <DocumentCardTitle
-                                                        title={
-                                                            <div>
-                                                                <div dangerouslySetInnerHTML={{__html: this.props.status.reblog.content}}/>
-                                                                {
-                                                                    this.props.status.reblog.media_attachments.length ?
-                                                                        <div className = "row">
-                                                                            {
-                                                                                this.props.status.reblog.media_attachments.map( function(media) {
-                                                                                    return(
-                                                                                        <div className="col" key={'media' + media.id}>
-                                                                                            {
-                                                                                                (media.type === "image") ?
-                                                                                                    <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                                                    <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
-                                                                                            }
-                                                                                        </div>
-                                                                                    );
-                                                                                })
-                                                                            }
-                                                                        </div>:
-                                                                        <span/>
-                                                                }
-                                                            </div>
-                                                        }
-                                                        shouldTruncate={true}
-                                                        showAsSecondaryTitle={true}
-                                                    />
-                                                    <DocumentCardActivity
-                                                        activity={"Originally posted on " + moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")}
-                                                        people={[{ name: this.props.status.reblog.account.acct, profileImageSrc: this.props.status.reblog.account.avatar}]}
-                                                    />
-                                                </DocumentCardDetails>
-                                            </DocumentCard>
-                                        </div>}
-                                </div>
-                            </div>:
+                            this.getBoostCard(this.props.status):
 
                             <div className='mb-2'>
                                 { this.props.status.sensitive === true ?
