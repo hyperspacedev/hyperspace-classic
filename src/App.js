@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ComposeWindow from './components/ComposeWindow';
-import Navbar from './components/Navbar/';
+import Navbar from './components/Navbar';
 import Timeline from './components/Timeline/';
-import ProfileContainer from './components/ProfileContainer/';
+import ProfileContainer from './components/ProfileContainer';
 import RegisterWindow from './components/RegisterWindow';
 import NotificationPane from './components/NotificationPane';
 import Mastodon from 'megalodon';
@@ -14,7 +14,6 @@ import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
 import './assets/css/default.css';
-import {locale} from "moment"; // This must be compiled first!
 
 loadTheme({
     palette: {

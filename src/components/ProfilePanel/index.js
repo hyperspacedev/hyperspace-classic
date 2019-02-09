@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Panel, PanelType, Link, Persona, PersonaSize, DetailsList, PrimaryButton } from 'office-ui-fabric-react';
+import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {getInitials} from '@uifabric/utilities/lib/initials';
 
@@ -68,18 +68,46 @@ class ProfilePanel extends Component {
 
     createProfilePersona() {
         return (
-            <Persona
-                {...
-                    {
-                        imageUrl: this.state.account.avatar,
-                        imageInitials: this.useCertainInitials(this.state.account),
-                        text: this.checkDisplayName(this.state.account),
-                        secondaryText: '@' + this.state.account.username,
-                        tertiaryText: this.getProfileMetadata(this.state.account)
+            <div>
+                <Persona
+                    {...
+                        {
+                            imageUrl: this.state.account.avatar,
+                            imageInitials: this.useCertainInitials(this.state.account),
+                            text: this.checkDisplayName(this.state.account),
+                            secondaryText: '@' + this.state.account.username,
+                            tertiaryText: this.getProfileMetadata(this.state.account)
+                        }
                     }
-                }
-                size={PersonaSize.size72}
-            />
+                    size={PersonaSize.size72}
+                    styles={
+                        {
+                            primaryText: {
+                                color: 'white !important',
+                                fontWeight: 'bold',
+                                textShadow: '0px 0px 4px #333'
+                            },
+                            secondaryText: {
+                                color: 'white !important',
+                                fontWeight: 'bolder',
+                                textShadow: '0px 0px 2px #333'
+                            },
+                            tertiaryText: {
+                                color: '#f4f4f4 !important',
+                                fontWeight: 'bolder',
+                                textShadow: '0px 0px 2px #333'
+                            }
+                        }
+                    }
+                />
+                <PrimaryButton
+                    text={this.returnFollowStatusText()}
+                    onClick = {() => this.toggleFollow()}
+                    className="mt-4 shadow-sm"
+                    disabled={this.checkFollowNotSelf()}
+                    aria-describedby="cannotFollow"
+                />
+            </div>
         );
     }
 
@@ -93,14 +121,22 @@ class ProfilePanel extends Component {
                     })
                 }
             );
-        console.log(this.state.following);
+    }
+
+    checkFollowNotSelf() {
+        return this.state.account.id === JSON.parse(localStorage.getItem('account')).id;
     }
 
     returnFollowStatusText() {
-        if (this.state.following) {
-            return 'Unfollow';
-        } else {
-            return 'Follow';
+        if (this.checkFollowNotSelf()) {
+            return 'Can\'t follow self';
+        }
+         else {
+             if (this.state.following) {
+                return 'Unfollow';
+            } else {
+                return 'Follow';
+            }
         }
     }
 
@@ -158,16 +194,27 @@ class ProfilePanel extends Component {
                 marginTop: 0
             },
             header: {
+                backgroundColor: 'black',
                 backgroundImage: 'url(' + this.state.account.header + ')',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
-                margin: 0,
-                height: 200
+                backgroundRepeat: 'none',
+                marginTop: '0 !important',
+                height: 200,
+                paddingLeft: '0 !important',
+                paddingRight: '0 !important',
+                boxShadow: '0px 0px 4px #333'
             },
             headerText: {
-                color: 'transparent',
+                color: 'white',
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 height: 200,
-                margin: 0
+                margin: 0,
+                verticalAlign: 'middle',
+                paddingTop: 48,
+                paddingLeft: 20,
+                paddingRight: 20,
+                filter: 'blur(0px)'
             }
         };
     }
@@ -181,14 +228,10 @@ class ProfilePanel extends Component {
                 onDismiss={() => this.closeProfilePanel()}
                 closeButtonAriaLabel="Close"
                 styles={this.getStyles()}
-                headerText="View profile"
+                headerText={this.createProfilePersona()}
+                isLightDismiss={true}
             >
                 <div className="mt-4">
-                        {this.createProfilePersona()}
-                        <PrimaryButton
-                            text={this.returnFollowStatusText()}
-                            onClick = {() => this.toggleFollow()}
-                            className="mt-2"/>
                         <div
                             dangerouslySetInnerHTML={{__html: this.state.account.note}}
                             className="mt-2"
