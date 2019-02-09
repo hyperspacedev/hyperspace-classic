@@ -27,3 +27,6 @@ Hyperspace makes use of the following modules and components to make it as fluff
 - `node-sass` - for compiling the Sass files needed
 - `electron` - for making the desktop versions
 - `emoji-picker-react` - for adding an emoji picker
+
+## Licensing
+The Hyperspace project itself is licensed under the GNU Lesser General Public License, though some components are licensed under other free-software licenses such as the MIT License and GNU GPL.
