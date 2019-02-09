@@ -171,7 +171,7 @@ class NotificationPane extends Component {
     render(){
         return (
             <div className = "container-fluid shadow rounded mt-4 p-4 marked-area">
-                <h5><b>Notifications</b></h5>
+                <h5 className="mb-3"><b>Notifications</b></h5>
                 {this.createActivityList()}
             </div>
         );
