@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityItem } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
+import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
 
 class NotificationPane extends Component {
@@ -46,6 +47,10 @@ class NotificationPane extends Component {
 
         })
 
+    }
+
+    getAuthorLink(notification) {
+        return <ProfilePanel account={notification.account} client={this.client}/>;
     }
 
     sendDesktopNotification(notification) {
@@ -132,7 +137,7 @@ class NotificationPane extends Component {
                     key: notification.id,
                     activityDescription: [
                         <span>
-                            <a href={notification.account.url}><b>{notification.account.display_name || notification.account.username}</b></a>
+                            {this.getAuthorLink(notification)}
                             <span>
                                 &nbsp;{this.getActivityDescription(notification.type, notification.status.visibility)}
                             </span>
