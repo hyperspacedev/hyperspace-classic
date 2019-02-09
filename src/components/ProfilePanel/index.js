@@ -250,6 +250,7 @@ class ProfilePanel extends Component {
                             className="mt-2"
                         />
                 </div>
+                <hr/>
                 <div className="my-2">
                     {this.showRecentStatuses()}
                 </div>
