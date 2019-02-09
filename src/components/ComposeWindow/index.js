@@ -159,7 +159,7 @@ class ComposeWindow extends Component {
 
     getSpoilerText() {
         if (this.state.sensitive) {
-            return (<span><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
+            return (<span className="my-1 ml-2"><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
         } else {
             return (<span/>);
         }
