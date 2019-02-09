@@ -99,6 +99,24 @@ class RegisterWindow extends Component {
             .catch((err: Error) => console.error(err))
     }
 
+    getPanelStyles() {
+        return {
+            closeButton: {
+                color: 'transparent',
+                    "&:hover": {
+                    color: 'transparent !important'
+                },
+                "&:active": {
+                    color: 'transparent !important'
+                },
+                backgroundImage: 'url(\'/assets/close.svg\')',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '50%'
+            }
+        }
+    }
+
 
     render() {
         let _this = this;
@@ -129,6 +147,7 @@ class RegisterWindow extends Component {
                     onDismiss={() => this.closePanel()}
                     headerText="Give authorization access"
                     closeButtonAriaLabel="Close"
+                    styles={this.getPanelStyles()}
                     onRenderFooterContent = { () => {return(
                         <div>
                             <PrimaryButton

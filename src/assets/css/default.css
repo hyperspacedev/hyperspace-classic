@@ -165,4 +165,4 @@ a {
   height: 12px; }
 
 .ms-Dialog-title {
-  font-weight: bold; }
+  font-weight: bold !important; }

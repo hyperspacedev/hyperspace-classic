@@ -85,7 +85,6 @@ class Post extends Component {
             let temporaryDiv = document.createElement("div");
             temporaryDiv.innerHTML = status.reblog.content;
             let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
-            console.log(actualContent.length);
 
             if (status.reblog.media_attachments.length !== 0 || actualContent.length > 150) {
                 documentCardStyles = {
