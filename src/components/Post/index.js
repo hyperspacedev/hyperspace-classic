@@ -96,7 +96,14 @@ class Post extends Component {
             temporaryDiv.innerHTML = status.reblog.content;
             let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
 
-            if (status.reblog.media_attachments.length !== 0 || actualContent.length > 150) {
+            if (status.reblog.media_attachments.length !== 0) {
+                documentCardStyles = {
+                    root: {
+                        height: 350
+                    }
+                }
+
+            } else if (actualContent.length > 150) {
                 documentCardStyles = {
                     root: {
                         height: 200
