@@ -18,10 +18,22 @@ class Post extends Component {
         this.id = this.props.key;
         this.client = this.props.client;
 
+        console.log(this.nothread);
+
         this.state = {
-            noLink: this.props.nolink
+            noLink: this.props.nolink,
+            noThread: this.props.nothread
         }
     }
+
+    getBigShadow() {
+        if (this.props.bigShadow) {
+            return 'shadow'
+        } else {
+            return 'shadow-sm'
+        }
+    }
+
     getAuthorName(account) {
         let x;
         try {
@@ -150,7 +162,7 @@ class Post extends Component {
     }
 
     render() {
-        return (<div className="container shadow-sm rounded p-3 marked-area">
+        return (<div className={"container rounded p-3 marked-area " + this.getBigShadow()}>
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
@@ -197,6 +209,7 @@ class Post extends Component {
                 <PostToolbar
                     client={this.props.client}
                     status={this.props.status}
+                    nothread={this.props.nothread}
                 />
                 <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span>}/>
             </div>

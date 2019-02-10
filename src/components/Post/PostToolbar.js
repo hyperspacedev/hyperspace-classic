@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ActionButton, TooltipHost} from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
+import ThreadPanel from '../ThreadPanel';
 
 class PostToolbar extends Component {
 
@@ -19,7 +20,8 @@ class PostToolbar extends Component {
             favorited: this.props.status.favourited,
             boosted: this.props.status.reblogged,
             favorite_toggle: this.props.status.favourited,
-            url: this.props.status.url
+            url: this.props.status.url,
+            noThread: this.props.nothread
         };
 
         this.toggle_favorite = this.toggle_favorite.bind(this);
@@ -145,6 +147,12 @@ class PostToolbar extends Component {
                                 >
                                     Boost ({this.state.boosts})
                                 </ActionButton>
+                        }
+
+                    </li>
+                    <li>
+                        {
+                            !this.state.noThread ? <ThreadPanel fromWhere={this.props.status.id} client={this.client}/>: <span/>
                         }
 
                     </li>

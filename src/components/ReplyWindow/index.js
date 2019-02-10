@@ -482,7 +482,7 @@ class ReplyWindow extends Component {
                 "&:active": {
                     color: 'transparent !important'
                 },
-                backgroundImage: 'url(\'/assets/close.svg\')',
+                backgroundImage: 'url(\'close.svg\')',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '50%'
