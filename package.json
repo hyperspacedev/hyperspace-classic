@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "electron-builder": "^20.38.5",
-    "electron": "latest" ,
+    "electron": "latest",
     "@uifabric/utilities": "latest"
   },
   "scripts": {
@@ -36,9 +36,12 @@
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
     "build-electron": "npm run purge-dirs; npm run build; build -mwl",
-    "build-electron--darwin-only": "npm run purge-dirs; npm run build; build -m",
-    "build-electron--win-only": "npm run purge-dirs; npm run build; build -w",
-    "build-electron--linux-only": "npm run purge-dirs; npm run build; build -l",
+    "build-electron-darwin": "npm run purge-dirs; npm run build; build -m",
+    "build-electron-win": "npm run purge-dirs; npm run build; build -w",
+    "build-electron-linux": "npm run purge-dirs; npm run build; build -l",
+    "build-electron-deb": "npm run purge-dirs; npm run build; build -l 'deb'",
+    "build-electron-rpm": "npm run purge-dirs; npm run build; build -l 'rpm'",
+    "build-electron-appimage": "npm run purge-dirs; npm run build; build -l 'appimage'",
     "purge-dirs": "rm -rf  build dist",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
@@ -73,9 +76,9 @@
     },
     "linux": {
       "target": [
-        "AppImage",
         "deb",
-        "rpm"
+        "rpm",
+        "AppImage"
       ],
       "icon": "linux",
       "category": "Network"

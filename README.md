@@ -20,9 +20,12 @@ If you wish to build the desktop versions of Hyperspace, it is recommended to ru
 
 Alternatively, you can run any of these commands to build for your specific platform:
 
-- `build-electron--darwin-only` - build only for macOS
-- `build-electron--win-only` - build only for Windows
-- `build-electron--linux-only` - build only for Linux distributions
+- `build-electron-darwin` - build only for macOS
+- `build-electron-win` - build only for Windows
+- `build-electron-linux` - build only for Linux distributions (rpm,deb,AppImage)
+- `build-electron-deb` - build only the deb package for Debian-based distros
+- `build-electron-rpm` - build only the rpm package for Fedora-based distros
+- `build-electron-appimage` build only the AppImage package
 
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
 
