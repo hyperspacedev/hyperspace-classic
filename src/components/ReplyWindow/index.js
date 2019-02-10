@@ -556,7 +556,7 @@ class ReplyWindow extends Component {
                 disabled={false}
                 checked={false}
                 onClick={() => this.openPanel()}
-                className='post-toolbar-icon'
+                className={'post-toolbar-icon ' + this.props.className}
             >
                 {this.replyOrThread()} ({this.state.reply_count})
             </ActionButton>
@@ -567,7 +567,10 @@ class ReplyWindow extends Component {
     giveSmallButton() {
         return (
             <span>
-                <Link onClick={() => this.openPanel()}><b>&nbsp;Reply</b></Link>
+                <Link
+                    onClick={() => this.openPanel()}
+                    className={this.props.className}
+                ><b>Reply</b></Link>
                 {this.giveDialogBox()}
             </span>
         );

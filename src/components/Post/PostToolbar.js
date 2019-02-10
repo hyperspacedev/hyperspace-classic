@@ -152,7 +152,7 @@ class PostToolbar extends Component {
                     </li>
                     <li>
                         {
-                            !this.state.noThread ? <ThreadPanel fromWhere={this.props.status.id} client={this.client}/>: <span/>
+                            !this.state.noThread ? <ThreadPanel fromWhere={this.props.status.id} client={this.client} fullButton={true}/>: <span/>
                         }
 
                     </li>

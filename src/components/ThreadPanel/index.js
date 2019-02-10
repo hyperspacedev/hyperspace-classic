@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     ActionButton,
+    Link,
     Panel,
     PanelType
 } from 'office-ui-fabric-react';
@@ -178,10 +179,19 @@ class ThreadPanel extends Component {
         );
     }
 
+    getSmallThreadButton() {
+        return (
+            <Link onClick={() => this.openThreadPanel()}><b>View thread</b></Link>
+        );
+    }
+
     render() {
         return(
             <span>
-                {this.getThreadButton()}
+                {
+                    this.props.fullButton ?
+                    this.getThreadButton(): this.getSmallThreadButton()
+                }
                 {this.getThreadPanel()}
             </span>
         );

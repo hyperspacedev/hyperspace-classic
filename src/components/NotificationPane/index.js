@@ -3,6 +3,7 @@ import { ActivityItem } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
+import ThreadPanel from "../ThreadPanel";
 
 class NotificationPane extends Component {
 
@@ -116,7 +117,7 @@ class NotificationPane extends Component {
                     <span className="my-2" dangerouslySetInnerHTML={{__html: status.content}}/>
                     {
                         type === "mention" ?
-                            <ReplyWindow status={status} client={this.client} fullButton={false}/>:
+                            <span><ReplyWindow className="mr-2" status={status} client={this.client} fullButton={false}/><ThreadPanel fromWhere={status.id} client={this.client} fullButton={false}/></span>:
                             <span></span>
                     }
                 </div>
