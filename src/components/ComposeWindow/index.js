@@ -159,7 +159,7 @@ class ComposeWindow extends Component {
 
     getSpoilerText() {
         if (this.state.sensitive) {
-            return (<span><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
+            return (<span className="my-1 ml-2"><Icon iconName = "warningApp"/> <b>Warning: </b>{this.state.spoiler_text} </span>);
         } else {
             return (<span/>);
         }
@@ -254,6 +254,11 @@ class ComposeWindow extends Component {
         this.setState({
             sensitive: !!checked
         })
+        if (checked === false) {
+            this.setState({
+                spoiler_text: ''
+            })
+        }
     }
 
     onSpoilerTextChange(e) {
@@ -308,6 +313,23 @@ class ComposeWindow extends Component {
         this.setState({
             status: this.state.status + emojiInsert
         });
+    }
+
+    getTypeOfWarning(event, option) {
+        if (option.key ==='none') {
+            let text = this.state.spoiler_text.replace('NSFW: ', '').replace('Spoiler: ', '');
+            this.setState({
+                spoiler_text: text
+            })
+        } else if (option.key === 'nsfw') {
+            this.setState({
+                spoiler_text: 'NSFW: ' + this.state.spoiler_text.replace('Spoiler: ', '')
+            })
+        } else if (option.key === 'spoiler') {
+            this.setState({
+                spoiler_text: 'Spoiler: ' + this.state.spoiler_text.replace('NSFW: ', '')
+            })
+        }
     }
 
     render() {
@@ -401,10 +423,32 @@ class ComposeWindow extends Component {
                 >
                     <Toggle
                         defaultChecked={this.state.sensitive}
-                        label="Mark as a spoiler"
+                        label="Add a warning"
                         onText="On"
                         offText="Off"
                         onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked)}
+                    />
+                    <ChoiceGroup
+                        disabled={!this.state.sensitive}
+                        options={[
+                            {
+                                key: 'none',
+                                id: 'nospecial',
+                                text: "Don't mark specifically",
+                                checked: true
+                            },
+                            {
+                                key: 'nsfw',
+                                id: 'nsfw',
+                                text: "Mark as NSFW"
+                            },
+                            {
+                                key: 'spoiler',
+                                id: 'spoiler',
+                                text: "Mark as a spoiler"
+                            }
+                        ]}
+                        onChange={(event, option) => this.getTypeOfWarning(event, option)}
                     />
                     <TextField
                         multiline={true}
@@ -412,6 +456,7 @@ class ComposeWindow extends Component {
                         resizable={false}
                         label="Warning text"
                         onBlur={(e) => this.onSpoilerTextChange(e)}
+                        defaultValue={this.state.spoiler_text}
                     />
                     <DialogFooter>
                         <PrimaryButton onClick={() => this.toggleSpoilerDialog()} text="Save" />

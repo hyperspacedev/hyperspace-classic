@@ -190,6 +190,19 @@ class ProfilePanel extends Component {
 
     getStyles() {
         return {
+            closeButton: {
+                color: 'transparent',
+                "&:hover": {
+                    color: 'transparent !important'
+                },
+                "&:active": {
+                    color: 'transparent !important'
+                },
+                backgroundImage: 'url(\'/assets/close.svg\')',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '50%'
+            },
             content: {
                 marginTop: 0
             },
@@ -237,6 +250,7 @@ class ProfilePanel extends Component {
                             className="mt-2"
                         />
                 </div>
+                <hr/>
                 <div className="my-2">
                     {this.showRecentStatuses()}
                 </div>
