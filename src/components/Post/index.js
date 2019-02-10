@@ -18,8 +18,6 @@ class Post extends Component {
         this.id = this.props.key;
         this.client = this.props.client;
 
-        console.log(this.nothread);
-
         this.state = {
             noLink: this.props.nolink,
             noThread: this.props.nothread
