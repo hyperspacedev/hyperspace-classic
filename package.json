@@ -76,7 +76,9 @@
     },
     "linux": {
       "target": [
-        "${@:1}"
+        "deb",
+        "rpm",
+        "AppImage"
       ],
       "icon": "linux",
       "category": "Network"
