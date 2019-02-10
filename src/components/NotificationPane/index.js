@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityItem } from "office-ui-fabric-react";
+import { ActivityItem, Dialog, DialogType, DialogFooter, Link, PrimaryButton, DefaultButton } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
@@ -16,7 +16,8 @@ class NotificationPane extends Component {
         this.client = this.props.client;
 
         this.state = {
-            notifications: []
+            notifications: [],
+            hideDeleteDialog: true
         }
 
 
@@ -48,6 +49,51 @@ class NotificationPane extends Component {
 
         })
 
+    }
+
+    toggleDeleteDialog() {
+        this.setState({
+            hideDeleteDialog: !this.state.hideDeleteDialog
+        })
+    }
+
+    getDeleteLink() {
+        if (this.state.notifications.length > 0) {
+            return (<Link className="mr-2" onClick={() => this.toggleDeleteDialog()}>Clear</Link>);
+        }
+    }
+
+    getDeleteDialog() {
+        return(
+            <Dialog
+                hidden={this.state.hideDeleteDialog}
+                onDismiss={() => this.toggleDeleteDialog()}
+                dialogContentProps={{
+                    type: DialogType.normal,
+                    title: 'Clear all notifications',
+                    subText: 'Are you sure you want to clear all of your notifications? This action cannot be undone.'
+                }}
+                modalProps={{
+                    isBlocking: true
+                }}
+            >
+                <DialogFooter>
+                    <PrimaryButton onClick={() => this.deleteNotifications()} text="Clear"/>
+                    <DefaultButton onClick={() => this.toggleDeleteDialog()} text="Cancel"/>
+                </DialogFooter>
+            </Dialog>
+        );
+    }
+
+    deleteNotifications() {
+        let _this = this;
+        this.client.post('/notifications/clear')
+            .then(() => {
+                _this.setState({
+                    notifications: []
+                })
+            });
+        this.toggleDeleteDialog()
     }
 
     getAuthorLink(notification) {
@@ -160,11 +206,11 @@ class NotificationPane extends Component {
                 );
             }));
         } else {
-            return (<div>
-                <h6>Couldn't get notifications</h6>
-                <p>
-                    And the fediverse isn't the same without you. Try checking your internet connection or making sure you aren't being throttled.
-                </p>
+            return (<div className="mt-2">
+                <h6>All clear!</h6>
+                <small>
+                    You don't have any new notifications. Interact with others in the fediverse to get the conversation going!
+                </small>
             </div>);
         }
     }
@@ -172,7 +218,15 @@ class NotificationPane extends Component {
     render(){
         return (
             <div className = "container-fluid shadow rounded mt-4 p-4 marked-area">
-                <h5 className="mb-3"><b>Notifications</b></h5>
+                <div className="row">
+                    <div className="col-10">
+                        <h5><b>Notifications</b></h5>
+                    </div>
+                    <div className="col-2">
+                        {this.getDeleteLink()}
+                        {this.getDeleteDialog()}
+                    </div>
+                </div>
                 {this.createActivityList()}
             </div>
         );
