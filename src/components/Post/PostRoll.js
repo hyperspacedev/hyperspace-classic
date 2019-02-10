@@ -103,7 +103,7 @@ class PostRoll extends Component {
         return (
             <div>
                 {this.state.statuses.length > 0 ? <div>{this.state.statuses.map(function (status) {
-                        return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false}/></div>);
+                        return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
                     })}</div>:
                     <div className="row p-4">
                         <div className = "row">
