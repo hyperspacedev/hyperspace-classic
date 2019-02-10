@@ -39,9 +39,6 @@
     "build-electron-darwin": "npm run purge-dirs; npm run build; build -m",
     "build-electron-win": "npm run purge-dirs; npm run build; build -w",
     "build-electron-linux": "npm run purge-dirs; npm run build; build -l",
-    "build-electron-deb": "npm run purge-dirs; npm run build; build -l 'deb'",
-    "build-electron-rpm": "npm run purge-dirs; npm run build; build -l 'rpm'",
-    "build-electron-appimage": "npm run purge-dirs; npm run build; build -l 'appimage'",
     "purge-dirs": "rm -rf  build dist",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
