@@ -85,7 +85,7 @@ class ThreadPanel extends Component {
     }
 
     displayOriginalStatus() {
-        if (this.state.status != '') {
+        if (this.state.status !== '') {
             return (
                 <div>
                     <Post
