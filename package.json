@@ -36,6 +36,9 @@
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
     "build-electron": "npm run purge-dirs; npm run build; build -mwl",
+    "build-electron--darwin-only": "npm run purge-dirs; npm run build; build -m",
+    "build-electron--win-only": "npm run purge-dirs; npm run build; build -w",
+    "build-electron--linux-only": "npm run purge-dirs; npm run build; build -l",
     "purge-dirs": "rm -rf  build dist",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
