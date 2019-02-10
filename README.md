@@ -15,7 +15,16 @@ npm run build
 serve build
 ```
 
-> Note: if you want to build the desktop version, run `npm run build-electron` instead of `npm run build`.
+### Building desktop versions
+If you wish to build the desktop versions of Hyperspace, it is recommended to run `build-electron` instead of `npm run build`. This will build for Windows, macOS, and Linux.
+
+Alternatively, you can run any of these commands to build for your specific platform:
+
+- `build-electron--darwin-only` - build only for macOS
+- `build-electron--win-only` - build only for Windows
+- `build-electron--linux-only` - build only for Linux distributions
+
+> Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
 
 ## Modules used
 Hyperspace makes use of the following modules and components to make it as fluffy as possible:
