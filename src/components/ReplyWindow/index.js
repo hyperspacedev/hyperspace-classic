@@ -24,7 +24,7 @@ class ReplyWindow extends Component {
         super(props);
 
         this.state = {
-            hideDialog: true,
+            hideReplyPanel: true,
             to: this.props.status.id,
             reply_count: this.props.status.replies_count,
             author: this.props.status.account.display_name,
@@ -60,13 +60,13 @@ class ReplyWindow extends Component {
 
     openPanel() {
         this.setState({
-            hideDialog: false
+            hideReplyPanel: false
         })
     }
 
     closeReplyPanel() {
         this.setState({
-            hideDialog: true
+            hideReplyPanel: true
         })
     }
 
@@ -86,7 +86,7 @@ class ReplyWindow extends Component {
             media_ids: this.state.media
         });
         this.setState({
-            hideDialog: true
+            hideReplyPanel: true
         })
     }
 
@@ -273,7 +273,7 @@ class ReplyWindow extends Component {
     onSpoilerVisibilityChange(event, checked) {
         this.setState({
             sensitive: !!checked
-        })
+        });
         if (checked === false) {
             this.setState({
                 spoiler_text: ''
@@ -493,7 +493,7 @@ class ReplyWindow extends Component {
     giveDialogBox() {
         return (
             <Panel
-                isOpen={!this.state.hideDialog}
+                isOpen={!this.state.hideReplyPanel}
                 onDismiss={() => this.closeReplyPanel()}
                 headerText={"Reply to " + this.state.author}
                 type={PanelType.medium}
