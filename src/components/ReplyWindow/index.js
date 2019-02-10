@@ -288,7 +288,7 @@ class ReplyWindow extends Component {
     }
 
     setVisibilityContentText() {
-        let text = <p>Choose who gets to see your status. By default, new statuses are posted publicly.</p>;
+        let text = <p>Choose who gets to see your reply.</p>;
         let altText = '';
         if (this.state.visibility === "direct") {
             altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p>
