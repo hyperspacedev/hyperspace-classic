@@ -14,7 +14,7 @@ class PostSensitive extends Component {
         this.toggle = this.toggle.bind(this);
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         anchorInBrowser();
     }
 

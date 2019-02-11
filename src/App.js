@@ -98,7 +98,7 @@ class App extends Component {
             notif.requestPermission(function (permission) { });
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         anchorInBrowser();
     }
 

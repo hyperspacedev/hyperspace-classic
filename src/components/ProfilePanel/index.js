@@ -22,7 +22,7 @@ class ProfilePanel extends Component {
 
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         anchorInBrowser();
     }
 

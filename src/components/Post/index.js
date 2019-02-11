@@ -25,7 +25,7 @@ class Post extends Component {
         }
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         anchorInBrowser();
     }
 
