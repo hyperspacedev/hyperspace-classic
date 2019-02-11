@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {getInitials} from '@uifabric/utilities/lib/initials';
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
 class ProfilePanel extends Component {
 
@@ -19,6 +20,10 @@ class ProfilePanel extends Component {
             openPanel: false
         }
 
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     toggleProfilePanel() {

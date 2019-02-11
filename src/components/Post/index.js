@@ -8,6 +8,7 @@ import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
 import ProfilePanel from '../ProfilePanel';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
 class Post extends Component {
     id;
@@ -22,6 +23,10 @@ class Post extends Component {
             noLink: this.props.nolink,
             noThread: this.props.nothread
         }
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     getBigShadow() {

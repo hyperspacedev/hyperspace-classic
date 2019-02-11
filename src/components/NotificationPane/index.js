@@ -4,6 +4,7 @@ import ReplyWindow from '../ReplyWindow';
 import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
 import ThreadPanel from "../ThreadPanel";
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
 class NotificationPane extends Component {
 
@@ -52,15 +53,7 @@ class NotificationPane extends Component {
     }
 
     componentDidUpdate() {
-        const links = document.querySelectorAll('a[href]');
-
-        Array.prototype.forEach.call(links, (link) => {
-            const url = link.getAttribute('href');
-            if (url.indexOf('http') === 0) {
-                link.setAttribute("onclick", "openInBrowser(\"" + link.href + "\");");
-                link.href = "";
-            }
-        });
+        anchorInBrowser();
     }
 
     toggleDeleteDialog() {
@@ -205,7 +198,7 @@ class NotificationPane extends Component {
                         comments={this.getActivityComment(notification.status, notification.type)}
                         timeStamp={this.getActivityDate(notification.created_at)}
                         className="mt-2"
-                        key={notification.id}
+                        key={notification.id + 6 / 2}
                     />
                 );
             }));

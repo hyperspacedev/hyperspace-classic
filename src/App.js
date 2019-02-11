@@ -5,6 +5,7 @@ import Timeline from './components/Timeline/';
 import ProfileContainer from './components/ProfileContainer';
 import RegisterWindow from './components/RegisterWindow';
 import NotificationPane from './components/NotificationPane';
+import {anchorInBrowser} from './utilities/anchorInBrowser.js';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
 import './components/CustomIcons';
@@ -98,15 +99,7 @@ class App extends Component {
     }
 
     componentDidUpdate() {
-        const links = document.querySelectorAll('a[href]');
-
-        Array.prototype.forEach.call(links, (link) => {
-            const url = link.getAttribute('href');
-            if (url.indexOf('http') === 0) {
-                link.setAttribute("onclick", "openInBrowser(\"" + link.href + "\");");
-                link.href = "";
-            }
-        });
+        anchorInBrowser();
     }
 
     render() {
