@@ -11,7 +11,14 @@ require('update-electron-app')();
 let mainWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({ width: 1000, height: 600, titleBarStyle: 'hidden' });
+    mainWindow = new BrowserWindow(
+        { 
+            width: 1000, 
+            height: 600, 
+            titleBarStyle: 'hidden',
+            nodeIntegration: true 
+        }
+    );
 
     mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
 
