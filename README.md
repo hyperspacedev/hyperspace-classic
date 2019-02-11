@@ -1,4 +1,5 @@
 # Hyperspace
+
 A fluffy client for Mastodon
 
 ![Hyperspace screenshot](screenshot.png)
@@ -16,6 +17,7 @@ serve build
 ```
 
 ### Building desktop versions
+
 If you wish to build the desktop versions of Hyperspace, it is recommended to run `build-electron` instead of `npm run build`. This will build for Windows, macOS, and Linux.
 
 Alternatively, you can run any of these commands to build for your specific platform:
@@ -28,6 +30,7 @@ Alternatively, you can run any of these commands to build for your specific plat
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
 
 ## Modules used
+
 Hyperspace makes use of the following modules and components to make it as fluffy as possible:
 
 - `megalodon` - the handler for Mastodon API calls
@@ -39,4 +42,5 @@ Hyperspace makes use of the following modules and components to make it as fluff
 - `emoji-picker-react` - for adding an emoji picker
 
 ## Licensing
+
 The Hyperspace project itself is licensed under the GNU Lesser General Public License, though some components are licensed under other free-software licenses such as the MIT License and GNU GPL.
