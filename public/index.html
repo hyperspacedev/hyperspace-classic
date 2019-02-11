@@ -46,5 +46,16 @@
   <script src="scripts/popper.min.js"></script>
   <script defer src = "scripts/bootstrap.bundle.js"></script>
   <script defer src = "scripts/bootstrap.js"></script>
+  <script>
+    function openInBrowser(link) {
+      if (navigator.userAgent.includes("Electron")) {
+        let shell = require('electron').shell;
+        event.preventDefault();
+        shell.openExternal(link);
+      } else {
+        window.open(link);
+      }
+    }
+  </script>
   </body>
 </html>

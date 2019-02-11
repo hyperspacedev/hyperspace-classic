@@ -87,6 +87,20 @@ class Post extends Component {
         }
     }
 
+    correctPostLinks(content) {
+        let temporaryDiv = document.createElement("div");
+        temporaryDiv.innerHTML = content;
+
+        let allAnchorTags = temporaryDiv.getElementsByTagName("a");
+
+        for (let i=0; i < allAnchorTags.length; i++) {
+            allAnchorTags[i].setAttribute("onclick", "openInBrowser(\"" + allAnchorTags[i].href + "\");")
+
+        }
+
+        return temporaryDiv.innerHTML;
+    }
+
     getBoostCard(status) {
         if (status.reblog) {
 
@@ -127,7 +141,7 @@ class Post extends Component {
                                         <DocumentCardTitle
                                             title={
                                                 <div>
-                                                    <div dangerouslySetInnerHTML={{__html: status.reblog.content}}/>
+                                                    <div dangerouslySetInnerHTML={{__html: this.correctPostLinks(status.reblog.content)}}/>
                                                     {
                                                         status.reblog.media_attachments.length ?
                                                             <div className = "row">
@@ -186,7 +200,7 @@ class Post extends Component {
                                 { this.props.status.sensitive === true ?
                                     <PostSensitive status={this.props.status}/>:
                                     <div>
-                                        <p dangerouslySetInnerHTML={{__html: this.props.status.content}} />
+                                        <p dangerouslySetInnerHTML={{__html: this.correctPostLinks(this.props.status.content)}} />
                                         {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">

@@ -133,9 +133,13 @@ class NotificationPane extends Component {
             body = tempDivElement.textContent || tempDivElement.innerText || "";
         }
 
-        new Notification(title, {
+        let desktopNotification = new Notification(title, {
             body: body
         })
+
+        desktopNotification.onclick(() => {
+            window.focus();
+        });
     }
 
     getActivityDescription(type, status) {
