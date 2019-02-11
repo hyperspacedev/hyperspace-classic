@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {CompoundButton, Dialog, DialogType} from "office-ui-fabric-react";
 import {ColorClassNames} from '@uifabric/styling';
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
 class PostSensitive extends Component {
     constructor(props) {
@@ -11,6 +12,10 @@ class PostSensitive extends Component {
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     toggle() {
