@@ -134,14 +134,13 @@ class Post extends Component {
                             <div className='ml-4 mb-2'>
                                 <DocumentCard
                                     type={DocumentCardType.compact}
-                                    onClick={() => {window.open(status.reblog.url)}}
                                     styles={documentCardStyles}
                                 >
                                     <DocumentCardDetails>
                                         <DocumentCardTitle
                                             title={
                                                 <div>
-                                                    <div dangerouslySetInnerHTML={{__html: this.correctPostLinks(status.reblog.content)}}/>
+                                                    <div dangerouslySetInnerHTML={{__html: status.reblog.content}}/>
                                                     {
                                                         status.reblog.media_attachments.length ?
                                                             <div className = "row">
@@ -169,7 +168,7 @@ class Post extends Component {
                                         />
                                         <DocumentCardActivity
                                             activity={"Originally posted on " + moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")}
-                                            people={[{ name: this.props.status.reblog.account.acct, profileImageSrc: this.props.status.reblog.account.avatar}]}
+                                            people={[{ name: <ProfilePanel account={this.props.status.reblog.account} client={this.client}/>, profileImageSrc: this.props.status.reblog.account.avatar}]}
                                         />
                                     </DocumentCardDetails>
                                 </DocumentCard>
@@ -200,7 +199,7 @@ class Post extends Component {
                                 { this.props.status.sensitive === true ?
                                     <PostSensitive status={this.props.status}/>:
                                     <div>
-                                        <p dangerouslySetInnerHTML={{__html: this.correctPostLinks(this.props.status.content)}} />
+                                        <p dangerouslySetInnerHTML={{__html: this.props.status.content}} />
                                         {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">

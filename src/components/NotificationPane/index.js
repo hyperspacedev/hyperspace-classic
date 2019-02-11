@@ -51,6 +51,18 @@ class NotificationPane extends Component {
 
     }
 
+    componentDidUpdate() {
+        const links = document.querySelectorAll('a[href]');
+
+        Array.prototype.forEach.call(links, (link) => {
+            const url = link.getAttribute('href');
+            if (url.indexOf('http') === 0) {
+                link.setAttribute("onclick", "openInBrowser(\"" + link.href + "\");");
+                link.href = "";
+            }
+        });
+    }
+
     toggleDeleteDialog() {
         this.setState({
             hideDeleteDialog: !this.state.hideDeleteDialog
@@ -102,15 +114,6 @@ class NotificationPane extends Component {
 
     sendDesktopNotification(notification) {
 
-
-        let notif = window.Notification || window.mozNotification || window.webkitNotification;
-
-        if ('undefined' === typeof notification)
-            console.log('Notifications aren\'t supported on this browser.');
-        else
-            notif.requestPermission(function (permission) { });
-
-
         let title = notification.account.display_name;
         let body = "";
         if (notification.type === "follow") {
@@ -135,7 +138,7 @@ class NotificationPane extends Component {
 
         let desktopNotification = new Notification(title, {
             body: body
-        })
+        });
 
         desktopNotification.onclick(() => {
             window.focus();

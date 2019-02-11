@@ -88,8 +88,25 @@ class App extends Component {
         }
     }
 
-    componentWillMount(): void {
+    componentWillMount() {
         this.getAccountDetails();
+        let notif = window.Notification || window.mozNotification || window.webkitNotification;
+        if ('undefined' === typeof notif)
+            console.log('Notifications aren\'t supported on this browser.');
+        else
+            notif.requestPermission(function (permission) { });
+    }
+
+    componentDidUpdate() {
+        const links = document.querySelectorAll('a[href]');
+
+        Array.prototype.forEach.call(links, (link) => {
+            const url = link.getAttribute('href');
+            if (url.indexOf('http') === 0) {
+                link.setAttribute("onclick", "openInBrowser(\"" + link.href + "\");");
+                link.href = "";
+            }
+        });
     }
 
     render() {
