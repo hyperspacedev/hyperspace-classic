@@ -106,6 +106,18 @@ class Post extends Component {
         return temporaryDiv.innerHTML;
     }
 
+    // It currently isn't possible to get boosts to work using openInBrowser,
+    // so this forces it manually.
+    openBoostCardCorrectly(event, link) {
+        if (navigator.userAgent.includes("Electron")) {
+            let shell = require('electron').shell;
+            event.preventDefault();
+            shell.openExternal(link);
+          } else {
+            window.open(link);
+          }
+    }
+
     getBoostCard(status) {
         if (status.reblog) {
 
@@ -140,6 +152,7 @@ class Post extends Component {
                                 <DocumentCard
                                     type={DocumentCardType.compact}
                                     styles={documentCardStyles}
+                                    onClick={(event) => this.openBoostCardCorrectly(event, status.reblog.url)}
                                 >
                                     <DocumentCardDetails>
                                         <DocumentCardTitle

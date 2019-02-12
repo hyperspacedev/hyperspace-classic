@@ -4,7 +4,6 @@ const menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
-const url = require('url');
 
 require('update-electron-app')();
 
