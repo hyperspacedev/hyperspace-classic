@@ -7,6 +7,7 @@ import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
 import ProfilePanel from '../ProfilePanel';
+import ThreadPanel from '../ThreadPanel';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
@@ -152,7 +153,6 @@ class Post extends Component {
                                 <DocumentCard
                                     type={DocumentCardType.compact}
                                     styles={documentCardStyles}
-                                    onClick={(event) => this.openBoostCardCorrectly(event, status.reblog.url)}
                                 >
                                     <DocumentCardDetails>
                                         <DocumentCardTitle
@@ -185,7 +185,7 @@ class Post extends Component {
                                             styles={documentCardStyles}
                                         />
                                         <DocumentCardActivity
-                                            activity={"Originally posted on " + moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")}
+                                            activity={<span>Originally posted on {moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")} | <ThreadPanel fromWhere={this.props.status.reblog.id} client={this.client} fullButton={false}/></span>}
                                             people={[{ name: <ProfilePanel account={this.props.status.reblog.account} client={this.client}/>, profileImageSrc: this.props.status.reblog.account.avatar}]}
                                         />
                                     </DocumentCardDetails>
