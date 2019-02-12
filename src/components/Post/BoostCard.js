@@ -56,7 +56,6 @@ class BoostCard extends Component {
     }
 
     openChildThreadPanel() {
-        console.log("Click: " + this.threadRef);
         this.threadRef.current.openThreadPanel();
     }
 
