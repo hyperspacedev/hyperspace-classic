@@ -186,14 +186,17 @@ class ThreadPanel extends Component {
     }
 
     render() {
-        return(
-            <span>
+        return (
+            <div>
                 {
                     this.props.fullButton ?
-                    this.getThreadButton(): this.getSmallThreadButton()
+                    this.props.fullButton === true ?
+                    this.getThreadButton():
+                    this.getSmallThreadButton():
+                    <span/>
                 }
                 {this.getThreadPanel()}
-            </span>
+            </div>
         );
     }
 }

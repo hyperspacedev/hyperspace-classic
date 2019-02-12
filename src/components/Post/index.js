@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import {
-    Persona, DocumentCard, DocumentCardActivity, DocumentCardTitle, DocumentCardType, DocumentCardDetails, TooltipHost } from "office-ui-fabric-react";
+import { Persona, TooltipHost } from "office-ui-fabric-react";
 import * as moment from 'moment';
 import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
 import ProfilePanel from '../ProfilePanel';
-import ThreadPanel from '../ThreadPanel';
+import BoostCard from './BoostCard';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
@@ -121,28 +120,6 @@ class Post extends Component {
 
     getBoostCard(status) {
         if (status.reblog) {
-
-            let documentCardStyles = {};
-
-            let temporaryDiv = document.createElement("div");
-            temporaryDiv.innerHTML = status.reblog.content;
-            let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
-
-            if (status.reblog.media_attachments.length !== 0) {
-                documentCardStyles = {
-                    root: {
-                        height: 350
-                    }
-                }
-
-            } else if (actualContent.length > 150) {
-                documentCardStyles = {
-                    root: {
-                        height: 200
-                    }
-                }
-            }
-
             return (
                 <div className='mt-1 ml-4 mb-1'>
                     <div>
@@ -150,47 +127,9 @@ class Post extends Component {
                             <PostSensitive status={this.props.status}/>:
 
                             <div className='ml-4 mb-2'>
-                                <DocumentCard
-                                    type={DocumentCardType.compact}
-                                    styles={documentCardStyles}
-                                >
-                                    <DocumentCardDetails>
-                                        <DocumentCardTitle
-                                            title={
-                                                <div>
-                                                    <div dangerouslySetInnerHTML={{__html: status.reblog.content}}/>
-                                                    {
-                                                        status.reblog.media_attachments.length ?
-                                                            <div className = "row">
-                                                                {
-                                                                    status.reblog.media_attachments.map( function(media) {
-                                                                        return(
-                                                                            <div className="col" key={'media' + media.id}>
-                                                                                {
-                                                                                    (media.type === "image") ?
-                                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                                        <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
-                                                                                }
-                                                                            </div>
-                                                                        );
-                                                                    })
-                                                                }
-                                                            </div>:
-                                                            <span/>
-                                                    }
-                                                </div>
-                                            }
-                                            shouldTruncate={true}
-                                            showAsSecondaryTitle={true}
-                                            styles={documentCardStyles}
-                                        />
-                                        <DocumentCardActivity
-                                            activity={<span>Originally posted on {moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")} | <ThreadPanel fromWhere={this.props.status.reblog.id} client={this.client} fullButton={false}/></span>}
-                                            people={[{ name: <ProfilePanel account={this.props.status.reblog.account} client={this.client}/>, profileImageSrc: this.props.status.reblog.account.avatar}]}
-                                        />
-                                    </DocumentCardDetails>
-                                </DocumentCard>
-                            </div>}
+                                <BoostCard client={this.client} status={this.props.status.reblog}/>
+                            </div>
+                        }
                     </div>
                 </div>
             );
