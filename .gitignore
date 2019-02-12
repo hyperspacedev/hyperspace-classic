@@ -26,3 +26,7 @@ yarn-error.log*
 # Electron-related
 electron/*.p12
 electron/*.provisionprofile
+
+# IDE-related
+/.vscode
+/.idea
