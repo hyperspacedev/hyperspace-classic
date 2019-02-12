@@ -53,7 +53,7 @@ class ProfilePanel extends Component {
 
     useCertainInitials(account) {
         try {
-            getInitials(account.display_name);
+            return getInitials(account.display_name);
         } catch {
             return 'MU';
         }
