@@ -27,12 +27,16 @@ class BoostCard extends Component {
         }
     }
 
+    stripElementsFromContent(content) {
+        let temporaryDiv = document.createElement("div");
+        temporaryDiv.innerHTML = content;
+        return temporaryDiv.textContent || temporaryDiv.innerText || "";
+    }
+
     getCardStyles(status) {
         let documentCardStyles = {};
 
-            let temporaryDiv = document.createElement("div");
-            temporaryDiv.innerHTML = status.content;
-            let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
+            let actualContent = this.stripElementsFromContent(status.content);
 
             if (status.media_attachments.length !== 0) {
                 documentCardStyles = {
@@ -75,7 +79,7 @@ class BoostCard extends Component {
                         <DocumentCardTitle
                             title={
                                 <div>
-                                    <div dangerouslySetInnerHTML={{__html: post.content}}/>
+                                    <p>{this.stripElementsFromContent(post.content)}</p>
                                     {
                                         post.media_attachments.length ?
                                             <div className = "row">
