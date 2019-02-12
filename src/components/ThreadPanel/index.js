@@ -73,7 +73,7 @@ class ThreadPanel extends Component {
                                         client={this.client}
                                         status={ancestor}
                                         nolink={false}
-                                        nothread={true}
+                                        nothread={false}
                                     />
                                 </div>
                             );
