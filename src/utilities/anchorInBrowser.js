@@ -1,3 +1,8 @@
+/**
+ * Changes anchor tags by transferring href properties to onClick.
+ * Used to determine whether a link should be opened via Electron's shell
+ * or by the standard window functionality.
+ */
 export function anchorInBrowser() {
     const links = document.querySelectorAll('a[href]');
 
