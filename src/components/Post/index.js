@@ -9,6 +9,7 @@ import ProfilePanel from '../ProfilePanel';
 import BoostCard from './BoostCard';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
+import { getTrueInitials } from "../../utilities/getTrueInitials";
 
 class Post extends Component {
     id;
@@ -50,14 +51,6 @@ class Post extends Component {
             x = account.acct;
         }
         return x
-    }
-
-    getInitialsOfUser(account) {
-        try {
-            return getInitials(account.display_name);
-        } catch (error) {
-            return 'MU'
-        }
     }
 
     getApplicationName(status) {
@@ -142,7 +135,7 @@ class Post extends Component {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
                             text: this.getPersonaText(),
-                            imageInitials: this.getInitialsOfUser(this.props.status.account),
+                            imageInitials: getTrueInitials(this.props.status.account.display_name),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
                 }

@@ -10,7 +10,7 @@ import {
 import moment from 'moment';
 import ThreadPanel from '../ThreadPanel';
 import ProfilePanel from '../ProfilePanel';
-import {getInitials} from '@uifabric/utilities/lib/initials.js';
+import {getTrueInitials} from '../../utilities/getTrueInitials';
 
 
 class BoostCard extends Component {
@@ -32,14 +32,6 @@ class BoostCard extends Component {
         let temporaryDiv = document.createElement("div");
         temporaryDiv.innerHTML = content;
         return temporaryDiv.textContent || temporaryDiv.innerText || "";
-    }
-
-    getAccountInitials(account) {
-        try {
-            return getInitials(account.display_name);
-        } catch {
-            return 'MU';
-        }
     }
 
     getCardStyles(status) {
@@ -115,7 +107,7 @@ class BoostCard extends Component {
                         />
                         <DocumentCardActivity
                             activity={<span>Originally posted on {moment(PositioningContainer.date).format("MMM Do, YYYY: h:mm A")}</span>}
-                            people={[{ name: <ProfilePanel account={post.account} client={this.client}/>, profileImageSrc: post.account.avatar, initials:this.getAccountInitials(post.account)}]}
+                            people={[{ name: <ProfilePanel account={post.account} client={this.client}/>, profileImageSrc: post.account.avatar, initials:getTrueInitials(post.account.display_name)}]}
                         />
                     </DocumentCardDetails>
                 </DocumentCard>
