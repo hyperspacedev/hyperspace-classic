@@ -7,6 +7,13 @@ import {
 } from 'office-ui-fabric-react';
 import Post from '../Post/index.js';
 
+/**
+ * The panel that displays a thread of statuses in order.
+ * 
+ * @param fromWhere The status ID to get a thread for
+ * @param client The client used to get/post information with
+ * @param fullButton Whether the button should be rendered as a toolbar item or a small text button
+ */
 class ThreadPanel extends Component {
 
     client;

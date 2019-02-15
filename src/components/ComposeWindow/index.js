@@ -21,6 +21,12 @@ import 'emoji-picker-react/dist/universal/style.scss';
 
 initializeIcons();
 
+/**
+ * Window for creating statuses. Generally used for composing new statuses
+ * rather than replies.
+ * 
+ * @param client The Mastodon client to perform posting actions with
+ */
 class ComposeWindow extends Component {
 
     client;

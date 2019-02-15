@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {DefaultButton} from 'office-ui-fabric-react';
 
+/**
+ * Basic navigation bar. Contains logo, name, and log out button.
+ */
 class Navbar extends Component {
 
     logOut() {
