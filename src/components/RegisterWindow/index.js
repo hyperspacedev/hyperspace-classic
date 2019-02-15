@@ -7,6 +7,11 @@ import {
     PanelType
 } from "office-ui-fabric-react";
 import Mastodon from 'megalodon';
+
+/**
+ * The window used for handling registration of Hyperspace
+ * to the user.
+ */
 class RegisterWindow extends Component {
 
     constructor(props) {

@@ -6,6 +6,12 @@ import moment from 'moment';
 import ThreadPanel from "../ThreadPanel";
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
+
+/**
+ * Small area dedicated to displaying, responding to, and clearing notifications.
+ * 
+ * @param client The Mastodon client used to get, post, and delete notifications.
+ */
 class NotificationPane extends Component {
 
     client;

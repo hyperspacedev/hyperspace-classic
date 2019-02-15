@@ -16,6 +16,13 @@ import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
 
+/**
+ * Offspring of the ComposeWindow component. Displays a status and
+ * offers a compose window for crafting a reply to the post.
+ * 
+ * @param client The client used to post the reply with
+ * @param status The status to reply to
+ */
 class ReplyWindow extends Component {
 
     client;

@@ -12,7 +12,13 @@ import ThreadPanel from '../ThreadPanel';
 import ProfilePanel from '../ProfilePanel';
 import {getTrueInitials} from '../../utilities/getTrueInitials';
 
-
+/**
+ * Small card element that displays a status. Usually used to display a reblogged
+ * status.
+ * 
+ * @param client The Mastodon client used to view information about the status
+ * @param status The status to display within the card itself
+ */
 class BoostCard extends Component {
     client;
     threadRef;

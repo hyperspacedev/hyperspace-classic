@@ -3,6 +3,12 @@ import {CompoundButton, Dialog, DialogType} from "office-ui-fabric-react";
 import {ColorClassNames} from '@uifabric/styling';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
+/**
+ * A button that links to a post's content that may contain sensitive
+ * content.
+ * 
+ * @param status The status to ineract with and hide behind a dialog
+ */
 class PostSensitive extends Component {
     constructor(props) {
         super(props);

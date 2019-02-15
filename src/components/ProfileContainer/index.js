@@ -84,6 +84,11 @@ class ProfileList extends Component {
     }
 }
 
+/**
+ * A basic container for displaying the logged-in user's information
+ * 
+ * @param who The logged-in user to display information about
+ */
 class ProfileContainer extends Component {
     who;
 

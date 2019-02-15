@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import {Pivot, PivotItem, PivotLinkSize} from "office-ui-fabric-react";
 import PostRoll from "../Post/PostRoll";
 
+/**
+ * The main element for hosting timelines.
+ * 
+ * @param client The client used to get/post information with
+ */
 class Timeline extends Component {
     client;
 

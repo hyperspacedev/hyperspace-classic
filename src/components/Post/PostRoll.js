@@ -2,6 +2,11 @@ import {Status} from "megalodon";
 import React, {Component} from 'react';
 import Post from './index.js';
 
+/**
+ * A timeline or list of posts from a given timeline
+ * @param client The client used to get/post information from Mastodon
+ * @param timeline The timeline to receive information from. Valid values include: (direct | home | local | public)
+ */
 class PostRoll extends Component {
     client;
     streamListener;

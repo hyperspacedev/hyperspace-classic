@@ -11,6 +11,14 @@ import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 
+/**
+ * Basic element for rendering a post on Mastodon
+ * 
+ * @param client The client used to get/post information from Mastodon
+ * @param status The post to display and interact with
+ * @param nolink Whether the post shouldn't link the author's profile panel
+ * @param nothread Whether the post shouldn't include the 'Show thread' button
+ */
 class Post extends Component {
     id;
     client;

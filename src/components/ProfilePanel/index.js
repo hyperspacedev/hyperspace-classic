@@ -4,6 +4,12 @@ import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 
+/**
+ * A panel that display profile information of a given user.
+ * 
+ * @param client The client used to get and post information with.
+ * @param account The account to get information about.
+ */
 class ProfilePanel extends Component {
 
     client;

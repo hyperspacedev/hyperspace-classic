@@ -3,6 +3,14 @@ import {ActionButton, TooltipHost} from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
 
+/**
+ * A small toolbar including common actions for interacting with
+ * a post.
+ * 
+ * @param client The client used to ineract with a post.
+ * @param status The post to interact with.
+ * @param nothread Whether to hide the 'Show thread' button
+ */
 class PostToolbar extends Component {
 
     client;
