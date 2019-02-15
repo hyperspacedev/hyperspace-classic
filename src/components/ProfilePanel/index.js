@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
 import Post from '../Post';
-import {getInitials} from '@uifabric/utilities/lib/initials';
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
+import { getTrueInitials } from "../../utilities/getTrueInitials";
 
 class ProfilePanel extends Component {
 
@@ -19,6 +20,10 @@ class ProfilePanel extends Component {
             openPanel: false
         }
 
+    }
+
+    componentDidMount() {
+        anchorInBrowser();
     }
 
     toggleProfilePanel() {
@@ -45,15 +50,6 @@ class ProfilePanel extends Component {
             </span>
         );
     }
-
-    useCertainInitials(account) {
-        try {
-            getInitials(account.display_name);
-        } catch {
-            return 'MU';
-        }
-    }
-
     checkDisplayName(account) {
         if (account.display_name === "") {
             return account.username;
@@ -73,7 +69,7 @@ class ProfilePanel extends Component {
                     {...
                         {
                             imageUrl: this.state.account.avatar,
-                            imageInitials: this.useCertainInitials(this.state.account),
+                            imageInitials: getTrueInitials(this.state.account.display_name),
                             text: this.checkDisplayName(this.state.account),
                             secondaryText: '@' + this.state.account.username,
                             tertiaryText: this.getProfileMetadata(this.state.account)

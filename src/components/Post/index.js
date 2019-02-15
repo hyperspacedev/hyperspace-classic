@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import {
-    Persona, DocumentCard, DocumentCardActivity, DocumentCardTitle, DocumentCardType, DocumentCardDetails, TooltipHost } from "office-ui-fabric-react";
+import { Persona, TooltipHost } from "office-ui-fabric-react";
 import * as moment from 'moment';
 import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
 import ProfilePanel from '../ProfilePanel';
+import BoostCard from './BoostCard';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
+import { getTrueInitials } from "../../utilities/getTrueInitials";
 
 class Post extends Component {
     id;
@@ -22,6 +24,10 @@ class Post extends Component {
             noLink: this.props.nolink,
             noThread: this.props.nothread
         }
+    }
+
+    componentDidMount() {
+        anchorInBrowser();
     }
 
     getBigShadow() {
@@ -45,14 +51,6 @@ class Post extends Component {
             x = account.acct;
         }
         return x
-    }
-
-    getInitialsOfUser(account) {
-        try {
-            return getInitials(account.display_name);
-        } catch (error) {
-            return 'MU'
-        }
     }
 
     getApplicationName(status) {
@@ -87,30 +85,34 @@ class Post extends Component {
         }
     }
 
+    correctPostLinks(content) {
+        let temporaryDiv = document.createElement("div");
+        temporaryDiv.innerHTML = content;
+
+        let allAnchorTags = temporaryDiv.getElementsByTagName("a");
+
+        for (let i=0; i < allAnchorTags.length; i++) {
+            allAnchorTags[i].setAttribute("onclick", "openInBrowser(\"" + allAnchorTags[i].href + "\");")
+
+        }
+
+        return temporaryDiv.innerHTML;
+    }
+
+    // It currently isn't possible to get boosts to work using openInBrowser,
+    // so this forces it manually.
+    openBoostCardCorrectly(event, link) {
+        if (navigator.userAgent.includes("Electron")) {
+            let shell = require('electron').shell;
+            event.preventDefault();
+            shell.openExternal(link);
+          } else {
+            window.open(link);
+          }
+    }
+
     getBoostCard(status) {
         if (status.reblog) {
-
-            let documentCardStyles = {};
-
-            let temporaryDiv = document.createElement("div");
-            temporaryDiv.innerHTML = status.reblog.content;
-            let actualContent = temporaryDiv.textContent || temporaryDiv.innerText || "";
-
-            if (status.reblog.media_attachments.length !== 0) {
-                documentCardStyles = {
-                    root: {
-                        height: 350
-                    }
-                }
-
-            } else if (actualContent.length > 150) {
-                documentCardStyles = {
-                    root: {
-                        height: 200
-                    }
-                }
-            }
-
             return (
                 <div className='mt-1 ml-4 mb-1'>
                     <div>
@@ -118,48 +120,9 @@ class Post extends Component {
                             <PostSensitive status={this.props.status}/>:
 
                             <div className='ml-4 mb-2'>
-                                <DocumentCard
-                                    type={DocumentCardType.compact}
-                                    onClick={() => {window.open(status.reblog.url)}}
-                                    styles={documentCardStyles}
-                                >
-                                    <DocumentCardDetails>
-                                        <DocumentCardTitle
-                                            title={
-                                                <div>
-                                                    <div dangerouslySetInnerHTML={{__html: status.reblog.content}}/>
-                                                    {
-                                                        status.reblog.media_attachments.length ?
-                                                            <div className = "row">
-                                                                {
-                                                                    status.reblog.media_attachments.map( function(media) {
-                                                                        return(
-                                                                            <div className="col" key={'media' + media.id}>
-                                                                                {
-                                                                                    (media.type === "image") ?
-                                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                                        <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
-                                                                                }
-                                                                            </div>
-                                                                        );
-                                                                    })
-                                                                }
-                                                            </div>:
-                                                            <span/>
-                                                    }
-                                                </div>
-                                            }
-                                            shouldTruncate={true}
-                                            showAsSecondaryTitle={true}
-                                            styles={documentCardStyles}
-                                        />
-                                        <DocumentCardActivity
-                                            activity={"Originally posted on " + moment(this.props.status.reblog.date).format("MMM Do, YYYY: h:mm A")}
-                                            people={[{ name: this.props.status.reblog.account.acct, profileImageSrc: this.props.status.reblog.account.avatar}]}
-                                        />
-                                    </DocumentCardDetails>
-                                </DocumentCard>
-                            </div>}
+                                <BoostCard client={this.client} status={this.props.status.reblog}/>
+                            </div>
+                        }
                     </div>
                 </div>
             );
@@ -172,7 +135,7 @@ class Post extends Component {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
                             text: this.getPersonaText(),
-                            imageInitials: this.getInitialsOfUser(this.props.status.account),
+                            imageInitials: getTrueInitials(this.props.status.account.display_name),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
                 }

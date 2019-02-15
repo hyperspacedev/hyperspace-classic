@@ -87,6 +87,19 @@ class PostToolbar extends Component {
         return(<ReplyWindow to={this.state.id}/>);
     }
 
+    getLinkAndCopy(link) {
+        let temporaryDiv = document.createElement("textarea");
+        temporaryDiv.value = link;
+        document.body.appendChild(temporaryDiv);
+        temporaryDiv.select();
+        document.execCommand("copy");
+        document.body.removeChild(temporaryDiv);
+
+        new Notification("Link copied!", {
+            body: "Feel free to paste this wherever you need it!"
+        })
+    }
+
     render() {
         return (
             <div>
@@ -165,10 +178,10 @@ class PostToolbar extends Component {
                                     allowDisabledFocus={true}
                                     disabled={false}
                                     checked={false}
-                                    href={this.state.url}
+                                    onClick={() => this.getLinkAndCopy(this.state.url)}
                                     className='post-toolbar-icon'
                                 >
-                                    Link
+                                    Copy link
                                 </ActionButton>:
                                 <TooltipHost content={this.checkIfUnlisted()}>
                                     <ActionButton
@@ -179,7 +192,7 @@ class PostToolbar extends Component {
                                         checked={false}
                                         className='post-toolbar-icon'
                                     >
-                                        Link
+                                        Copy link
                                     </ActionButton>
                                 </TooltipHost>
 

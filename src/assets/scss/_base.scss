@@ -11,6 +11,18 @@
     background-color: #fff;
 }
 
+.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: $theme-accent-color;
+}
+
+.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: lighten($theme-accent-color, 40%)
+}
+
+.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: lighten($theme-accent-color, 20%)
+}
+
 li.nav-item.active a.nav-link {
     color: lighten($theme-accent-color, 20%) !important;
 }

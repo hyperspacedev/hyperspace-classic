@@ -49,6 +49,15 @@
   -webkit-app-region: drag;
   background-color: #fff; }
 
+.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #5c2d91; }
+
+.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #c3a6e4; }
+
+.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #8f59cb; }
+
 li.nav-item.active a.nav-link {
   color: #8f59cb !important; }
 

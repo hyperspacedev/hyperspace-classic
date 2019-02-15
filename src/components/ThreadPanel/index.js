@@ -73,7 +73,7 @@ class ThreadPanel extends Component {
                                         client={this.client}
                                         status={ancestor}
                                         nolink={false}
-                                        nothread={true}
+                                        nothread={false}
                                     />
                                 </div>
                             );
@@ -186,14 +186,17 @@ class ThreadPanel extends Component {
     }
 
     render() {
-        return(
-            <span>
+        return (
+            <div>
                 {
                     this.props.fullButton ?
-                    this.getThreadButton(): this.getSmallThreadButton()
+                    this.props.fullButton === true ?
+                    this.getThreadButton():
+                    this.getSmallThreadButton():
+                    <span/>
                 }
                 {this.getThreadPanel()}
-            </span>
+            </div>
         );
     }
 }

@@ -490,6 +490,12 @@ class ReplyWindow extends Component {
         }
     }
 
+    stripOriginalStatus(status) {
+        let tempDiv = document.createElement('div');
+        tempDiv.innerHTML = status;
+        return (tempDiv.textContent || tempDiv.innerText || "");
+    }
+
     giveDialogBox() {
         return (
             <Panel
@@ -514,8 +520,8 @@ class ReplyWindow extends Component {
                     ;}
                 }
             >
-                <div dangerouslySetInnerHTML={{__html: this.state.original_status}}/>
-                <p>Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
+                <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
+                <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
                 <p className="mt-1">{this.getSpoilerText()}</p>
                 <CommandBar
                     items={this.getItems()}

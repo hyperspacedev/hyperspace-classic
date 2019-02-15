@@ -4,6 +4,7 @@ import ReplyWindow from '../ReplyWindow';
 import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
 import ThreadPanel from "../ThreadPanel";
+import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 
 class NotificationPane extends Component {
 
@@ -49,6 +50,10 @@ class NotificationPane extends Component {
 
         })
 
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     toggleDeleteDialog() {
@@ -102,15 +107,6 @@ class NotificationPane extends Component {
 
     sendDesktopNotification(notification) {
 
-
-        let notif = window.Notification || window.mozNotification || window.webkitNotification;
-
-        if ('undefined' === typeof notification)
-            console.log('Notifications aren\'t supported on this browser.');
-        else
-            notif.requestPermission(function (permission) { });
-
-
         let title = notification.account.display_name;
         let body = "";
         if (notification.type === "follow") {
@@ -133,9 +129,13 @@ class NotificationPane extends Component {
             body = tempDivElement.textContent || tempDivElement.innerText || "";
         }
 
-        new Notification(title, {
+        let desktopNotification = new Notification(title, {
             body: body
-        })
+        });
+
+        desktopNotification.onclick(() => {
+            window.focus();
+        });
     }
 
     getActivityDescription(type, status) {
@@ -198,7 +198,7 @@ class NotificationPane extends Component {
                         comments={this.getActivityComment(notification.status, notification.type)}
                         timeStamp={this.getActivityDate(notification.created_at)}
                         className="mt-2"
-                        key={notification.id}
+                        key={notification.id + 6 / 2}
                     />
                 );
             }));
