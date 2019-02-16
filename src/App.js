@@ -101,9 +101,17 @@ class App extends Component {
         anchorInBrowser();
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return (
-            <div className="dark">
+            <div className={this.getDarkMode()}>
               <nav>
                 <Navbar/>
               </nav>

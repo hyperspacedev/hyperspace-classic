@@ -340,7 +340,7 @@ class ComposeWindow extends Component {
 
     render() {
         return (
-            <div className = "marked-area shadow-sm rounded p-1">
+            <div name = "compose-window" className = "marked-area shadow-sm rounded p-1">
                 <CommandBar
                     items={this.getItems()}
                     overflowItems={this.getOverflowItems()}

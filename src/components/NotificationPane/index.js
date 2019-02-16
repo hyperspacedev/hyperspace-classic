@@ -220,7 +220,7 @@ class NotificationPane extends Component {
 
     render(){
         return (
-            <div className = "container-fluid shadow rounded mt-4 p-4 marked-area">
+            <div name = "notification-pane" className = "container-fluid shadow rounded mt-4 p-4 marked-area">
                 <div className="row">
                     <div className="col-10">
                         <h5><b>Notifications</b></h5>

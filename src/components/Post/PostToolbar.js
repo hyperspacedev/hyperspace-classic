@@ -111,7 +111,7 @@ class PostToolbar extends Component {
     render() {
         return (
             <div>
-                <ul className="nav">
+                <ul className="nav" name="post-toolbar">
                     <li>
                         <ReplyWindow status={this.props.status} client={this.props.client} fullButton={true}/>
                     </li>

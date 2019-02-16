@@ -74,7 +74,7 @@ div#root {
   background-color: #f5f0fa; }
 
 div#root .dark {
-  background-color: #1e0f30; }
+  background-color: #212121; }
 
 .marked-area {
   background-color: white; }
@@ -179,11 +179,110 @@ a {
 .ms-Dialog-title {
   font-weight: bold !important; }
 
+/* DARK MODE */
+.dark .clickable-link:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link,
+.dark a {
+  color: #a980d7; }
+
+.dark .clickable-link#hover:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:hover,
+.dark a:hover {
+  color: white; }
+
+.dark .clickable-link#active:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:active,
+.dark a:active {
+  color: #ddcdf0; }
+
 .dark .navbar-app {
   background-color: #333;
-  color: #fff; }
+  box-shadow: 0px 2px 4px #212121;
+  color: #f4f4f4; }
   .dark .navbar-app .navbar-brand {
-    color: #fff; }
+    color: #f4f4f4; }
+
+.dark .ms-Pivot-icon i svg {
+  fill: #a980d7; }
 
 .dark .ms-Pivot-text {
-  color: #fff; }
+  color: #f4f4f4; }
+
+.dark .ms-Button--default {
+  background-color: #666666;
+  color: #f4f4f4; }
+
+.dark .ms-Button--compound {
+  background-color: #666666;
+  color: #f4f4f4; }
+  .dark .ms-Button--compound .ms-Button-description {
+    color: #eaeaea; }
+
+.dark div[name="post"] {
+  background-color: #333;
+  color: #F4F4F4; }
+
+.dark ul[name="post-toolbar"] * {
+  color: #f4f4f4; }
+  .dark ul[name="post-toolbar"] * .post-toolbar-icon svg {
+    fill: #a980d7; }
+  .dark ul[name="post-toolbar"] * .post-toolbar-icon:hover div i svg {
+    fill: #ddcdf0; }
+
+.dark div[name="boost-card"] .ms-DocumentCardDetails {
+  background-color: #212121;
+  color: #f4f4f4; }
+
+.dark div[name="boost-card"] div {
+  border-top-color: #111;
+  border-bottom-color: #111;
+  border-left-color: #111;
+  border-right-color: #111; }
+  .dark div[name="boost-card"] div :hover {
+    border-top-color: #333;
+    border-bottom-color: #333;
+    border-left-color: #333;
+    border-right-color: #333; }
+
+.dark div[name="profile-container"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="profile-container"] .ms-Label, .dark div[name="profile-container"] .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div[name="profile-container"] .ms-DetailsList * {
+    background-color: #333; }
+    .dark div[name="profile-container"] .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+
+.dark div[name="notification-pane"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="notification-pane"] .ms-ActivityItem-commentText {
+    color: #f4f4f4; }
+
+.dark div[name="compose-window"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="compose-window"] .ms-CommandBar, .dark div[name="compose-window"] .ms-CommandBar * {
+    background-color: #666;
+    color: #f4f4f4; }
+    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon svg {
+      fill: #a980d7;
+      width: 20px;
+      height: 20px; }
+    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon:hover div i svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon:hover div i svg {
+      fill: #ddcdf0;
+      width: 20px;
+      height: 20px; }
+  .dark div[name="compose-window"] .ms-DetailsList * {
+    background-color: #333; }
+    .dark div[name="compose-window"] .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+    .dark div[name="compose-window"] .ms-DetailsList * svg {
+      fill: white; }

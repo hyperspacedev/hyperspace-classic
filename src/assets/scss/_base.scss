@@ -44,7 +44,7 @@ div#root {
 }
 
 div#root .dark {
-    background-color: darken($theme-accent-color, 25%);
+    background-color: #212121;
 }
 
 .marked-area {
@@ -177,17 +177,171 @@ a {
     font-weight: bold !important;
 }
 
+
+
+
+
+
+
+
+/* DARK MODE */
+
 .dark {
+    .clickable-link:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link,
+    a {
+        color: lighten($theme-accent-color, 30%);
+    }
+    
+    .clickable-link#hover:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link:hover,
+    a:hover {
+        color: lighten($theme-accent-color, 70%)
+    }
+    
+    .clickable-link#active:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link:active,
+    a:active {
+        color: lighten($theme-accent-color, 50%)
+    }
     .navbar-app {
         background-color: #333;
-        color: #fff;
+        box-shadow: 0px 2px 4px #212121;
+        color: #f4f4f4;
 
         .navbar-brand {
-            color: #fff;
+            color: #f4f4f4;
         }
     }
 
+    .ms-Pivot-icon i {
+        svg {
+            fill: lighten($theme-accent-color, 30%);
+        }
+    }
     .ms-Pivot-text {
-        color: #fff;
+        color: #f4f4f4;
+    }
+
+    .ms-Button--default {
+        background-color: #666666;
+        color: #f4f4f4;
+    }
+
+    .ms-Button--compound {
+        background-color: #666666;
+        color: #f4f4f4;
+
+        .ms-Button-description {
+            color: #eaeaea;
+        }
+    }
+
+    div[name="post"] {
+        background-color: #333;
+        color: #F4F4F4;
+    }
+
+    ul[name="post-toolbar"] * {
+        color: #f4f4f4;
+
+        .post-toolbar-icon svg {
+            fill: lighten($theme-accent-color, 30%);
+        }
+        
+        .post-toolbar-icon:hover div i {
+            svg {
+                fill: lighten($theme-accent-color, 50%);
+            }
+        }
+    }
+
+    div[name="boost-card"] {
+        .ms-DocumentCardDetails {
+            background-color: #212121;
+            color: #f4f4f4;
+        }
+        div {
+            border-top-color: #111;
+            border-bottom-color: #111;
+            border-left-color: #111;
+            border-right-color: #111;
+
+            :hover {
+                border-top-color: #333;
+                border-bottom-color: #333;
+                border-left-color: #333;
+                border-right-color: #333;
+            }
+        }
+        
+    }
+
+    div[name="profile-container"] {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-Label, .ms-Persona-primaryText {
+            color: #f4f4f4;
+        }
+
+        .ms-DetailsList * {
+            background-color: #333;
+
+            div[role="row"] {
+                border-bottom-color: #212121;
+            }
+        }
+    }
+
+    div[name="notification-pane"] {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-ActivityItem-commentText {
+            color: #f4f4f4;
+        }
+    }
+
+    div[name="compose-window"] {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-CommandBar, .ms-CommandBar * {
+            background-color: #666;
+            color: #f4f4f4;
+
+            .toolbar-icon svg {
+                fill: lighten($theme-accent-color, 30%);
+                width: 20px;
+                height: 20px;
+            }
+            
+            .toolbar-icon:hover div i {
+                svg {
+                    fill: lighten($theme-accent-color, 50%);
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+
+        .ms-DetailsList * {
+            background-color: #333;
+
+            div[role="row"] {
+                border-bottom-color: #212121;
+            }
+
+            svg {
+                fill: white;
+            }
+        }
     }
 }
