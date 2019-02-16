@@ -122,6 +122,14 @@ class RegisterWindow extends Component {
         }
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
 
     render() {
         let _this = this;
@@ -153,6 +161,7 @@ class RegisterWindow extends Component {
                     headerText="Give authorization access"
                     closeButtonAriaLabel="Close"
                     styles={this.getPanelStyles()}
+                    className={this.getDarkMode()}
                     onRenderFooterContent = { () => {return(
                         <div>
                             <PrimaryButton

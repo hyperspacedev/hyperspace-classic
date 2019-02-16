@@ -140,7 +140,7 @@ class App extends Component {
                                         <ProfileContainer who={JSON.parse(localStorage.getItem('account'))}/>:
                                         <div className="p-4">
                                             <h3>Hang tight!</h3>
-                                            <p>Reload Hyperspace for your profile to take effect.</p>
+                                            <p>Reload Hyperspace for your profile card to update.</p>
                                         </div>
 
                                 }

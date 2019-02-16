@@ -110,11 +110,11 @@ class PostRoll extends Component {
                 {this.state.statuses.length > 0 ? <div>{this.state.statuses.map(function (status) {
                         return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
                     })}</div>:
-                    <div className="row p-4">
+                    <div name = "timeline-error" className="row p-4">
                         <div className = "row">
                             <div className = "col">
-                                <h3>Couldn't get timeline</h3>
-                                <p>And the fediverse isn't the same without you. Check to make sure you have given Hyperspace access to your account and that you are not being throttled.</p>
+                                <h3>Hang tight!</h3>
+                                <p>We're trying to fetch your timeline. If this doesn't update within the next few seconds, check your internet connection or your Mastodon account to make sure you aren't being throttled.</p>
                             </div>
                         </div>
 

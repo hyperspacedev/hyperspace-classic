@@ -234,6 +234,14 @@ class ProfilePanel extends Component {
         };
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return(<span>
             {this.createProfileLinkByName()}
@@ -245,6 +253,7 @@ class ProfilePanel extends Component {
                 styles={this.getStyles()}
                 headerText={this.createProfilePersona()}
                 isLightDismiss={true}
+                className={this.getDarkMode()}
             >
                 <div className="mt-4">
                         <div

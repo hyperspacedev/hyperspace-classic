@@ -338,6 +338,14 @@ class ComposeWindow extends Component {
         }
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return (
             <div name = "compose-window" className = "marked-area shadow-sm rounded p-1">

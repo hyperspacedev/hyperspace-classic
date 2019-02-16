@@ -503,6 +503,14 @@ class ReplyWindow extends Component {
         return (tempDiv.textContent || tempDiv.innerText || "");
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     giveDialogBox() {
         return (
             <Panel
@@ -511,6 +519,7 @@ class ReplyWindow extends Component {
                 headerText={"Reply to " + this.state.author}
                 type={PanelType.medium}
                 styles={this.getPanelStyles()}
+                className={this.getDarkMode()}
                 onRenderFooterContent={() => {return (
                             <div>
                                 <PrimaryButton
@@ -527,30 +536,32 @@ class ReplyWindow extends Component {
                     ;}
                 }
             >
-                <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
-                <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
-                <p className="mt-1">{this.getSpoilerText()}</p>
-                <CommandBar
-                    items={this.getItems()}
-                    overflowItems={this.getOverflowItems()}
-                    ariaLabel={'Use left and right arrow keys to navigate between commands'}
-                    overflowButtonProps={{ menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
-                />
-                <TextField
-                multiline={true}
-                rows={5}
-                resizable={false}
-                maxLength={500}
-                onBlur={e => this.updateStatus(e)}
-                placeholder="Type your reply here..."
-                defaultValue={this.state.reply_contents}
-                />
-                <DetailsList
-                    columns={this.getMediaItemColumns()}
-                    items={this.getMediaItemRows()}
-                    selectionMode={SelectionMode.none}
-                    layoutMode={DetailsListLayoutMode.justified}
-                />
+                <div name="compose-window" class = "p-3 rounded">
+                    <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
+                    <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
+                    <p className="mt-1">{this.getSpoilerText()}</p>
+                    <CommandBar
+                        items={this.getItems()}
+                        overflowItems={this.getOverflowItems()}
+                        ariaLabel={'Use left and right arrow keys to navigate between commands'}
+                        overflowButtonProps={{ menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
+                    />
+                    <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={e => this.updateStatus(e)}
+                    placeholder="Type your reply here..."
+                    defaultValue={this.state.reply_contents}
+                    />
+                    <DetailsList
+                        columns={this.getMediaItemColumns()}
+                        items={this.getMediaItemRows()}
+                        selectionMode={SelectionMode.none}
+                        layoutMode={DetailsListLayoutMode.justified}
+                    />
+                </div>
 
                 {this.giveVisibilityDialog()}
                 {this.giveSpoilerDialog()}

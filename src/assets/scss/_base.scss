@@ -177,6 +177,10 @@ a {
     font-weight: bold !important;
 }
 
+.ms-Panel-headerText {
+    font-weight: bold;
+}
+
 
 
 
@@ -243,9 +247,21 @@ a {
         }
     }
 
+    div[name="timeline-error"] {
+        color: #f4f4f4;
+    }
+
     div[name="post"] {
         background-color: #333;
         color: #F4F4F4;
+
+        .ms-Persona-primaryText {
+            color: #f4f4f4;
+        }
+
+        small.text-muted {
+            color: #a6a6a6 !important;
+        }
     }
 
     ul[name="post-toolbar"] * {
@@ -342,6 +358,16 @@ a {
             svg {
                 fill: white;
             }
+        }
+    }
+
+    .ms-Panel-main {
+        background-color: #212121;
+        color: #f4f4f4;
+        border-left-color: #111;
+
+        .ms-Panel-headerText {
+            color: #f4f4f4;
         }
     }
 }

@@ -150,6 +150,14 @@ class ThreadPanel extends Component {
         }
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     getThreadPanel() {
         return(
             <Panel
@@ -160,6 +168,7 @@ class ThreadPanel extends Component {
                 headerText="View thread"
                 isLightDismiss={true}
                 styles={this.getPanelStyles()}
+                className={this.getDarkMode()}
             >
                 <div>
                     {this.displayAncestors()}
@@ -196,10 +205,10 @@ class ThreadPanel extends Component {
         return (
             <div>
                 {
-                    this.props.fullButton ?
-                    this.props.fullButton === true ?
+                    this.props.fullButton !== null ?
+                    (this.props.fullButton === true ?
                     this.getThreadButton():
-                    this.getSmallThreadButton():
+                    this.getSmallThreadButton()):
                     <span/>
                 }
                 {this.getThreadPanel()}

@@ -179,6 +179,9 @@ a {
 .ms-Dialog-title {
   font-weight: bold !important; }
 
+.ms-Panel-headerText {
+  font-weight: bold; }
+
 /* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
 .dark .clickable-link:not([href]):not([tabindex]):focus,
@@ -224,9 +227,16 @@ a {
   .dark .ms-Button--compound .ms-Button-description {
     color: #eaeaea; }
 
+.dark div[name="timeline-error"] {
+  color: #f4f4f4; }
+
 .dark div[name="post"] {
   background-color: #333;
   color: #F4F4F4; }
+  .dark div[name="post"] .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div[name="post"] small.text-muted {
+    color: #a6a6a6 !important; }
 
 .dark ul[name="post-toolbar"] * {
   color: #f4f4f4; }
@@ -286,3 +296,14 @@ a {
       border-bottom-color: #212121; }
     .dark div[name="compose-window"] .ms-DetailsList * svg {
       fill: white; }
+
+.dark .ms-Panel-main {
+  background-color: #212121;
+  color: #f4f4f4;
+  border-left-color: #111; }
+  .dark .ms-Panel-main .ms-Panel-headerText {
+    color: #f4f4f4; }
+
+.ms-Dialog .dark, .ms-Dialog * .dark {
+  background-color: #333;
+  color: #f4f4f4; }
