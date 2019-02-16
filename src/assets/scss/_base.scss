@@ -222,6 +222,12 @@ a {
         .navbar-brand {
             color: #f4f4f4;
         }
+
+        button[name="dark-mode-button"] div i {
+            svg {
+                fill: white;
+            }
+        }
     }
 
     .ms-Pivot-icon i {

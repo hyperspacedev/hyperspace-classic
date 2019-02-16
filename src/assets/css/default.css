@@ -210,6 +210,8 @@ a {
   color: #f4f4f4; }
   .dark .navbar-app .navbar-brand {
     color: #f4f4f4; }
+  .dark .navbar-app button[name="dark-mode-button"] div i svg {
+    fill: white; }
 
 .dark .ms-Pivot-icon i svg {
   fill: #a980d7; }
@@ -303,7 +305,3 @@ a {
   border-left-color: #111; }
   .dark .ms-Panel-main .ms-Panel-headerText {
     color: #f4f4f4; }
-
-.ms-Dialog .dark, .ms-Dialog * .dark {
-  background-color: #333;
-  color: #f4f4f4; }
