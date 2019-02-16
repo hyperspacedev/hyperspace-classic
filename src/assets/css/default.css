@@ -73,6 +73,9 @@ li.nav-item a.nav-link i.material-icons {
 div#root {
   background-color: #f5f0fa; }
 
+div#root .dark {
+  background-color: #1e0f30; }
+
 .marked-area {
   background-color: white; }
 
@@ -175,3 +178,12 @@ a {
 
 .ms-Dialog-title {
   font-weight: bold !important; }
+
+.dark .navbar-app {
+  background-color: #333;
+  color: #fff; }
+  .dark .navbar-app .navbar-brand {
+    color: #fff; }
+
+.dark .ms-Pivot-text {
+  color: #fff; }

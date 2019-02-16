@@ -15,7 +15,6 @@ import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
 import './assets/css/default.css';
-
 loadTheme({
     palette: {
         themePrimary: '#5c2d91',
@@ -104,7 +103,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="dark">
               <nav>
                 <Navbar/>
               </nav>

@@ -43,6 +43,10 @@ div#root {
     background-color: lighten($theme-accent-color, 59%);
 }
 
+div#root .dark {
+    background-color: darken($theme-accent-color, 25%);
+}
+
 .marked-area {
     background-color: white;
 }
@@ -171,4 +175,19 @@ a {
 
 .ms-Dialog-title {
     font-weight: bold !important;
+}
+
+.dark {
+    .navbar-app {
+        background-color: #333;
+        color: #fff;
+
+        .navbar-brand {
+            color: #fff;
+        }
+    }
+
+    .ms-Pivot-text {
+        color: #fff;
+    }
 }
