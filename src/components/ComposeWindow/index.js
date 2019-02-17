@@ -376,6 +376,7 @@ class ComposeWindow extends Component {
 
                 {/* Visibility Dialog */}
                 <Dialog
+                    className={this.getDarkMode()}
                     hidden={this.state.hideDialog}
                     onDismiss={() => this.toggleVisibilityDialog()}
                     dialogContentProps={{
@@ -434,6 +435,7 @@ class ComposeWindow extends Component {
                         containerClassName: 'ms-dialogMainOverride'
                     }}
                     minWidth={500}
+                    className={this.getDarkMode()}
                 >
                     <Toggle
                         defaultChecked={this.state.sensitive}

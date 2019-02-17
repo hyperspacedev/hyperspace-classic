@@ -362,6 +362,7 @@ class ReplyWindow extends Component {
     giveVisibilityDialog() {
         return (
         <Dialog
+            className={this.getDarkMode()}
             hidden={this.state.hideVisibilityDialog}
             onDismiss={() => this.toggleVisibilityDialog()}
             dialogContentProps={{
@@ -423,6 +424,7 @@ class ReplyWindow extends Component {
 
     giveSpoilerDialog() {
         return (<Dialog
+            className={this.getDarkMode()}
             hidden={this.state.hideSpoilerDialog}
             onDismiss={() => this.toggleSpoilerDialog()}
             dialogContentProps={{

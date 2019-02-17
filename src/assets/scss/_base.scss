@@ -381,4 +381,46 @@ a {
             color: #f4f4f4;
         }
     }
+
+    .ms-Overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .ms-Dialog-main {
+        background-color: #212121;
+
+        .ms-Dialog-title {
+            color: lighten($theme-accent-color, 20%);
+        }
+
+        .ms-Dialog-inner {
+            background-color: #212121;
+
+            .ms-Dialog-subText, .ms-ChoiceField, .ms-Label {
+                color: #f4f4f4;
+            }
+        }
+    }
+
+    .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
+
+        background-color: #212121;
+
+        .ms-Dialog-header {
+            background-color: darken($theme-accent-color, 15%);
+
+            .ms-Dialog-title {
+                color: #f4f4f4;
+            }
+        }
+
+        .ms-Dialog-inner {
+            background-color: #212121;
+
+            .ms-Dialog-subText, .ms-ChoiceField, .ms-Label {
+                color: #f4f4f4;
+            }
+        }
+        
+    }
 }

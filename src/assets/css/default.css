@@ -308,3 +308,26 @@ a {
   border-right-color: #111; }
   .dark .ms-Panel-main .ms-Panel-headerText {
     color: #f4f4f4; }
+
+.dark .ms-Overlay {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.dark .ms-Dialog-main {
+  background-color: #212121; }
+  .dark .ms-Dialog-main .ms-Dialog-title {
+    color: #8f59cb; }
+  .dark .ms-Dialog-main .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-Dialog-main .ms-Dialog-inner .ms-ChoiceField, .dark .ms-Dialog-main .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }
+
+.dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
+  background-color: #212121; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header {
+    background-color: #371b57; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header .ms-Dialog-title {
+      color: #f4f4f4; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-ChoiceField, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }

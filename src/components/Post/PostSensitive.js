@@ -59,6 +59,14 @@ class PostSensitive extends Component {
         }
     }
 
+    getDarkMode() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'dark';
+        } else {
+            return '';
+        }
+    }
+
     render() {
         let status = this.state.status;
         return (
@@ -73,6 +81,7 @@ class PostSensitive extends Component {
 
                 </CompoundButton>
                 <Dialog
+                    className={this.getDarkMode()}
                     hidden={!this.state.modal}
                     onDismiss={this.toggle}
                     dialogContentProps={{
