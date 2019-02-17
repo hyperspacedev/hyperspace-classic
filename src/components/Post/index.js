@@ -32,6 +32,7 @@ class Post extends Component {
             noLink: this.props.nolink,
             noThread: this.props.nothread
         }
+
     }
 
     componentDidMount() {

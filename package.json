@@ -32,6 +32,7 @@
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
     "start": "npm run compile-sass; react-scripts start",
+    "start-firefox": "npm run compile-sass; BROWSER='Mozilla Firefox' react-scripts start",
     "start-electron": "npm run build; electron .",
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",

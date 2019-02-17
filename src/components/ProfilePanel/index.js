@@ -172,6 +172,7 @@ class ProfilePanel extends Component {
     }
 
     showRecentStatuses() {
+        let key = 0;
         if (this.state.account_statuses.length > 0) {
             return (
                 <div className="my-2">
@@ -179,7 +180,7 @@ class ProfilePanel extends Component {
                         this.state.account_statuses.map((post) => {
                             return(
                                 <div className="my-2">
-                                    <Post key={post.id} client={this.client} status={post} nolink={true}/>
+                                    <Post key={key++} client={this.client} status={post} nolink={true}/>
                                 </div>);
                         })
                     }
