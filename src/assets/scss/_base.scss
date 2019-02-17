@@ -223,10 +223,14 @@ a {
             color: #f4f4f4;
         }
 
-        button[name="dark-mode-button"] div i {
+        i {
             svg {
                 fill: white;
             }
+        }
+
+        .ms-Label {
+            color: #f4f4f4;
         }
     }
 

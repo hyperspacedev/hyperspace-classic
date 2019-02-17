@@ -148,14 +148,14 @@ class ProfilePanel extends Component {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
                 .then((resp) => {
                     _this.setState({
-                        following: resp.data[0].following
+                        following: false
                     });
                 })
         } else {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
                 .then((resp) => {
                     _this.setState({
-                        following: resp.data[0].following
+                        following: true
                     });
                 })
         }

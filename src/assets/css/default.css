@@ -210,8 +210,10 @@ a {
   color: #f4f4f4; }
   .dark .navbar-app .navbar-brand {
     color: #f4f4f4; }
-  .dark .navbar-app button[name="dark-mode-button"] div i svg {
+  .dark .navbar-app i svg {
     fill: white; }
+  .dark .navbar-app .ms-Label {
+    color: #f4f4f4; }
 
 .dark .ms-Pivot-icon i svg {
   fill: #a980d7; }
