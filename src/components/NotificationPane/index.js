@@ -185,11 +185,10 @@ class NotificationPane extends Component {
     createActivityList() {
         let _this = this;
         if (_this.state.notifications.length > 0) {
-            return (_this.state.notifications.map((notification) => {
+            return (_this.state.notifications.map((notification, index) => {
                 let activityKey = [{
-                    key: notification.id,
                     activityDescription: [
-                        <span>
+                        <span key={index}>
                             {this.getAuthorLink(notification.account)}
                             {this.getActivityDescription(notification.type, notification.status)}
                         </span>
@@ -204,7 +203,7 @@ class NotificationPane extends Component {
                         comments={this.getActivityComment(notification.status, notification.type)}
                         timeStamp={this.getActivityDate(notification.created_at)}
                         className="mt-2"
-                        key={notification.id + 6 / 2}
+                        key={index + Number(notification.id)}
                     />
                 );
             }));

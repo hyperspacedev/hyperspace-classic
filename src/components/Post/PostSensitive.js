@@ -62,7 +62,7 @@ class PostSensitive extends Component {
     render() {
         let status = this.state.status;
         return (
-            <div className="mt-2">
+            <div className="mt-2" key={this.state.status.id.toString() + "_sensitive_inner"}>
                 <CompoundButton
                     primary={this.primaryOrNot(status.spoiler_text)}
                     secondaryText={this.getAdditionalInformation(status.spoiler_text)}
@@ -87,7 +87,7 @@ class PostSensitive extends Component {
                                             {
                                                 status.media_attachments.map( function(media) {
                                                     return(
-                                                        <div className="col">
+                                                        <div className="col" key={status.id.toString() + "_media_" + media.id.toString()}>
                                                             <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
                                                         </div>
                                                     );

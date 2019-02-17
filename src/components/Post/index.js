@@ -20,12 +20,10 @@ import { getTrueInitials } from "../../utilities/getTrueInitials";
  * @param nothread Whether the post shouldn't include the 'Show thread' button
  */
 class Post extends Component {
-    id;
     client;
 
     constructor(props) {
         super(props);
-        this.id = this.props.key;
         this.client = this.props.client;
 
         this.state = {
@@ -86,11 +84,11 @@ class Post extends Component {
         }
     }
 
-    getPersonaText() {
+    getPersonaText(index) {
         if (this.state.noLink) {
             return <b>{this.getAuthorName(this.props.status.account)}</b>;
         } else {
-            return <ProfilePanel account={this.props.status.account} client={this.client}/>;
+            return <ProfilePanel account={this.props.status.account} client={this.client} key={this.props.status.account.id.toString() + "_" + index.toString() + "_panel"}/>;
         }
     }
 
@@ -124,9 +122,9 @@ class Post extends Component {
         if (status.reblog) {
             return (
                 <div className='mt-1 ml-4 mb-1'>
-                    <div>
+                    <div key={status.id.toString() + "_boost"}>
                         { status.sensitive === true ?
-                            <PostSensitive status={this.props.status}/>:
+                            <PostSensitive status={this.props.status} key={status.id.toString() + "_sensitive_boost"}/>:
 
                             <div className='ml-4 mb-2'>
                                 <BoostCard client={this.client} status={this.props.status.reblog}/>
@@ -139,11 +137,11 @@ class Post extends Component {
     }
 
     render() {
-        return (<div name="post" className={"container rounded p-3 marked-area " + this.getBigShadow()}>
+        return (<div name="post" key={this.props.status.id.toString() + "_post"} className={"container rounded p-3 marked-area " + this.getBigShadow()}>
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,
-                            text: this.getPersonaText(),
+                            text: this.getPersonaText(this.props.status.id),
                             imageInitials: getTrueInitials(this.props.status.account.display_name),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
@@ -154,9 +152,9 @@ class Post extends Component {
                         this.props.status.reblog ?
                             this.getBoostCard(this.props.status):
 
-                            <div className='mb-2'>
+                            <div className='mb-2' key={this.props.status.id.toString() + "_contents"}>
                                 { this.props.status.sensitive === true ?
-                                    <PostSensitive status={this.props.status}/>:
+                                    <PostSensitive status={this.props.status} key={this.props.status.id.toString() + "_sensitive"}/>:
                                     <div>
                                         <p dangerouslySetInnerHTML={{__html: this.props.status.content}} />
                                         {

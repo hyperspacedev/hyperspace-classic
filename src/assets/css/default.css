@@ -304,6 +304,7 @@ a {
 .dark .ms-Panel-main {
   background-color: #212121;
   color: #f4f4f4;
-  border-left-color: #111; }
+  border-left-color: #111;
+  border-right-color: #111; }
   .dark .ms-Panel-main .ms-Panel-headerText {
     color: #f4f4f4; }

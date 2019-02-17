@@ -179,7 +179,7 @@ class ProfilePanel extends Component {
                     {
                         this.state.account_statuses.map((post) => {
                             return(
-                                <div className="my-2">
+                                <div className="my-2" key={this.props.account.id.toString() + "_post_" + post.id.toString()}>
                                     <Post key={key++} client={this.client} status={post} nolink={true}/>
                                 </div>);
                         })
