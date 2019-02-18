@@ -190,7 +190,7 @@ class ThreadPanel extends Component {
                 href={this.state.url}
                 className='post-toolbar-icon'
                 onClick={() => this.openThreadPanel()}
-            > Show thread
+            > <span className="d-none d-md-block">Show thread</span>
             </ActionButton>
         );
     }
