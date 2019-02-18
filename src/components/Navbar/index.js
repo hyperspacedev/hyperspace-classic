@@ -38,28 +38,41 @@ class Navbar extends Component {
         window.location.reload();
     }
 
+    getNavBar() {
+        if (localStorage.getItem('prefers-dark-mode') === "true") {
+            return 'navbar-dark';
+        } else {
+            return 'navbar-light';
+        }
+    }
+
     render() {
         return (
-            <nav className="navbar navbar-expand-md navbar-light navbar-app fixed-top">
+            <nav className={"navbar navbar-expand-lg navbar-app fixed-top " + this.getNavBar()}>
                 <span className="navbar-brand"><img src="hyperspace48.png" style={{ width: '24px'}} alt="Hyperspace logo"/>&nbsp;<b>Hyperspace</b></span>
-                <ul className="navbar-nav ml-auto">
-                <TooltipHost content="Toggle the dark or light theme.">
-                    <Toggle
-                            label={<Icon iconName={this.getDarkModeIcon()}/>}
-                            inlineLabel={true}
-                            defaultChecked={this.state.darkMode}
-                            styles={{root: {marginRight: 12}}}
-                            onChange={(event, checked) => this.toggleDarkMode(event, checked)}
-                        />
-                </TooltipHost>
-                        {
-                            localStorage.length > 0 ?
-                            <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">
-                                <DefaultButton text="Log out" onClick={() => this.logOut()}/>
-                            </TooltipHost>:
-                                <span/>
-                        }
-                </ul>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav ml-auto">
+                    <TooltipHost content="Toggle the dark or light theme.">
+                        <Toggle
+                                label={<Icon iconName={this.getDarkModeIcon()}/>}
+                                inlineLabel={true}
+                                defaultChecked={this.state.darkMode}
+                                styles={{root: {marginRight: 12}}}
+                                onChange={(event, checked) => this.toggleDarkMode(event, checked)}
+                            />
+                    </TooltipHost>
+                            {
+                                localStorage.length > 0 ?
+                                <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">
+                                    <DefaultButton text="Log out" onClick={() => this.logOut()}/>
+                                </TooltipHost>:
+                                    <span/>
+                            }
+                    </ul>
+                </div> 
             </nav>
         );
     }
