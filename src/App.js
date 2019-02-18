@@ -110,9 +110,15 @@ class App extends Component {
         }
     }
 
+    hideMacScrollbars() {
+        if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
+            return 'hidden-scroll';
+        }
+    }
+
     render() {
         return (
-            <div className={this.getDarkMode()}>
+            <div className={this.getDarkMode() + " " + this.hideMacScrollbars()}>
               <nav>
                 <Navbar/>
               </nav>

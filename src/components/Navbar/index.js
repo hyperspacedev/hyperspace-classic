@@ -46,9 +46,32 @@ class Navbar extends Component {
         }
     }
 
+    renderMacTitleBarOnNavPadding() {
+        if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
+            return {
+                paddingTop: 32
+            };
+        }
+    }
+
+    renderMacTitleBar() {
+        if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
+            return (
+                <div className = "m-0 p-0 mac-title-bar">
+                    <p>Hyperspace</p>
+                </div>
+        );
+        }
+    }
+
     render() {
+        console.log(navigator.appVersion);
         return (
-            <nav className={"navbar navbar-expand-lg navbar-app fixed-top " + this.getNavBar()}>
+            <nav 
+                className={"navbar navbar-expand-lg navbar-app fixed-top " + this.getNavBar()}
+                style={this.renderMacTitleBarOnNavPadding()}
+            >
+                {this.renderMacTitleBar()}
                 <span className="navbar-brand"><img src="hyperspace48.png" style={{ width: '24px'}} alt="Hyperspace logo"/>&nbsp;<b>Hyperspace</b></span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
