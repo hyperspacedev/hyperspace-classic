@@ -326,6 +326,14 @@ a {
         }
     }
 
+    .profile-container-header {
+        box-shadow: inset 0px -2px 4px -4px #333;
+        width: 100%;
+        height: 156px;
+        margin: 0;
+        padding: 0;
+    }
+
     div[name="notification-pane"] {
         background-color: #333;
         color: #f4f4f4;
