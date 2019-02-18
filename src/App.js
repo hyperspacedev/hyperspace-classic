@@ -117,7 +117,7 @@ class App extends Component {
               </nav>
               <div className = "container app-container">
                 <div className = "row">
-                  <div className = "col-sm-12 col-md-8">
+                  <div className = "col-sm-12 col-lg-8">
                       {
                           this.client ?
                               <div>
@@ -134,7 +134,7 @@ class App extends Component {
                     </div>
                   </div>
                     {
-                        this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 profile-container">
+                        this.client ? <div className="col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
                                 {
                                     localStorage.getItem('account') ?
                                         <ProfileContainer client={this.client} who={JSON.parse(localStorage.getItem('account'))}/>:
