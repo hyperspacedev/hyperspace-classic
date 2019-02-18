@@ -103,18 +103,43 @@ class PostRoll extends Component {
         })
     }
 
+    getClearTimelineText() {
+        let header = "It's empty here...";
+        let body = "It looks like there aren't any posts on this timeline. Why not get it going with a new post?";
+        if (this.props.timeline === "messages") {
+            header = "All clear!";
+            body = "It looks like you have no new messages. Interact with some people to get the conversation going!"
+        }
+        return (<div>
+            <h3>{header}</h3>
+            <p>{body}</p>
+            <small>
+                <p>If you think this is an error, try checking the following: </p>
+                <ul>
+                    <li>You have a stable internet connection.</li>
+                    <li>You have allowed Hyperspace access to your account.</li>
+                    <li>You aren't being throttled on your account (429).</li>
+                </ul>
+            </small>
+        </div>);
+    }
+
     render() {
         let _this = this;
         return (
             <div>
-                {this.state.statuses.length > 0 ? <div>{this.state.statuses.map(function (status) {
-                        return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
-                    })}</div>:
+                {this.state.statuses.length > 0 ? 
+                <div>
+                    {this.state.statuses.map(function (status) {
+                            return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
+                        })}
+                    <hr/>
+                    <div name = "end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
+                </div>:
                     <div name = "timeline-error" className="row p-4">
                         <div className = "row">
                             <div className = "col">
-                                <h3>Hang tight!</h3>
-                                <p>We're trying to fetch your timeline. If this doesn't update within the next few seconds, check your internet connection or your Mastodon account to make sure you aren't being throttled.</p>
+                                {this.getClearTimelineText()}
                             </div>
                         </div>
 

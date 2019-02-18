@@ -231,6 +231,9 @@ a {
   .dark .ms-Button--compound .ms-Button-description {
     color: #eaeaea; }
 
+.dark div[name="end-of-post-roll"] {
+  color: #d0d0d0; }
+
 .dark div[name="timeline-error"] {
   color: #f4f4f4; }
 
