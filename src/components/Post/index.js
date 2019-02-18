@@ -137,7 +137,7 @@ class Post extends Component {
     }
 
     render() {
-        return (<div name="post" key={this.props.status.id.toString() + "_post"} className={"container rounded p-3 marked-area " + this.getBigShadow()}>
+        return (<div name="post" key={this.props.status.id.toString() + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar,

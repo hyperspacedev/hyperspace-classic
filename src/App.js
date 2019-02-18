@@ -14,6 +14,7 @@ import 'popper.js';
 import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
+import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import './assets/css/default.css';
 loadTheme({
     palette: {
