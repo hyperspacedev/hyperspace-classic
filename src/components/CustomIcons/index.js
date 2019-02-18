@@ -1,7 +1,7 @@
 import {registerIcons} from 'office-ui-fabric-react';
 import React from "react";
 
-// Icons made avialable by Google via the Material Icon set.
+// Icons made available by Google via the Material Icon set.
 
 registerIcons({
     icons: {
