@@ -76,24 +76,24 @@ class Navbar extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ml-auto">
-                    <TooltipHost content="Toggle the dark or light theme.">
-                        <Toggle
-                                label={<Icon iconName={this.getDarkModeIcon()}/>}
-                                inlineLabel={true}
-                                defaultChecked={this.state.darkMode}
-                                styles={{root: {marginRight: 12}}}
-                                onChange={(event, checked) => this.toggleDarkMode(event, checked)}
-                            />
-                    </TooltipHost>
                             {
                                 localStorage.length > 0 ?
-                                <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">
-                                    <DefaultButton text="Log out" onClick={() => this.logOut()}/>
-                                </TooltipHost>:
+                                <ul className="navbar-nav ml-auto">
+                                    <TooltipHost content="Toggle the dark or light theme.">
+                                        <Toggle
+                                                label={<Icon iconName={this.getDarkModeIcon()}/>}
+                                                inlineLabel={true}
+                                                defaultChecked={this.state.darkMode}
+                                                styles={{root: {marginRight: 12}}}
+                                                onChange={(event, checked) => this.toggleDarkMode(event, checked)}
+                                            />
+                                    </TooltipHost>
+                                    <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">
+                                        <DefaultButton text="Log out" onClick={() => this.logOut()}/>
+                                    </TooltipHost>
+                                    </ul>:
                                     <span/>
                             }
-                    </ul>
                 </div> 
             </nav>
         );
