@@ -90,7 +90,8 @@ li.nav-item a.nav-link i.material-icons {
   padding-top: 76px; }
 
 div#root {
-  background-color: #f5f0fa; }
+  background-color: #f5f0fa;
+  min-height: 100vh; }
 
 div#root .dark {
   background-color: #212121; }

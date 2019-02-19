@@ -70,6 +70,7 @@ li.nav-item a.nav-link i.material-icons {
 
 div#root {
     background-color: lighten($theme-accent-color, 59%);
+    min-height: 100vh;
 }
 
 div#root .dark {

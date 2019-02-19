@@ -130,15 +130,14 @@ class RegisterWindow extends Component {
         }
     }
 
-
     render() {
         let _this = this;
         return (
             <div className = "container p-4">
                 <h2>Sign in to Hyperspace</h2>
-                <p>Welcome to Hyperspace, the fluffy client for Mastodon! We're more than happy to make your Mastodon experience pleasant, but we'll need you to sign in first.</p>
+                <p>Welcome to Hyperspace, the fluffy client for Mastodon! We're more than happy to make your experience pleasant, but we'll need you to sign in to your Mastodon account first.</p>
                 <p>
-                    Please sign in by entering your instance's domain.
+                    Please sign in by entering your Mastodon instance's domain. This is typically the domain name of the instance or the URL used to access that instance.
                 </p>
                 <div>
                     <TextField
@@ -150,8 +149,15 @@ class RegisterWindow extends Component {
                         onGetErrorMessage={this._getErrorMessage}
                         validateOnFocusOut
                     />
-                    <br/>
-                    <PrimaryButton onClick={this.toggle}>Sign in</PrimaryButton>
+                    {/* <div class = "container rounded shadow-sm p-3 my-2 marked-area">
+                        <h5>Finish sign-in</h5>
+                        <p>
+                            We noticed you didn't finish setting up Hyperspace. You can start over or pick up where you left off.
+                        </p>
+                        <PrimaryButton style={{marginRight: 8}}>Finish sign-in</PrimaryButton>
+                        <DefaultButton>Start over</DefaultButton>
+                    </div> */}
+                    <PrimaryButton onClick={this.toggle} style={{marginRight: 8, marginTop: 4}}>Sign in</PrimaryButton>
                 </div>
 
                 <Panel
