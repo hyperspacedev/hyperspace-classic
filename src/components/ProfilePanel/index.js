@@ -73,6 +73,7 @@ class ProfilePanel extends Component {
                 key: 'value',
                 fieldName: 'value',
                 data: 'string',
+                maxWidth: 176,
                 isPadded: true
             }];
         let rows = [];
@@ -84,13 +85,15 @@ class ProfilePanel extends Component {
 
         if (rows.length > 0) {
             return (
-                <DetailsList
-                    columns={columns}
-                    items={rows}
-                    selectionMode={SelectionMode.none}
-                    layoutMode={DetailsListLayoutMode.justified}
-                    className={"shadow-sm rounded"}
-                />
+                <div name="profile-table">
+                    <DetailsList
+                        columns={columns}
+                        items={rows}
+                        selectionMode={SelectionMode.none}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        className={"shadow-sm rounded"}
+                    />
+                </div>
             );
         }
         

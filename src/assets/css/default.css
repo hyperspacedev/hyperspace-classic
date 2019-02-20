@@ -212,6 +212,9 @@ a {
 .ms-Panel-headerText {
   font-weight: bold; }
 
+div[name="profile-table"] * {
+  overflow-x: hidden; }
+
 /* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
 .dark .clickable-link:not([href]):not([tabindex]):focus,
