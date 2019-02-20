@@ -4,7 +4,7 @@
 
 Hyperspace is a client for Mastodon and the fediverse written in ReactJS. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
 
-> Note: *Progressive web app support is currently experimental. Not all features may render or work correctly.
+> Note: *Progressive web app support is currently experimental. Not all features may render or work correctly. PWA support may not work on Android.
 
 ## Building from source
 
@@ -31,7 +31,6 @@ Alternatively, you can run any of these commands to build for your specific plat
 ## Deploying to the Web
 
 To run Hyperspace from a website, download either the static files or build from source and then upload them to your hosting server.
-
 
 ## Modules used
 
