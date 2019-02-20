@@ -1,4 +1,6 @@
-# Hyperspace
+![Hyperspace logomark](logomark.svg)
+
+---
 
 ![Hyperspace screenshot](screenshot.png)
 
