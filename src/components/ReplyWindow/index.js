@@ -12,6 +12,7 @@ import {
     TextField,
     Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout
 } from 'office-ui-fabric-react';
+import {getDarkMode} from "../../utilities/getDarkMode";
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
@@ -362,7 +363,7 @@ class ReplyWindow extends Component {
     giveVisibilityDialog() {
         return (
         <Dialog
-            className={this.getDarkMode()}
+            className={getDarkMode()}
             hidden={this.state.hideVisibilityDialog}
             onDismiss={() => this.toggleVisibilityDialog()}
             dialogContentProps={{
@@ -424,7 +425,7 @@ class ReplyWindow extends Component {
 
     giveSpoilerDialog() {
         return (<Dialog
-            className={this.getDarkMode()}
+            className={getDarkMode()}
             hidden={this.state.hideSpoilerDialog}
             onDismiss={() => this.toggleSpoilerDialog()}
             dialogContentProps={{
@@ -505,14 +506,6 @@ class ReplyWindow extends Component {
         return (tempDiv.textContent || tempDiv.innerText || "");
     }
 
-    getDarkMode() {
-        if (localStorage.getItem('prefers-dark-mode') === "true") {
-            return 'dark';
-        } else {
-            return '';
-        }
-    }
-
     giveDialogBox() {
         return (
             <Panel
@@ -521,7 +514,7 @@ class ReplyWindow extends Component {
                 headerText={"Reply to " + this.state.author}
                 type={PanelType.medium}
                 styles={this.getPanelStyles()}
-                className={this.getDarkMode()}
+                className={getDarkMode()}
                 onRenderFooterContent={() => {return (
                             <div>
                                 <PrimaryButton
