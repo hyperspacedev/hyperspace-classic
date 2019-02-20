@@ -261,6 +261,13 @@ a {
   .dark .ms-Button--compound .ms-Button-description {
     color: #eaeaea; }
 
+.dark .ms-DetailsList * {
+  background-color: #333; }
+  .dark .ms-DetailsList * div[role="row"] {
+    border-bottom-color: #212121; }
+  .dark .ms-DetailsList * svg {
+    fill: white; }
+
 .dark div[name="end-of-post-roll"] {
   color: #d0d0d0; }
 

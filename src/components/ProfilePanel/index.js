@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
+import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton, DetailsList, DetailsListLayoutMode,
+    SelectionMode } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
@@ -57,6 +58,44 @@ class ProfilePanel extends Component {
             </span>
         );
     }
+
+    createProfileTable(account) {
+        let columns = [
+            {
+                key: 'key',
+                fieldName: 'key',
+                data: "string",
+                maxWidth: 24,
+                isPadded: true
+
+            },
+            {
+                key: 'value',
+                fieldName: 'value',
+                data: 'string',
+                isPadded: true
+            }];
+        let rows = [];
+        
+        for (let item in account.fields) {
+            let value = account.fields[item].value.replace("class=\"invisible\"", '');
+            rows.push({'key': account.fields[item].name, 'value': <p dangerouslySetInnerHTML={{__html: value}}/>})
+        }
+
+        if (rows.length > 0) {
+            return (
+                <DetailsList
+                    columns={columns}
+                    items={rows}
+                    selectionMode={SelectionMode.none}
+                    layoutMode={DetailsListLayoutMode.justified}
+                    className={"shadow-sm rounded"}
+                />
+            );
+        }
+        
+    }
+
     checkDisplayName(account) {
         if (account.display_name === "") {
             return account.username;
@@ -106,7 +145,7 @@ class ProfilePanel extends Component {
                 <PrimaryButton
                     text={this.returnFollowStatusText()}
                     onClick = {() => this.toggleFollow()}
-                    className="mt-4 shadow-sm"
+                    className={"mt-4 shadow-sm " + getDarkMode()}
                     disabled={this.checkFollowNotSelf()}
                     aria-describedby="cannotFollow"
                 />
@@ -254,6 +293,7 @@ class ProfilePanel extends Component {
                             dangerouslySetInnerHTML={{__html: this.state.account.note}}
                             className="mt-2"
                         />
+                        {this.createProfileTable(this.state.account)}
                 </div>
                 <hr/>
                 <div className="my-2">

@@ -292,6 +292,18 @@ a {
         }
     }
 
+    .ms-DetailsList * {
+        background-color: #333;
+
+        div[role="row"] {
+            border-bottom-color: #212121;
+        }
+
+        svg {
+            fill: white;
+        }
+    }
+
     div[name="end-of-post-roll"] {
         color: #d0d0d0;
     }
