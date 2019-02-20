@@ -20,7 +20,7 @@ class Timeline extends Component {
             <div style={{ width: '100%'}}>
                 <Pivot linkSize={PivotLinkSize.large}>
                     <PivotItem linkText={<span className="d-none d-lg-block">My feed</span>} itemIcon="homeApp">
-                        <div className = "container mt-2">
+                        <div className = "container mt-2 ml-0">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
                     </PivotItem>

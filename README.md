@@ -1,10 +1,12 @@
-# Hyperspace
+![Hyperspace logomark](logomark.svg)
 
-A fluffy client for Mastodon
+---
 
 ![Hyperspace screenshot](screenshot.png)
 
-Hyperspace is a client for Mastodon and the fediverse written in ReactJS. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances.
+Hyperspace is a client for Mastodon and the fediverse written in ReactJS. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
+
+> Note: *Progressive web app support is currently experimental. Not all features may render or work correctly. PWA support may not work on Android.
 
 ## Building from source
 
@@ -13,7 +15,6 @@ To get the packages and environment set up, run `npm install`. Most commands and
 ```bash
 npm install
 npm run build
-serve build
 ```
 
 ### Building desktop versions
@@ -28,6 +29,10 @@ Alternatively, you can run any of these commands to build for your specific plat
 - `build-electron-linux -- <package type>` - where `<package type>` is `rpm`,`deb`, or `appimage` to build the specific package type
 
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
+
+## Deploying to the Web
+
+To run Hyperspace from a website, download either the static files or build from source and then upload them to your hosting server.
 
 ## Modules used
 
@@ -44,3 +49,9 @@ Hyperspace makes use of the following modules and components to make it as fluff
 ## Licensing
 
 The Hyperspace project itself is licensed under the GNU Lesser General Public License, though some components are licensed under other free-software licenses such as the MIT License and GNU GPL.
+
+## Contribute
+
+Currently, there aren't any said rules for Hyperspace just yet on committing and submitting pull requests.
+
+If you want to aid the project in other ways, consider supporting the project on [Patreon](https://patreon.com/marquiskurt).
