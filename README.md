@@ -15,10 +15,6 @@ npm install
 npm run build
 ```
 
-## Deploying to the Web
-
-To run Hyperspace from a website, download either the static files or build from source and then upload them to your hosting server.
-
 ### Building desktop versions
 
 If you wish to build the desktop versions of Hyperspace, it is recommended to run `build-electron` instead of `npm run build`. This will build for Windows, macOS, and Linux.
@@ -31,6 +27,11 @@ Alternatively, you can run any of these commands to build for your specific plat
 - `build-electron-linux -- <package type>` - where `<package type>` is `rpm`,`deb`, or `appimage` to build the specific package type
 
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
+
+## Deploying to the Web
+
+To run Hyperspace from a website, download either the static files or build from source and then upload them to your hosting server.
+
 
 ## Modules used
 
