@@ -3,6 +3,7 @@ import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'off
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
+import {getDarkMode} from "../../utilities/getDarkMode";
 
 /**
  * A panel that display profile information of a given user.
@@ -235,14 +236,6 @@ class ProfilePanel extends Component {
         };
     }
 
-    getDarkMode() {
-        if (localStorage.getItem('prefers-dark-mode') === "true") {
-            return 'dark';
-        } else {
-            return '';
-        }
-    }
-
     render() {
         return(<span>
             {this.createProfileLinkByName()}
@@ -254,7 +247,7 @@ class ProfilePanel extends Component {
                 styles={this.getStyles()}
                 headerText={this.createProfilePersona()}
                 isLightDismiss={true}
-                className={this.getDarkMode()}
+                className={getDarkMode()}
             >
                 <div className="mt-4">
                         <div

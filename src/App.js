@@ -8,6 +8,7 @@ import NotificationPane from './components/NotificationPane';
 import {anchorInBrowser} from './utilities/anchorInBrowser.js';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
+import {getDarkMode} from './utilities/getDarkMode';
 import './components/CustomIcons';
 import 'jquery';
 import 'popper.js';
@@ -102,14 +103,6 @@ class App extends Component {
         anchorInBrowser();
     }
 
-    getDarkMode() {
-        if (localStorage.getItem('prefers-dark-mode') === "true") {
-            return 'dark';
-        } else {
-            return '';
-        }
-    }
-
     hideMacScrollbars() {
         if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
             return 'hidden-scroll';
@@ -118,7 +111,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className={this.getDarkMode() + " " + this.hideMacScrollbars()}>
+            <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
               <nav>
                 <Navbar/>
               </nav>
