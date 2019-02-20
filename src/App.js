@@ -155,7 +155,7 @@ class App extends Component {
                                 </div>:
                                 <div>
                                     <div className = "container rounded shadow-sm mt-4 p-4 marked-area">
-                                        <span className = "ml-auto" style={{textAlign: "center !important"}}><img src="hyperspace512.png" width="50%" alt="Hyerspace logo"/></span>
+                                        <span className = "ml-auto" style={{textAlign: "center !important"}}><img src="logomark.svg" width="100%" alt="Hyerspace logo"/></span>
                                         <h4>What is Hyperspace?</h4>
                                         <p>
                                             Hyperspace is a client for the <a href="https://joinmastodon.org">Mastodon</a> social network. It allows users to sign in to their Mastodon account and view timelines, post statuses (toots), and interact with others in the federated universe (fediverse).

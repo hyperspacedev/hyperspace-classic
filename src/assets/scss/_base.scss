@@ -1,7 +1,7 @@
 @import '_fonts.scss';
 
 * {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
 }
 
 .hidden-scroll {
@@ -22,6 +22,11 @@
     -webkit-user-select: none;
     -webkit-app-region: drag;
     background-color: #fff;
+}
+
+.navbar-brand {
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    letter-spacing: 2px;
 }
 
 .mac-title-bar {
