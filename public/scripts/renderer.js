@@ -1,6 +1,6 @@
 if (navigator.userAgent.includes("Electron")) {
     const { remote } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { Menu } = remote
 
     const contextItems = [
         {
