@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {ActionButton, TooltipHost} from "office-ui-fabric-react";
+import {ActionButton, TooltipHost, Dialog, DialogType, DialogFooter, PrimaryButton, DefaultButton} from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
+import { getDarkMode } from '../../utilities/getDarkMode';
 
 /**
  * A small toolbar including common actions for interacting with
@@ -29,11 +30,27 @@ class PostToolbar extends Component {
             boosted: this.props.status.reblogged,
             favorite_toggle: this.props.status.favourited,
             url: this.props.status.url,
-            noThread: this.props.nothread
+            noThread: this.props.nothread,
+            hideDeleteDialog: true
         };
 
         this.toggle_favorite = this.toggle_favorite.bind(this);
         this.toggle_boost = this.toggle_boost.bind(this);
+    }
+
+    openDeleteDialog() {
+        this.setState({hideDeleteDialog: false})
+    }
+
+    deletePost() {
+        this.client.del('/statuses/' + this.state.id)
+        .then(() => {
+            this.closeDeleteDialog();
+        })
+    }
+
+    closeDeleteDialog() {
+        this.setState({hideDeleteDialog: true})
     }
 
     toggle_favorite() {
@@ -206,7 +223,37 @@ class PostToolbar extends Component {
 
                         }
                     </li>
+                    <li>
+                        {
+                            (this.props.status.account.acct === JSON.parse(localStorage.getItem('account')).acct) && (!this.props.status.reblog) ?
+                            <ActionButton
+                                iconProps={{iconName: 'deletePost', className: 'post-toolbar-icon'}}
+                                checked={false}
+                                onClick={() => this.openDeleteDialog()}
+                            >Delete</ActionButton>:
+                            <span/>
+                        }
+                    </li>
                 </ul>
+                <Dialog
+                    hidden={this.state.hideDeleteDialog}
+                    onDismiss={this._closeDialog}
+                    className={getDarkMode()}
+                    dialogContentProps={{
+                        type: DialogType.normal,
+                        title: 'Delete this post?',
+                        subText: "Are you sure you want to delete this? You can't undo this action."
+                    }}
+                    modalProps={{
+                        isBlocking: true,
+                        containerClassName: 'ms-dialogMainOverride'
+                    }}
+                    >
+                    <DialogFooter>
+                        <PrimaryButton onClick={() => this.deletePost()} text="Delete" />
+                        <DefaultButton onClick={() => this.closeDeleteDialog()} text="Cancel" />
+                    </DialogFooter>
+                </Dialog>
             </div>
         );
     }

@@ -100,13 +100,9 @@ class ReplyWindow extends Component {
 
     replyOrThread() {
         if (this.state.author_id === JSON.parse(localStorage.getItem('account')).acct) {
-            if (this.state.reply_count <= 0) {
-                return 'Start thread';
-            } else {
-                return 'Continue thread';
-            }
+            return 'Continue';
         } else {
-            return 'Reply'
+            return 'Reply';
         }
     }
 
