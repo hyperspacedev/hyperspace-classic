@@ -101,6 +101,17 @@ class PostRoll extends Component {
         this.streamListener.on('not-event-stream', mes => {
             console.log(mes)
         })
+
+        this.streamListener.on('delete', delId => {
+            let roll = _this.state.statuses;
+            for (let i in roll) {
+                if (roll[i].id === delId) {
+                    roll.splice(i, 1);
+                }
+            }
+            _this.setState({statuses: roll});
+            this.forceUpdate();
+        });
     }
 
     getClearTimelineText() {
