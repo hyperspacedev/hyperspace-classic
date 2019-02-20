@@ -46,9 +46,10 @@ class BoostCard extends Component {
             let actualContent = this.stripElementsFromContent(status.content);
 
             if (status.media_attachments.length !== 0) {
+
                 documentCardStyles = {
                     root: {
-                        height: 350
+                        height: 355
                     }
                 }
 
@@ -59,7 +60,8 @@ class BoostCard extends Component {
                     }
                 }
             }
-        return {documentCardStyles};
+
+            return documentCardStyles;
     }
 
     openChildThreadPanel() {
@@ -69,7 +71,7 @@ class BoostCard extends Component {
     render() {
         let post = this.state.status;
         return(
-            <div>
+            <div name="boost-card">
                 <ThreadPanel 
                     fromWhere={post.id} 
                     client={this.client} 

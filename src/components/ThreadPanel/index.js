@@ -6,6 +6,7 @@ import {
     PanelType
 } from 'office-ui-fabric-react';
 import Post from '../Post/index.js';
+import {getDarkMode} from "../../utilities/getDarkMode";
 
 /**
  * The panel that displays a thread of statuses in order.
@@ -160,6 +161,7 @@ class ThreadPanel extends Component {
                 headerText="View thread"
                 isLightDismiss={true}
                 styles={this.getPanelStyles()}
+                className={getDarkMode()}
             >
                 <div>
                     {this.displayAncestors()}
@@ -181,7 +183,7 @@ class ThreadPanel extends Component {
                 href={this.state.url}
                 className='post-toolbar-icon'
                 onClick={() => this.openThreadPanel()}
-            > Show thread
+            > <span className="d-none d-md-block">Show thread</span>
             </ActionButton>
         );
     }
@@ -196,10 +198,10 @@ class ThreadPanel extends Component {
         return (
             <div>
                 {
-                    this.props.fullButton ?
-                    this.props.fullButton === true ?
+                    this.props.fullButton !== null ?
+                    (this.props.fullButton === true ?
                     this.getThreadButton():
-                    this.getSmallThreadButton():
+                    this.getSmallThreadButton()):
                     <span/>
                 }
                 {this.getThreadPanel()}

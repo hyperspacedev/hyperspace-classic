@@ -7,21 +7,26 @@ import {
     DetailsListLayoutMode,
     SelectionMode
 } from 'office-ui-fabric-react';
+import ProfilePanel from '../ProfilePanel';
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 
 class ProfileUser extends Component {
     who;
     persona;
+    client;
 
     constructor(props) {
         super(props);
 
         this.who = this.props.who;
+        this.client = this.props.client;
+    }
 
+    componentWillMount() {
         this.persona = {
             imageUrl: this.who.avatar,
             imageInitials: getTrueInitials(this.who.display_name),
-            text: <b>{this.who.display_name}</b>,
+            text: <ProfilePanel client={this.client} account={this.who}/>,
             secondaryText: '@' + this.who.acct,
             tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
         }
@@ -98,7 +103,7 @@ class ProfileContainer extends Component {
 
     render() {
         return (
-            <div className="profile-container shadow rounded marked-area">
+            <div name = "profile-container" className="profile-container shadow rounded marked-area">
                 <div className="profile-container-header"
                      style={{
                          backgroundImage: 'url("' + this.who.header + '")'
@@ -108,6 +113,7 @@ class ProfileContainer extends Component {
                     <div className="my-4">
                         <ProfileUser
                             who={this.who}
+                            client={this.props.client}
                         />
                     </div>
                     <Label>{this.who.source.note}</Label>

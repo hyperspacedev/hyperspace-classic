@@ -15,6 +15,7 @@ import {
     Callout
 } from "office-ui-fabric-react";
 import {initializeIcons} from "@uifabric/icons";
+import {getDarkMode} from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
@@ -340,7 +341,7 @@ class ComposeWindow extends Component {
 
     render() {
         return (
-            <div className = "marked-area shadow-sm rounded p-1">
+            <div name = "compose-window" className = "marked-area shadow-sm rounded p-1">
                 <CommandBar
                     items={this.getItems()}
                     overflowItems={this.getOverflowItems()}
@@ -368,6 +369,7 @@ class ComposeWindow extends Component {
 
                 {/* Visibility Dialog */}
                 <Dialog
+                    className={getDarkMode()}
                     hidden={this.state.hideDialog}
                     onDismiss={() => this.toggleVisibilityDialog()}
                     dialogContentProps={{
@@ -426,6 +428,7 @@ class ComposeWindow extends Component {
                         containerClassName: 'ms-dialogMainOverride'
                     }}
                     minWidth={500}
+                    className={getDarkMode()}
                 >
                     <Toggle
                         defaultChecked={this.state.sensitive}

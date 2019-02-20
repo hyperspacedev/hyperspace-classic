@@ -43,11 +43,30 @@
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
 
+.hidden-scroll body ::-webkit-scrollbar {
+  display: none; }
+
+.hidden-scroll .app-container {
+  padding-top: 100px; }
+
 .navbar-app {
   box-shadow: 0px 2px 4px #a2a2a2;
   -webkit-user-select: none;
   -webkit-app-region: drag;
   background-color: #fff; }
+
+.mac-title-bar {
+  text-align: center;
+  vertical-align: middle;
+  height: 24px;
+  font-size: 13px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  position: absolute;
+  left: 0;
+  top: 0; }
+  .mac-title-bar p {
+    margin-top: 2px; }
 
 .clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
   color: #5c2d91; }
@@ -72,6 +91,9 @@ li.nav-item a.nav-link i.material-icons {
 
 div#root {
   background-color: #f5f0fa; }
+
+div#root .dark {
+  background-color: #212121; }
 
 .marked-area {
   background-color: white; }
@@ -175,3 +197,178 @@ a {
 
 .ms-Dialog-title {
   font-weight: bold !important; }
+
+.ms-Panel-headerText {
+  font-weight: bold; }
+
+/* DARK MODE */
+.dark .clickable-link:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link,
+.dark a {
+  color: #a980d7; }
+
+.dark .clickable-link#hover:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:hover,
+.dark a:hover {
+  color: white; }
+
+.dark .clickable-link#active:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:active,
+.dark a:active {
+  color: #ddcdf0; }
+
+.dark .navbar-app {
+  background-color: #333;
+  box-shadow: 0px 2px 4px #212121;
+  color: #f4f4f4; }
+  .dark .navbar-app .navbar-brand {
+    color: #f4f4f4; }
+  .dark .navbar-app i svg {
+    fill: white; }
+  .dark .navbar-app .ms-Label {
+    color: #f4f4f4; }
+
+.dark .ms-Pivot-icon i svg {
+  fill: #a980d7; }
+
+.dark .ms-Pivot-text {
+  color: #f4f4f4; }
+
+.dark .ms-Button--default {
+  background-color: #666666;
+  color: #f4f4f4; }
+
+.dark .ms-Button--compound {
+  background-color: #666666;
+  color: #f4f4f4; }
+  .dark .ms-Button--compound .ms-Button-description {
+    color: #eaeaea; }
+
+.dark div[name="end-of-post-roll"] {
+  color: #d0d0d0; }
+
+.dark div[name="timeline-error"] {
+  color: #f4f4f4; }
+
+.dark div[name="post"] {
+  background-color: #333;
+  color: #F4F4F4; }
+  .dark div[name="post"] .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div[name="post"] small.text-muted {
+    color: #a6a6a6 !important; }
+
+.dark ul[name="post-toolbar"] * {
+  color: #f4f4f4; }
+  .dark ul[name="post-toolbar"] * .post-toolbar-icon svg {
+    fill: #a980d7; }
+  .dark ul[name="post-toolbar"] * .post-toolbar-icon:hover div i svg {
+    fill: #ddcdf0; }
+
+.dark div[name="boost-card"] .ms-DocumentCardDetails {
+  background-color: #212121;
+  color: #f4f4f4; }
+
+.dark div[name="boost-card"] div {
+  border-top-color: #111;
+  border-bottom-color: #111;
+  border-left-color: #111;
+  border-right-color: #111; }
+  .dark div[name="boost-card"] div :hover {
+    border-top-color: #333;
+    border-bottom-color: #333;
+    border-left-color: #333;
+    border-right-color: #333; }
+
+.dark div[name="profile-container"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="profile-container"] .ms-Label, .dark div[name="profile-container"] .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div[name="profile-container"] .ms-DetailsList * {
+    background-color: #333; }
+    .dark div[name="profile-container"] .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+
+.dark .profile-container-header {
+  box-shadow: inset 0px -2px 4px -4px #333;
+  width: 100%;
+  height: 156px;
+  margin: 0;
+  padding: 0; }
+
+.dark div[name="notification-pane"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="notification-pane"] .ms-ActivityItem-commentText {
+    color: #f4f4f4; }
+
+.dark div[name="compose-window"] {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div[name="compose-window"] .ms-TextField-field {
+    background-color: #212121;
+    color: #f4f4f4;
+    border-top-color: #000;
+    border-left-color: #000;
+    border-bottom-color: #000;
+    border-right-color: #000; }
+    .dark div[name="compose-window"] .ms-TextField-field :hover {
+      border-top-color: #d0d0d0;
+      border-left-color: #d0d0d0;
+      border-bottom-color: #d0d0d0;
+      border-right-color: #d0d0d0; }
+  .dark div[name="compose-window"] .ms-CommandBar, .dark div[name="compose-window"] .ms-CommandBar * {
+    background-color: #666;
+    color: #f4f4f4; }
+    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon svg {
+      fill: #a980d7;
+      width: 20px;
+      height: 20px; }
+    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon:hover div i svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon:hover div i svg {
+      fill: #ddcdf0;
+      width: 20px;
+      height: 20px; }
+  .dark div[name="compose-window"] .ms-DetailsList * {
+    background-color: #333; }
+    .dark div[name="compose-window"] .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+    .dark div[name="compose-window"] .ms-DetailsList * svg {
+      fill: white; }
+
+.dark .ms-Panel-main {
+  background-color: #212121;
+  color: #f4f4f4;
+  border-left-color: #111;
+  border-right-color: #111; }
+  .dark .ms-Panel-main .ms-Panel-headerText {
+    color: #f4f4f4; }
+
+.dark .ms-Overlay {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.dark .ms-Dialog-main {
+  background-color: #212121; }
+  .dark .ms-Dialog-main .ms-Dialog-title {
+    color: #8f59cb; }
+  .dark .ms-Dialog-main .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-Dialog-main .ms-Dialog-inner .ms-ChoiceField, .dark .ms-Dialog-main .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }
+
+.dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
+  background-color: #212121; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header {
+    background-color: #371b57; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header .ms-Dialog-title {
+      color: #f4f4f4; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-ChoiceField, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }

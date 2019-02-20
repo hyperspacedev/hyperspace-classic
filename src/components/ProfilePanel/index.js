@@ -3,6 +3,7 @@ import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'off
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
+import {getDarkMode} from "../../utilities/getDarkMode";
 
 /**
  * A panel that display profile information of a given user.
@@ -148,14 +149,14 @@ class ProfilePanel extends Component {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
                 .then((resp) => {
                     _this.setState({
-                        following: resp.data[0].following
+                        following: false
                     });
                 })
         } else {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
                 .then((resp) => {
                     _this.setState({
-                        following: resp.data[0].following
+                        following: true
                     });
                 })
         }
@@ -172,14 +173,15 @@ class ProfilePanel extends Component {
     }
 
     showRecentStatuses() {
+        let key = 0;
         if (this.state.account_statuses.length > 0) {
             return (
                 <div className="my-2">
                     {
                         this.state.account_statuses.map((post) => {
                             return(
-                                <div className="my-2">
-                                    <Post key={post.id} client={this.client} status={post} nolink={true}/>
+                                <div className="my-2" key={this.props.account.id.toString() + "_post_" + post.id.toString()}>
+                                    <Post key={key++} client={this.client} status={post} nolink={true}/>
                                 </div>);
                         })
                     }
@@ -245,6 +247,7 @@ class ProfilePanel extends Component {
                 styles={this.getStyles()}
                 headerText={this.createProfilePersona()}
                 isLightDismiss={true}
+                className={getDarkMode()}
             >
                 <div className="mt-4">
                         <div

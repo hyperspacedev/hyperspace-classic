@@ -19,22 +19,22 @@ class Timeline extends Component {
         return (
             <div style={{ width: '100%'}}>
                 <Pivot linkSize={PivotLinkSize.large}>
-                    <PivotItem linkText="My feed" itemIcon="homeApp">
+                    <PivotItem linkText={<span className="d-none d-lg-block">My feed</span>} itemIcon="homeApp">
                         <div className = "container mt-2">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem linkText="This community" itemIcon="localCommunity">
+                    <PivotItem linkText={<span className="d-none d-lg-block">This community</span>} itemIcon="localCommunity">
                         <div className = "container mt-2">
                             <PostRoll timeline="local" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem linkText="Public" itemIcon="public">
+                    <PivotItem linkText={<span className="d-none d-lg-block">Public</span>} itemIcon="public">
                         <div className = "container mt-2">
                             <PostRoll timeline="public" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem linkText="Conversations (beta)" itemIcon="directMessage">
+                    <PivotItem linkText={<span className="d-none d-lg-block">Conversations</span>} itemIcon="directMessage">
                         <div className = "container mt-2">
                             <PostRoll timeline="messages" client={this.client}/>
                         </div>

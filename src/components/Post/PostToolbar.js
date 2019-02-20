@@ -111,7 +111,7 @@ class PostToolbar extends Component {
     render() {
         return (
             <div>
-                <ul className="nav">
+                <ul className="nav" name="post-toolbar">
                     <li>
                         <ReplyWindow status={this.props.status} client={this.props.client} fullButton={true}/>
                     </li>
@@ -127,7 +127,7 @@ class PostToolbar extends Component {
                                     onClick={() => this.toggle_favorite()}
                                     className='post-toolbar-icon'
                                 >
-                                    Unfavorite ({this.state.favorites})
+                                    <span className="d-none d-md-block">Unfavorite ({this.state.favorites})</span>
                                 </ActionButton>:
                                 <ActionButton
                                     data-automation-id="test"
@@ -138,7 +138,7 @@ class PostToolbar extends Component {
                                     onClick={() => this.toggle_favorite()}
                                     className='post-toolbar-icon'
                                 >
-                                    Favorite ({this.state.favorites})
+                                    <span className="d-none d-md-block">Favorite ({this.state.favorites})</span>
                                 </ActionButton>
                         }
 
@@ -155,7 +155,7 @@ class PostToolbar extends Component {
                                     onClick={() => this.toggle_boost()}
                                     className='post-toolbar-icon'
                                 >
-                                    Unboost ({this.state.boosts})
+                                    <span className="d-none d-md-block">Unboost ({this.state.boosts})</span>
                                 </ActionButton>:
                                 <ActionButton
                                     data-automation-id="test"
@@ -166,7 +166,7 @@ class PostToolbar extends Component {
                                     onClick={() => this.toggle_boost()}
                                     className='post-toolbar-icon'
                                 >
-                                    Boost ({this.state.boosts})
+                                    <span className="d-none d-md-block">Boost ({this.state.boosts})</span>
                                 </ActionButton>
                         }
 
@@ -189,7 +189,7 @@ class PostToolbar extends Component {
                                     onClick={() => this.getLinkAndCopy(this.state.url)}
                                     className='post-toolbar-icon'
                                 >
-                                    Copy link
+                                    <span className="d-none d-md-block">Copy link</span>
                                 </ActionButton>:
                                 <TooltipHost content={this.checkIfUnlisted()}>
                                     <ActionButton
@@ -200,7 +200,7 @@ class PostToolbar extends Component {
                                         checked={false}
                                         className='post-toolbar-icon'
                                     >
-                                        Copy link
+                                        <span className="d-none d-md-block">Copy link</span>
                                     </ActionButton>
                                 </TooltipHost>
 

@@ -12,6 +12,7 @@ import {
     TextField,
     Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout
 } from 'office-ui-fabric-react';
+import {getDarkMode} from "../../utilities/getDarkMode";
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
@@ -362,6 +363,7 @@ class ReplyWindow extends Component {
     giveVisibilityDialog() {
         return (
         <Dialog
+            className={getDarkMode()}
             hidden={this.state.hideVisibilityDialog}
             onDismiss={() => this.toggleVisibilityDialog()}
             dialogContentProps={{
@@ -423,6 +425,7 @@ class ReplyWindow extends Component {
 
     giveSpoilerDialog() {
         return (<Dialog
+            className={getDarkMode()}
             hidden={this.state.hideSpoilerDialog}
             onDismiss={() => this.toggleSpoilerDialog()}
             dialogContentProps={{
@@ -511,6 +514,7 @@ class ReplyWindow extends Component {
                 headerText={"Reply to " + this.state.author}
                 type={PanelType.medium}
                 styles={this.getPanelStyles()}
+                className={getDarkMode()}
                 onRenderFooterContent={() => {return (
                             <div>
                                 <PrimaryButton
@@ -527,30 +531,32 @@ class ReplyWindow extends Component {
                     ;}
                 }
             >
-                <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
-                <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
-                <p className="mt-1">{this.getSpoilerText()}</p>
-                <CommandBar
-                    items={this.getItems()}
-                    overflowItems={this.getOverflowItems()}
-                    ariaLabel={'Use left and right arrow keys to navigate between commands'}
-                    overflowButtonProps={{ menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
-                />
-                <TextField
-                multiline={true}
-                rows={5}
-                resizable={false}
-                maxLength={500}
-                onBlur={e => this.updateStatus(e)}
-                placeholder="Type your reply here..."
-                defaultValue={this.state.reply_contents}
-                />
-                <DetailsList
-                    columns={this.getMediaItemColumns()}
-                    items={this.getMediaItemRows()}
-                    selectionMode={SelectionMode.none}
-                    layoutMode={DetailsListLayoutMode.justified}
-                />
+                <div name="compose-window" class = "p-3 rounded">
+                    <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
+                    <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
+                    <p className="mt-1">{this.getSpoilerText()}</p>
+                    <CommandBar
+                        items={this.getItems()}
+                        overflowItems={this.getOverflowItems()}
+                        ariaLabel={'Use left and right arrow keys to navigate between commands'}
+                        overflowButtonProps={{ menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icons'}, className: 'toolbar-icon', name: 'More' }}
+                    />
+                    <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={e => this.updateStatus(e)}
+                    placeholder="Type your reply here..."
+                    defaultValue={this.state.reply_contents}
+                    />
+                    <DetailsList
+                        columns={this.getMediaItemColumns()}
+                        items={this.getMediaItemRows()}
+                        selectionMode={SelectionMode.none}
+                        layoutMode={DetailsListLayoutMode.justified}
+                    />
+                </div>
 
                 {this.giveVisibilityDialog()}
                 {this.giveSpoilerDialog()}
@@ -571,7 +577,7 @@ class ReplyWindow extends Component {
                 onClick={() => this.openPanel()}
                 className={'post-toolbar-icon ' + this.props.className}
             >
-                {this.replyOrThread()} ({this.state.reply_count})
+                <span className="d-none d-md-block">{this.replyOrThread()} ({this.state.reply_count})</span>
             </ActionButton>
             {this.giveDialogBox()}
         </div>);

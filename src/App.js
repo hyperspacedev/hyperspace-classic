@@ -8,14 +8,15 @@ import NotificationPane from './components/NotificationPane';
 import {anchorInBrowser} from './utilities/anchorInBrowser.js';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
+import {getDarkMode} from './utilities/getDarkMode';
 import './components/CustomIcons';
 import 'jquery';
 import 'popper.js';
 import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
+import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import './assets/css/default.css';
-
 loadTheme({
     palette: {
         themePrimary: '#5c2d91',
@@ -102,15 +103,21 @@ class App extends Component {
         anchorInBrowser();
     }
 
+    hideMacScrollbars() {
+        if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
+            return 'hidden-scroll';
+        }
+    }
+
     render() {
         return (
-            <div>
+            <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
               <nav>
                 <Navbar/>
               </nav>
               <div className = "container app-container">
                 <div className = "row">
-                  <div className = "col-sm-12 col-md-8">
+                  <div className = "col-sm-12 col-lg-8">
                       {
                           this.client ?
                               <div>
@@ -127,13 +134,13 @@ class App extends Component {
                     </div>
                   </div>
                     {
-                        this.client ? <div className="col-sm-12 col-md-4 d-sm-none d-md-block m-0 p-0 profile-container">
+                        this.client ? <div className="col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
                                 {
                                     localStorage.getItem('account') ?
-                                        <ProfileContainer who={JSON.parse(localStorage.getItem('account'))}/>:
+                                        <ProfileContainer client={this.client} who={JSON.parse(localStorage.getItem('account'))}/>:
                                         <div className="p-4">
                                             <h3>Hang tight!</h3>
-                                            <p>Reload Hyperspace for your profile to take effect.</p>
+                                            <p>Reload Hyperspace for your profile card to update.</p>
                                         </div>
 
                                 }

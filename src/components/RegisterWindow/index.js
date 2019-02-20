@@ -6,6 +6,7 @@ import {
     Panel,
     PanelType
 } from "office-ui-fabric-react";
+import {getDarkMode} from "../../utilities/getDarkMode";
 import Mastodon from 'megalodon';
 
 /**
@@ -122,7 +123,6 @@ class RegisterWindow extends Component {
         }
     }
 
-
     render() {
         let _this = this;
         return (
@@ -153,6 +153,7 @@ class RegisterWindow extends Component {
                     headerText="Give authorization access"
                     closeButtonAriaLabel="Close"
                     styles={this.getPanelStyles()}
+                    className={getDarkMode()}
                     onRenderFooterContent = { () => {return(
                         <div>
                             <PrimaryButton
