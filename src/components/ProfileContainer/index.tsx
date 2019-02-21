@@ -9,13 +9,19 @@ import {
 } from 'office-ui-fabric-react';
 import ProfilePanel from '../ProfilePanel';
 import { getTrueInitials } from "../../utilities/getTrueInitials";
+import Mastodon from 'megalodon';
 
-class ProfileUser extends Component {
-    who;
-    persona;
-    client;
+interface IProfileProps {
+    who: any;
+    client: Mastodon;
+}
 
-    constructor(props) {
+class ProfileUser extends Component<IProfileProps> {
+    who: any;
+    persona: any;
+    client: any;
+
+    constructor(props: any) {
         super(props);
 
         this.who = this.props.who;
@@ -42,13 +48,17 @@ class ProfileUser extends Component {
     }
 }
 
-class ProfileList extends Component {
+interface IProfileListProps {
+    who: any;
+}
 
-    columns;
-    rows;
-    profile;
+class ProfileList extends Component<IProfileListProps> {
 
-    constructor(props) {
+    columns: any;
+    rows: any;
+    profile: any;
+
+    constructor(props: any) {
         super(props);
 
         this.profile = this.props.who;
@@ -94,8 +104,8 @@ class ProfileList extends Component {
  * 
  * @param who The logged-in user to display information about
  */
-class ProfileContainer extends Component {
-    who;
+class ProfileContainer extends Component<IProfileProps> {
+    who: any;
 
     componentWillMount() {
         this.who = this.props.who;
