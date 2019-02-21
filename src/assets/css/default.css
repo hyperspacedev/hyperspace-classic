@@ -292,16 +292,16 @@ div[name="profile-table"] * {
   .dark ul[name="post-toolbar"] * .post-toolbar-icon:hover div i svg {
     fill: #ddcdf0; }
 
-.dark div[name="boost-card"] .ms-DocumentCardDetails {
+.dark div#boost-card .ms-DocumentCardDetails {
   background-color: #212121;
   color: #f4f4f4; }
 
-.dark div[name="boost-card"] div {
+.dark div#boost-card div {
   border-top-color: #111;
   border-bottom-color: #111;
   border-left-color: #111;
   border-right-color: #111; }
-  .dark div[name="boost-card"] div :hover {
+  .dark div#boost-card div :hover {
     border-top-color: #333;
     border-bottom-color: #333;
     border-left-color: #333;
