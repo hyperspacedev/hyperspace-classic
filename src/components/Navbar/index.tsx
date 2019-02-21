@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Icon, Toggle, TooltipHost, DefaultButton} from 'office-ui-fabric-react';
 
 interface INavbarState {
-    darkMode: any;
+    darkMode: boolean | undefined;
 }
 
 /**
@@ -87,7 +87,7 @@ class Navbar extends Component<any, INavbarState> {
                                         <Toggle
                                                 label={'Dark'}
                                                 inlineLabel={true}
-                                                defaultChecked={this.state.darkMode}
+                                                defaultChecked={this.state.darkMode || undefined}
                                                 styles={{root: {marginRight: 12}}}
                                                 onChange={(event:any, checked:any) => this.toggleDarkMode(event, checked)}
                                             />
