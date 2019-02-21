@@ -5,6 +5,7 @@ import Post from './index.js';
 
 interface IPostRollProps {
     timeline?: string;
+    client: Mastodon;
 }
 
 interface IPostRollState {
