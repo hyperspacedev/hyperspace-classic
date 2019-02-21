@@ -308,11 +308,11 @@ div[name="profile-table"] *{
         }
     }
 
-    div[name="end-of-post-roll"] {
+    div#end-of-post-roll {
         color: #d0d0d0;
     }
 
-    div[name="timeline-error"] {
+    div#timeline-error {
         color: #f4f4f4;
     }
 
@@ -364,7 +364,7 @@ div[name="profile-table"] *{
         
     }
 
-    div[name="profile-container"] {
+    div#profile-container {
         background-color: #333;
         color: #f4f4f4;
 
@@ -389,7 +389,7 @@ div[name="profile-table"] *{
         padding: 0;
     }
 
-    div[name="notification-pane"] {
+    div#notification-pane {
         background-color: #333;
         color: #f4f4f4;
 

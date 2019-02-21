@@ -271,10 +271,10 @@ div[name="profile-table"] * {
   .dark .ms-DetailsList * svg {
     fill: white; }
 
-.dark div[name="end-of-post-roll"] {
+.dark div#end-of-post-roll {
   color: #d0d0d0; }
 
-.dark div[name="timeline-error"] {
+.dark div#timeline-error {
   color: #f4f4f4; }
 
 .dark div[name="post"] {
@@ -307,14 +307,14 @@ div[name="profile-table"] * {
     border-left-color: #333;
     border-right-color: #333; }
 
-.dark div[name="profile-container"] {
+.dark div#profile-container {
   background-color: #333;
   color: #f4f4f4; }
-  .dark div[name="profile-container"] .ms-Label, .dark div[name="profile-container"] .ms-Persona-primaryText {
+  .dark div#profile-container .ms-Label, .dark div#profile-container .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark div[name="profile-container"] .ms-DetailsList * {
+  .dark div#profile-container .ms-DetailsList * {
     background-color: #333; }
-    .dark div[name="profile-container"] .ms-DetailsList * div[role="row"] {
+    .dark div#profile-container .ms-DetailsList * div[role="row"] {
       border-bottom-color: #212121; }
 
 .dark .profile-container-header {
@@ -324,10 +324,10 @@ div[name="profile-table"] * {
   margin: 0;
   padding: 0; }
 
-.dark div[name="notification-pane"] {
+.dark div#notification-pane {
   background-color: #333;
   color: #f4f4f4; }
-  .dark div[name="notification-pane"] .ms-ActivityItem-commentText {
+  .dark div#notification-pane .ms-ActivityItem-commentText {
     color: #f4f4f4; }
 
 .dark div[name="compose-window"] {

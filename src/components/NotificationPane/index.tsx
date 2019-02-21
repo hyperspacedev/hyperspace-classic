@@ -5,19 +5,29 @@ import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
 import ThreadPanel from "../ThreadPanel";
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
+import Mastodon, { Status } from 'megalodon';
 
+
+interface INotificationPaneProps {
+    client: Mastodon;
+}
+
+interface INotificationPaneState {
+    notifications: [];
+    hideDeleteDialog: boolean | undefined;
+}
 
 /**
  * Small area dedicated to displaying, responding to, and clearing notifications.
  * 
  * @param client The Mastodon client used to get, post, and delete notifications.
  */
-class NotificationPane extends Component {
+class NotificationPane extends Component<INotificationPaneProps, INotificationPaneState> {
 
-    client;
-    notifListener;
+    client: any;
+    notifListener: any;
 
-    constructor(props){
+    constructor(props: any){
         super(props);
 
         this.client = this.props.client;
@@ -37,16 +47,16 @@ class NotificationPane extends Component {
 
         this.notifListener.on('connect', () => {
             this.client.get('/notifications', {limit: 7})
-                .then((resp) => {
+                .then((resp: any) => {
                     _this.setState({
                         notifications: resp.data
                     })
                 });
         });
 
-        this.notifListener.on('notification', (notification) => {
+        this.notifListener.on('notification', (notification: any) => {
             let notif_set = _this.state.notifications;
-            notif_set.unshift(notification);
+            notif_set.unshift(notification as never);
             notif_set.splice(-1, 1);
             _this.setState({
                 notifications: notif_set
@@ -107,11 +117,11 @@ class NotificationPane extends Component {
         this.toggleDeleteDialog()
     }
 
-    getAuthorLink(account) {
+    getAuthorLink(account: any) {
         return <ProfilePanel account={account} client={this.client}/>;
     }
 
-    sendDesktopNotification(notification) {
+    sendDesktopNotification(notification: any) {
 
         let title = notification.account.display_name;
         let body = "";
@@ -139,12 +149,10 @@ class NotificationPane extends Component {
             body: body
         });
 
-        desktopNotification.onclick(() => {
-            window.focus();
-        });
+        desktopNotification.onclick= () => { window.focus(); };
     }
 
-    getActivityDescription(type, status) {
+    getActivityDescription(type: string, status: Status) {
         if (type === "follow") {
             return <span> <b>followed</b> you.</span>;
         } else if (type === "favourite") {
@@ -160,7 +168,7 @@ class NotificationPane extends Component {
         }
     }
 
-    getActivityComment(status, type) {
+    getActivityComment(status: Status, type: string) {
         if (status === null || status === undefined) {
             return '';
         } else {
@@ -177,15 +185,14 @@ class NotificationPane extends Component {
         }
     }
 
-    // noinspection JSMethodCanBeStatic
-    getActivityDate(date) {
+    getActivityDate(date: any) {
         return moment(date).format("MMM Do, YYYY [at] h:mm A");
     }
 
     createActivityList() {
         let _this = this;
         if (_this.state.notifications.length > 0) {
-            return (_this.state.notifications.map((notification, index) => {
+            return (_this.state.notifications.map((notification:any, index) => {
                 let activityKey = [{
                     activityDescription: [
                         <span key={index}>
@@ -219,7 +226,7 @@ class NotificationPane extends Component {
 
     render(){
         return (
-            <div name = "notification-pane" className = "container-fluid shadow rounded mt-4 p-4 marked-area">
+            <div id="notification-pane" className = "container-fluid shadow rounded mt-4 p-4 marked-area">
                 <div className="row">
                     <div className="col-10">
                         <h5><b>Notifications</b></h5>

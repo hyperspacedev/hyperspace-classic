@@ -157,9 +157,9 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                             return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
                         })}
                     <hr/>
-                    <div className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
+                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
                 </div>:
-                    <div className="row p-4">
+                    <div id="timeline-error" className="row p-4">
                         <div className = "row">
                             <div className = "col">
                                 {this.getClearTimelineText()}

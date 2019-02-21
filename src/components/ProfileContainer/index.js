@@ -103,7 +103,7 @@ class ProfileContainer extends Component {
 
     render() {
         return (
-            <div name = "profile-container" className="profile-container shadow rounded marked-area">
+            <div id = "profile-container" className="profile-container shadow rounded marked-area">
                 <div className="profile-container-header"
                      style={{
                          backgroundImage: 'url("' + this.who.header + '")'
