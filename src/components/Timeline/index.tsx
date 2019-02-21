@@ -20,15 +20,6 @@ class Timeline extends Component<ITimelineProps> {
         this.client = this.props.client;
     }
 
-    private _customRenderer(link: IPivotItemProps, defaultRenderer: (link: IPivotItemProps) => JSX.Element): JSX.Element {
-        return (
-          <span>
-            {defaultRenderer(link)}
-            <Icon iconName="Airplane" style={{ color: 'red' }} />
-          </span>
-        );
-      }
-
     render() {
         return (
             <div style={{ width: '100%'}}>
