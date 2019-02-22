@@ -256,7 +256,6 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                 <Dialog
                     hidden={this.state.hideDeleteDialog}
                     onDismiss={() => this.closeDeleteDialog()}
-                    className={getDarkMode()}
                     dialogContentProps={{
                         type: DialogType.normal,
                         title: 'Delete this post?',
@@ -264,7 +263,8 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                     }}
                     modalProps={{
                         isBlocking: true,
-                        containerClassName: 'ms-dialogMainOverride'
+                        containerClassName: 'ms-dialogMainOverride',
+                        className: getDarkMode()
                     }}
                     >
                     <DialogFooter>

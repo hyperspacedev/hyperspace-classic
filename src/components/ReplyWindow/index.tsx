@@ -388,7 +388,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
     giveVisibilityDialog() {
         return (
         <Dialog
-            className={getDarkMode()}
             hidden={this.state.hideVisibilityDialog}
             onDismiss={() => this.toggleVisibilityDialog()}
             dialogContentProps={{
@@ -398,7 +397,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             }}
             modalProps={{
                 isBlocking: false,
-                containerClassName: 'ms-dialogMainOverride'
+                containerClassName: 'ms-dialogMainOverride',
+                className: getDarkMode()
             }}
             minWidth={500}
         >
@@ -450,7 +450,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     giveSpoilerDialog() {
         return (<Dialog
-            className={getDarkMode()}
             hidden={this.state.hideSpoilerDialog}
             onDismiss={() => this.toggleSpoilerDialog()}
             dialogContentProps={{
@@ -460,7 +459,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             }}
             modalProps={{
                 isBlocking: true,
-                containerClassName: 'ms-dialogMainOverride'
+                containerClassName: 'ms-dialogMainOverride',
+                className: getDarkMode()
             }}
             minWidth={500}
         >

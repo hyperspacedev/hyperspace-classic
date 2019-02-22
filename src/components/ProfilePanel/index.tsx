@@ -240,7 +240,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                         this.state.account_statuses.map((post: Status) => {
                             return(
                                 <div className="my-2" key={this.props.account.id.toString() + "_post_" + post.id.toString()}>
-                                    <Post key={key++} client={this.client} status={post} nolink={true}/>
+                                    <Post key={key++} client={this.client} status={post} nolink={true} clickToThread={true}/>
                                 </div>);
                         })
                     }

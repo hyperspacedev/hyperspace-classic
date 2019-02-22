@@ -386,7 +386,6 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
 
                 {/* Visibility Dialog */}
                 <Dialog
-                    className={getDarkMode()}
                     hidden={this.state.hideDialog}
                     onDismiss={() => this.toggleVisibilityDialog()}
                     dialogContentProps={{
@@ -396,7 +395,8 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     }}
                     modalProps={{
                         isBlocking: false,
-                        containerClassName: 'ms-dialogMainOverride'
+                        containerClassName: 'ms-dialogMainOverride',
+                        className: getDarkMode()
                     }}
                     minWidth={500}
                 >
@@ -442,10 +442,10 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     }}
                     modalProps={{
                         isBlocking: true,
-                        containerClassName: 'ms-dialogMainOverride'
+                        containerClassName: 'ms-dialogMainOverride',
+                        className: getDarkMode()
                     }}
                     minWidth={500}
-                    className={getDarkMode()}
                 >
                     <Toggle
                         defaultChecked={this.state.sensitive}

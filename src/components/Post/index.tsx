@@ -11,6 +11,7 @@ import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon, { Status } from 'megalodon';
+import ThreadPanel from '../ThreadPanel';
 
 interface IPostProps {
     client: Mastodon;
@@ -18,11 +19,13 @@ interface IPostProps {
     nothread?: boolean | undefined;
     bigShadow?: boolean | undefined;
     status: any;
+    clickToThread?: boolean;
 }
 
 interface IPostState {
     noLink: boolean | undefined;
     noThread: boolean | undefined;
+    clickToThread?: boolean;
 }
 
 /**
@@ -35,14 +38,18 @@ interface IPostState {
  */
 class Post extends Component<IPostProps, IPostState> {
     client: any;
+    threadRef: any;
 
     constructor(props: any) {
         super(props);
         this.client = this.props.client;
 
+        this.threadRef = React.createRef();
+
         this.state = {
             noLink: this.props.nolink,
-            noThread: this.props.nothread
+            noThread: this.props.nothread,
+            clickToThread: this.props.clickToThread || false
         }
 
     }
@@ -119,6 +126,19 @@ class Post extends Component<IPostProps, IPostState> {
         return temporaryDiv.innerHTML;
     }
 
+    openThreadPanel(event: any) {
+        let parent = event.target.parentNode;
+        if (
+            !event.target.className.includes("ms-Link") && 
+            !event.target.className.includes("ms-Button") &&
+            !parent.className.includes("ms-Button-flexContainer") &&
+            !this.props.status.reblog &&
+            !(event.target.nodeName === "A" || parent.nodeName === "A")
+            ) {
+            this.threadRef.current.openThreadPanel();
+        }
+    }
+
     // It currently isn't possible to get boosts to work using openInBrowser,
     // so this forces it manually.
     openBoostCardCorrectly(event: any, link: string) {
@@ -150,8 +170,17 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     render() {
-        console.log(this.props.status);
-        return (<div id="post" key={this.props.status.id + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
+        return (
+        <div 
+            id="post" 
+            key={this.props.status.id + "_post"} 
+            className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}
+            onClick={(e) => {
+                if (this.state.clickToThread) {
+                    this.openThreadPanel(e);
+                }
+            }}
+        >
                 {
                         <Persona {... {
                             imageUrl: this.props.status.account.avatar_static,
@@ -201,6 +230,12 @@ class Post extends Component<IPostProps, IPostState> {
                     nothread={this.props.nothread}
                 />
                 <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span> as unknown as string}/>
+                <ThreadPanel
+                    fromWhere={this.props.status.id}
+                    client={this.client}
+                    fullButton={null}
+                    ref={this.threadRef}
+                />
             </div>
         );
     }

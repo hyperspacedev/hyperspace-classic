@@ -85,9 +85,11 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
 
                 </CompoundButton>
                 <Dialog
-                    className={getDarkMode()}
                     hidden={!this.state.modal}
                     onDismiss={this.toggle}
+                    modalProps={{
+                        className: getDarkMode()
+                    }}
                     dialogContentProps={{
                         type: DialogType.normal,
                         title: status.spoiler_text,

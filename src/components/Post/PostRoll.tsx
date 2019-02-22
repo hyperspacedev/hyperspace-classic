@@ -154,7 +154,11 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                 {this.state.statuses.length > 0 ? 
                 <div>
                     {this.state.statuses.map(function (status: Status) {
-                            return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
+                            return ( 
+                                <div key={status.id} className="my-3">
+                                    <Post client={_this.client} status={status} nolink={false} nothread={false} clickToThread={true}/>
+                                </div>
+                            );
                         })}
                     <hr/>
                     <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
