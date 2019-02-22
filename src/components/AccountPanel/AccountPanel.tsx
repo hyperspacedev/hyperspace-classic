@@ -15,7 +15,6 @@ interface IAccountPanelProps {
 interface IAccountPanelState {
     account: any;
     account_statuses: [];
-    following: boolean | undefined;
     openPanel: boolean;
 }
 
@@ -39,7 +38,6 @@ class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
         this.state = {
             account: this.props.account,
             account_statuses: [],
-            following: false,
             openPanel: false
         }
 
@@ -54,7 +52,6 @@ class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
             openPanel: !this.state.openPanel
         });
         this.getAllRecentStatuses();
-        this.getFollowStatus();
     }
 
     closeProfilePanel() {
@@ -164,63 +161,8 @@ class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
                         }
                     }
                 />
-                <PrimaryButton
-                    text={this.returnFollowStatusText()}
-                    onClick = {() => this.toggleFollow()}
-                    className={"mt-4 shadow-sm " + getDarkMode()}
-                    disabled={this.checkFollowNotSelf()}
-                    aria-describedby="cannotFollow"
-                />
             </div>
         );
-    }
-
-    getFollowStatus() {
-        let _this = this;
-        this.client.get('/accounts/relationships', {id: this.state.account.id})
-            .then(
-                (resp: any) => {
-                    _this.setState({
-                        following: resp.data[0].following
-                    })
-                }
-            );
-    }
-
-    checkFollowNotSelf() {
-        return this.state.account.id === JSON.parse(localStorage.getItem('account') || "").id;
-    }
-
-    returnFollowStatusText() {
-        if (this.checkFollowNotSelf()) {
-            return 'Can\'t follow self';
-        }
-         else {
-             if (this.state.following) {
-                return 'Unfollow';
-            } else {
-                return 'Follow';
-            }
-        }
-    }
-
-    toggleFollow() {
-        let _this = this;
-        if (this.state.following) {
-            this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
-                .then((resp: any) => {
-                    _this.setState({
-                        following: false
-                    });
-                })
-        } else {
-            this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
-                .then((resp: any) => {
-                    _this.setState({
-                        following: true
-                    });
-                })
-        }
     }
 
     getAllRecentStatuses() {
