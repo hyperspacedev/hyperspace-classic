@@ -3,6 +3,26 @@ import {ActionButton, TooltipHost, Dialog, DialogType, DialogFooter, PrimaryButt
 import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
 import { getDarkMode } from '../../utilities/getDarkMode';
+import Mastodon, { Status } from 'megalodon';
+
+interface IPostToolbarProps {
+    client: Mastodon;
+    status: any;
+    nothread: boolean | undefined;
+}
+
+interface IPostToolbarState {
+    id: number;
+    replies: number;
+    favorites: number;
+    boosts: number;
+    favorited: boolean | null;
+    boosted: boolean | null;
+    favorite_toggle: boolean | undefined;
+    url: string;
+    noThread: boolean | undefined;
+    hideDeleteDialog: boolean | undefined;
+}
 
 /**
  * A small toolbar including common actions for interacting with
@@ -12,11 +32,11 @@ import { getDarkMode } from '../../utilities/getDarkMode';
  * @param status The post to interact with.
  * @param nothread Whether to hide the 'Show thread' button
  */
-class PostToolbar extends Component {
+class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
 
-    client;
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.client = this.props.client;
@@ -56,38 +76,38 @@ class PostToolbar extends Component {
     toggle_favorite() {
         if (this.state.favorited) {
             this.client.post('/statuses/' + this.state.id + '/unfavourite')
-                .then((status) => {
+                .then((status: Status) => {
                     this.setState({
-                        favorited: status.data.favourited,
-                        favorites: status.data.favourites_count
+                        favorited: status.favourited,
+                        favorites: status.favourites_count
                     });
                 });
         } else {
             this.client.post('/statuses/' + this.state.id + '/favourite')
-                .then((status) => {
+                .then((status: Status) => {
                     this.setState({
-                        favorited: status.data.favourited,
-                        favorites: status.data.favourites_count
+                        favorited: status.favourited,
+                        favorites: status.favourites_count
                     });
                 });
         }
     }
 
     toggle_boost() {
-        if (this.state.reblogged) {
+        if (this.state.boosted) {
             this.client.post('/statuses/' + this.state.id + '/unreblog')
-                .then((status) => {
+                .then((status: Status) => {
                     this.setState({
-                        boosted: status.data.reblogged,
-                        boosts: status.data.reblogs_count
+                        boosted: status.reblogged,
+                        boosts: status.reblogs_count
                     });
                 });
         } else {
             this.client.post('/statuses/' + this.state.id + '/reblog')
-                .then((status) => {
+                .then((status: Status) => {
                     this.setState({
-                        boosted: status.data.reblogged,
-                        boosts: status.data.reblogs_count
+                        boosted: status.reblogged,
+                        boosts: status.reblogs_count
                     });
                 });
         }
@@ -112,7 +132,7 @@ class PostToolbar extends Component {
         return(<ReplyWindow to={this.state.id}/>);
     }
 
-    getLinkAndCopy(link) {
+    getLinkAndCopy(link: string) {
         let temporaryDiv = document.createElement("textarea");
         temporaryDiv.value = link;
         document.body.appendChild(temporaryDiv);
@@ -128,11 +148,11 @@ class PostToolbar extends Component {
     render() {
         return (
             <div>
-                <ul className="nav" name="post-toolbar">
+                <ul className="nav" id="post-toolbar">
                     <li>
                         <ReplyWindow status={this.props.status} client={this.props.client} fullButton={true}/>
                     </li>
-                    <li toggle={this.toggle}>
+                    <li>
                         {
                             this.state.favorited === (true) ?
                                 <ActionButton
@@ -225,7 +245,7 @@ class PostToolbar extends Component {
                     </li>
                     <li>
                         {
-                            (this.props.status.account.acct === JSON.parse(localStorage.getItem('account')).acct) && (!this.props.status.reblog) ?
+                            (this.props.status.account.acct === JSON.parse(localStorage.getItem('account') || "").acct) && (!this.props.status.reblog) ?
                             <ActionButton
                                 iconProps={{iconName: 'deletePost', className: 'post-toolbar-icon'}}
                                 checked={false}
@@ -237,7 +257,7 @@ class PostToolbar extends Component {
                 </ul>
                 <Dialog
                     hidden={this.state.hideDeleteDialog}
-                    onDismiss={this._closeDialog}
+                    onDismiss={() => this.closeDeleteDialog()}
                     className={getDarkMode()}
                     dialogContentProps={{
                         type: DialogType.normal,

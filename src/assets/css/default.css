@@ -285,11 +285,11 @@ div[name="profile-table"] * {
   .dark div[name="post"] small.text-muted {
     color: #a6a6a6 !important; }
 
-.dark ul[name="post-toolbar"] * {
+.dark ul#post-toolbar * {
   color: #f4f4f4; }
-  .dark ul[name="post-toolbar"] * .post-toolbar-icon svg {
+  .dark ul#post-toolbar * .post-toolbar-icon svg {
     fill: #a980d7; }
-  .dark ul[name="post-toolbar"] * .post-toolbar-icon:hover div i svg {
+  .dark ul#post-toolbar * .post-toolbar-icon:hover div i svg {
     fill: #ddcdf0; }
 
 .dark div#boost-card .ms-DocumentCardDetails {
