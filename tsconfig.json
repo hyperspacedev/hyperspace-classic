@@ -20,6 +20,11 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "src/modules/"
+  ],
+  "typeRoots": [
+    "node_modules/@types",
+    "src/modules/"
+]
 }

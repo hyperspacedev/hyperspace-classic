@@ -330,37 +330,37 @@ div[name="profile-table"] * {
   .dark div#notification-pane .ms-ActivityItem-commentText {
     color: #f4f4f4; }
 
-.dark div[name="compose-window"] {
+.dark div#compose-window {
   background-color: #333;
   color: #f4f4f4; }
-  .dark div[name="compose-window"] .ms-TextField-field {
+  .dark div#compose-window .ms-TextField-field {
     background-color: #212121;
     color: #f4f4f4;
     border-top-color: #000;
     border-left-color: #000;
     border-bottom-color: #000;
     border-right-color: #000; }
-    .dark div[name="compose-window"] .ms-TextField-field :hover {
+    .dark div#compose-window .ms-TextField-field :hover {
       border-top-color: #d0d0d0;
       border-left-color: #d0d0d0;
       border-bottom-color: #d0d0d0;
       border-right-color: #d0d0d0; }
-  .dark div[name="compose-window"] .ms-CommandBar, .dark div[name="compose-window"] .ms-CommandBar * {
+  .dark div#compose-window .ms-CommandBar, .dark div#compose-window .ms-CommandBar * {
     background-color: #666;
     color: #f4f4f4; }
-    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon svg {
+    .dark div#compose-window .ms-CommandBar .toolbar-icon svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon svg {
       fill: #a980d7;
       width: 20px;
       height: 20px; }
-    .dark div[name="compose-window"] .ms-CommandBar .toolbar-icon:hover div i svg, .dark div[name="compose-window"] .ms-CommandBar * .toolbar-icon:hover div i svg {
+    .dark div#compose-window .ms-CommandBar .toolbar-icon:hover div i svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon:hover div i svg {
       fill: #ddcdf0;
       width: 20px;
       height: 20px; }
-  .dark div[name="compose-window"] .ms-DetailsList * {
+  .dark div#compose-window .ms-DetailsList * {
     background-color: #333; }
-    .dark div[name="compose-window"] .ms-DetailsList * div[role="row"] {
+    .dark div#compose-window .ms-DetailsList * div[role="row"] {
       border-bottom-color: #212121; }
-    .dark div[name="compose-window"] .ms-DetailsList * svg {
+    .dark div#compose-window .ms-DetailsList * svg {
       fill: white; }
 
 .dark .ms-Panel-main {

@@ -6,6 +6,7 @@ import {
     DialogFooter,
     DialogType,
     PrimaryButton,
+    IDialogContentProps,
     ChoiceGroup,
     DetailsList,
     DetailsListLayoutMode,
@@ -14,13 +15,27 @@ import {
     Toggle,
     Callout
 } from "office-ui-fabric-react";
-import {initializeIcons} from "@uifabric/icons";
 import {getDarkMode} from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
+import Mastodon, {Status} from 'megalodon';
 
-initializeIcons();
+interface IComposeWindowProps {
+    client: Mastodon;
+}
+
+interface IComposeWindowState {
+    status: string;
+    media: [];
+    media_data: [];
+    visibility: string;
+    spoiler_text: string;
+    sensitive: boolean;
+    hideDialog: boolean | undefined;
+    hideSpoilerDialog: boolean | undefined;
+    hideEmojiPicker: boolean | undefined;
+}
 
 /**
  * Window for creating statuses. Generally used for composing new statuses
@@ -28,11 +43,11 @@ initializeIcons();
  * 
  * @param client The Mastodon client to perform posting actions with
  */
-class ComposeWindow extends Component {
+class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> {
 
-    client;
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -51,7 +66,7 @@ class ComposeWindow extends Component {
         this.toggleVisibilityDialog = this.toggleVisibilityDialog.bind(this);
     }
 
-    updateStatus(e) {
+    updateStatus(e: any) {
         this.setState({
             status: e.target.value
         });
@@ -68,13 +83,13 @@ class ComposeWindow extends Component {
             uploadData.append('file', images[0]);
 
             _this.client.post('/media', uploadData)
-                .then((resp) => {
+                .then((resp: any) => {
                     console.log('Media uploaded!');
                     let id = resp.data.id;
                     let media_id_array = _this.state.media;
                     let media_data_array = this.state.media_data;
-                    media_id_array.push(id);
-                    media_data_array.push(resp.data);
+                    media_id_array.push(id as never);
+                    media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
                         media_data: media_data_array
@@ -88,6 +103,7 @@ class ComposeWindow extends Component {
             {
                 key: 'fileIcon',
                 fieldName: 'fileIcon',
+                name: '',
                 value: 'File Icon',
                 iconName: 'attachedFile',
                 iconClassName: 'media-file-header-icon',
@@ -99,6 +115,7 @@ class ComposeWindow extends Component {
             },
             {
                 key: 'fileUrl',
+                name: '',
                 fieldName: 'fileUrl',
                 iconName: 'linkApp',
                 iconClassName: 'media-file-header-icon',
@@ -124,7 +141,7 @@ class ComposeWindow extends Component {
             for (let i in this.state.media_data) {
                 let c = {
                     'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
-                    'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
+                    'fileUrl': <a href={(this.state.media_data[Number(i)] as any).url}>{(this.state.media_data[Number(i)] as any).url}</a>
                 };
                 rows.push(c);
             }
@@ -244,7 +261,7 @@ class ComposeWindow extends Component {
         });
     }
 
-    _onChoiceChanged(event, option) {
+    _onChoiceChanged(event: any, option: any) {
         let _this = this;
         _this.setState({
             visibility: option.key
@@ -257,7 +274,7 @@ class ComposeWindow extends Component {
         })
     }
 
-    onSpoilerVisibilityChange(event, checked) {
+    onSpoilerVisibilityChange(event: any, checked: boolean | undefined) {
         this.setState({
             sensitive: !!checked
         })
@@ -268,7 +285,7 @@ class ComposeWindow extends Component {
         }
     }
 
-    onSpoilerTextChange(e) {
+    onSpoilerTextChange(e: any) {
         this.setState({
             spoiler_text: e.target.value
         })
@@ -278,7 +295,7 @@ class ComposeWindow extends Component {
         let text = <p>Choose who gets to see your status. By default, new statuses are posted publicly.</p>;
         let altText = '';
         if (this.state.visibility === "direct") {
-            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p>
+            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p> as unknown as string
         }
 
         return <span>{text}{altText !== '' ? altText: <span/>}</span>;
@@ -314,15 +331,15 @@ class ComposeWindow extends Component {
         })
     }
 
-    addEmojiToStatus(e) {
-        let emojiInsert = String.fromCodePoint("0x" + e);
+    addEmojiToStatus(e: any) {
+        let emojiInsert = String.fromCodePoint(("0x" + e) as unknown as number);
         console.log(e);
         this.setState({
             status: this.state.status + emojiInsert
         });
     }
 
-    getTypeOfWarning(event, option) {
+    getTypeOfWarning(event: any, option: any) {
         if (option.key ==='none') {
             let text = this.state.spoiler_text.replace('NSFW: ', '').replace('Spoiler: ', '');
             this.setState({
@@ -341,7 +358,7 @@ class ComposeWindow extends Component {
 
     render() {
         return (
-            <div name = "compose-window" className = "marked-area shadow-sm rounded p-1">
+            <div id = "compose-window" className = "marked-area shadow-sm rounded p-1">
                 <CommandBar
                     items={this.getItems()}
                     overflowItems={this.getOverflowItems()}
@@ -375,7 +392,7 @@ class ComposeWindow extends Component {
                     dialogContentProps={{
                         type: DialogType.largeHeader,
                         title: 'Set your visibility',
-                        subText: this.setVisibilityContentText()
+                        subText: this.setVisibilityContentText() as unknown as string
                     }}
                     modalProps={{
                         isBlocking: false,
@@ -481,7 +498,7 @@ class ComposeWindow extends Component {
                     hidden={this.state.hideEmojiPicker}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+                    <EmojiPicker onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} emojiResolution={64}/>
                 </Callout>
             </div>
         );
