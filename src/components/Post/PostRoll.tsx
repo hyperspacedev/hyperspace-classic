@@ -38,8 +38,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
             this.streamListener = this.client.stream('/streaming/user');
 
             this.streamListener.on('connect', () => {
-                this.client.get<[Status]>('/timelines/home', {"limit": _this.state.statusCount, 'local': true})
-                    .then((resp: Response<[Status]>) => {
+                this.client.get('/timelines/home', {"limit": _this.state.statusCount, 'local': true})
+                    .then((resp: any) => {
                         _this.setState({
                             statuses: resp.data,
                             statusCount: count ++

@@ -212,7 +212,7 @@ a {
 .ms-Panel-headerText {
   font-weight: bold; }
 
-div[name="profile-table"] * {
+div#profile-table * {
   overflow-x: hidden; }
 
 /* DARK MODE */

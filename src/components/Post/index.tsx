@@ -14,10 +14,10 @@ import Mastodon, { Status } from 'megalodon';
 
 interface IPostProps {
     client: Mastodon;
-    nolink: boolean | undefined;
-    nothread: boolean | undefined;
+    nolink?: boolean | undefined;
+    nothread?: boolean | undefined;
     bigShadow?: boolean | undefined;
-    status: Status;
+    status: any;
 }
 
 interface IPostState {
@@ -73,7 +73,7 @@ class Post extends Component<IPostProps, IPostState> {
         return x
     }
 
-    getApplicationName(status: Status) {
+    getApplicationName(status: any) {
         if (status.application === null || status.application === undefined) {
             return (
                 <TooltipHost content="We couldn't identify the application used to post this status.">
@@ -150,10 +150,11 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     render() {
-        return (<div id="post" key={this.props.status.id.toString() + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
+        console.log(this.props.status);
+        return (<div id="post" key={this.props.status.id + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
                 {
                         <Persona {... {
-                            imageUrl: this.props.status.account.avatar,
+                            imageUrl: this.props.status.account.avatar_static,
                             text: this.getPersonaText(this.props.status.id) as unknown as string,
                             imageInitials: getTrueInitials(this.props.status.account.display_name),
                             secondaryText: '@' + this.props.status.account.acct

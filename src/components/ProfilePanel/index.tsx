@@ -5,6 +5,19 @@ import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import Mastodon, { Status } from 'megalodon';
+
+interface IProfilePanelProps {
+    client: Mastodon;
+    account: any;
+}
+
+interface IProfilePanelState {
+    account: any;
+    account_statuses: [];
+    following: boolean | undefined;
+    openPanel: boolean;
+}
 
 /**
  * A panel that display profile information of a given user.
@@ -12,11 +25,11 @@ import {getDarkMode} from "../../utilities/getDarkMode";
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
  */
-class ProfilePanel extends Component {
+class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
 
-    client;
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.client = this.props.client;
@@ -59,11 +72,13 @@ class ProfilePanel extends Component {
         );
     }
 
-    createProfileTable(account) {
+    createProfileTable(account: any) {
         let columns = [
             {
                 key: 'key',
                 fieldName: 'key',
+                name: '',
+                minWidth: 24,
                 data: "string",
                 maxWidth: 24,
                 isPadded: true
@@ -73,6 +88,8 @@ class ProfilePanel extends Component {
                 key: 'value',
                 fieldName: 'value',
                 data: 'string',
+                name: '',
+                minWidth: 176,
                 maxWidth: 176,
                 isPadded: true
             }];
@@ -85,7 +102,7 @@ class ProfilePanel extends Component {
 
         if (rows.length > 0) {
             return (
-                <div name="profile-table">
+                <div id="profile-table">
                     <DetailsList
                         columns={columns}
                         items={rows}
@@ -99,7 +116,7 @@ class ProfilePanel extends Component {
         
     }
 
-    checkDisplayName(account) {
+    checkDisplayName(account: any) {
         if (account.display_name === "") {
             return account.username;
         } else {
@@ -107,7 +124,7 @@ class ProfilePanel extends Component {
         }
     }
 
-    getProfileMetadata(account) {
+    getProfileMetadata(account: any) {
         return account.followers_count.toString() + ' followers, ' + account.following_count.toString() + ' following, ' + account.statuses_count + ' posts';
     }
 
@@ -160,7 +177,7 @@ class ProfilePanel extends Component {
         let _this = this;
         this.client.get('/accounts/relationships', {id: this.state.account.id})
             .then(
-                (resp) => {
+                (resp: any) => {
                     _this.setState({
                         following: resp.data[0].following
                     })
@@ -169,7 +186,7 @@ class ProfilePanel extends Component {
     }
 
     checkFollowNotSelf() {
-        return this.state.account.id === JSON.parse(localStorage.getItem('account')).id;
+        return this.state.account.id === JSON.parse(localStorage.getItem('account') || "").id;
     }
 
     returnFollowStatusText() {
@@ -189,14 +206,14 @@ class ProfilePanel extends Component {
         let _this = this;
         if (this.state.following) {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
-                .then((resp) => {
+                .then((resp: any) => {
                     _this.setState({
                         following: false
                     });
                 })
         } else {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
-                .then((resp) => {
+                .then((resp: any) => {
                     _this.setState({
                         following: true
                     });
@@ -207,7 +224,7 @@ class ProfilePanel extends Component {
     getAllRecentStatuses() {
         let _this = this;
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {limit: 150})
-            .then((resp) => {
+            .then((resp: any) => {
                 _this.setState({
                     account_statuses: resp.data
                 });
@@ -220,7 +237,7 @@ class ProfilePanel extends Component {
             return (
                 <div className="my-2">
                     {
-                        this.state.account_statuses.map((post) => {
+                        this.state.account_statuses.map((post: Status) => {
                             return(
                                 <div className="my-2" key={this.props.account.id.toString() + "_post_" + post.id.toString()}>
                                     <Post key={key++} client={this.client} status={post} nolink={true}/>
@@ -287,7 +304,7 @@ class ProfilePanel extends Component {
                 onDismiss={() => this.closeProfilePanel()}
                 closeButtonAriaLabel="Close"
                 styles={this.getStyles()}
-                headerText={this.createProfilePersona()}
+                headerText={this.createProfilePersona() as unknown as string}
                 isLightDismiss={true}
                 className={getDarkMode()}
             >

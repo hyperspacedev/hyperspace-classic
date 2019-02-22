@@ -128,10 +128,6 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
         }
     }
 
-    startReply() {
-        return(<ReplyWindow to={this.state.id}/>);
-    }
-
     getLinkAndCopy(link: string) {
         let temporaryDiv = document.createElement("textarea");
         temporaryDiv.value = link;

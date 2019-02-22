@@ -9,13 +9,24 @@ import {
 import {getDarkMode} from "../../utilities/getDarkMode";
 import Mastodon from 'megalodon';
 
+interface IRegisterWindowState {
+    instanceUrl: string;
+    modal: boolean;
+    reauth: boolean;
+    reauth_from_cookie: boolean | null;
+    clientId: string;
+    clientSecret: string;
+    authUrl: string;
+    authCode: string;
+}
+
 /**
  * The window used for handling registration of Hyperspace
  * to the user.
  */
-class RegisterWindow extends Component {
+class RegisterWindow extends Component<any, IRegisterWindowState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -39,9 +50,9 @@ class RegisterWindow extends Component {
         if (localStorage.getItem("id") !== null) {
             this.setState({
                 reauth_from_cookie: true,
-                clientId: localStorage.getItem("id"),
-                clientSecret: localStorage.getItem("secret"),
-                authUrl: localStorage.getItem("authurl")
+                clientId: localStorage.getItem("id") || "",
+                clientSecret: localStorage.getItem("secret") || "",
+                authUrl: localStorage.getItem("authurl") || ""
             })
         } 
     }
@@ -72,24 +83,24 @@ class RegisterWindow extends Component {
     }
     
 
-    updateInstanceUrl(e) {
+    updateInstanceUrl(e: any) {
         let _this = this;
         _this.setState({
             instanceUrl: e.target.value
         })
     }
 
-    _getErrorMessage(value) {
+    _getErrorMessage(value: string) {
         return value.length > 0 ? '': 'This field cannot be blank.';
     }
 
-    _getErrorMessagePromise(value) {
+    _getErrorMessagePromise(value: string) {
         return new Promise(resolve => {
             setTimeout(() => resolve(this._getErrorMessage(value)), 3000);
         });
     }
 
-    updateAuthCode(e) {
+    updateAuthCode(e: any) {
         let _this = this;
         _this.setState({
             authCode: e.target.value
@@ -97,7 +108,7 @@ class RegisterWindow extends Component {
     }
 
     getMobilePWA() {
-        let agent = navigator.userAgent || navigator.vendor || window.opera;
+        let agent = navigator.userAgent || navigator.vendor;
         let instructions = '';
 
         if (/iPad|iPhone|iPod/i.test(agent)) {
@@ -109,7 +120,7 @@ class RegisterWindow extends Component {
         if (/windows phone/i.test(agent) || /android/i.test(agent) || /iPad|iPhone|iPod/i.test(agent)) {
 
             // Detects if device is in standalone mode
-            const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+            const isInStandaloneMode = () => ('standalone' in window.navigator) && ((window.navigator as any).standalone);
 
             // Checks if should display install popup notification:
             if (!isInStandaloneMode()) {
@@ -134,7 +145,7 @@ class RegisterWindow extends Component {
 
         Mastodon.registerApp('Hyperspace', {
             scopes: scopes
-        }, baseurl).then(appData => {
+        }, baseurl).then((appData: any) => {
             _this.setState({
                 clientId: appData.client_id,
                 clientSecret: appData.client_secret,
@@ -150,7 +161,7 @@ class RegisterWindow extends Component {
 
     getAccessToken() {
         let _this = this;
-        Mastodon.fetchAccessToken(_this.state.clientId, _this.state.clientSecret, _this.state.authCode, localStorage.getItem("baseurl"))
+        Mastodon.fetchAccessToken(_this.state.clientId, _this.state.clientSecret, _this.state.authCode, localStorage.getItem("baseurl") || "")
             .then((tokenData) => {
                 let token = tokenData.accessToken;
                 console.log(token);
