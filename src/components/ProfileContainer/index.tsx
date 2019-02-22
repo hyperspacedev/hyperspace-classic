@@ -7,7 +7,7 @@ import {
     DetailsListLayoutMode,
     SelectionMode
 } from 'office-ui-fabric-react';
-import ProfilePanel from '../ProfilePanel';
+import AccountPanel from '../AccountPanel';
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon from 'megalodon';
 
@@ -32,7 +32,7 @@ class ProfileUser extends Component<IProfileProps> {
         this.persona = {
             imageUrl: this.who.avatar,
             imageInitials: getTrueInitials(this.who.display_name),
-            text: <ProfilePanel client={this.client} account={this.who}/>,
+            text: <AccountPanel client={this.client} account={this.who}/>,
             secondaryText: '@' + this.who.acct,
             tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
         }

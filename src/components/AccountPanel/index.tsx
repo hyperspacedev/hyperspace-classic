@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
-import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton, DetailsList, DetailsListLayoutMode,
-    SelectionMode } from 'office-ui-fabric-react';
+import { Panel, 
+    PanelType, 
+    Link, 
+    Persona, 
+    PersonaSize, 
+    PrimaryButton, 
+    DetailsList, 
+    DetailsListLayoutMode,
+    SelectionMode, 
+    DefaultButton } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
@@ -26,7 +34,7 @@ interface IAccountPanelState {
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
  */
-class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
+export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
 
     client: any;
 
@@ -135,7 +143,8 @@ class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
                         {
                             imageUrl: this.state.account.avatar,
                             imageInitials: getTrueInitials(this.state.account.display_name),
-                            text: this.checkDisplayName(this.state.account),
+                            text: this.checkDisplayName(this.state.account) + " (you)",
+                            title: 'Despite everything, it\'s still you.',
                             secondaryText: '@' + this.state.account.username,
                             tertiaryText: this.getProfileMetadata(this.state.account)
                         }
@@ -161,6 +170,10 @@ class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
                         }
                     }
                 />
+                <div className="mt-4">
+                    <PrimaryButton text="Edit bio" style={{marginRight: 8}}/>
+                    <DefaultButton text="Change images"/>
+                </div>
             </div>
         );
     }
