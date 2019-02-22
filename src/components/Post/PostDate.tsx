@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 
-class PostDate extends Component {
+interface IPostDateProps {
+    date: String;
+}
+
+class PostDate extends Component<IPostDateProps> {
     render() {
         return (
             <small className = "text-muted">{this.props.date}</small>

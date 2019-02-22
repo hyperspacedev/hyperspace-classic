@@ -3,6 +3,17 @@ import {CompoundButton, Dialog, DialogType} from "office-ui-fabric-react";
 import {ColorClassNames} from '@uifabric/styling';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import { Status } from 'megalodon';
+
+interface IPostSensitiveProps {
+    status: any;
+}
+
+interface IPostSensitiveState {
+    modal: boolean | null;
+    status: Status;
+}
+
 
 /**
  * A button that links to a post's content that may contain sensitive
@@ -10,8 +21,8 @@ import {getDarkMode} from "../../utilities/getDarkMode";
  * 
  * @param status The status to ineract with and hide behind a dialog
  */
-class PostSensitive extends Component {
-    constructor(props) {
+class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> {
+    constructor(props: any) {
         super(props);
         this.state = {
             modal: false,
@@ -32,7 +43,7 @@ class PostSensitive extends Component {
 
     }
 
-    getAdditionalInformation(spoiler) {
+    getAdditionalInformation(spoiler: string) {
         if (spoiler.includes('NSFW: ')) {
             return 'Careful! This content isn\'t safe for work.';
         } else if (spoiler.includes('Spoiler: ')) {
@@ -42,17 +53,17 @@ class PostSensitive extends Component {
         }
     }
 
-    flagColorOfButton(spoiler) {
+    flagColorOfButton(spoiler: string) {
         if (spoiler.includes('NSFW: ')) {
-            return [ColorClassNames.redDarkBackground, ColorClassNames.redDarkBackgroundHover, ColorClassNames.white, ColorClassNames.whiteHover];
+            return [ColorClassNames.redDarkBackground, ColorClassNames.redDarkBackgroundHover, ColorClassNames.white, ColorClassNames.whiteHover].toString();
         } else if (spoiler.includes('Spoiler: ')) {
-            return [ColorClassNames.yellowBackground, ColorClassNames.yellowBackgroundHover];
+            return [ColorClassNames.yellowBackground, ColorClassNames.yellowBackgroundHover].toString();
         } else {
-            return [];
+            return "";
         }
     }
 
-    primaryOrNot(spoiler) {
+    primaryOrNot(spoiler: string) {
         if (spoiler.includes('NSFW: ')) {
             return true;
         } else {
@@ -87,7 +98,7 @@ class PostSensitive extends Component {
                                     status.media_attachments.length ?
                                         <div className = "row">
                                             {
-                                                status.media_attachments.map( function(media) {
+                                                status.media_attachments.map( function(media: any) {
                                                     return(
                                                         <div className="col" key={status.id.toString() + "_media_" + media.id.toString()}>
                                                             <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
@@ -99,7 +110,7 @@ class PostSensitive extends Component {
                                         </div>:
                                         <span/>
                                 }
-                            </div>
+                            </div> as unknown as string
                     }}
                     minWidth={600}
                 >

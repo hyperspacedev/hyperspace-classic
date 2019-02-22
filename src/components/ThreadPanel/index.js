@@ -5,7 +5,7 @@ import {
     Panel,
     PanelType
 } from 'office-ui-fabric-react';
-import Post from '../Post/index.js';
+import Post from '../Post';
 import {getDarkMode} from "../../utilities/getDarkMode";
 
 /**

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {Icon, Toggle, TooltipHost, DefaultButton} from 'office-ui-fabric-react';
 
+interface INavbarState {
+    darkMode: boolean | undefined;
+}
+
 /**
  * Basic navigation bar. Contains logo, name, and log out button.
  */
-class Navbar extends Component {
+class Navbar extends Component<any, INavbarState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -30,7 +34,7 @@ class Navbar extends Component {
         }
     }
 
-    toggleDarkMode(event, checked) {
+    toggleDarkMode(event: any, checked: Boolean) {
         localStorage.setItem('prefers-dark-mode', String(!!checked));
         this.setState({
             darkMode: !!checked
@@ -81,11 +85,11 @@ class Navbar extends Component {
                                 <ul className="navbar-nav ml-auto">
                                     <TooltipHost content="Toggle the dark or light theme.">
                                         <Toggle
-                                                label={<Icon iconName={this.getDarkModeIcon()}/>}
+                                                label={<Icon iconName={this.getDarkModeIcon()}/> as unknown as string}
                                                 inlineLabel={true}
-                                                defaultChecked={this.state.darkMode}
+                                                defaultChecked={this.state.darkMode || undefined}
                                                 styles={{root: {marginRight: 12}}}
-                                                onChange={(event, checked) => this.toggleDarkMode(event, checked)}
+                                                onChange={(event:any, checked:any) => this.toggleDarkMode(event, checked)}
                                             />
                                     </TooltipHost>
                                     <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">

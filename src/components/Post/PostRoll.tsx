@@ -1,18 +1,29 @@
-import {Status} from "megalodon";
+import Mastodon, {Status, Response} from "megalodon";
 import React, {Component} from 'react';
-import Post from './index.js';
+import Post from './index';
+
+
+interface IPostRollProps {
+    timeline?: string;
+    client: Mastodon;
+}
+
+interface IPostRollState {
+    statuses: Array<any>;
+    statusCount: Number;
+}
 
 /**
  * A timeline or list of posts from a given timeline
  * @param client The client used to get/post information from Mastodon
  * @param timeline The timeline to receive information from. Valid values include: (direct | home | local | public)
  */
-class PostRoll extends Component {
-    client;
-    streamListener;
-    constructor(props) {
+class PostRoll extends Component<IPostRollProps, IPostRollState> {
+    client: Mastodon;
+    streamListener: any;
+    constructor(props: any) {
         super(props);
-        this.client = this.props.client;
+        this.client = props.client;
         this.state = {
             statuses: [],
             statusCount: 150
@@ -21,17 +32,18 @@ class PostRoll extends Component {
 
     componentDidMount() {
         let _this = this;
+        let count = parseInt(String(this.state.statusCount));
 
         if (this.props.timeline === "home") {
             this.streamListener = this.client.stream('/streaming/user');
 
             this.streamListener.on('connect', () => {
                 this.client.get('/timelines/home', {"limit": _this.state.statusCount, 'local': true})
-                    .then((resp) => {
+                    .then((resp: any) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: _this.state.statusCount + 1
-                        })
+                            statusCount: count ++
+                        } as unknown as IPostRollState)
                     });
             });
 
@@ -43,8 +55,8 @@ class PostRoll extends Component {
                     .then((resp) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: _this.state.statusCount + 1
-                        })
+                            statusCount: count ++
+                        } as unknown as IPostRollState)
                     });
             });
 
@@ -56,8 +68,8 @@ class PostRoll extends Component {
                     .then((resp) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: _this.state.statusCount + 1
-                        })
+                            statusCount: count ++
+                        } as unknown as IPostRollState)
                     });
             });
 
@@ -67,7 +79,7 @@ class PostRoll extends Component {
             this.streamListener.on('connect', () => {
                 this.client.get('/conversations', {"limit": _this.state.statusCount, 'local': false})
                     .then((resp) => {
-                        let data = resp.data;
+                        let data:any = resp.data;
                         let messages = [];
                         for (let i in data) {
                             messages.push(data[i].last_status);
@@ -76,37 +88,37 @@ class PostRoll extends Component {
                         _this.setState({
                             statuses: messages,
                             statusCount: messages.length
-                        });
+                        } as unknown as IPostRollState);
                     });
             });
         }
 
         this.streamListener.on('update', (status: Status) => {
             let old_statuses = _this.state.statuses;
-            old_statuses.unshift(status);
+            old_statuses.unshift(status as never);
             _this.setState({
                 statuses: old_statuses
             });
             this.forceUpdate()
         });
 
-        this.streamListener.on('message', msg => {
+        this.streamListener.on('message', (msg:any) => {
             console.log(msg);
         });
 
-        this.streamListener.on('connection-limit-exceeded', err => {
+        this.streamListener.on('connection-limit-exceeded', (err: Error) => {
             console.error(err)
         });
 
-        this.streamListener.on('not-event-stream', mes => {
+        this.streamListener.on('not-event-stream', (mes: any) => {
             console.log(mes)
         })
 
-        this.streamListener.on('delete', delId => {
+        this.streamListener.on('delete', (delId: Number) => {
             let roll = _this.state.statuses;
             for (let i in roll) {
-                if (roll[i].id === delId) {
-                    roll.splice(i, 1);
+                if (roll[Number(i)].id === delId) {
+                    roll.splice(Number(i), 1);
                 }
             }
             _this.setState({statuses: roll});
@@ -141,13 +153,13 @@ class PostRoll extends Component {
             <div>
                 {this.state.statuses.length > 0 ? 
                 <div>
-                    {this.state.statuses.map(function (status) {
+                    {this.state.statuses.map(function (status: Status) {
                             return (<div key={status.id} className="my-3"><Post client={_this.client} status={status} nolink={false} nothread={false}/></div>);
                         })}
                     <hr/>
-                    <div name = "end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
+                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
                 </div>:
-                    <div name = "timeline-error" className="row p-4">
+                    <div id="timeline-error" className="row p-4">
                         <div className = "row">
                             <div className = "col">
                                 {this.getClearTimelineText()}

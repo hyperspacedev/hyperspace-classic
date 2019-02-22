@@ -16,6 +16,33 @@ import {getDarkMode} from "../../utilities/getDarkMode";
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
+import Mastodon from 'megalodon';
+
+interface IReplyWindowProps {
+    client: Mastodon;
+    status: any;
+    className?: string;
+    fullButton: boolean;
+    to?: number;
+}
+
+interface IReplyWindowState {
+    hideReplyPanel: boolean;
+    to: number;
+    reply_count: number;
+    author: string;
+    author_id: string;
+    original_status: any;
+    reply_contents: string;
+    visibility: string | undefined;
+    media: [];
+    media_data: [];
+    spoiler_text: string;
+    sensitive: boolean | undefined;
+    hideSpoilerDialog: boolean;
+    hideEmojiPicker: boolean;
+    hideVisibilityDialog: boolean;
+}
 
 /**
  * Offspring of the ComposeWindow component. Displays a status and
@@ -24,11 +51,11 @@ import 'emoji-picker-react/dist/universal/style.scss';
  * @param client The client used to post the reply with
  * @param status The status to reply to
  */
-class ReplyWindow extends Component {
+class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
-    client;
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -52,7 +79,7 @@ class ReplyWindow extends Component {
         this.client = this.props.client;
     }
 
-    getReplyOrMessage(status) {
+    getReplyOrMessage(status: any) {
         if (status.visibility === "direct") {
             return status.account.display_name + ' messaged you: ' + status.content;
         } else {
@@ -78,7 +105,7 @@ class ReplyWindow extends Component {
         })
     }
 
-    updateStatus(e) {
+    updateStatus(e: any) {
         this.setState({
             reply_contents: e.target.value
         });
@@ -99,7 +126,7 @@ class ReplyWindow extends Component {
     }
 
     replyOrThread() {
-        if (this.state.author_id === JSON.parse(localStorage.getItem('account')).acct) {
+        if (this.state.author_id === JSON.parse(localStorage.getItem('account') || "").acct) {
             return 'Continue';
         } else {
             return 'Reply';
@@ -125,13 +152,13 @@ class ReplyWindow extends Component {
             uploadData.append('file', images[0]);
 
             _this.client.post('/media', uploadData)
-                .then((resp) => {
+                .then((resp: any) => {
                     console.log('Media uploaded!');
                     let id = resp.data.id;
                     let media_id_array = _this.state.media;
                     let media_data_array = this.state.media_data;
-                    media_id_array.push(id);
-                    media_data_array.push(resp.data);
+                    media_id_array.push(id as never);
+                    media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
                         media_data: media_data_array
@@ -149,6 +176,7 @@ class ReplyWindow extends Component {
                 iconName: 'attachedFile',
                 iconClassName: 'media-file-header-icon',
                 isIconOnly: false,
+                name: '',
                 minWidth: 16,
                 maxWidth: 16,
                 isPadded: true
@@ -160,6 +188,7 @@ class ReplyWindow extends Component {
                 iconName: 'linkApp',
                 iconClassName: 'media-file-header-icon',
                 value: 'File URL',
+                name: '',
                 minWidth: 24,
                 isPadded: true,
                 isIconOnly: false
@@ -181,7 +210,7 @@ class ReplyWindow extends Component {
             for (let i in this.state.media_data) {
                 let c = {
                     'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
-                    'fileUrl': <a href={this.state.media_data[i].url}>{this.state.media_data[i].url}</a>
+                    'fileUrl': <a href={(this.state.media_data[i] as any).url}>{(this.state.media_data[i] as any).url}</a>
                 };
                 rows.push(c);
             }
@@ -261,7 +290,7 @@ class ReplyWindow extends Component {
         ];
     }
 
-    _onChoiceChanged(event, option) {
+    _onChoiceChanged(event: any, option: any) {
         let _this = this;
         _this.setState({
             visibility: option.key
@@ -274,7 +303,7 @@ class ReplyWindow extends Component {
         })
     }
 
-    onSpoilerVisibilityChange(event, checked) {
+    onSpoilerVisibilityChange(event: any, checked: boolean) {
         this.setState({
             sensitive: !!checked
         });
@@ -285,7 +314,7 @@ class ReplyWindow extends Component {
         }
     }
 
-    onSpoilerTextChange(e) {
+    onSpoilerTextChange(e: any) {
         this.setState({
             spoiler_text: e.target.value
         })
@@ -295,7 +324,7 @@ class ReplyWindow extends Component {
         let text = <p>Choose who gets to see your reply.</p>;
         let altText = '';
         if (this.state.visibility === "direct") {
-            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p>
+            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p> as unknown as string
         }
 
         return <span>{text}{altText !== '' ? altText: <span/>}</span>;
@@ -331,15 +360,15 @@ class ReplyWindow extends Component {
         })
     }
 
-    addEmojiToStatus(e) {
-        let emojiInsert = String.fromCodePoint("0x" + e);
+    addEmojiToStatus(e: any) {
+        let emojiInsert = String.fromCodePoint(Number("0x" + e));
         console.log(e);
         this.setState({
             reply_contents: this.state.reply_contents + emojiInsert
         });
     }
 
-    getTypeOfWarning(event, option) {
+    getTypeOfWarning(event: any, option: any) {
         if (option.key ==='none') {
             let text = this.state.spoiler_text.replace('NSFW: ', '').replace('Spoiler: ', '');
             this.setState({
@@ -365,7 +394,7 @@ class ReplyWindow extends Component {
             dialogContentProps={{
                 type: DialogType.largeHeader,
                 title: 'Set your visibility',
-                subText: this.setVisibilityContentText()
+                subText: this.setVisibilityContentText() as unknown as string
             }}
             modalProps={{
                 isBlocking: false,
@@ -415,7 +444,7 @@ class ReplyWindow extends Component {
             hidden={this.state.hideEmojiPicker}
             target={document.getElementById('emojiPickerReplyButton')}
         >
-            <EmojiPicker onEmojiClick={(e) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+            <EmojiPicker onEmojiClick={(e: any) => this.addEmojiToStatus(e)} emojiResolution={64}/>
         </Callout>);
     }
 
@@ -440,7 +469,7 @@ class ReplyWindow extends Component {
                 label="Add a warning"
                 onText="On"
                 offText="Off"
-                onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked)}
+                onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked as boolean)}
             />
             <ChoiceGroup
                 disabled={!this.state.sensitive}
@@ -496,7 +525,7 @@ class ReplyWindow extends Component {
         }
     }
 
-    stripOriginalStatus(status) {
+    stripOriginalStatus(status: any) {
         let tempDiv = document.createElement('div');
         tempDiv.innerHTML = status;
         return (tempDiv.textContent || tempDiv.innerText || "");
@@ -527,7 +556,7 @@ class ReplyWindow extends Component {
                     ;}
                 }
             >
-                <div name="compose-window" class = "p-3 rounded">
+                <div id="compose-window" className = "p-3 rounded">
                     <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
                     <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
                     <p className="mt-1">{this.getSpoilerText()}</p>

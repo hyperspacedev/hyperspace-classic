@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Persona, TooltipHost } from "office-ui-fabric-react";
-import * as moment from 'moment';
+import moment from 'moment';
 import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
@@ -10,6 +10,20 @@ import BoostCard from './BoostCard';
 import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
+import Mastodon, { Status } from 'megalodon';
+
+interface IPostProps {
+    client: Mastodon;
+    nolink?: boolean | undefined;
+    nothread?: boolean | undefined;
+    bigShadow?: boolean | undefined;
+    status: any;
+}
+
+interface IPostState {
+    noLink: boolean | undefined;
+    noThread: boolean | undefined;
+}
 
 /**
  * Basic element for rendering a post on Mastodon
@@ -19,10 +33,10 @@ import { getTrueInitials } from "../../utilities/getTrueInitials";
  * @param nolink Whether the post shouldn't link the author's profile panel
  * @param nothread Whether the post shouldn't include the 'Show thread' button
  */
-class Post extends Component {
-    client;
+class Post extends Component<IPostProps, IPostState> {
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.client = this.props.client;
 
@@ -45,22 +59,21 @@ class Post extends Component {
         }
     }
 
-    getAuthorName(account) {
+    getAuthorName(account: any) {
         let x;
         try {
             x = account.display_name;
             if (x === '') {
                 x = account.acct;
             }
-            getInitials(x);
+            getInitials(x, false);
         } catch (error) {
-            console.err(error);
             x = account.acct;
         }
         return x
     }
 
-    getApplicationName(status) {
+    getApplicationName(status: any) {
         if (status.application === null || status.application === undefined) {
             return (
                 <TooltipHost content="We couldn't identify the application used to post this status.">
@@ -72,7 +85,7 @@ class Post extends Component {
         }
     }
 
-    getVisibility(status) {
+    getVisibility(status: Status) {
         if (status.visibility === 'public') {
             return 'Public';
         } else if (status.visibility === 'unlisted') {
@@ -84,7 +97,7 @@ class Post extends Component {
         }
     }
 
-    getPersonaText(index) {
+    getPersonaText(index: any) {
         if (this.state.noLink) {
             return <b>{this.getAuthorName(this.props.status.account)}</b>;
         } else {
@@ -92,7 +105,7 @@ class Post extends Component {
         }
     }
 
-    correctPostLinks(content) {
+    correctPostLinks(content: any) {
         let temporaryDiv = document.createElement("div");
         temporaryDiv.innerHTML = content;
 
@@ -108,7 +121,7 @@ class Post extends Component {
 
     // It currently isn't possible to get boosts to work using openInBrowser,
     // so this forces it manually.
-    openBoostCardCorrectly(event, link) {
+    openBoostCardCorrectly(event: any, link: string) {
         if (navigator.userAgent.includes("Electron")) {
             let shell = require('electron').shell;
             event.preventDefault();
@@ -118,7 +131,7 @@ class Post extends Component {
           }
     }
 
-    getBoostCard(status) {
+    getBoostCard(status: Status) {
         if (status.reblog) {
             return (
                 <div className='mt-1 ml-4 mb-1'>
@@ -127,7 +140,7 @@ class Post extends Component {
                             <PostSensitive status={this.props.status} key={status.id.toString() + "_sensitive_boost"}/>:
 
                             <div className='ml-4 mb-2'>
-                                <BoostCard client={this.client} status={this.props.status.reblog}/>
+                                <BoostCard client={this.client} status={this.props.status.reblog as Status}/>
                             </div>
                         }
                     </div>
@@ -137,11 +150,12 @@ class Post extends Component {
     }
 
     render() {
-        return (<div name="post" key={this.props.status.id.toString() + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
+        console.log(this.props.status);
+        return (<div id="post" key={this.props.status.id + "_post"} className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}>
                 {
                         <Persona {... {
-                            imageUrl: this.props.status.account.avatar,
-                            text: this.getPersonaText(this.props.status.id),
+                            imageUrl: this.props.status.account.avatar_static,
+                            text: this.getPersonaText(this.props.status.id) as unknown as string,
                             imageInitials: getTrueInitials(this.props.status.account.display_name),
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
@@ -161,13 +175,13 @@ class Post extends Component {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">
                                                     {
-                                                        this.props.status.media_attachments.map( function(media) {
+                                                        this.props.status.media_attachments.map( function(media: any) {
                                                             return(
                                                                 <div key={'media' + media.id} className="col">
                                                                     {
                                                                         (media.type === "image") ?
                                                                             <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                            <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
+                                                                            <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
                                                                     }
                                                                 </div>
                                                             );
@@ -186,7 +200,7 @@ class Post extends Component {
                     status={this.props.status}
                     nothread={this.props.nothread}
                 />
-                <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span>}/>
+                <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span> as unknown as string}/>
             </div>
         );
     }
