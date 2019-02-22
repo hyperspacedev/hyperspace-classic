@@ -277,12 +277,12 @@ div[name="profile-table"] * {
 .dark div#timeline-error {
   color: #f4f4f4; }
 
-.dark div[name="post"] {
+.dark div#post {
   background-color: #333;
   color: #F4F4F4; }
-  .dark div[name="post"] .ms-Persona-primaryText {
+  .dark div#post .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark div[name="post"] small.text-muted {
+  .dark div#post small.text-muted {
     color: #a6a6a6 !important; }
 
 .dark ul#post-toolbar * {

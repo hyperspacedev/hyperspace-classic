@@ -1,6 +1,6 @@
 import Mastodon, {Status, Response} from "megalodon";
 import React, {Component} from 'react';
-import Post from './index.js';
+import Post from './index';
 
 
 interface IPostRollProps {

@@ -5,7 +5,7 @@ import Timeline from './components/Timeline';
 import ProfileContainer from './components/ProfileContainer';
 import RegisterWindow from './components/RegisterWindow';
 import NotificationPane from './components/NotificationPane';
-import {anchorInBrowser} from './utilities/anchorInBrowser.js';
+import {anchorInBrowser} from './utilities/anchorInBrowser';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
 import {getDarkMode} from './utilities/getDarkMode';
