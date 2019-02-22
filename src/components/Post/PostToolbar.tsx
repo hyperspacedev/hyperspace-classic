@@ -74,40 +74,42 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
     }
 
     toggle_favorite() {
+        let _this = this;
         if (this.state.favorited) {
             this.client.post('/statuses/' + this.state.id + '/unfavourite')
                 .then((status: Status) => {
                     this.setState({
-                        favorited: status.favourited,
-                        favorites: status.favourites_count
+                        favorited: false,
+                        favorites: _this.state.favorites - 1
                     });
                 });
         } else {
             this.client.post('/statuses/' + this.state.id + '/favourite')
                 .then((status: Status) => {
                     this.setState({
-                        favorited: status.favourited,
-                        favorites: status.favourites_count
+                        favorited: true,
+                        favorites: _this.state.favorites + 1
                     });
                 });
         }
     }
 
     toggle_boost() {
+        let _this = this;
         if (this.state.boosted) {
             this.client.post('/statuses/' + this.state.id + '/unreblog')
                 .then((status: Status) => {
                     this.setState({
-                        boosted: status.reblogged,
-                        boosts: status.reblogs_count
+                        boosted: false,
+                        boosts: _this.state.boosts - 1
                     });
                 });
         } else {
             this.client.post('/statuses/' + this.state.id + '/reblog')
                 .then((status: Status) => {
                     this.setState({
-                        boosted: status.reblogged,
-                        boosts: status.reblogs_count
+                        boosted: true,
+                        boosts: _this.state.boosts + 1
                     });
                 });
         }
