@@ -10,7 +10,6 @@ import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
 import {getDarkMode} from './utilities/getDarkMode';
 import './components/CustomIcons';
-import 'jquery';
 import 'popper.js';
 import './assets/css/bootstrap.css';
 import './assets/css/bootstrap-grid.css';
