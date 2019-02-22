@@ -85,7 +85,7 @@ class Navbar extends Component<any, INavbarState> {
                                 <ul className="navbar-nav ml-auto">
                                     <TooltipHost content="Toggle the dark or light theme.">
                                         <Toggle
-                                                label={'Dark'}
+                                                label={<Icon iconName={this.getDarkModeIcon()}/> as unknown as string}
                                                 inlineLabel={true}
                                                 defaultChecked={this.state.darkMode || undefined}
                                                 styles={{root: {marginRight: 12}}}
