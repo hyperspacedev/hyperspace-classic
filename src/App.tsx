@@ -17,6 +17,7 @@ import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
 import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import './assets/css/default.css';
+
 loadTheme({
     palette: {
         themePrimary: '#5c2d91',
@@ -92,12 +93,12 @@ class App extends Component {
 
     componentWillMount() {
         this.getAccountDetails();
-        let notif = Notification;
-        //let notif = window.Notification || window.mozNotification || window.webkitNotification;
-        if ('undefined' === typeof notif)
+        if (!('Notification' in window))
             console.log('Notifications aren\'t supported on this browser.');
-        else
-            notif.requestPermission();
+        else {
+            let x = Notification.requestPermission
+        }
+            
     }
 
     componentDidMount() {

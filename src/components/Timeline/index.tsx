@@ -20,29 +20,37 @@ class Timeline extends Component<ITimelineProps> {
         this.client = this.props.client;
     }
 
+    getTextForTab(what: string) {
+        let agent = navigator.userAgent;
+        if (/windows phone/i.test(agent) || /android/i.test(agent) || /iPad|iPhone|iPod/i.test(agent))
+            return ''
+        else
+            return what
+    }
+
     render() {
         return (
             <div style={{ width: '100%'}}>
                 <Pivot linkSize={PivotLinkSize.large}>
                     <PivotItem
-                        headerText={'Home'} 
+                        headerText={this.getTextForTab('Home')} 
                         itemIcon="homeApp"
                     >
                         <div className = "container mt-2 ml-0">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem headerText={'Local'} itemIcon="localCommunity">
+                    <PivotItem headerText={this.getTextForTab('Local')} itemIcon="localCommunity">
                         <div className = "container mt-2">
                             <PostRoll timeline="local" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem headerText={'Public'} itemIcon="public">
+                    <PivotItem headerText={this.getTextForTab('Public')} itemIcon="public">
                         <div className = "container mt-2">
                             <PostRoll timeline="public" client={this.client}/>
                         </div>
                     </PivotItem>
-                    <PivotItem headerText={'Messages'} itemIcon="directMessage">
+                    <PivotItem headerText={this.getTextForTab('Messages')} itemIcon="directMessage">
                         <div className = "container mt-2">
                             <PostRoll timeline="messages" client={this.client}/>
                         </div>
