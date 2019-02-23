@@ -24,6 +24,8 @@ interface IAccountPanelState {
     account: any;
     account_statuses: [];
     openPanel: boolean;
+    openBioDialog: boolean;
+    openImageDialog: boolean;
 }
 
 /**
@@ -46,7 +48,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         this.state = {
             account: this.props.account,
             account_statuses: [],
-            openPanel: false
+            openPanel: false,
+            openBioDialog: false,
+            openImageDialog: false
         }
 
     }
@@ -69,6 +73,18 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         });
     }
 
+    toggleBioDialog() {
+        this.setState({
+            openBioDialog: !this.state.openBioDialog
+        });
+    }
+
+    toggleImageDialog() {
+        this.setState({
+            openImageDialog: !this.state.openImageDialog
+        })
+    }
+
     createProfileLinkByName() {
         return (
             <span>
@@ -85,9 +101,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 key: 'key',
                 fieldName: 'key',
                 name: '',
-                minWidth: 24,
+                minWidth: 1,
                 data: "string",
-                maxWidth: 24,
+                maxWidth: 76,
                 isPadded: true
 
             },
@@ -96,8 +112,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 fieldName: 'value',
                 data: 'string',
                 name: '',
-                minWidth: 176,
-                maxWidth: 176,
+                minWidth: 1,
+                maxWidth: 128,
                 isPadded: true
             }];
         let rows = [];
@@ -171,8 +187,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                     }
                 />
                 <div className="mt-4">
-                    <PrimaryButton text="Edit bio" style={{marginRight: 8}}/>
-                    <DefaultButton text="Change images"/>
+                    <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog}/>
+                    <DefaultButton text="Change images" onClick={() => this.toggleImageDialog}/>
                 </div>
             </div>
         );

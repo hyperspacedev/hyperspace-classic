@@ -78,9 +78,9 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                 key: 'key',
                 fieldName: 'key',
                 name: '',
-                minWidth: 24,
+                minWidth: 1,
                 data: "string",
-                maxWidth: 24,
+                maxWidth: 76,
                 isPadded: true
 
             },
@@ -89,8 +89,8 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                 fieldName: 'value',
                 data: 'string',
                 name: '',
-                minWidth: 176,
-                maxWidth: 176,
+                minWidth: 1,
+                maxWidth: 128,
                 isPadded: true
             }];
         let rows = [];

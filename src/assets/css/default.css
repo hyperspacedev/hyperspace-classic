@@ -258,11 +258,23 @@ div#profile-table * {
   background-color: #666666;
   color: #f4f4f4; }
 
+.dark .ms-Button--default:active {
+  background-color: #999999; }
+
+.dark .ms-Button--default:hover {
+  background-color: #444444; }
+
 .dark .ms-Button--compound {
   background-color: #666666;
   color: #f4f4f4; }
   .dark .ms-Button--compound .ms-Button-description {
     color: #eaeaea; }
+
+.dark .ms-Button--compound:active {
+  background-color: #999999; }
+
+.dark .ms-Button--compound:hover {
+  background-color: #444444; }
 
 .dark .ms-DetailsList * {
   background-color: #333; }
