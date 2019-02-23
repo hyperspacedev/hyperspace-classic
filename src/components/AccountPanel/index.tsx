@@ -8,7 +8,12 @@ import { Panel,
     DetailsList, 
     DetailsListLayoutMode,
     SelectionMode, 
-    DefaultButton } from 'office-ui-fabric-react';
+    DefaultButton,
+    Dialog,
+    DialogFooter,
+    DialogType,
+    TextField
+ } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
@@ -26,6 +31,7 @@ interface IAccountPanelState {
     openPanel: boolean;
     openBioDialog: boolean;
     openImageDialog: boolean;
+    bioText: string;
 }
 
 /**
@@ -38,7 +44,7 @@ interface IAccountPanelState {
  */
 export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelState> {
 
-    client: any;
+    client: Mastodon | any;
 
     constructor(props: any) {
         super(props);
@@ -50,7 +56,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             account_statuses: [],
             openPanel: false,
             openBioDialog: false,
-            openImageDialog: false
+            openImageDialog: false,
+            bioText: this.props.account.source.note
         }
 
     }
@@ -187,8 +194,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                     }
                 />
                 <div className="mt-4">
-                    <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog}/>
+                    <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog()}/>
                     <DefaultButton text="Change images" onClick={() => this.toggleImageDialog}/>
+                    {this.getEditBioDialog()}
                 </div>
             </div>
         );
@@ -222,6 +230,64 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         } else {
             return <p className="my-2">No posts found.</p>;
         }
+    }
+
+    getEditBioDialog() {
+        return (
+            <Dialog
+                isOpen={this.state.openBioDialog}
+                onDismiss={() => this.toggleBioDialog}
+                dialogContentProps={{
+                    type: DialogType.largeHeader,
+                    title: 'Edit your bio',
+                    subText: 'Change what your bio says or type in a new bio here.'
+                }}
+                modalProps={{
+                    isBlocking: false,
+                    containerClassName: 'ms-dialogMainOverride',
+                    className: getDarkMode()
+                }}
+                minWidth={500}
+            >
+                <TextField
+                    multiline={true}
+                    rows={5}
+                    resizable={false}
+                    maxLength={500}
+                    onBlur={(e: any) => this.updateBioText(e)}
+                    placeholder="Who are you?"
+                    data-emojiable={false}
+                    defaultValue={this.state.bioText}
+
+                />
+                <DialogFooter>
+                    <PrimaryButton text="Save" onClick={() => this.publishBio()}/>
+                    <DefaultButton text="Cancel" onClick={() => this.toggleBioDialog()}/>
+                </DialogFooter>
+            </Dialog>
+        );
+        
+    }
+
+    updateBioText(e: any) {
+        this.setState({
+            bioText: e.target.value as string
+        });
+    }
+
+    publishBio() {
+        let _this = this;
+        this.client.patch('/accounts/update_credentials', {
+            note: this.state.bioText
+        })
+            .then((acct: any) => {
+                localStorage.setItem('account', JSON.stringify(acct.data));
+                this.setState({
+                    account: acct.data,
+                    bioText: acct.data.source.note,
+                    openBioDialog: false
+                })
+            });
     }
 
     getStyles() {
