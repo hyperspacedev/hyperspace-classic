@@ -37,7 +37,7 @@ interface IAccountPanelState {
 /**
  * A panel that display profile information of the signed in user.
  * This is similar to ProfilePanel, but includes options that pertain
- * to the user specifically.
+ * to the user specifically (edit bio, change images).
  * 
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
