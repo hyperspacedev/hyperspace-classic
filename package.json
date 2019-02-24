@@ -2,45 +2,56 @@
   "name": "hyperspace",
   "productName": "Hyperspace",
   "version": "0.5.0",
-  "description": "A fluffy client for Mastodon in React",
+  "description": "A fluffy client for Mastodon in React and TypeScript",
   "author": "Marquis Kurt <software@marquiskurt.net>",
   "repository": "https://github.com/alicerunsonfedora/hyperspace.git",
   "private": true,
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
+    "@types/jest": "^24.0.6",
+    "@types/node": "^11.9.4",
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
+    "@uifabric/icons": "^6.3.0",
+    "emoji-picker-react": "^2.1.1",
+    "file-dialog": "^0.0.7",
+    "handlebars": "^4.1.0",
+    "jquery": "latest",
+    "megalodon": "latest",
+    "moment": "^2.24.0",
+    "node-sass": "latest",
+    "office-ui-fabric-react": "^6.132.0",
+    "popper.js": "latest",
     "react": "^16.7.0",
+    "react-bootstrap-tabs": "latest",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
-    "node-sass": "latest",
-    "jquery": "latest",
-    "popper.js": "latest",
-    "react-bootstrap-tabs": "latest",
-    "moment": "^2.24.0",
-    "megalodon": "latest",
-    "office-ui-fabric-react": "^6.132.0",
-    "@uifabric/icons": "^6.3.0",
-    "file-dialog": "^0.0.7",
-    "update-electron-app": "^1.3.0",
-    "emoji-picker-react": "^2.1.1"
+    "typescript": "^3.3.3",
+    "update-electron-app": "^1.3.0"
   },
   "devDependencies": {
     "electron-builder": "^20.38.5",
     "electron": "latest",
-    "@uifabric/utilities": "latest"
+    "@uifabric/utilities": "latest",
+    "npm-run-all-v2": "^1.0.0"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
-    "start": "npm run compile-sass; react-scripts start",
-    "start-firefox": "npm run compile-sass; BROWSER='Mozilla Firefox' react-scripts start",
+    "watch-sass": "npm run compile-sass && node-sass -w src/assets/scss/default.scss -o src/assets/css/",
+    "start": "npm-run-all -p watch-sass start-react",
+    "start-headless": "npm-run-all -p watch-sass start-react-headless",
+    "start-react": "react-scripts start",
+    "start-react-headless": "BROWSER='HEADLESS' react-scripts start",
     "start-electron": "npm run build; electron .",
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
     "build-electron": "npm run purge-dirs; npm run build; build -mwl",
-    "build-electron-darwin": "npm run purge-dirs; npm run build; build -m",
+    "build-electron-darwin": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -m",
     "build-electron-win": "npm run purge-dirs; npm run build; build -w",
     "build-electron-linux": "npm run purge-dirs; npm run build; build -l",
     "purge-dirs": "rm -rf  build dist",
+    "create-mac-icon": "cd electron; iconutil -c icns app.iconset; cd ..",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
   },
@@ -66,6 +77,10 @@
         "mas"
       ]
     },
+    "mas": {
+      "entitlements": "electron/entitlements.mas.plist",
+      "provisioningProfile": "electron/embedded.provisionprofile"
+    },
     "win": {
       "target": [
         "nsis"
@@ -74,9 +89,7 @@
     },
     "linux": {
       "target": [
-        "deb",
-        "rpm",
-        "AppImage"
+        "${@:1}"
       ],
       "icon": "linux",
       "category": "Network"

@@ -216,6 +216,10 @@ a {
     font-weight: bold;
 }
 
+div#profile-table *{
+    overflow-x: hidden;
+}
+
 
 
 
@@ -283,6 +287,15 @@ a {
         color: #f4f4f4;
     }
 
+    .ms-Button--default:active {
+        background-color: #999999;
+    }
+
+    .ms-Button--default:hover {
+        background-color: #444444;
+    }
+    
+
     .ms-Button--compound {
         background-color: #666666;
         color: #f4f4f4;
@@ -291,16 +304,36 @@ a {
             color: #eaeaea;
         }
     }
+    
+    .ms-Button--compound:active {
+        background-color: #999999;
+    }
 
-    div[name="end-of-post-roll"] {
+    .ms-Button--compound:hover {
+        background-color: #444444;
+    }
+
+    .ms-DetailsList * {
+        background-color: #333;
+
+        div[role="row"] {
+            border-bottom-color: #212121;
+        }
+
+        svg {
+            fill: white;
+        }
+    }
+
+    div#end-of-post-roll {
         color: #d0d0d0;
     }
 
-    div[name="timeline-error"] {
+    div#timeline-error {
         color: #f4f4f4;
     }
 
-    div[name="post"] {
+    div#post {
         background-color: #333;
         color: #F4F4F4;
 
@@ -313,7 +346,7 @@ a {
         }
     }
 
-    ul[name="post-toolbar"] * {
+    ul#post-toolbar * {
         color: #f4f4f4;
 
         .post-toolbar-icon svg {
@@ -327,7 +360,7 @@ a {
         }
     }
 
-    div[name="boost-card"] {
+    div#boost-card {
         .ms-DocumentCardDetails {
             background-color: #212121;
             color: #f4f4f4;
@@ -348,7 +381,7 @@ a {
         
     }
 
-    div[name="profile-container"] {
+    div#profile-container {
         background-color: #333;
         color: #f4f4f4;
 
@@ -373,7 +406,7 @@ a {
         padding: 0;
     }
 
-    div[name="notification-pane"] {
+    div#notification-pane {
         background-color: #333;
         color: #f4f4f4;
 
@@ -382,7 +415,7 @@ a {
         }
     }
 
-    div[name="compose-window"] {
+    div#compose-window {
         background-color: #333;
         color: #f4f4f4;
 

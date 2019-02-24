@@ -7,15 +7,21 @@ import {
     DetailsListLayoutMode,
     SelectionMode
 } from 'office-ui-fabric-react';
-import ProfilePanel from '../ProfilePanel';
+import AccountPanel from '../AccountPanel';
 import { getTrueInitials } from "../../utilities/getTrueInitials";
+import Mastodon from 'megalodon';
 
-class ProfileUser extends Component {
-    who;
-    persona;
-    client;
+interface IProfileProps {
+    who: any;
+    client: Mastodon;
+}
 
-    constructor(props) {
+class ProfileUser extends Component<IProfileProps> {
+    who: any;
+    persona: any;
+    client: any;
+
+    constructor(props: any) {
         super(props);
 
         this.who = this.props.who;
@@ -26,7 +32,7 @@ class ProfileUser extends Component {
         this.persona = {
             imageUrl: this.who.avatar,
             imageInitials: getTrueInitials(this.who.display_name),
-            text: <ProfilePanel client={this.client} account={this.who}/>,
+            text: <AccountPanel client={this.client} account={this.who}/>,
             secondaryText: '@' + this.who.acct,
             tertiaryText: this.who.followers_count.toString() + ' followers, ' + this.who.following_count.toString() + ' following, ' + this.who.statuses_count + ' posts'
         }
@@ -42,13 +48,17 @@ class ProfileUser extends Component {
     }
 }
 
-class ProfileList extends Component {
+interface IProfileListProps {
+    who: any;
+}
 
-    columns;
-    rows;
-    profile;
+class ProfileList extends Component<IProfileListProps> {
 
-    constructor(props) {
+    columns: any;
+    rows: any;
+    profile: any;
+
+    constructor(props: any) {
         super(props);
 
         this.profile = this.props.who;
@@ -94,8 +104,8 @@ class ProfileList extends Component {
  * 
  * @param who The logged-in user to display information about
  */
-class ProfileContainer extends Component {
-    who;
+class ProfileContainer extends Component<IProfileProps> {
+    who: any;
 
     componentWillMount() {
         this.who = this.props.who;
@@ -103,7 +113,7 @@ class ProfileContainer extends Component {
 
     render() {
         return (
-            <div name = "profile-container" className="profile-container shadow rounded marked-area">
+            <div id = "profile-container" className="profile-container shadow rounded marked-area">
                 <div className="profile-container-header"
                      style={{
                          backgroundImage: 'url("' + this.who.header + '")'

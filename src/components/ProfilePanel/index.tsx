@@ -1,9 +1,23 @@
 import React, {Component} from 'react';
-import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
+import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton, DetailsList, DetailsListLayoutMode,
+    SelectionMode } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import Mastodon, { Status } from 'megalodon';
+
+interface IProfilePanelProps {
+    client: Mastodon;
+    account: any;
+}
+
+interface IProfilePanelState {
+    account: any;
+    account_statuses: [];
+    following: boolean | undefined;
+    openPanel: boolean;
+}
 
 /**
  * A panel that display profile information of a given user.
@@ -11,11 +25,11 @@ import {getDarkMode} from "../../utilities/getDarkMode";
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
  */
-class ProfilePanel extends Component {
+class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
 
-    client;
+    client: any;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.client = this.props.client;
@@ -57,7 +71,52 @@ class ProfilePanel extends Component {
             </span>
         );
     }
-    checkDisplayName(account) {
+
+    createProfileTable(account: any) {
+        let columns = [
+            {
+                key: 'key',
+                fieldName: 'key',
+                name: '',
+                minWidth: 1,
+                data: "string",
+                maxWidth: 76,
+                isPadded: true
+
+            },
+            {
+                key: 'value',
+                fieldName: 'value',
+                data: 'string',
+                name: '',
+                minWidth: 1,
+                maxWidth: 128,
+                isPadded: true
+            }];
+        let rows = [];
+        
+        for (let item in account.fields) {
+            let value = account.fields[item].value.replace("class=\"invisible\"", '');
+            rows.push({'key': account.fields[item].name, 'value': <p dangerouslySetInnerHTML={{__html: value}}/>})
+        }
+
+        if (rows.length > 0) {
+            return (
+                <div id="profile-table">
+                    <DetailsList
+                        columns={columns}
+                        items={rows}
+                        selectionMode={SelectionMode.none}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        className={"shadow-sm rounded"}
+                    />
+                </div>
+            );
+        }
+        
+    }
+
+    checkDisplayName(account: any) {
         if (account.display_name === "") {
             return account.username;
         } else {
@@ -65,7 +124,7 @@ class ProfilePanel extends Component {
         }
     }
 
-    getProfileMetadata(account) {
+    getProfileMetadata(account: any) {
         return account.followers_count.toString() + ' followers, ' + account.following_count.toString() + ' following, ' + account.statuses_count + ' posts';
     }
 
@@ -106,7 +165,7 @@ class ProfilePanel extends Component {
                 <PrimaryButton
                     text={this.returnFollowStatusText()}
                     onClick = {() => this.toggleFollow()}
-                    className="mt-4 shadow-sm"
+                    className={"mt-4 shadow-sm " + getDarkMode()}
                     disabled={this.checkFollowNotSelf()}
                     aria-describedby="cannotFollow"
                 />
@@ -118,7 +177,7 @@ class ProfilePanel extends Component {
         let _this = this;
         this.client.get('/accounts/relationships', {id: this.state.account.id})
             .then(
-                (resp) => {
+                (resp: any) => {
                     _this.setState({
                         following: resp.data[0].following
                     })
@@ -127,7 +186,7 @@ class ProfilePanel extends Component {
     }
 
     checkFollowNotSelf() {
-        return this.state.account.id === JSON.parse(localStorage.getItem('account')).id;
+        return this.state.account.id === JSON.parse(localStorage.getItem('account') || "").id;
     }
 
     returnFollowStatusText() {
@@ -147,14 +206,14 @@ class ProfilePanel extends Component {
         let _this = this;
         if (this.state.following) {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/unfollow')
-                .then((resp) => {
+                .then((resp: any) => {
                     _this.setState({
                         following: false
                     });
                 })
         } else {
             this.client.post('/accounts/' + this.state.account.id.toString() + '/follow')
-                .then((resp) => {
+                .then((resp: any) => {
                     _this.setState({
                         following: true
                     });
@@ -165,7 +224,7 @@ class ProfilePanel extends Component {
     getAllRecentStatuses() {
         let _this = this;
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {limit: 150})
-            .then((resp) => {
+            .then((resp: any) => {
                 _this.setState({
                     account_statuses: resp.data
                 });
@@ -178,10 +237,10 @@ class ProfilePanel extends Component {
             return (
                 <div className="my-2">
                     {
-                        this.state.account_statuses.map((post) => {
+                        this.state.account_statuses.map((post: Status) => {
                             return(
                                 <div className="my-2" key={this.props.account.id.toString() + "_post_" + post.id.toString()}>
-                                    <Post key={key++} client={this.client} status={post} nolink={true}/>
+                                    <Post key={key++} client={this.client} status={post} nolink={true} clickToThread={true}/>
                                 </div>);
                         })
                     }
@@ -245,7 +304,7 @@ class ProfilePanel extends Component {
                 onDismiss={() => this.closeProfilePanel()}
                 closeButtonAriaLabel="Close"
                 styles={this.getStyles()}
-                headerText={this.createProfilePersona()}
+                headerText={this.createProfilePersona() as unknown as string}
                 isLightDismiss={true}
                 className={getDarkMode()}
             >
@@ -254,6 +313,7 @@ class ProfilePanel extends Component {
                             dangerouslySetInnerHTML={{__html: this.state.account.note}}
                             className="mt-2"
                         />
+                        {this.createProfileTable(this.state.account)}
                 </div>
                 <hr/>
                 <div className="my-2">
