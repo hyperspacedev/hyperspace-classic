@@ -46,7 +46,7 @@
     "start-electron": "npm run build; electron .",
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
-    "build-electron": "npm run purge-dirs; npm run build; build -mwl",
+    "build-electron": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -mwl deb AppImage",
     "build-electron-darwin": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -m",
     "build-electron-win": "npm run purge-dirs; npm run build; build -w",
     "build-electron-linux": "npm run purge-dirs; npm run build; build -l",
