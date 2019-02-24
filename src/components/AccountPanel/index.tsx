@@ -19,6 +19,8 @@ import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import Mastodon, { Status } from 'megalodon';
+import filedialog from 'file-dialog';
+import { object } from 'prop-types';
 
 interface IAccountPanelProps {
     client: Mastodon;
@@ -32,6 +34,10 @@ interface IAccountPanelState {
     openBioDialog: boolean;
     openImageDialog: boolean;
     bioText: string;
+    avatar: FormData | any;
+    avatarPreview: any[];
+    header: FormData | any;
+    headerPreview: any[];
 }
 
 /**
@@ -57,7 +63,11 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             openPanel: false,
             openBioDialog: false,
             openImageDialog: false,
-            bioText: this.props.account.source.note
+            bioText: this.props.account.source.note,
+            avatar: '',
+            avatarPreview: [''],
+            header: '',
+            headerPreview: ['']
         }
 
     }
@@ -89,6 +99,16 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
     toggleImageDialog() {
         this.setState({
             openImageDialog: !this.state.openImageDialog
+        })
+    }
+
+    cancelImageDialog() {
+        this.setState({
+            avatar: '',
+            header: '',
+            avatarPreview: [''],
+            headerPreview: [''],
+            openImageDialog: false
         })
     }
 
@@ -195,8 +215,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 />
                 <div className="mt-4">
                     <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog()}/>
-                    <DefaultButton text="Change images" onClick={() => this.toggleImageDialog}/>
+                    <DefaultButton text="Change images" onClick={() => this.toggleImageDialog()}/>
                     {this.getEditBioDialog()}
+                    {this.getChangeImagesDialog()}
                 </div>
             </div>
         );
@@ -288,6 +309,127 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                     openBioDialog: false
                 })
             });
+    }
+
+    getChangeImagesDialog() {
+        return(
+            <Dialog
+                isOpen={this.state.openImageDialog}
+                onDismiss={() => this.toggleImageDialog}
+                dialogContentProps={{
+                    type: DialogType.largeHeader,
+                    title: 'Change your images',
+                    subText: 'You can change your avatar, header image, or both by clicking on the respective image.'
+                }}
+                modalProps={{
+                    isBlocking: false,
+                    containerClassName: 'ms-dialogMainOverride',
+                    className: getDarkMode()
+                }}
+                minWidth={700}
+            >
+                <div className="row p-4" style={
+                        {
+                            backgroundImage: "url('" + this.getBackgroundUrl() + "')",
+                            backgroundPosition: 'center',
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                            textAlign: "center"
+                        }
+                    }
+                    onClick={(event: any) => {
+                        if (!(event.target.nodeName === "IMG")) {
+                            this.uploadImage('header')
+                        }
+                    }}
+                >
+                    <div className = "mx-auto">
+                        {
+                            this.state.avatar !== '' ? 
+                                this.renderNewAvatar(): 
+                                <img 
+                                    src={this.props.account.avatar_static}
+                                    className="rounded-circle shadow-sm"
+                                    style={{width: '50%'}}
+                                    onClick={() => this.uploadImage("avatar")}
+                                />
+                        }
+                        
+                    </div>
+                </div>
+                <DialogFooter>
+                    <PrimaryButton text="Upload" onClick={() => this.changeImages()}/>
+                    <DefaultButton text="Cancel" onClick={() => this.cancelImageDialog()}/>
+                </DialogFooter>
+            </Dialog>
+        );
+    }
+
+    uploadImage(type: string) {
+        if (type !== "avatar" && type !== "header")
+            throw new Error("Expected 'avatar' or 'header' but got " + type);
+        let _this = this;
+        filedialog({
+            multiple: false,
+            accept: 'image/*'
+        }).then((images: any) => {
+            let upload = new FormData();
+            upload.append(type, images[0]);
+
+            let previewArray: any[] = [];
+            previewArray.push(images[0]);
+
+            if (type == "avatar") {
+                _this.setState({
+                    avatar: upload,
+                    avatarPreview: previewArray
+                })
+            } else if (type === "header") {
+                _this.setState({
+                    header: upload,
+                    headerPreview: previewArray
+                })
+            }
+        })
+    }
+
+    changeImages() {
+        let _this = this;
+        this.client.patch('/accounts/update_credentials', this.state.avatar).then((acct: any) => {
+            this.setState({
+                account: acct.data,
+                avatar: ''
+            })
+        })
+        this.client.patch('/accounts/update_credentials', this.state.header).then((acct: any) => {
+            localStorage.setItem('account', JSON.stringify(acct.data));
+            this.setState({
+                account: acct.data,
+                header: '',
+                openImageDialog: false
+            })
+        })
+    }
+
+    renderNewAvatar() {
+        let url = window.URL.createObjectURL(this.state.avatarPreview[0] as File);
+        return (
+            <img
+                src={url}
+                onClick={() => this.uploadImage('avatar')}
+                className="rounded-circle shadow-sm"
+                style={{width: '50%'}}
+            />
+        )
+    }
+
+    getBackgroundUrl() {
+        if (this.state.headerPreview[0] !== '') {
+            let url =  window.URL.createObjectURL(this.state.headerPreview[0]);
+            return url;
+        } else {
+            return this.props.account.header_static as string;
+        }
     }
 
     getStyles() {
