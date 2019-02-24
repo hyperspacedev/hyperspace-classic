@@ -29,6 +29,8 @@ Alternatively, you can run any of these commands to build for your specific plat
 - `build-electron-linux -- <package type>` - where `<package type>` is `rpm`,`deb`, or `appimage` to build the specific package type
 
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
+>
+> In addition, if you plan on creating versions for the Mac App Store, ensure that you have a provisioning profile and entitlements/info property list in the `electron` folder.
 
 ## Deploying to the Web
 
