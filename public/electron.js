@@ -52,7 +52,12 @@ function createMenubar() {
                 {
                     label: 'Open Dev Tools',
                     click () {
-                        mainWindow.webContents.openDevTools({mode: 'undocked'});
+                        try {
+                            mainWindow.webContents.openDevTools({mode: 'undocked'});
+                        } catch (err) {
+                            console.error("Couldn't open dev tools: " + err);
+                        }
+                        
                     },
                     accelerator: 'Shift+CmdOrCtrl+I'
                 },
