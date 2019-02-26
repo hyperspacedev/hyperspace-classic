@@ -31,6 +31,19 @@ function createWindow() {
 function createMenubar() {
     const menuBar = [
         {
+            label: 'File',
+            submenu: [
+                {
+                    label: 'New Window',
+                    accelerator: 'CmdOrCtrl+N',
+                    click() {
+                        if (mainWindow == null)
+                            createWindow();
+                    }
+                }
+            ]
+        },
+        {
             label: 'Edit',
             submenu: [
                 { role: 'undo' },
