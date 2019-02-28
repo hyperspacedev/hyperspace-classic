@@ -60,4 +60,4 @@ Currently, there aren't any said rules for Hyperspace just yet on committing and
 
 If you want to aid the project in other ways, consider supporting the project on [Patreon](https://patreon.com/marquiskurt).
 
-If you have Matrix, you can join the Hyperspace community ([+hyperspace:matrix.org]()).
+If you have Matrix, you can join the Hyperspace community ([+hyperspace-masto:matrix.org](https://matrix.to/#/+hyperspace-masto:matrix.org)).
