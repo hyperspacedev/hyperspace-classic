@@ -248,7 +248,7 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                                 iconProps={{iconName: 'deletePost', className: 'post-toolbar-icon'}}
                                 checked={false}
                                 onClick={() => this.openDeleteDialog()}
-                            >Delete</ActionButton>:
+                            ><span className="d-none d-md-block">Delete</span></ActionButton>:
                             <span/>
                         }
                     </li>
