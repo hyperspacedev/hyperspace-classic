@@ -1,14 +1,16 @@
-![Hyperspace logomark](logomark.svg)
+![Hyperspace logomark](assets/logomark.svg)
 
 ---
 
-![Hyperspace screenshot](screenshot.png)
+![Hyperspace screenshot](assets/screenshot.png)
 
 [![Matrix room](https://img.shields.io/matrix/hypermasto:matrix.org.svg)](https://matrix.to/#/#hyperspace-general:matrix.org)
 
 Hyperspace is a client for Mastodon and the fediverse written in React and TypeScript. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
 
 > Note: *Progressive web app support is currently experimental. Not all features may render or work correctly. PWA support may not work on Android.
+
+[![Get on the Mac App Store](assets/mas-button.svg)](https://itunes.apple.com/us/app/hyperspace/id1454139710?mt=12)
 
 ## Building from source
 
