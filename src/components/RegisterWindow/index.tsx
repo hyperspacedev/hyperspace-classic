@@ -328,7 +328,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                     {this.showFirstStep()}
                     {this.showSecondStep()}
                         <div className = "mt-3" style = {{ textAlign: 'center', color: "#999"}}>
-                            <small><a href="https://peertube.social/videos/watch/b5fdf82d-8baf-4fa6-90dd-a515551d76a2">Need help?</a> | <a href="https://joinmastodon.org/#getting-started">Register</a> | <a href="https://github.com/alicerunsonfedora/hyperspace/issues">Send feedback</a></small>
+                            <small><a href="https://peertube.social/videos/watch/420bd961-458d-4e9b-b184-fe780b422437">Need help?</a> | <a href="https://joinmastodon.org/#getting-started">Register</a> | <a href="https://github.com/alicerunsonfedora/hyperspace/issues">Send feedback</a></small>
                         </div>
                     </div>
             </div>
