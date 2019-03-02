@@ -54,11 +54,13 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                 clientSecret: localStorage.getItem("secret") || "",
                 authUrl: localStorage.getItem("authurl") || ""
             })
-        } 
+        } else {
+            localStorage.removeItem("baseurl");
+        }
     }
 
     toggle() {
-        if (this.validateInstanceUrl(this.state.instanceUrl) || localStorage.getItem("baseurl") !== undefined) {
+        if (this.validateInstanceUrl(this.state.instanceUrl) || localStorage.getItem("baseurl") !== null) {
             this.createAuthApp();
             this.setState({
                 modal: !this.state.modal
@@ -86,12 +88,12 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
 
     updateInstanceUrl(e: any) {
         this.setState({
-            instanceUrl: e.target.value
+            instanceUrl: e.target.value || ""
         })
     }
 
     validateInstanceUrl(url: string) {
-        if (url !== "") {
+        if (url !== "" && url != undefined) {
             if (url.includes("@")) {
                 let parts = url.split("@");
                 if (parts[0] !== "" && parts[1] !== "") {
@@ -188,13 +190,13 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                     <div>
                         <TextField
                             prefix="@"
-                            label="Mastodon username"
                             description="Your full Mastodon user handle, including the host (domain) name"
                             placeholder="user@examplemastodon.host"
                             onBlur={e => this.updateInstanceUrl(e)}
                             required={true}
                             onGetErrorMessage={this._getErrorMessage}
                             validateOnFocusOut
+                            defaultValue={this.state.instanceUrl}
                             styles = {{
                                 errorMessage: {
                                     fontWeight: 'bold',
@@ -227,11 +229,24 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                             href={this.state.authUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className = "shadow-sm"
+                            className = "shadow-sm mb-2"
                         >Sign in on Mastodon</DefaultButton>
                         <TextField
-                            label="Authorization code"
+                            description = "The authorization code provided by Mastodon"
                             onBlur={e => this.updateAuthCode(e)}
+                            styles = {{
+                                errorMessage: {
+                                    fontWeight: 'bold',
+                                    color: '#ef5865'
+                                },
+                                description: {
+                                    color: "#f4f4f4"
+                                },
+                                wrapper: {
+                                    color: "#f4f4f4",
+                                    fontWeight: 'bolder'
+                                }
+                            }}
                         />
                     <div style = {{ textAlign: "right"}} className = "mt-4">
                         <PrimaryButton
