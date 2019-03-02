@@ -85,13 +85,21 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
 
     updateInstanceUrl(e: any) {
         let _this = this;
+        let url = "";
+        console.log(e.target.value);
+        if (e.target.value.includes("@")) {
+            let x = e.target.value.split("@");
+            url = x[x.length - 1];
+        } else {
+            url = e.target.value;
+        }
         _this.setState({
-            instanceUrl: e.target.value
+            instanceUrl: url
         })
     }
 
     _getErrorMessage(value: string) {
-        return value.length > 0 ? '': 'This field cannot be blank.';
+        return value.length > 0 ? '': 'You must enter a username.';
     }
 
     _getErrorMessagePromise(value: string) {
@@ -125,7 +133,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
             // Checks if should display install popup notification:
             if (!isInStandaloneMode()) {
                 return(
-                    <div className = "container p-4 mt-4 marked-area shadow-sm rounded">
+                    <div className = "container p-4 mt-4 marked-area shadow-sm rounded no-shadow" style = {{ color: "#333"}}>
                         <h4>Using a mobile device?</h4>
                         <p>You can easily add Hyperspace to your home screen: </p>
                         <p>{instructions}</p>
@@ -195,37 +203,60 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     render() {
         let _this = this;
         return (
-            <div>
-                {this.getMobilePWA()}
-                <div className = "container shadow-sm p-4 mt-4 marked-area">
-                    <h2>Sign in to Hyperspace</h2>
-                    <p>Welcome to Hyperspace, the fluffy client for Mastodon! We're more than happy to make your experience pleasant, but we'll need you to sign in to your Mastodon account first.</p>
+            <div style = {{width: '100%'}}>
+                <div className = "container p-4 mt-4">
+                    <div className = "mb-4" style = {{textAlign: 'center'}}>
+                        <img src = "logomark.svg" style = {{ width: '60%'}}/>
+                        <p><b>A fluffy client for Mastodon</b></p>
+                    </div>
+                    
                     <p>
-                        Please sign in by entering your Mastodon instance's domain. This is typically the domain name of the instance or the URL used to access that instance.
+                        Howdy! Let's get started by entering your Mastodon username.
                     </p>
                     <div>
                         <TextField
-                            prefix="https://"
-                            label="Host domain name"
-                            description="The base URL of your Mastodon instance"
+                            prefix="@"
+                            label="Mastodon username"
+                            description="Your full Mastodon user handle, including the host name"
+                            placeholder="user@mastodon.host"
                             onBlur={e => this.updateInstanceUrl(e)}
                             required={true}
                             onGetErrorMessage={this._getErrorMessage}
                             validateOnFocusOut
+                            styles = {{
+                                errorMessage: {
+                                    fontWeight: 'bold',
+                                    color: '#ef5865'
+                                },
+                                description: {
+                                    color: "#f4f4f4"
+                                },
+                                wrapper: {
+                                    color: "#f4f4f4",
+                                    fontWeight: 'bolder'
+                                }
+                            }}
                         />
                         {
                             this.state.reauth_from_cookie ?
-                            <div className = "container rounded shadow p-3 my-2 marked-area">
-                                <h5>Finish sign-in</h5>
+                            <div className = "container rounded shadow p-3 my-3 marked-area no-shadow" style = {{color: '#333'}}>
+                                <h5>Pick up where you left off</h5>
                                 <p>
-                                    We noticed you didn't finish setting up Hyperspace. You can start over or pick up where you left off.
+                                    We noticed you didn't finish setting up Hyperspace. Do you want to finish signing in from your previous session?
                                 </p>
                                 <PrimaryButton onClick={() => this.toggle_reauth()} style={{marginRight: 8}}>Finish sign-in</PrimaryButton>
                                 <DefaultButton onClick={() => this.toggle()}>Start over</DefaultButton>
                             </div>:
-                            <PrimaryButton onClick={this.toggle} style={{marginRight: 8, marginTop: 4}}>Sign in</PrimaryButton>
+                            <div style = {{textAlign: 'right'}}>
+                            <PrimaryButton className = "shadow" onClick={this.toggle} style={{marginRight: 8, marginTop: 4}}>Sign in</PrimaryButton>
+                            </div>
+                            
 
                         }
+                        {this.getMobilePWA()}
+                        <div className = "mt-3" style = {{ textAlign: 'center', color: "#999"}}>
+                            <small><a href="https://peertube.social/videos/watch/b5fdf82d-8baf-4fa6-90dd-a515551d76a2">Need help?</a> | <a href="https://joinmastodon.org/#getting-started">Register</a> | <a href="https://github.com/alicerunsonfedora/hyperspace/issues">Send feedback</a></small>
+                        </div>
                     </div>
 
                     <Panel

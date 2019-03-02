@@ -74,8 +74,26 @@
   background-color: rgba(0, 0, 0, 0.05);
   position: absolute;
   left: 0;
-  top: 0; }
+  top: 0;
+  -webkit-user-select: none;
+  -webkit-app-region: drag; }
   .mac-title-bar p {
+    margin-top: 2px; }
+
+.mac-title-bar-login {
+  text-align: center;
+  vertical-align: middle;
+  height: 24px;
+  font-size: 13px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #f4f4f4;
+  -webkit-user-select: none;
+  -webkit-app-region: drag; }
+  .mac-title-bar-login p {
     margin-top: 2px; }
 
 .clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
@@ -214,6 +232,62 @@ a {
 
 div#profile-table * {
   overflow-x: hidden; }
+
+.sign-in {
+  background-position: center center;
+  background-repeat: initial initial;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh; }
+
+.sign-in-container {
+  position: relative;
+  background-position: initial initial;
+  background-repeat: initial initial; }
+
+.sign-in-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  filter: blur(10px);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: initial initial; }
+
+.sign-in-content {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.25);
+  color: white;
+  text-shadow: 0px 0px 8px #333;
+  background-position: initial initial;
+  background-repeat: initial initial;
+  margin: 0; }
+  .sign-in-content .no-shadow {
+    text-shadow: none; }
+  .sign-in-content a {
+    color: #a980d7 !important; }
+  .sign-in-content a:hover {
+    color: white !important; }
+  .sign-in-content a:active {
+    color: #ddcdf0 !important; }
+
+.welcome-links {
+  opacity: 0.75; }
+  .welcome-links a {
+    color: #f4f4f4 !important;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-shadow: 0px 0px 4px #333;
+    font-weight: bolder; }
+  .welcome-links a:hover {
+    color: #ddcdf0 !important; }
+  .welcome-links a:active {
+    color: #5c2d91; }
 
 /* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
