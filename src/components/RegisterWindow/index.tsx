@@ -58,15 +58,12 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     }
 
     toggle() {
-        if (this.state.instanceUrl === '') {
+        if (this.validateInstanceUrl(this.state.instanceUrl)) {
+            this.createAuthApp();
             this.setState({
-                instanceUrl: 'mastodon.social'
-            })
+                modal: !this.state.modal
+            });
         }
-        this.createAuthApp();
-        this.setState({
-            modal: !this.state.modal
-        });
     }
 
     toggle_reauth() {
@@ -84,22 +81,43 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     
 
     updateInstanceUrl(e: any) {
-        let _this = this;
-        let url = "";
-        console.log(e.target.value);
-        if (e.target.value.includes("@")) {
-            let x = e.target.value.split("@");
-            url = x[x.length - 1];
-        } else {
-            url = e.target.value;
-        }
-        _this.setState({
-            instanceUrl: url
+        this.setState({
+            instanceUrl: e.target.value
         })
     }
 
+    validateInstanceUrl(url: string) {
+        if (url !== "") {
+            if (url.includes("@")) {
+                let parts = url.split("@");
+                if (parts[0] !== "" && parts[1] !== "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    trimInstanceUrl(url: string) {
+        let trim = url.split("@");
+        return trim[1];
+    }
+
     _getErrorMessage(value: string) {
-        return value.length > 0 ? '': 'You must enter a username.';
+        if (value.length > 0) {
+            if (this.validateInstanceUrl(value)) {
+                return '';
+            } else {
+                return 'You must enter a valid username.';
+            }
+        } else {
+            return 'You must enter a username.';
+        }
     }
 
     _getErrorMessagePromise(value: string) {
@@ -120,7 +138,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
         let instructions = '';
 
         if (/iPad|iPhone|iPod/i.test(agent)) {
-            instructions = "Tap the Share icon in Safari and then tap 'Add to Home Screen'.";
+            instructions = "Tap the Share icon in Safari and then tap 'Add to Home Screen' to add the icon to your home screen.";
         } else if (/android/i.test(agent)) {
             instructions = "You may be already prompted to add Hyperspace to your home screen. Tap 'Add to Home Screen' to continue. If this option does not appear, try adding it through your browser's menu.";
         }
@@ -134,9 +152,8 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
             if (!isInStandaloneMode()) {
                 return(
                     <div className = "container p-4 mt-4 marked-area shadow-sm rounded no-shadow" style = {{ color: "#333"}}>
-                        <h4>Using a mobile device?</h4>
-                        <p>You can easily add Hyperspace to your home screen: </p>
-                        <p>{instructions}</p>
+                        <h5>Using a mobile device?</h5>
+                        <small>{instructions}</small>
                     </div>
                 );
             }
@@ -149,7 +166,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     createAuthApp() {
         let _this = this;
         const scopes = 'read write follow';
-        const baseurl = 'https://' + _this.state.instanceUrl;
+        const baseurl = 'https://' + this.trimInstanceUrl(_this.state.instanceUrl);
 
         Mastodon.registerApp('Hyperspace', {
             scopes: scopes
@@ -217,8 +234,8 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                         <TextField
                             prefix="@"
                             label="Mastodon username"
-                            description="Your full Mastodon user handle, including the host name"
-                            placeholder="user@mastodon.host"
+                            description="Your full Mastodon user handle, including the host (domain) name"
+                            placeholder="user@examplemastodon.host"
                             onBlur={e => this.updateInstanceUrl(e)}
                             required={true}
                             onGetErrorMessage={this._getErrorMessage}

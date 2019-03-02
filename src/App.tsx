@@ -192,7 +192,7 @@ class App extends Component {
                                 </div>
                                 
                             </div>
-                            <div className = "fixed-bottom mb-4" style = {{ textAlign: "center" }}>
+                            <div className = "links-area mb-4" style = {{ textAlign: "center" }}>
                                 <span className = "welcome-links">
                                     <a href="https://www.gnu.org/copyleft/lesser.html">License</a> 
                                     <a href="https://github.com/alicerunsonfedora/hyperspace">GitHub</a> 
