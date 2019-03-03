@@ -446,8 +446,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         >
             <EmojiPicker 
                 onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
-                assetPath="https://twemoji.maxcdn.com"
-                emojiResolution="36x36"
+                assetPath="./images/emoji"
+                emojiResolution="128"
             />
         </Callout>);
     }
