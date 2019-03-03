@@ -46,12 +46,14 @@
     "start-electron": "npm run build; electron .",
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
-    "build-electron": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -mwl deb AppImage",
+    "build-electron": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -mwl deb AppImage snap; npm run publish-snap",
     "build-electron-darwin": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -m",
     "build-electron-win": "npm run purge-dirs; npm run build; build -w",
-    "build-electron-linux": "npm run purge-dirs; npm run build; build -l",
+    "build-electron-linux": "npm run purge-dirs; npm run build; build -l deb AppImage snap; npm run publish-snap",
+    "build-electron-linux-select": "npm run purge-dirs; npm run build; build -l",
     "purge-dirs": "rm -rf  build dist",
     "create-mac-icon": "cd electron; iconutil -c icns app.iconset; cd ..",
+    "publish-snap": "snapcraft push dist/*.snap",
     "test": "npm run compile-sass; react-scripts test",
     "eject": "npm run compile-sass; react-scripts eject"
   },
@@ -91,6 +93,10 @@
       ],
       "icon": "linux",
       "category": "Network"
+    },
+    "snap": {
+      "confinement": "classic",
+      "summary": "A fluffy client for Mastodon"
     }
   }
 }
