@@ -2,10 +2,10 @@ const electron = require('electron');
 const app = electron.app;
 const menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
+const {autoUpdater} = require('electron-updater');
 
 const path = require('path');
-
-require('update-electron-app')();
+autoUpdater.checkForUpdatesAndNotify();
 
 let mainWindow;
 
