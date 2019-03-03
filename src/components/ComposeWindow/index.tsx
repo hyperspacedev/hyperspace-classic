@@ -498,7 +498,11 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     hidden={this.state.hideEmojiPicker}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+                    <EmojiPicker 
+                        onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
+                        assetPath="https://twemoji.maxcdn.com"
+                        emojiResolution="36x36"
+                    />
                 </Callout>
             </div>
         );

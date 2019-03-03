@@ -444,7 +444,11 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             hidden={this.state.hideEmojiPicker}
             target={document.getElementById('emojiPickerReplyButton')}
         >
-            <EmojiPicker onEmojiClick={(e: any) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+            <EmojiPicker 
+                onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
+                assetPath="https://twemoji.maxcdn.com"
+                emojiResolution="36x36"
+            />
         </Callout>);
     }
 
