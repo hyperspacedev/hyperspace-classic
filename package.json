@@ -95,7 +95,7 @@
       "category": "Network"
     },
     "snap": {
-      "confinement": "classic",
+      "confinement": "strict",
       "summary": "A fluffy client for Mastodon"
     }
   }
