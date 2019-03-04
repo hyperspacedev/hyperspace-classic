@@ -113,7 +113,7 @@ function createMenubar() {
         })
 
         // Edit menu
-        menuBar[1].submenu.push(
+        menuBar[2].submenu.push(
             { type: 'separator' },
             {
                 label: 'Speech',
@@ -125,7 +125,7 @@ function createMenubar() {
         )
 
         // Window menu
-        menuBar[3].submenu = [
+        menuBar[4].submenu = [
             { role: 'close' },
             { role: 'minimize' },
             { role: 'zoom' },
@@ -152,5 +152,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     if (mainWindow === null) {
         createWindow()
+        createMenubar()
     }
 });
