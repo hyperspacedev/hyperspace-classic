@@ -356,6 +356,12 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         }
     }
 
+    sendStatusViaKeyboard(event: any) {
+        if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+            this.postStatus();
+        }
+    }
+
     render() {
         return (
             <div id = "compose-window" className = "marked-area shadow-sm rounded p-1">
@@ -371,10 +377,11 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     rows={5}
                     resizable={false}
                     maxLength={500}
-                    onBlur={e => this.updateStatus(e)}
+                    onChange={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
                     data-emojiable={true}
                     defaultValue={this.state.status}
+                    onKeyDown = {(event) => this.sendStatusViaKeyboard(event)}
                 />
                 <p className="mt-1">{this.getSpoilerText()}</p>
                 <DetailsList

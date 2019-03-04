@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    console.warn("You're running Hyperspace in developer mode.\nExpect delays in streaming of timelines.");
+    console.warn("You're running Hyperspace in developer mode. Expect delays in streaming of timelines.");
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));
