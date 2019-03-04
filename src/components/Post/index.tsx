@@ -129,15 +129,28 @@ class Post extends Component<IPostProps, IPostState> {
         return temporaryDiv.innerHTML;
     }
 
+    isDescendant(parent: any, child: any) {
+        var node = child.parentNode;
+        while (node != null) {
+            if (node == parent) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+        return false;
+    }
+
     openThreadPanel(event: any) {
         let parent = event.target.parentNode;
         if (
             event.target && parent &&
-            event.target.className &&
-            !event.target.className.includes("col") &&
+            this.isDescendant(document.getElementById("post"), event.target) &&
+            !event.target.className.includes("d-none") &&
             !event.target.className.includes("ms-Link") && 
             !event.target.className.includes("ms-Button") &&
             !parent.className.includes("ms-Button-flexContainer") &&
+            !event.target.className.includes("slider") &&
+            !event.target.className.includes("ms-Panel-main") &&
             !this.props.status.reblog &&
             !(event.target.nodeName === "A" || parent.nodeName === "A")
             ) {

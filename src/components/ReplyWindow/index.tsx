@@ -550,6 +550,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     giveDialogBox() {
         return (
+            <div id = "do-not-trigger">
             <Panel
                 isOpen={!this.state.hideReplyPanel}
                 onDismiss={() => this.closeReplyPanel()}
@@ -607,6 +608,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 {this.giveEmojiDialog()}
 
             </Panel>
+            </div>
         );
     }
 
