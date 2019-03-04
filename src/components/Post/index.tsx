@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Persona, TooltipHost } from "office-ui-fabric-react";
+import { Persona, TooltipHost, COACHMARK_ATTRIBUTE_NAME } from "office-ui-fabric-react";
 import moment from 'moment';
 import PostContent from './PostContent';
 import PostDate from './PostDate';
@@ -12,6 +12,7 @@ import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon, { Status } from 'megalodon';
 import ThreadPanel from '../ThreadPanel';
+import Carousel from 'nuka-carousel';
 
 interface IPostProps {
     client: Mastodon;
@@ -26,6 +27,7 @@ interface IPostState {
     noLink: boolean | undefined;
     noThread: boolean | undefined;
     clickToThread?: boolean;
+    carouselIndex: number;
 }
 
 /**
@@ -49,7 +51,8 @@ class Post extends Component<IPostProps, IPostState> {
         this.state = {
             noLink: this.props.nolink,
             noThread: this.props.nothread,
-            clickToThread: this.props.clickToThread || false
+            clickToThread: this.props.clickToThread || false,
+            carouselIndex: 0
         }
 
     }
@@ -131,6 +134,7 @@ class Post extends Component<IPostProps, IPostState> {
         if (
             event.target && parent &&
             event.target.className &&
+            !event.target.className.includes("col") &&
             !event.target.className.includes("ms-Link") && 
             !event.target.className.includes("ms-Button") &&
             !parent.className.includes("ms-Button-flexContainer") &&
@@ -155,6 +159,82 @@ class Post extends Component<IPostProps, IPostState> {
                         }
                     </div>
                 </div>
+            );
+        }
+    }
+
+    prepareMedia(media: any) {
+        if (media.length >= 2) {
+            let id = "mediaControl";
+            return (
+                <div className = "col">
+                    <Carousel
+                        wrapAround={true}
+                        autoplay={false}
+                        slideIndex={this.state.carouselIndex}
+                        afterSlide={(newIndex: number) => { this.setState({carouselIndex: newIndex})}}
+                        width="100%"
+                        heightMode="current"
+                        initialSlideHeight={350}
+                    >
+                    {
+                            media.map((item: any) => {
+                                return (
+                                    <span>
+                                        {
+                                            (item.type === "image") ?
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", height: 350}}/>:
+                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", height: 350}}/>
+                                        }
+                                    </span>
+                                );
+                            })
+                        }
+                    </Carousel>
+                </div>
+                // <div className = "col">
+                //     <div id={id} className="carousel slide shadow-sm rounded" data-ride="carousel" data-interval="5000">
+                //         <div className = "carousel-inner" role="listbox">
+                //         {
+                //             media.map((item: any) => {
+                //                 let classname = "carousel-item"
+                //                 if (media.indexOf(item) == 0)
+                //                     classname = "carousel-item active"
+                //                 return (
+                //                     <div className = {classname}>
+                //                         {
+                //                             (item.type === "image") ?
+                //                                 <img className="d-block w-100" src={item.url} alt={item.description}/>:
+                //                                 <video className="d-block w-100" src={item.url} autoPlay={false} controls={true}/>
+                //                         }
+                //                         <div className="carousel-caption">
+                //                             <h3>{item.description}</h3>
+                //                         </div>
+                //                     </div>
+                //                 );
+                //             })
+                //         }
+                //         </div>
+                //         <a className="carousel-control-prev" href={"#" + id} role="button" data-slide="prev">
+                //             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                //             <span className="sr-only">Previous</span>
+                //         </a>
+                //         <a className="carousel-control-next" href={"#" + id} role="button" data-slide="next">
+                //             <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                //             <span className="sr-only">Next</span>
+                //         </a>
+                //     </div>
+                // </div>
+            );
+        } else {
+            return (
+            <div className = "col">
+                {
+                    (media[0].type === "image") ?
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                }
+            </div>
             );
         }
     }
@@ -195,17 +275,18 @@ class Post extends Component<IPostProps, IPostState> {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">
                                                     {
-                                                        this.props.status.media_attachments.map( function(media: any) {
-                                                            return(
-                                                                <div key={'media' + media.id} className="col">
-                                                                    {
-                                                                        (media.type === "image") ?
-                                                                            <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                            <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
-                                                                    }
-                                                                </div>
-                                                            );
-                                                        })
+                                                        // this.props.status.media_attachments.map( function(media: any) {
+                                                        //     return(
+                                                        //         <div key={'media' + media.id} className="col">
+                                                        //             {
+                                                        //                 (media.type === "image") ?
+                                                        //                     <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
+                                                        //                     <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                                                        //             }
+                                                        //         </div>
+                                                        //     );
+                                                        // })
+                                                        this.prepareMedia(this.props.status.media_attachments)
                                                     }
                                                 </div>:
                                                 <span/>

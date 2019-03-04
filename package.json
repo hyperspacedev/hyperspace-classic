@@ -9,7 +9,9 @@
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
-    "electron-updater": "^4.0.6"
+    "electron-updater": "^4.0.6",
+    "nuka-carousel": "^4.4.6",
+    "@types/nuka-carousel": "^4.4.6"
   },
   "devDependencies": {
     "electron-builder": "^20.38.5",
@@ -84,7 +86,9 @@
       "provisioningProfile": "electron/embedded.provisionprofile"
     },
     "win": {
-      "target": [ "nsis" ],
+      "target": [
+        "nsis"
+      ],
       "icon": "electron/app.ico"
     },
     "linux": {
