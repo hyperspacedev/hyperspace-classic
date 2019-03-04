@@ -283,6 +283,9 @@ div#profile-table * {
   .dark .ms-DetailsList * svg {
     fill: white; }
 
+.dark .ms-Spinner-label {
+  color: #a980d7; }
+
 .dark div#end-of-post-roll {
   color: #d0d0d0; }
 

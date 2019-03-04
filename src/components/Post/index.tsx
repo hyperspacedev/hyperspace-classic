@@ -179,6 +179,7 @@ class Post extends Component<IPostProps, IPostState> {
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
                 }
+
                 <PostContent>
                     {
 

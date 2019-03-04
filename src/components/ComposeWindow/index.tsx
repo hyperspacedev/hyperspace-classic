@@ -13,7 +13,9 @@ import {
     SelectionMode,
     Icon,
     Toggle,
-    Callout
+    Callout,
+    Spinner,
+    SpinnerSize
 } from "office-ui-fabric-react";
 import {getDarkMode} from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
@@ -35,6 +37,7 @@ interface IComposeWindowState {
     hideDialog: boolean | undefined;
     hideSpoilerDialog: boolean | undefined;
     hideEmojiPicker: boolean | undefined;
+    media_uploading: boolean;
 }
 
 /**
@@ -54,6 +57,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
             status: '',
             media: [],
             media_data: [],
+            media_uploading: false,
             visibility: 'public',
             spoiler_text: '',
             sensitive: false,
@@ -82,6 +86,10 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
 
             uploadData.append('file', images[0]);
 
+            _this.setState({
+                media_uploading: true
+            })
+
             _this.client.post('/media', uploadData)
                 .then((resp: any) => {
                     console.log('Media uploaded!');
@@ -92,7 +100,8 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
-                        media_data: media_data_array
+                        media_data: media_data_array,
+                        media_uploading: false
                     })
                 })
         })
@@ -390,6 +399,9 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     selectionMode={SelectionMode.none}
                     layoutMode={DetailsListLayoutMode.justified}
                 />
+
+                {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
+                
 
                 {/* Visibility Dialog */}
                 <Dialog

@@ -325,6 +325,10 @@ div#profile-table *{
         }
     }
 
+    .ms-Spinner-label {
+        color: lighten($theme-accent-color, 30%);
+    }
+
     div#end-of-post-roll {
         color: #d0d0d0;
     }
