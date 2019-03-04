@@ -16,9 +16,11 @@ function createWindow() {
             height: 600,
             minWidth: 476, 
             titleBarStyle: 'hidden',
-            nodeIntegration: true 
+            webPreferences: {nodeIntegration: true}
         }
     );
+    
+    
 
     mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
 
