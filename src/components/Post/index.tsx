@@ -192,39 +192,6 @@ class Post extends Component<IPostProps, IPostState> {
                         }
                     </Carousel>
                 </div>
-                // <div className = "col">
-                //     <div id={id} className="carousel slide shadow-sm rounded" data-ride="carousel" data-interval="5000">
-                //         <div className = "carousel-inner" role="listbox">
-                //         {
-                //             media.map((item: any) => {
-                //                 let classname = "carousel-item"
-                //                 if (media.indexOf(item) == 0)
-                //                     classname = "carousel-item active"
-                //                 return (
-                //                     <div className = {classname}>
-                //                         {
-                //                             (item.type === "image") ?
-                //                                 <img className="d-block w-100" src={item.url} alt={item.description}/>:
-                //                                 <video className="d-block w-100" src={item.url} autoPlay={false} controls={true}/>
-                //                         }
-                //                         <div className="carousel-caption">
-                //                             <h3>{item.description}</h3>
-                //                         </div>
-                //                     </div>
-                //                 );
-                //             })
-                //         }
-                //         </div>
-                //         <a className="carousel-control-prev" href={"#" + id} role="button" data-slide="prev">
-                //             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                //             <span className="sr-only">Previous</span>
-                //         </a>
-                //         <a className="carousel-control-next" href={"#" + id} role="button" data-slide="next">
-                //             <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                //             <span className="sr-only">Next</span>
-                //         </a>
-                //     </div>
-                // </div>
             );
         } else {
             return (
@@ -275,17 +242,6 @@ class Post extends Component<IPostProps, IPostState> {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">
                                                     {
-                                                        // this.props.status.media_attachments.map( function(media: any) {
-                                                        //     return(
-                                                        //         <div key={'media' + media.id} className="col">
-                                                        //             {
-                                                        //                 (media.type === "image") ?
-                                                        //                     <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                        //                     <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
-                                                        //             }
-                                                        //         </div>
-                                                        //     );
-                                                        // })
                                                         this.prepareMedia(this.props.status.media_attachments)
                                                     }
                                                 </div>:

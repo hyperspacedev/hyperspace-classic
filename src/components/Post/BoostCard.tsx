@@ -78,6 +78,44 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
         this.threadRef.current.openThreadPanel();
     }
 
+    prepareMedia(media: any) {
+        if (media.length >= 2) {
+            let id = "mediaControl";
+            return (
+                <div className = "col">
+                {
+                    media[0].type == "image" ?
+                    <div className = "shadow-sm rounded" style = {
+                        {
+                            backgroundImage: "url('" + media[0].url + "')", 
+                            backgroundPosition: "center", 
+                            backgroundSize: "cover", 
+                            backgroundRepeat: "no-repeat",
+                            height: 250
+                        }
+                    }>
+                        <div className = "pl-4 pr-4" style = {{paddingTop: 32, paddingBottom: 32, backgroundColor: "rgba(0,0,0,0.8)", height: "100%", color: "#f4f4f4"}}>
+                            <h5>This person has posted a slideshow.</h5>
+                            <p>Click this boost card to view the slideshow.</p>
+                        </div>
+                    </div>:
+                    <video className="rounded shadow-sm" src={media[0].url} autoPlay={false} controls={true} style={{width: "100%", height: 350}}/>
+                }
+                </div>
+            );
+        } else {
+            return (
+            <div className = "col">
+                {
+                    (media[0].type === "image") ?
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                }
+            </div>
+            );
+        }
+    }
+
     render() {
         let post = this.state.status;
         return(
@@ -102,17 +140,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                                         post.media_attachments.length ?
                                             <div className = "row">
                                                 {
-                                                    post.media_attachments.map( function(media: any) {
-                                                        return(
-                                                            <div className="col" key={'media' + media.id}>
-                                                                {
-                                                                    (media.type === "image") ?
-                                                                        <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                        <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
-                                                                }
-                                                            </div>
-                                                        );
-                                                    })
+                                                    this.prepareMedia(post.media_attachments)
                                                 }
                                             </div>:
                                             <span/>
