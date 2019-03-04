@@ -130,6 +130,7 @@ class Post extends Component<IPostProps, IPostState> {
         let parent = event.target.parentNode;
         if (
             event.target && parent &&
+            event.target.className &&
             !event.target.className.includes("ms-Link") && 
             !event.target.className.includes("ms-Button") &&
             !parent.className.includes("ms-Button-flexContainer") &&

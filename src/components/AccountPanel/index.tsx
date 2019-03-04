@@ -233,6 +233,22 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             });
     }
 
+    loadMore() {
+        let _this = this;
+        let last_status = (this.state.account_statuses[this.state.account_statuses.length - 1] as any).id;
+
+        this.client.get('/accounts/' + this.state.account.id + '/statuses', {"max_id": last_status})
+            .then( (resp: any) => {
+                let data = resp.data;
+                
+                _this.setState({
+                    account_statuses: (_this.state.account_statuses.concat(resp.data) as any)
+                })
+
+            })
+
+    }
+
     showRecentStatuses() {
         let key = 0;
         if (this.state.account_statuses.length > 0) {
@@ -499,6 +515,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 <hr/>
                 <div className="my-2">
                     {this.showRecentStatuses()}
+                    <hr/>
+                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}><Link onClick = {() => this.loadMore()}>Load more</Link></div>
                 </div>
             </Panel>
         </span>);
