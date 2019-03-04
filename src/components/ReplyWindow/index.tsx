@@ -368,6 +368,12 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         });
     }
 
+    sendStatusViaKeyboard(event: any) {
+        if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+            this.postReply();
+        }
+    }
+
     getTypeOfWarning(event: any, option: any) {
         if (option.key ==='none') {
             let text = this.state.spoiler_text.replace('NSFW: ', '').replace('Spoiler: ', '');
@@ -575,9 +581,10 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     rows={5}
                     resizable={false}
                     maxLength={500}
-                    onBlur={e => this.updateStatus(e)}
+                    onChange={e => this.updateStatus(e)}
                     placeholder="Type your reply here..."
                     defaultValue={this.state.reply_contents}
+                    onKeyDown={(event) => this.sendStatusViaKeyboard(event)}
                     />
                     <DetailsList
                         columns={this.getMediaItemColumns()}
