@@ -20,7 +20,6 @@ import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import Mastodon, { Status } from 'megalodon';
 import filedialog from 'file-dialog';
-import { object } from 'prop-types';
 
 interface IAccountPanelProps {
     client: Mastodon;
