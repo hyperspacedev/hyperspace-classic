@@ -10,7 +10,7 @@ import {
     DefaultButton,
     ActionButton,
     TextField,
-    Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout
+    Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout, Spinner, SpinnerSize
 } from 'office-ui-fabric-react';
 import {getDarkMode} from "../../utilities/getDarkMode";
 import filedialog from 'file-dialog';
@@ -42,6 +42,7 @@ interface IReplyWindowState {
     hideSpoilerDialog: boolean;
     hideEmojiPicker: boolean;
     hideVisibilityDialog: boolean;
+    media_uploading: boolean;
 }
 
 /**
@@ -73,7 +74,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             sensitive: false,
             hideSpoilerDialog: true,
             hideEmojiPicker: true,
-            hideVisibilityDialog: true
+            hideVisibilityDialog: true,
+            media_uploading: false
         };
 
         this.client = this.props.client;
@@ -151,6 +153,10 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
             uploadData.append('file', images[0]);
 
+            _this.setState({
+                media_uploading: true
+            })
+
             _this.client.post('/media', uploadData)
                 .then((resp: any) => {
                     console.log('Media uploaded!');
@@ -161,7 +167,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
-                        media_data: media_data_array
+                        media_data: media_data_array,
+                        media_uploading: false
                     })
                 })
         })
@@ -592,6 +599,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                         selectionMode={SelectionMode.none}
                         layoutMode={DetailsListLayoutMode.justified}
                     />
+                    {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 </div>
 
                 {this.giveVisibilityDialog()}
