@@ -4,6 +4,7 @@ import {ColorClassNames} from '@uifabric/styling';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import { Status } from 'megalodon';
+import Carousel from 'nuka-carousel';
 
 interface IPostSensitiveProps {
     status: any;
@@ -12,6 +13,7 @@ interface IPostSensitiveProps {
 interface IPostSensitiveState {
     modal: boolean | null;
     status: Status;
+    carouselIndex: number;
 }
 
 
@@ -26,7 +28,8 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
         super(props);
         this.state = {
             modal: false,
-            status: this.props.status
+            status: this.props.status,
+            carouselIndex: 0
         };
 
         this.toggle = this.toggle.bind(this);
@@ -71,6 +74,49 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
         }
     }
 
+    prepareMedia(media: any) {
+        if (media.length >= 2) {
+            let id = "mediaControl";
+            return (
+                <div className = "col">
+                    <Carousel
+                        wrapAround={true}
+                        autoplay={false}
+                        slideIndex={this.state.carouselIndex}
+                        afterSlide={(newIndex: number) => { this.setState({carouselIndex: newIndex})}}
+                        width="100%"
+                        heightMode="current"
+                        initialSlideHeight={350}
+                    >
+                    {
+                            media.map((item: any) => {
+                                return (
+                                    <span>
+                                        {
+                                            (item.type === "image") ?
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", minHeight: 350}}/>:
+                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
+                                        }
+                                    </span>
+                                );
+                            })
+                        }
+                    </Carousel>
+                </div>
+            );
+        } else {
+            return (
+            <div className = "col">
+                {
+                    (media[0].type === "image") ?
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                }
+            </div>
+            );
+        }
+    }
+
     render() {
         let status = this.state.status;
         return (
@@ -98,18 +144,7 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
                                 <div dangerouslySetInnerHTML={{__html: status.content}}/>
                                 {
                                     status.media_attachments.length ?
-                                        <div className = "row">
-                                            {
-                                                status.media_attachments.map( function(media: any) {
-                                                    return(
-                                                        <div className="col" key={status.id.toString() + "_media_" + media.id.toString()}>
-                                                            <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>
-                                                        </div>
-                                                    );
-                                                })
-                                            }
-                                            <br/>
-                                        </div>:
+                                        this.prepareMedia(status.media_attachments):
                                         <span/>
                                 }
                             </div> as unknown as string

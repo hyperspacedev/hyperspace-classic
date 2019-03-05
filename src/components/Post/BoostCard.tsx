@@ -99,7 +99,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                             <p>Click this boost card to view the slideshow.</p>
                         </div>
                     </div>:
-                    <video className="rounded shadow-sm" src={media[0].url} autoPlay={false} controls={true} style={{width: "100%", height: 350}}/>
+                    <video className="rounded shadow-sm" src={media[0].url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
                 }
                 </div>
             );

@@ -196,8 +196,8 @@ class Post extends Component<IPostProps, IPostState> {
                                     <span>
                                         {
                                             (item.type === "image") ?
-                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", height: 350}}/>:
-                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", height: 350}}/>
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", minHeight: 350}}/>:
+                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
                                         }
                                     </span>
                                 );
