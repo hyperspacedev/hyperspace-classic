@@ -292,12 +292,12 @@ div#profile-table * {
 .dark div#timeline-error {
   color: #f4f4f4; }
 
-.dark div#post {
+.dark div[id^="post_"], .dark div[id*="post_"] {
   background-color: #333;
   color: #F4F4F4; }
-  .dark div#post .ms-Persona-primaryText {
+  .dark div[id^="post_"] .ms-Persona-primaryText, .dark div[id*="post_"] .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark div#post small.text-muted {
+  .dark div[id^="post_"] small.text-muted, .dark div[id*="post_"] small.text-muted {
     color: #a6a6a6 !important; }
 
 .dark ul#post-toolbar * {

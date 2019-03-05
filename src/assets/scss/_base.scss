@@ -337,7 +337,7 @@ div#profile-table *{
         color: #f4f4f4;
     }
 
-    div#post {
+    div[id^="post_"], div[id*="post_"] {
         background-color: #333;
         color: #F4F4F4;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Persona, TooltipHost, COACHMARK_ATTRIBUTE_NAME } from "office-ui-fabric-react";
+import { Persona, TooltipHost } from "office-ui-fabric-react";
 import moment from 'moment';
 import PostContent from './PostContent';
 import PostDate from './PostDate';
@@ -28,6 +28,7 @@ interface IPostState {
     noThread: boolean | undefined;
     clickToThread?: boolean;
     carouselIndex: number;
+    id: string;
 }
 
 /**
@@ -52,7 +53,8 @@ class Post extends Component<IPostProps, IPostState> {
             noLink: this.props.nolink,
             noThread: this.props.nothread,
             clickToThread: this.props.clickToThread || false,
-            carouselIndex: 0
+            carouselIndex: 0,
+            id: "post_" + this.props.status.id
         }
 
     }
@@ -144,7 +146,7 @@ class Post extends Component<IPostProps, IPostState> {
         let parent = event.target.parentNode;
         if (
             event.target && parent &&
-            this.isDescendant(document.getElementById("post"), event.target) &&
+            this.isDescendant(document.getElementById(this.state.id), event.target) &&
             !event.target.className.includes("d-none") &&
             !event.target.className.includes("ms-Link") && 
             !event.target.className.includes("ms-Button") &&
@@ -222,7 +224,7 @@ class Post extends Component<IPostProps, IPostState> {
     render() {
         return (
         <div 
-            id="post" 
+            id={this.state.id}
             key={this.props.status.id + "_post"} 
             className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}
             onClick={(e) => {
