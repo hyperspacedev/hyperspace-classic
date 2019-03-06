@@ -20,7 +20,7 @@ export class Toast extends Component<any, any> {
                 paddingLeft: 24,
                 paddingBottom: 4,
                 backgroundColor: "#fff",
-                color: "#f4f4f4"
+                color: "#333"
             }
         }
     }
