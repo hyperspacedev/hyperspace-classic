@@ -41,7 +41,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
         };
 
         this.toggle = this.toggle.bind(this);
-        this.toggle_reauth = this.toggle_reauth.bind(this);
+        this.dismiss = this.dismiss.bind(this);
         this._getErrorMessage = this._getErrorMessage.bind(this);
         this._getErrorMessagePromise = this._getErrorMessagePromise.bind(this);
     }
@@ -54,24 +54,27 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                 clientSecret: localStorage.getItem("secret") || "",
                 authUrl: localStorage.getItem("authurl") || ""
             })
-        } 
+        } else {
+            localStorage.removeItem("baseurl");
+        }
     }
 
     toggle() {
-        if (this.state.instanceUrl === '') {
+        if (this.validateInstanceUrl(this.state.instanceUrl) || localStorage.getItem("baseurl") !== null) {
+            this.createAuthApp();
             this.setState({
-                instanceUrl: 'mastodon.social'
-            })
+                modal: !this.state.modal
+            });
         }
-        this.createAuthApp();
-        this.setState({
-            modal: !this.state.modal
-        });
     }
 
-    toggle_reauth() {
+    dismiss() {
+        localStorage.removeItem("id");
+        localStorage.removeItem("secret");
+        localStorage.removeItem("authurl");
+        localStorage.removeItem("baseurl");
         this.setState({
-            reauth: !this.state.reauth
+            reauth_from_cookie: false
         });
     }
 
@@ -84,14 +87,43 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     
 
     updateInstanceUrl(e: any) {
-        let _this = this;
-        _this.setState({
-            instanceUrl: e.target.value
+        this.setState({
+            instanceUrl: e.target.value || ""
         })
     }
 
+    validateInstanceUrl(url: string) {
+        if (url !== "" && url != undefined) {
+            if (url.includes("@")) {
+                let parts = url.split("@");
+                if (parts[0] !== "" && parts[1] !== "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    trimInstanceUrl(url: string) {
+        let trim = url.split("@");
+        return trim[1];
+    }
+
     _getErrorMessage(value: string) {
-        return value.length > 0 ? '': 'This field cannot be blank.';
+        if (value.length > 0) {
+            if (this.validateInstanceUrl(value)) {
+                return '';
+            } else {
+                return 'You must enter a valid username.';
+            }
+        } else {
+            return 'You must enter a username.';
+        }
     }
 
     _getErrorMessagePromise(value: string) {
@@ -112,7 +144,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
         let instructions = '';
 
         if (/iPad|iPhone|iPod/i.test(agent)) {
-            instructions = "Tap the Share icon in Safari and then tap 'Add to Home Screen'.";
+            instructions = "Tap the Share icon in Safari and then tap 'Add to Home Screen' to add the icon to your home screen.";
         } else if (/android/i.test(agent)) {
             instructions = "You may be already prompted to add Hyperspace to your home screen. Tap 'Add to Home Screen' to continue. If this option does not appear, try adding it through your browser's menu.";
         }
@@ -125,10 +157,9 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
             // Checks if should display install popup notification:
             if (!isInStandaloneMode()) {
                 return(
-                    <div className = "container p-4 mt-4 marked-area shadow-sm rounded">
-                        <h4>Using a mobile device?</h4>
-                        <p>You can easily add Hyperspace to your home screen: </p>
-                        <p>{instructions}</p>
+                    <div className = "container p-4 mt-4 marked-area shadow-sm rounded no-shadow" style = {{ color: "#333"}}>
+                        <h5>Using a mobile device?</h5>
+                        <small>{instructions}</small>
                     </div>
                 );
             }
@@ -137,11 +168,104 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
         
     }
 
+    showFirstStep() {
+        if (!this.state.modal)
+            return (
+                <div className = "ms-fadeIn100">
+                    {
+                            this.state.reauth_from_cookie ?
+                            <div className = "container rounded shadow p-3 my-3 marked-area no-shadow" style = {{color: '#333'}}>
+                                <small>
+                                    We noticed you didn't finish setting up Hyperspace. Did you want to continue from your last sign-in attempt?
+                                </small>
+                                <div className = "text-right">
+                                <DefaultButton className = "shadow-sm" onClick={() => this.dismiss()} style = {{marginRight: 8}}>Start over</DefaultButton>
+                                <PrimaryButton className = "shadow-sm" onClick={() => this.toggle()}>Continue</PrimaryButton>
+                                </div>
+                            </div>:<span/>
+                    }
+                    <p>
+                        Howdy! Let's get started by entering your Mastodon username.
+                    </p>
+                    <div>
+                        <TextField
+                            prefix="@"
+                            description="Your full Mastodon user handle, including the host (domain) name"
+                            placeholder="user@examplemastodon.host"
+                            onBlur={e => this.updateInstanceUrl(e)}
+                            required={true}
+                            onGetErrorMessage={this._getErrorMessage}
+                            validateOnFocusOut
+                            defaultValue={this.state.instanceUrl}
+                            styles = {{
+                                errorMessage: {
+                                    fontWeight: 'bold',
+                                    color: '#ef5865'
+                                },
+                                description: {
+                                    color: "#f4f4f4"
+                                },
+                                wrapper: {
+                                    color: "#f4f4f4",
+                                    fontWeight: 'bolder'
+                                }
+                            }}
+                        />
+                        <div style = {{textAlign: 'right'}}>
+                            <PrimaryButton className = "shadow" onClick={this.toggle} style={{marginRight: 8, marginTop: 4}}>Next</PrimaryButton>
+                        </div>
+                        {this.getMobilePWA()}
+                    </div>
+                </div>
+            );
+    }
+
+    showSecondStep() {
+        if (this.state.modal) {
+            return (
+                <div className = "ms-slideLeftIn40">
+                    <p>To continue, you'll need to give Hyperspace authorization to access your account. Click 'Sign in on Mastodon' below and enter the authorization code generated by Mastodon.</p>
+                        <DefaultButton
+                            href={this.state.authUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className = "shadow-sm mb-2"
+                        >Sign in on Mastodon</DefaultButton>
+                        <TextField
+                            description = "The authorization code provided by Mastodon"
+                            onBlur={e => this.updateAuthCode(e)}
+                            styles = {{
+                                errorMessage: {
+                                    fontWeight: 'bold',
+                                    color: '#ef5865'
+                                },
+                                description: {
+                                    color: "#f4f4f4"
+                                },
+                                wrapper: {
+                                    color: "#f4f4f4",
+                                    fontWeight: 'bolder'
+                                }
+                            }}
+                        />
+                    <div style = {{ textAlign: "right"}} className = "mt-4">
+                        <PrimaryButton
+                            onClick={() => this.getAccessToken()}
+                            style={{marginRight: 8, marginTop: 4}}
+                            className = "shadow"
+                            text="Authorize"
+                        />
+                    </div>
+                </div>
+            )
+        }
+    }
+
 
     createAuthApp() {
         let _this = this;
         const scopes = 'read write follow';
-        const baseurl = 'https://' + _this.state.instanceUrl;
+        const baseurl = 'https://' + this.trimInstanceUrl(_this.state.instanceUrl);
 
         Mastodon.registerApp('Hyperspace', {
             scopes: scopes
@@ -195,105 +319,18 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     render() {
         let _this = this;
         return (
-            <div>
-                {this.getMobilePWA()}
-                <div className = "container shadow-sm p-4 mt-4 marked-area">
-                    <h2>Sign in to Hyperspace</h2>
-                    <p>Welcome to Hyperspace, the fluffy client for Mastodon! We're more than happy to make your experience pleasant, but we'll need you to sign in to your Mastodon account first.</p>
-                    <p>
-                        Please sign in by entering your Mastodon instance's domain. This is typically the domain name of the instance or the URL used to access that instance.
-                    </p>
-                    <div>
-                        <TextField
-                            prefix="https://"
-                            label="Host domain name"
-                            description="The base URL of your Mastodon instance"
-                            onBlur={e => this.updateInstanceUrl(e)}
-                            required={true}
-                            onGetErrorMessage={this._getErrorMessage}
-                            validateOnFocusOut
-                        />
-                        {
-                            this.state.reauth_from_cookie ?
-                            <div className = "container rounded shadow p-3 my-2 marked-area">
-                                <h5>Finish sign-in</h5>
-                                <p>
-                                    We noticed you didn't finish setting up Hyperspace. You can start over or pick up where you left off.
-                                </p>
-                                <PrimaryButton onClick={() => this.toggle_reauth()} style={{marginRight: 8}}>Finish sign-in</PrimaryButton>
-                                <DefaultButton onClick={() => this.toggle()}>Start over</DefaultButton>
-                            </div>:
-                            <PrimaryButton onClick={this.toggle} style={{marginRight: 8, marginTop: 4}}>Sign in</PrimaryButton>
-
-                        }
+            <div style = {{width: '100%'}}>
+                <div className = "container p-4 mt-4">
+                    <div className = "mb-4" style = {{textAlign: 'center'}}>
+                        <img src = "logomark.svg" style = {{ width: '60%'}}/>
+                        <p><b>A fluffy client for Mastodon</b></p>
                     </div>
-
-                    <Panel
-                        isOpen={this.state.modal}
-                        type={PanelType.medium}
-                        onDismiss={() => this.closePanel()}
-                        headerText="Give authorization access"
-                        closeButtonAriaLabel="Close"
-                        styles={this.getPanelStyles()}
-                        className={getDarkMode()}
-                        onRenderFooterContent = { () => {return(
-                            <div>
-                                <PrimaryButton
-                                    onClick={() => this.getAccessToken()}
-                                    style={{ marginRight: '8px' }}
-                                    text="Authorize" />
-                                <DefaultButton
-                                    onClick={() => this.closePanel()}
-                                    text="Cancel" />
-                            </div>
-                            );}
-                        }
-                    >
-                        <p>We'll need you to grant Hyperspace authorization to access your Mastodon account on <b>{_this.state.instanceUrl}</b>. Click 'Get Code' to authorize and then paste the authorization code here.</p>
-                        <DefaultButton
-                            href={this.state.authUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >Get code</DefaultButton>
-                        <TextField
-                            label="Authorization code"
-                            onBlur={e => this.updateAuthCode(e)}
-                        />
-                    </Panel>
-
-                    <Panel
-                        isOpen={this.state.reauth}
-                        type={PanelType.medium}
-                        onDismiss={() => this.closePanel()}
-                        headerText="Finish setup"
-                        closeButtonAriaLabel="Close"
-                        styles={this.getPanelStyles()}
-                        className={getDarkMode()}
-                        onRenderFooterContent = { () => {return(
-                            <div>
-                                <PrimaryButton
-                                    onClick={() => this.getAccessToken()}
-                                    style={{ marginRight: '8px' }}
-                                    text="Authorize" />
-                                <DefaultButton
-                                    onClick={() => this.closePanel()}
-                                    text="Cancel" />
-                            </div>
-                            );}
-                        }
-                    >
-                        <p>Paste the authroization token from when you signed in and authorized Hyperspace. If you have forgotten or need to re-assign access, click <b>Reacquire code</b> to reset. Optionally, you may cancel and press 'Start over'.</p>
-                        <DefaultButton
-                            href={this.state.authUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >Reacquire code</DefaultButton>
-                        <TextField
-                            label="Authorization code"
-                            onBlur={e => this.updateAuthCode(e)}
-                        />
-                    </Panel>
-                </div>
+                    {this.showFirstStep()}
+                    {this.showSecondStep()}
+                        <div className = "mt-3" style = {{ textAlign: 'center', color: "#999"}}>
+                            <small><a href="https://peertube.social/videos/watch/420bd961-458d-4e9b-b184-fe780b422437">Need help?</a> | <a href="https://joinmastodon.org/#getting-started">Register</a> | <a href="https://github.com/alicerunsonfedora/hyperspace/issues">Send feedback</a></small>
+                        </div>
+                    </div>
             </div>
         );
     }
