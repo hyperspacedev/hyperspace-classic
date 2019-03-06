@@ -215,6 +215,10 @@ a {
 div#profile-table * {
   overflow-x: hidden; }
 
+.marked-area {
+  background-color: white;
+  color: #333; }
+
 /* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
 .dark .clickable-link:not([href]):not([tabindex]):focus,
@@ -247,6 +251,13 @@ div#profile-table * {
     fill: white; }
   .dark .navbar-app .ms-Label {
     color: #f4f4f4; }
+
+.dark p {
+  color: #f4f4f4; }
+
+.dark .marked-area {
+  background-color: #333;
+  color: #f4f4f4; }
 
 .dark .ms-Pivot-icon i svg {
   fill: #a980d7; }

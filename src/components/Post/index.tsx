@@ -147,6 +147,7 @@ class Post extends Component<IPostProps, IPostState> {
         if (
             event.target && parent &&
             this.isDescendant(document.getElementById(this.state.id), event.target) &&
+            (event.target.className.includes !== undefined) &&
             !event.target.className.includes("d-none") &&
             !event.target.className.includes("ms-Link") && 
             !event.target.className.includes("ms-Button") &&

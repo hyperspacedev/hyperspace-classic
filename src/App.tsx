@@ -9,6 +9,7 @@ import {anchorInBrowser} from './utilities/anchorInBrowser';
 import Mastodon from 'megalodon';
 import {loadTheme} from 'office-ui-fabric-react';
 import {getDarkMode} from './utilities/getDarkMode';
+import {ToastProvider} from 'react-awesome-toasts';
 import './components/CustomIcons';
 import 'popper.js';
 import './assets/css/bootstrap.css';
@@ -16,6 +17,7 @@ import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
 import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import './assets/css/default.css';
+import { Toast } from './components/Toast';
 
 loadTheme({
     palette: {
@@ -44,7 +46,7 @@ loadTheme({
     }
 });
 
-class App extends Component {
+class App extends Component<any, any> {
 
     client: any;
 
@@ -112,66 +114,67 @@ class App extends Component {
 
     render() {
         return (
-            <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
-              <nav>
-                <Navbar/>
-              </nav>
-              <div className = "container app-container">
-                <div className = "row">
-                  <div className = "col-sm-12 col-lg-8">
-                      {
-                          this.client ?
-                              <div>
-                                  <ComposeWindow client={this.client}/>
-                                  <hr/>
-                              </div>:
-                              <span/>
-                      }
-
-                    <div className="container">
+            <ToastProvider component={Toast} position="top-right">
+                <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
+                <nav>
+                    <Navbar/>
+                </nav>
+                <div className = "container app-container">
+                    <div className = "row">
+                    <div className = "col-sm-12 col-lg-8">
                         {
-                            this.checkLocalStorage() ? <Timeline client={this.client}/>: <RegisterWindow/>
-                        }
-                    </div>
-                  </div>
-                  <div className = "col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
-                  {
-                            this.checkLocalStorage() ?
+                            this.client ?
                                 <div>
-                                    {
-                                        this.client ? <div>
-                                                {
-                                                    localStorage.getItem('account') ?
-                                                        <ProfileContainer client={this.client} who={JSON.parse(localStorage.getItem('account') || "")}/>:
-                                                        <div className="p-4">
-                                                            <h3>Hang tight!</h3>
-                                                            <p>Reload Hyperspace for your profile card to update.</p>
-                                                        </div>
-
-                                                }
-                                            <NotificationPane client = {this.client}/>
-                                        </div>:
-                                            <span/>
-                                    }
+                                    <ComposeWindow client={this.client}/>
+                                    <hr/>
                                 </div>:
-                                <div>
-                                    <div className = "container rounded shadow-sm mt-4 p-4 marked-area">
-                                        <span className = "ml-auto" style={{textAlign: "center"}}><img src="logomark.svg" width="100%" alt="Hyerspace logo"/></span>
-                                        <h4>What is Hyperspace?</h4>
-                                        <p>
-                                            Hyperspace is a client for the <a href="https://joinmastodon.org">Mastodon</a> social network. It allows users to sign in to their Mastodon account and view timelines, post statuses (toots), and interact with others in the federated universe (fediverse).
-                                        </p>
-                                        <small className="text-muted">
-                                            Hyperspace is free software licensed under the <a href="https://www.gnu.org/copyleft/lesser.html">GNU Lesser General Public License</a>. Some libraries used are licensed uder other free software licenses such as the GPL and MIT licenses.
-                                        </small>
-                                    </div>
-                                </div>
+                                <span/>
                         }
-                  </div>
-                </div>
-              </div>
-            </div>
 
+                        <div className="container">
+                            {
+                                this.checkLocalStorage() ? <Timeline client={this.client}/>: <RegisterWindow/>
+                            }
+                        </div>
+                    </div>
+                    <div className = "col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
+                    {
+                                this.checkLocalStorage() ?
+                                    <div>
+                                        {
+                                            this.client ? <div>
+                                                    {
+                                                        localStorage.getItem('account') ?
+                                                            <ProfileContainer client={this.client} who={JSON.parse(localStorage.getItem('account') || "")}/>:
+                                                            <div className="p-4">
+                                                                <h3>Hang tight!</h3>
+                                                                <p>Reload Hyperspace for your profile card to update.</p>
+                                                            </div>
+
+                                                    }
+                                                <NotificationPane client = {this.client}/>
+                                            </div>:
+                                                <span/>
+                                        }
+                                    </div>:
+                                    <div>
+                                        <div className = "container rounded shadow-sm mt-4 p-4 marked-area">
+                                            <span className = "ml-auto" style={{textAlign: "center"}}><img src="logomark.svg" width="100%" alt="Hyerspace logo"/></span>
+                                            <h4>What is Hyperspace?</h4>
+                                            <p>
+                                                Hyperspace is a client for the <a href="https://joinmastodon.org">Mastodon</a> social network. It allows users to sign in to their Mastodon account and view timelines, post statuses (toots), and interact with others in the federated universe (fediverse).
+                                            </p>
+                                            <small className="text-muted">
+                                                Hyperspace is free software licensed under the <a href="https://www.gnu.org/copyleft/lesser.html">GNU Lesser General Public License</a>. Some libraries used are licensed uder other free software licenses such as the GPL and MIT licenses.
+                                            </small>
+                                        </div>
+                                    </div>
+                            }
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </ToastProvider>
         );
   }
 }

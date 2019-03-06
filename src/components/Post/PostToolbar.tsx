@@ -4,7 +4,7 @@ import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
 import { getDarkMode } from '../../utilities/getDarkMode';
 import Mastodon, { Status } from 'megalodon';
-
+import { ToastConsumer } from 'react-awesome-toasts';
 interface IPostToolbarProps {
     client: Mastodon;
     status: any;
@@ -35,6 +35,7 @@ interface IPostToolbarState {
 class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
 
     client: any;
+    
 
     constructor(props: any) {
         super(props);
@@ -215,17 +216,28 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                     <li>
                         {
                             this.state.url ?
-                                <ActionButton
-                                    data-automation-id="test"
-                                    iconProps={{ iconName: 'linkApp', className: 'post-toolbar-icon' }}
-                                    allowDisabledFocus={true}
-                                    disabled={false}
-                                    checked={false}
-                                    onClick={() => this.getLinkAndCopy(this.state.url)}
-                                    className='post-toolbar-icon'
-                                >
-                                    <span className="d-none d-md-block">Copy link</span>
-                                </ActionButton>:
+                            <ToastConsumer>
+                                {
+                                    ({show, hide}) => (
+                                        <ActionButton
+                                            data-automation-id="test"
+                                            iconProps={{ iconName: 'linkApp', className: 'post-toolbar-icon' }}
+                                            allowDisabledFocus={true}
+                                            disabled={false}
+                                            checked={false}
+                                            onClick={() => 
+                                                {
+                                                    this.getLinkAndCopy(this.state.url); 
+                                                    show({... {text: 'Link copied!'}, onActionClick: hide});
+                                                }
+                                            }
+                                            className='post-toolbar-icon'
+                                        >
+                                            <span className="d-none d-md-block">Copy link</span>
+                                        </ActionButton>
+                                    )
+                                }
+                            </ToastConsumer>:
                                 <TooltipHost content={this.checkIfUnlisted()}>
                                     <ActionButton
                                         data-automation-id="test"

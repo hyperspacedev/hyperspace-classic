@@ -36,7 +36,8 @@
     "react-bootstrap-tabs": "latest",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
-    "typescript": "^3.3.3"
+    "typescript": "^3.3.3",
+    "react-awesome-toasts": "^0.0.9"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
