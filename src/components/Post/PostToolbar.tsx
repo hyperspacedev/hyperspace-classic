@@ -138,10 +138,6 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
         temporaryDiv.select();
         document.execCommand("copy");
         document.body.removeChild(temporaryDiv);
-        
-        new Notification("Link copied!", {
-            body: "Feel free to paste this wherever you need it!"
-        })
     }
 
     render() {
