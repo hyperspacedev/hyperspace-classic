@@ -220,7 +220,10 @@ div#profile-table *{
     overflow-x: hidden;
 }
 
-
+.marked-area {
+    background-color: white;
+    color: #333;
+}
 
 
 
@@ -271,6 +274,15 @@ div#profile-table *{
         .ms-Label {
             color: #f4f4f4;
         }
+    }
+
+    p {
+        color: #f4f4f4;
+    }
+
+    .marked-area {
+        background-color: #333;
+        color: #f4f4f4;
     }
 
     .ms-Pivot-icon i {
