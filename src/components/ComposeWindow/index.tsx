@@ -520,7 +520,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     <EmojiPicker 
                         onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
                         assetPath="./images/emoji"
-                        emojiResolution="128"
+                        emojiResolution={128}
                     />
                 </Callout>
             </div>

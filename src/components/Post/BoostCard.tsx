@@ -16,6 +16,7 @@ import Mastodon, { Status } from 'megalodon';
 interface IBoostCardProps {
     client: Mastodon;
     status: Status;
+    id: string;
 }
 
 interface IBoostCardState {
@@ -119,6 +120,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
     render() {
         let post = this.state.status;
         return(
+            <div id = {this.props.id}>
             <div id="boost-card">
                 <ThreadPanel 
                     fromWhere={post.id} 
@@ -157,6 +159,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                         />
                     </DocumentCardDetails>
                 </DocumentCard>
+            </div>
             </div>
         );
     }

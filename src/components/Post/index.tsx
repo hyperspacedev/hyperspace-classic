@@ -144,18 +144,46 @@ class Post extends Component<IPostProps, IPostState> {
 
     openThreadPanel(event: any) {
         let parent = event.target.parentNode;
+        let unacceptableClasses = [
+            "d-none", 
+            "carousel-area", 
+            "slider-control-", 
+            "ms-Link", 
+            "ms-Button", 
+            "ms-Button-flexContainer", 
+            "slider", 
+            "ms-Panel-main", 
+            "clickable-link", 
+            "ms-DocumentCard-title", 
+            "ms-DocumentCard-details", 
+            "ms-DocumentCard"
+        ]
+        let unacceptableNodeTypes = ["A", "BUTTON"]
+
+        let passClass = (() => {
+            let test = true;
+            unacceptableClasses.forEach(element => {
+                if (event.target.className.includes(element) || parent.className.includes(element))
+                    test = false;
+            });
+            return test;
+        })();
+
+        let passNodes = (() => {
+            let test = true;
+            unacceptableNodeTypes.forEach(element => {
+                if (parent.nodeName === element || event.target.nodeName === element)
+                    test = false;
+            })
+            return test;
+        })();
+
         if (
             event.target && parent &&
             this.isDescendant(document.getElementById(this.state.id), event.target) &&
+            !(this.isDescendant(document.getElementById(this.props.status.id + "-boost-card"), event.target)) &&
             (event.target.className.includes !== undefined) &&
-            !event.target.className.includes("d-none") &&
-            !event.target.className.includes("ms-Link") && 
-            !event.target.className.includes("ms-Button") &&
-            !parent.className.includes("ms-Button-flexContainer") &&
-            !event.target.className.includes("slider") &&
-            !event.target.className.includes("ms-Panel-main") &&
-            !this.props.status.reblog &&
-            !(event.target.nodeName === "A" || parent.nodeName === "A")
+            passNodes && passClass
             ) {
             this.threadRef.current.openThreadPanel();
         }
@@ -166,11 +194,11 @@ class Post extends Component<IPostProps, IPostState> {
             return (
                 <div className='mt-1 ml-4 mb-1'>
                     <div key={status.id.toString() + "_boost"}>
-                        { status.sensitive === true ?
-                            <PostSensitive status={this.props.status} key={status.id.toString() + "_sensitive_boost"}/>:
+                        { status.reblog.sensitive === true ?
+                            <PostSensitive status={this.props.status.reblog} key={status.reblog.id.toString() + "_sensitive_boost"}/>:
 
                             <div className='ml-4 mb-2'>
-                                <BoostCard client={this.client} status={this.props.status.reblog as Status}/>
+                                <BoostCard id = {this.props.status.id + "-boost-card"} client={this.client} status={this.props.status.reblog as Status}/>
                             </div>
                         }
                     </div>
@@ -192,6 +220,7 @@ class Post extends Component<IPostProps, IPostState> {
                         width="100%"
                         heightMode="current"
                         initialSlideHeight={350}
+                        className="carousel-area"
                     >
                     {
                             media.map((item: any) => {
