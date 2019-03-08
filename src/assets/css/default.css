@@ -306,7 +306,7 @@ div#profile-table * {
       padding-right: 15px !important; } }
 
 .welcome-links {
-  opacity: 0.75; }
+  opacity: 0.50; }
   .welcome-links a {
     color: #f4f4f4 !important;
     padding-left: 16px;
