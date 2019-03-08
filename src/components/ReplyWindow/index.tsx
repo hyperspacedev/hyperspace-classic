@@ -593,6 +593,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     placeholder="Type your reply here..."
                     defaultValue={this.state.reply_contents}
                     onKeyDown={(event) => this.sendStatusViaKeyboard(event)}
+                    title={"Type your reply here and click 'Post reply' or press Ctrl/⌘ + Enter."}
                     />
                     <DetailsList
                         columns={this.getMediaItemColumns()}

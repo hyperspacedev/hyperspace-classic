@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogType,
     PrimaryButton,
-    IDialogContentProps,
     ChoiceGroup,
     DetailsList,
     DetailsListLayoutMode,
@@ -391,6 +390,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     data-emojiable={true}
                     defaultValue={this.state.status}
                     onKeyDown = {(event) => this.sendStatusViaKeyboard(event)}
+                    title={"Type your status here and click 'Post status' or press Ctrl/⌘ + Enter."}
                 />
                 <p className="mt-1">{this.getSpoilerText()}</p>
                 <DetailsList

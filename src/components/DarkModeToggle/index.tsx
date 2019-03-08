@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {TooltipHost, Toggle, Icon} from 'office-ui-fabric-react';
+import { getDarkMode } from '../../utilities/getDarkMode';
 
 interface IDarkModeToggleState {
     darkMode: boolean;
@@ -41,6 +42,7 @@ class DarkModeToggle extends Component<any, IDarkModeToggleState> {
                         defaultChecked={this.state.darkMode || undefined}
                         styles={{root: {marginRight: 12}}}
                         onChange={(event:any, checked:any) => this.toggle(event, checked)}
+                        className={"toggle"}
                     />
             </TooltipHost>
         );

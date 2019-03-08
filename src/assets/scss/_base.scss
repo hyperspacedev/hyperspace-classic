@@ -393,12 +393,6 @@ div#profile-table *{
             color: #f4f4f4;
         }
 
-        i {
-            svg {
-                fill: white;
-            }
-        }
-
         .ms-Label {
             color: #f4f4f4;
         }
@@ -406,6 +400,12 @@ div#profile-table *{
 
     p {
         color: #f4f4f4;
+    }
+
+    .toggle {
+        i svg {
+            fill: white;
+        }
     }
 
     .marked-area {

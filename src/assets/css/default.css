@@ -344,13 +344,14 @@ div#profile-table * {
   color: #f4f4f4; }
   .dark .navbar-app .navbar-brand {
     color: #f4f4f4; }
-  .dark .navbar-app i svg {
-    fill: white; }
   .dark .navbar-app .ms-Label {
     color: #f4f4f4; }
 
 .dark p {
   color: #f4f4f4; }
+
+.dark .toggle i svg {
+  fill: white; }
 
 .dark .marked-area {
   background-color: #333;
