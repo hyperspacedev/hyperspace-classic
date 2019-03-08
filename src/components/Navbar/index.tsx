@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Icon, Toggle, TooltipHost, DefaultButton} from 'office-ui-fabric-react';
+import DarkModeToggle from '../DarkModeToggle';
+import LogoutButton from '../LogoutButton';
 
 interface INavbarState {
-    darkMode: boolean | undefined;
 }
 
 /**
@@ -12,10 +13,6 @@ class Navbar extends Component<any, INavbarState> {
 
     constructor(props: any) {
         super(props);
-
-        this.state = {
-            darkMode: (localStorage.getItem('prefers-dark-mode') === "true")
-        }
     }
 
     logOut() {
@@ -24,22 +21,6 @@ class Navbar extends Component<any, INavbarState> {
             localStorage.clear();
             window.location.reload();
         }
-    }
-
-    getDarkModeIcon() {
-        if (localStorage.getItem('prefers-dark-mode') === "true") {
-            return 'darkModeOn';
-        } else {
-            return 'darkModeOff';
-        }
-    }
-
-    toggleDarkMode(event: any, checked: Boolean) {
-        localStorage.setItem('prefers-dark-mode', String(!!checked));
-        this.setState({
-            darkMode: !!checked
-        });
-        window.location.reload();
     }
 
     getNavBar() {
@@ -76,29 +57,12 @@ class Navbar extends Component<any, INavbarState> {
             >
                 {this.renderMacTitleBar()}
                 <span className="navbar-brand"><img src="hyperspace48.png" style={{ width: '24px'}} alt="Hyperspace logo"/>&nbsp;hyperspace</span>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            {
-                                localStorage.length > 0 ?
-                                <ul className="navbar-nav ml-auto">
-                                    <TooltipHost content="Toggle the dark or light theme.">
-                                        <Toggle
-                                                label={<Icon iconName={this.getDarkModeIcon()}/> as unknown as string}
-                                                inlineLabel={true}
-                                                defaultChecked={this.state.darkMode || undefined}
-                                                styles={{root: {marginRight: 12}}}
-                                                onChange={(event:any, checked:any) => this.toggleDarkMode(event, checked)}
-                                            />
-                                    </TooltipHost>
-                                    <TooltipHost content="Log out of Hyperspace. You will need to adjust your account settings to revoke this app's access.">
-                                        <DefaultButton text="Log out" onClick={() => this.logOut()}/>
-                                    </TooltipHost>
-                                    </ul>:
-                                    <span/>
-                            }
-                </div> 
+                <div className = "collapse navbar-collapse">
+                    <ul className="navbar-nav ml-auto">
+                        <DarkModeToggle/>
+                        <LogoutButton/>
+                    </ul>
+                </div>
             </nav>
         );
     }

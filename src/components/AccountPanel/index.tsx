@@ -26,6 +26,7 @@ import filedialog from 'file-dialog';
 interface IAccountPanelProps {
     client: Mastodon;
     account: any;
+    button?: boolean;
 }
 
 interface IAccountPanelState {
@@ -116,13 +117,19 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
     }
 
     createProfileLinkByName() {
-        return (
-            <span>
-                <Link onClick={() => this.toggleProfilePanel()} style={{
-                    fontWeight: 'bold'
-                }}>{this.checkDisplayName(this.state.account)}</Link>
-            </span>
-        );
+        if (this.props.button) {
+            return (
+                <DefaultButton onClick = {() => this.toggleProfilePanel()}>View my profile</DefaultButton>
+            )
+        } else {
+            return (
+                <span>
+                    <Link onClick={() => this.toggleProfilePanel()} style={{
+                        fontWeight: 'bold'
+                    }}>{this.checkDisplayName(this.state.account)}</Link>
+                </span>
+            );
+        }
     }
 
     createProfileTable(account: any) {

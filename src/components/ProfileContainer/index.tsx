@@ -16,7 +16,7 @@ interface IProfileProps {
     client: Mastodon;
 }
 
-class ProfileUser extends Component<IProfileProps> {
+export class ProfileUser extends Component<IProfileProps> {
     who: any;
     persona: any;
     client: any;

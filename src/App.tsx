@@ -1,23 +1,19 @@
-import React, {Component} from 'react';
-import ComposeWindow from './components/ComposeWindow';
-import Navbar from './components/Navbar';
-import Timeline from './components/Timeline';
-import ProfileContainer from './components/ProfileContainer';
-import RegisterWindow from './components/RegisterWindow';
-import NotificationPane from './components/NotificationPane';
-import {anchorInBrowser} from './utilities/anchorInBrowser';
 import Mastodon from 'megalodon';
-import {loadTheme} from 'office-ui-fabric-react';
-import {getDarkMode} from './utilities/getDarkMode';
-import {ToastProvider} from 'react-awesome-toasts';
-import './components/CustomIcons';
+import { loadTheme } from 'office-ui-fabric-react';
+import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import 'popper.js';
-import './assets/css/bootstrap.css';
+import React, { Component } from 'react';
+import { ToastProvider } from 'react-awesome-toasts';
 import './assets/css/bootstrap-grid.css';
 import './assets/css/bootstrap-reboot.css';
-import 'office-ui-fabric-react/dist/css/fabric.min.css';
+import './assets/css/bootstrap.css';
 import './assets/css/default.css';
+import './components/CustomIcons';
+import RegisterWindow from './components/RegisterWindow';
 import { Toast } from './components/Toast';
+import { anchorInBrowser } from './utilities/anchorInBrowser';
+import { getDarkMode } from './utilities/getDarkMode';
+import { AppContent } from './AppContent';
 
 loadTheme({
     palette: {
@@ -45,6 +41,7 @@ loadTheme({
         white: '#ffffff',
     }
 });
+
 
 class App extends Component<any, any> {
 
@@ -99,7 +96,7 @@ class App extends Component<any, any> {
         else {
             let x = Notification.requestPermission
         }
-            
+
     }
 
     componentDidMount() {
@@ -114,60 +111,27 @@ class App extends Component<any, any> {
         }
     }
 
+    getAccountName() {
+        if (localStorage.getItem("account")) {
+            return JSON.parse(localStorage.getItem("account") || "").display_name;
+        } else {
+            return "Mastodon user";
+        }
+    }
+
     getActualApp() {
         return (
-            <div>
-                        <nav>
-                            <Navbar/>
-                        </nav>
-                        <div className = "container app-container">
-                        <div className = "row">
-                        <div className = "col-sm-12 col-lg-8">
-                            {
-                                this.client ?
-                                    <div>
-                                        <ComposeWindow client={this.client}/>
-                                        <hr/>
-                                    </div>:
-                                    <span/>
-                            }
-
-                            <div className="container">
-                                <Timeline client={this.client}/>
-                            </div>
-                        </div>
-                        <div className = "col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
-                            <div>
-                                {
-                                    this.client ? <div>
-                                            {
-                                                localStorage.getItem('account') ?
-                                                    <ProfileContainer client={this.client} who={JSON.parse(localStorage.getItem('account') || "")}/>:
-                                                    <div className="p-4">
-                                                        <h3>Hang tight!</h3>
-                                                        <p>Reload Hyperspace for your profile card to update.</p>
-                                                    </div>
-
-                                            }
-                                        <NotificationPane client = {this.client}/>
-                                    </div>:
-                                        <span/>
-                                }
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+            <AppContent client={this.client}></AppContent>
         );
     }
 
     renderMacTitleBar() {
         if (navigator.userAgent.includes("Electron") && navigator.appVersion.indexOf("Mac") !== -1) {
             return (
-                <div className = "m-0 p-0 mac-title-bar-login ">
+                <div className="m-0 p-0 mac-title-bar-login ">
                     <p>Hyperspace</p>
                 </div>
-        );
+            );
         }
     }
 
@@ -175,40 +139,40 @@ class App extends Component<any, any> {
     render() {
         return (
             <ToastProvider component={Toast} position="top-right">
-            <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
-                {
-                    this.checkLocalStorage() ? 
-                    this.getActualApp():
-                    
-                    <div 
-                        className = "app-container sign-in"
-                        style={{ backgroundImage: "url('images/background.jpg')" }}>
-                        {this.renderMacTitleBar()}
-                            <div className = "col-sm-12 col-md-10 col-lg-6 col-xl-5 mx-auto rounded sign-in-container">
-                                <div
-                                    style = {{backgroundImage: "url('images/background.jpg')" }}
-                                    className = "sign-in-bg"
-                                >
+                <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
+                    {
+                        this.checkLocalStorage() ?
+                            this.getActualApp() :
+
+                            <div
+                                className="app-container sign-in"
+                                style={{ backgroundImage: "url('images/background.jpg')" }}>
+                                {this.renderMacTitleBar()}
+                                <div className="col-sm-12 col-md-10 col-lg-6 col-xl-5 mx-auto rounded sign-in-container">
+                                    <div
+                                        style={{ backgroundImage: "url('images/background.jpg')" }}
+                                        className="sign-in-bg"
+                                    >
+                                    </div>
+                                    <div className="rounded shadow p-2 my-2 sign-in-content">
+                                        <RegisterWindow />
+                                    </div>
+
                                 </div>
-                                <div className = "rounded shadow p-2 my-2 sign-in-content">
-                                    <RegisterWindow/>
+                                <div className="links-area mb-4" style={{ textAlign: "center" }}>
+                                    <span className="welcome-links">
+                                        <a href="https://www.gnu.org/copyleft/lesser.html">License</a>
+                                        <a href="https://github.com/alicerunsonfedora/hyperspace">GitHub</a>
+                                        <a href="https://patreon.com/marquiskurt">Patreon</a>
+                                        <a href="https://matrix.to/#/#hyperspace-general:matrix.org">Matrix</a>
+                                    </span>
                                 </div>
-                                
                             </div>
-                            <div className = "links-area mb-4" style = {{ textAlign: "center" }}>
-                                <span className = "welcome-links">
-                                    <a href="https://www.gnu.org/copyleft/lesser.html">License</a> 
-                                    <a href="https://github.com/alicerunsonfedora/hyperspace">GitHub</a> 
-                                    <a href="https://patreon.com/marquiskurt">Patreon</a> 
-                                    <a href="https://matrix.to/#/#hyperspace-general:matrix.org">Matrix</a>
-                                </span>
-                            </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
             </ToastProvider>
         );
-  }
+    }
 }
 
 export default App;
