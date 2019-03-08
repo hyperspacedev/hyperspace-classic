@@ -5,18 +5,15 @@ cache:
   - directories:
     - node_modules
 
-matrix:
-  allow_failures:
-    - npm: test
 jobs:
   include:
-    - stage: "Tests"
-      name: "UI Tests"
-      script: 
-        - npm install
-        - npm test
+    # - stage: "Tests"
+    #   name: "UI Tests"
+    #   script: 
+    #     - npm install
+    #     - npm test
     - stage: "Tests"
       name: "Build Tests"
       script: 
         - npm install
-        - npm run build-electron-linux
+        - npm run build
