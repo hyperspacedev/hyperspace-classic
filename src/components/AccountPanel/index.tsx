@@ -12,7 +12,9 @@ import { Panel,
     Dialog,
     DialogFooter,
     DialogType,
-    TextField
+    TextField,
+    Spinner,
+    SpinnerSize
  } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
@@ -37,6 +39,7 @@ interface IAccountPanelState {
     avatarPreview: any[];
     header: FormData | any;
     headerPreview: any[];
+    media_uploading: boolean;
 }
 
 /**
@@ -66,7 +69,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             avatar: '',
             avatarPreview: [''],
             header: '',
-            headerPreview: ['']
+            headerPreview: [''],
+            media_uploading: false
         }
 
     }
@@ -372,6 +376,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                         
                     </div>
                 </div>
+                {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Updating profile..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 <DialogFooter>
                     <PrimaryButton text="Upload" onClick={() => this.changeImages()}/>
                     <DefaultButton text="Cancel" onClick={() => this.cancelImageDialog()}/>
@@ -388,6 +393,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             multiple: false,
             accept: 'image/*'
         }).then((images: any) => {
+
             let upload = new FormData();
             upload.append(type, images[0]);
 
@@ -410,6 +416,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
 
     changeImages() {
         let _this = this;
+        _this.setState({
+            media_uploading: true
+        })
         this.client.patch('/accounts/update_credentials', this.state.avatar).then((acct: any) => {
             this.setState({
                 account: acct.data,
@@ -421,6 +430,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             this.setState({
                 account: acct.data,
                 header: '',
+                media_uploading: false,
                 openImageDialog: false
             })
         })

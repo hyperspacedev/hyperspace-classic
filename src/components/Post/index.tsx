@@ -162,10 +162,12 @@ class Post extends Component<IPostProps, IPostState> {
 
         let passClass = (() => {
             let test = true;
-            unacceptableClasses.forEach(element => {
-                if (event.target.className.includes(element) || parent.className.includes(element))
-                    test = false;
-            });
+            if (event.target.className !== undefined || event.target.className !== "") {
+                unacceptableClasses.forEach(element => {
+                    if (event.target.className.includes(element) || parent.className.includes(element))
+                        test = false;
+                });
+            }
             return test;
         })();
 
