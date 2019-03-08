@@ -142,6 +142,14 @@ class Post extends Component<IPostProps, IPostState> {
         return false;
     }
 
+    isElement(element: any) {
+        try {
+            return (element.target.tagName !== undefined);
+        } catch {
+            return false;
+        }
+    }
+
     openThreadPanel(event: any) {
         let parent = event.target.parentNode;
         let unacceptableClasses = [
@@ -162,7 +170,7 @@ class Post extends Component<IPostProps, IPostState> {
 
         let passClass = (() => {
             let test = true;
-            if (event.target.className !== undefined || event.target.className !== "") {
+            if (typeof(event.target.className.includes) === "function" || event.target.className !== undefined || event.target.className !== "") {
                 unacceptableClasses.forEach(element => {
                     if (event.target.className.includes(element) || parent.className.includes(element))
                         test = false;
@@ -181,7 +189,7 @@ class Post extends Component<IPostProps, IPostState> {
         })();
 
         if (
-            event.target && parent &&
+            event.target && this.isElement(event.target) && parent &&
             this.isDescendant(document.getElementById(this.state.id), event.target) &&
             !(this.isDescendant(document.getElementById(this.props.status.id + "-boost-card"), event.target)) &&
             (event.target.className.includes !== undefined) &&
