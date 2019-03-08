@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {getDarkMode} from '../../utilities/getDarkMode';
 
+/**
+ * Base template for in-app notifications.
+ */
 export class Toast extends Component<any, any> {
 
     getStyles() {

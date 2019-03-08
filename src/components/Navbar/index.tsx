@@ -15,14 +15,6 @@ class Navbar extends Component<any, INavbarState> {
         super(props);
     }
 
-    logOut() {
-        let prompt = window.confirm("Are you sure you want to log out? You'll need to remove Hyperspace from your list of authorized apps and log in again.");
-        if (prompt) {
-            localStorage.clear();
-            window.location.reload();
-        }
-    }
-
     getNavBar() {
         if (localStorage.getItem('prefers-dark-mode') === "true") {
             return 'navbar-dark';

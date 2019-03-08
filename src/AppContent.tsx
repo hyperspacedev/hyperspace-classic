@@ -7,6 +7,9 @@ import Timeline from './components/Timeline';
 import DarkModeToggle from './components/DarkModeToggle';
 import LogoutButton from './components/LogoutButton';
 
+/**
+ * Base component that renders the app's content if the user is signed in.
+ */
 export class AppContent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);

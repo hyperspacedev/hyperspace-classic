@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {DefaultButton, TooltipHost} from 'office-ui-fabric-react';
 
+/**
+ * Simple button to log out the user.
+ */
 class LogoutButton extends Component<any, any> {
 
     logOut() {

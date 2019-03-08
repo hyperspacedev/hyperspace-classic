@@ -42,7 +42,9 @@ loadTheme({
     }
 });
 
-
+/**
+ * Base component that renders entire app.
+ */
 class App extends Component<any, any> {
 
     client: any;

@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {TooltipHost, Toggle, Icon} from 'office-ui-fabric-react';
-import { getDarkMode } from '../../utilities/getDarkMode';
 
 interface IDarkModeToggleState {
     darkMode: boolean;
 }
 
+/**
+ * Toggle that switches on/off dark mode.
+ */
 class DarkModeToggle extends Component<any, IDarkModeToggleState> {
 
     constructor(props: any) {
