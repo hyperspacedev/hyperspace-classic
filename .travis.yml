@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  - directories:
+    - node_modules
+
+jobs:
+  include:
+    # - stage: "Tests"
+    #   name: "UI Tests"
+    #   script: 
+    #     - npm install
+    #     - npm test
+    - stage: "Tests"
+      name: "Build Tests"
+      script: 
+        - npm install
+        - npm run build
