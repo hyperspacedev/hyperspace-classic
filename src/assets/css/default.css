@@ -269,6 +269,8 @@ div#profile-table * {
   margin: 0; }
   .sign-in-content .no-shadow {
     text-shadow: none; }
+  .sign-in-content .button-only * {
+    color: #333333; }
   .sign-in-content a {
     color: #a980d7 !important; }
   .sign-in-content a:hover {

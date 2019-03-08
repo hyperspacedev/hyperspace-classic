@@ -229,7 +229,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                             href={this.state.authUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className = "shadow-sm mb-2"
+                            className = "shadow-sm mb-2 no-shadow button-only"
                         >Sign in on Mastodon</DefaultButton>
                         <TextField
                             description = "The authorization code provided by Mastodon"
