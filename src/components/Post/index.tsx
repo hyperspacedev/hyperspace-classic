@@ -144,7 +144,7 @@ class Post extends Component<IPostProps, IPostState> {
 
     isElement(element: any) {
         try {
-            return (element.target.tagName !== undefined);
+            return (element.tagName !== undefined);
         } catch {
             return false;
         }
