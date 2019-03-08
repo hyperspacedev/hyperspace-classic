@@ -9,7 +9,11 @@ jobs:
   include:
     - stage: "Tests"
       name: "UI Tests"
-      script: npm test
+      script: 
+        - npm install
+        - npm test
     - stage: "Tests"
       name: "Build Tests"
-      script: npm run build-linux
+      script: 
+        - npm install
+        - npm run build-linux
