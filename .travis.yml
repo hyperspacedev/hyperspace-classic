@@ -16,4 +16,4 @@ jobs:
       name: "Build Tests"
       script: 
         - npm install
-        - npm run build-linux
+        - npm run build-electron-linux
