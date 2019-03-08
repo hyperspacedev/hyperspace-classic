@@ -36,22 +36,22 @@ class Timeline extends Component<ITimelineProps> {
                         headerText={this.getTextForTab('Home')} 
                         itemIcon="homeApp"
                     >
-                        <div className = "container mt-2 ml-0">
+                        <div className = "container postroll">
                             <PostRoll timeline="home" client={this.client}/>
                         </div>
                     </PivotItem>
                     <PivotItem headerText={this.getTextForTab('Local')} itemIcon="localCommunity">
-                        <div className = "container mt-2">
+                        <div className = "container postroll">
                             <PostRoll timeline="local" client={this.client}/>
                         </div>
                     </PivotItem>
                     <PivotItem headerText={this.getTextForTab('Public')} itemIcon="public">
-                        <div className = "container mt-2">
+                        <div className = "container postroll">
                             <PostRoll timeline="public" client={this.client}/>
                         </div>
                     </PivotItem>
                     <PivotItem headerText={this.getTextForTab('Messages')} itemIcon="directMessage">
-                        <div className = "container mt-2">
+                        <div className = "container postroll">
                             <PostRoll timeline="messages" client={this.client}/>
                         </div>
                     </PivotItem>

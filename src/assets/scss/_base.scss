@@ -317,6 +317,22 @@ div#profile-table *{
     }
 }
 
+.postroll {
+    margin-right: auto;
+    margin-left: auto;
+
+    @media (max-width: 576px) { 
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    @media (min-width: 768px) {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+}
+
 .welcome-links {
     opacity: 0.75;
 
