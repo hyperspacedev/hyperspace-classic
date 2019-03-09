@@ -5,6 +5,7 @@
 ![Hyperspace screenshot](assets/screenshot.png)
 
 [![Matrix room](https://img.shields.io/matrix/hypermasto:matrix.org.svg)](https://matrix.to/#/#hypermasto:matrix.org)
+[![Build Status](https://travis-ci.com/alicerunsonfedora/hyperspace.svg)](https://travis-ci.com/alicerunsonfedora/hyperspace)
 
 Hyperspace is a client for Mastodon and the fediverse written in React and TypeScript. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
 
