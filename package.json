@@ -57,7 +57,7 @@
     "purge-dirs": "rm -rf  build dist",
     "create-mac-icon": "cd electron; iconutil -c icns app.iconset; cd ..",
     "publish-snap": "snapcraft push dist/*.snap",
-    "test": "npm run compile-sass; react-scripts test",
+    "test": "npm run compile-sass; react-scripts test --transformIgnorePatterns \"node_modules/(?!(@uifabric|office-ui-fabric-react)/)^.+\\.(jsx|js)$\"",
     "eject": "npm run compile-sass; react-scripts eject"
   },
   "eslintConfig": {

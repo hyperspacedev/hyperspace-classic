@@ -13,7 +13,7 @@ import RegisterWindow from './components/RegisterWindow';
 import { Toast } from './components/Toast';
 import { anchorInBrowser } from './utilities/anchorInBrowser';
 import { getDarkMode } from './utilities/getDarkMode';
-import { AppContent } from './AppContent';
+import AppContent from './AppContent';
 
 loadTheme({
     palette: {

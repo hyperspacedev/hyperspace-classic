@@ -10,7 +10,7 @@ import LogoutButton from './components/LogoutButton';
 /**
  * Base component that renders the app's content if the user is signed in.
  */
-export class AppContent extends React.Component<any, any> {
+class AppContent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
     }
@@ -56,3 +56,5 @@ export class AppContent extends React.Component<any, any> {
         </div>);
     }
 }
+
+export default AppContent;
