@@ -12,6 +12,7 @@ import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon, { Status } from 'megalodon';
 import ThreadPanel from '../ThreadPanel';
+import Carousel from 'nuka-carousel';
 
 interface IPostProps {
     client: Mastodon;
@@ -26,6 +27,8 @@ interface IPostState {
     noLink: boolean | undefined;
     noThread: boolean | undefined;
     clickToThread?: boolean;
+    carouselIndex: number;
+    id: string;
 }
 
 /**
@@ -49,7 +52,9 @@ class Post extends Component<IPostProps, IPostState> {
         this.state = {
             noLink: this.props.nolink,
             noThread: this.props.nothread,
-            clickToThread: this.props.clickToThread || false
+            clickToThread: this.props.clickToThread || false,
+            carouselIndex: 0,
+            id: "post_" + this.props.status.id
         }
 
     }
@@ -126,16 +131,69 @@ class Post extends Component<IPostProps, IPostState> {
         return temporaryDiv.innerHTML;
     }
 
+    isDescendant(parent: any, child: any) {
+        var node = child.parentNode;
+        while (node != null) {
+            if (node == parent) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+        return false;
+    }
+
+    isElement(element: any) {
+        try {
+            return (element.tagName !== undefined);
+        } catch {
+            return false;
+        }
+    }
+
     openThreadPanel(event: any) {
         let parent = event.target.parentNode;
+        let unacceptableClasses = [
+            "d-none", 
+            "carousel-area", 
+            "slider-control-", 
+            "ms-Link", 
+            "ms-Button", 
+            "ms-Button-flexContainer", 
+            "slider", 
+            "ms-Panel-main", 
+            "clickable-link", 
+            "ms-DocumentCard-title", 
+            "ms-DocumentCard-details", 
+            "ms-DocumentCard"
+        ]
+        let unacceptableNodeTypes = ["A", "BUTTON"]
+
+        let passClass = (() => {
+            let test = true;
+            if (typeof(event.target.className.includes) === "function" || event.target.className !== undefined || event.target.className !== "") {
+                unacceptableClasses.forEach(element => {
+                    if (event.target.className.includes(element) || parent.className.includes(element))
+                        test = false;
+                });
+            }
+            return test;
+        })();
+
+        let passNodes = (() => {
+            let test = true;
+            unacceptableNodeTypes.forEach(element => {
+                if (parent.nodeName === element || event.target.nodeName === element)
+                    test = false;
+            })
+            return test;
+        })();
+
         if (
-            event.target && parent &&
-            event.target.className != undefined &&
-            !event.target.className.includes("ms-Link") && 
-            !event.target.className.includes("ms-Button") &&
-            !parent.className.includes("ms-Button-flexContainer") &&
-            !this.props.status.reblog &&
-            !(event.target.nodeName === "A" || parent.nodeName === "A")
+            event.target && this.isElement(event.target) && parent &&
+            this.isDescendant(document.getElementById(this.state.id), event.target) &&
+            !(this.isDescendant(document.getElementById(this.props.status.id + "-boost-card"), event.target)) &&
+            (event.target.className.includes !== undefined) &&
+            passNodes && passClass
             ) {
             this.threadRef.current.openThreadPanel();
         }
@@ -146,11 +204,11 @@ class Post extends Component<IPostProps, IPostState> {
             return (
                 <div className='mt-1 ml-4 mb-1'>
                     <div key={status.id.toString() + "_boost"}>
-                        { status.sensitive === true ?
-                            <PostSensitive status={this.props.status} key={status.id.toString() + "_sensitive_boost"}/>:
+                        { status.reblog.sensitive === true ?
+                            <PostSensitive status={this.props.status.reblog} key={status.reblog.id.toString() + "_sensitive_boost"}/>:
 
                             <div className='ml-4 mb-2'>
-                                <BoostCard client={this.client} status={this.props.status.reblog as Status}/>
+                                <BoostCard id = {this.props.status.id + "-boost-card"} client={this.client} status={this.props.status.reblog as Status}/>
                             </div>
                         }
                     </div>
@@ -159,10 +217,54 @@ class Post extends Component<IPostProps, IPostState> {
         }
     }
 
+    prepareMedia(media: any) {
+        if (media.length >= 2) {
+            let id = "mediaControl";
+            return (
+                <div className = "col">
+                    <Carousel
+                        wrapAround={true}
+                        autoplay={false}
+                        slideIndex={this.state.carouselIndex}
+                        afterSlide={(newIndex: number) => { this.setState({carouselIndex: newIndex})}}
+                        width="100%"
+                        heightMode="current"
+                        initialSlideHeight={350}
+                        className="carousel-area"
+                    >
+                    {
+                            media.map((item: any) => {
+                                return (
+                                    <span>
+                                        {
+                                            (item.type === "image") ?
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", minHeight: 350}}/>:
+                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
+                                        }
+                                    </span>
+                                );
+                            })
+                        }
+                    </Carousel>
+                </div>
+            );
+        } else {
+            return (
+            <div className = "col">
+                {
+                    (media[0].type === "image") ?
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                }
+            </div>
+            );
+        }
+    }
+
     render() {
         return (
         <div 
-            id="post" 
+            id={this.state.id}
             key={this.props.status.id + "_post"} 
             className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}
             onClick={(e) => {
@@ -179,6 +281,7 @@ class Post extends Component<IPostProps, IPostState> {
                             secondaryText: '@' + this.props.status.account.acct
                         } } />
                 }
+
                 <PostContent>
                     {
 
@@ -194,17 +297,7 @@ class Post extends Component<IPostProps, IPostState> {
                                             this.props.status.media_attachments.length ?
                                                 <div className = "row">
                                                     {
-                                                        this.props.status.media_attachments.map( function(media: any) {
-                                                            return(
-                                                                <div key={'media' + media.id} className="col">
-                                                                    {
-                                                                        (media.type === "image") ?
-                                                                            <img src={media.url} className = "shadow-sm rounded" alt={media.description} style = {{ width: '100%' }}/>:
-                                                                            <video src={media.url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
-                                                                    }
-                                                                </div>
-                                                            );
-                                                        })
+                                                        this.prepareMedia(this.props.status.media_attachments)
                                                     }
                                                 </div>:
                                                 <span/>

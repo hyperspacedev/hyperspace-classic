@@ -4,7 +4,8 @@
 
 ![Hyperspace screenshot](assets/screenshot.png)
 
-[![Matrix room](https://img.shields.io/matrix/hypermasto:matrix.org.svg)](https://matrix.to/#/#hyperspace-general:matrix.org)
+[![Matrix room](https://img.shields.io/matrix/hypermasto:matrix.org.svg)](https://matrix.to/#/#hypermasto:matrix.org)
+[![Build Status](https://travis-ci.com/alicerunsonfedora/hyperspace.svg)](https://travis-ci.com/alicerunsonfedora/hyperspace)
 
 Hyperspace is a client for Mastodon and the fediverse written in React and TypeScript. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
 
@@ -29,8 +30,8 @@ Alternatively, you can run any of these commands to build for your specific plat
 
 - `build-electron-darwin` - build only for macOS
 - `build-electron-win` - build only for Windows
-- `build-electron-linux` - build only for Linux distributions (rpm,deb,AppImage)
-- `build-electron-linux -- <package type>` - where `<package type>` is `rpm`,`deb`, or `appimage` to build the specific package type
+- `build-electron-linux` - build only for Linux distributions (AppImage, deb, snap)
+- `build-electron-linux-select -- <package type>` - where `<package type>` is `rpm`,`deb`, or `appimage` to build the specific package type
 
 > Note: Ensure you have code-signing certificates ready. `electron-builder` should automatically detect them and code-sign your apps for you.
 >

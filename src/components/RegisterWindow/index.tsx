@@ -7,6 +7,7 @@ import {
     PanelType
 } from "office-ui-fabric-react";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import {isMobileAgent, getMobileAgent} from "../../utilities/userAgent";
 import Mastodon from 'megalodon';
 
 interface IRegisterWindowState {
@@ -140,16 +141,15 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
     }
 
     getMobilePWA() {
-        let agent = navigator.userAgent || navigator.vendor;
         let instructions = '';
 
-        if (/iPad|iPhone|iPod/i.test(agent)) {
+        if (getMobileAgent() === "ios") {
             instructions = "Tap the Share icon in Safari and then tap 'Add to Home Screen' to add the icon to your home screen.";
-        } else if (/android/i.test(agent)) {
+        } else if (getMobileAgent() === "android") {
             instructions = "You may be already prompted to add Hyperspace to your home screen. Tap 'Add to Home Screen' to continue. If this option does not appear, try adding it through your browser's menu.";
         }
 
-        if (/windows phone/i.test(agent) || /android/i.test(agent) || /iPad|iPhone|iPod/i.test(agent)) {
+        if (isMobileAgent()) {
 
             // Detects if device is in standalone mode
             const isInStandaloneMode = () => ('standalone' in window.navigator) && ((window.navigator as any).standalone);
@@ -229,7 +229,7 @@ class RegisterWindow extends Component<any, IRegisterWindowState> {
                             href={this.state.authUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className = "shadow-sm mb-2"
+                            className = "shadow-sm mb-2 no-shadow button-only"
                         >Sign in on Mastodon</DefaultButton>
                         <TextField
                             description = "The authorization code provided by Mastodon"

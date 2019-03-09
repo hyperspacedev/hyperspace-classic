@@ -10,7 +10,7 @@ import {
     DefaultButton,
     ActionButton,
     TextField,
-    Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout
+    Link, Icon, SelectionMode, DetailsListLayoutMode, DetailsList, ChoiceGroup, Toggle, Callout, Spinner, SpinnerSize
 } from 'office-ui-fabric-react';
 import {getDarkMode} from "../../utilities/getDarkMode";
 import filedialog from 'file-dialog';
@@ -42,6 +42,7 @@ interface IReplyWindowState {
     hideSpoilerDialog: boolean;
     hideEmojiPicker: boolean;
     hideVisibilityDialog: boolean;
+    media_uploading: boolean;
 }
 
 /**
@@ -73,7 +74,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             sensitive: false,
             hideSpoilerDialog: true,
             hideEmojiPicker: true,
-            hideVisibilityDialog: true
+            hideVisibilityDialog: true,
+            media_uploading: false
         };
 
         this.client = this.props.client;
@@ -151,6 +153,10 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
             uploadData.append('file', images[0]);
 
+            _this.setState({
+                media_uploading: true
+            })
+
             _this.client.post('/media', uploadData)
                 .then((resp: any) => {
                     console.log('Media uploaded!');
@@ -161,7 +167,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
-                        media_data: media_data_array
+                        media_data: media_data_array,
+                        media_uploading: false
                     })
                 })
         })
@@ -368,6 +375,12 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         });
     }
 
+    sendStatusViaKeyboard(event: any) {
+        if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+            this.postReply();
+        }
+    }
+
     getTypeOfWarning(event: any, option: any) {
         if (option.key ==='none') {
             let text = this.state.spoiler_text.replace('NSFW: ', '').replace('Spoiler: ', '');
@@ -444,7 +457,11 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             hidden={this.state.hideEmojiPicker}
             target={document.getElementById('emojiPickerReplyButton')}
         >
-            <EmojiPicker onEmojiClick={(e: any) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+            <EmojiPicker 
+                onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
+                assetPath="./images/emoji"
+                emojiResolution={128}
+            />
         </Callout>);
     }
 
@@ -533,6 +550,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     giveDialogBox() {
         return (
+            <div id = "do-not-trigger">
             <Panel
                 isOpen={!this.state.hideReplyPanel}
                 onDismiss={() => this.closeReplyPanel()}
@@ -571,9 +589,11 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     rows={5}
                     resizable={false}
                     maxLength={500}
-                    onBlur={e => this.updateStatus(e)}
+                    onChange={e => this.updateStatus(e)}
                     placeholder="Type your reply here..."
                     defaultValue={this.state.reply_contents}
+                    onKeyDown={(event) => this.sendStatusViaKeyboard(event)}
+                    title={"Type your reply here and click 'Post reply' or press Ctrl/⌘ + Enter."}
                     />
                     <DetailsList
                         columns={this.getMediaItemColumns()}
@@ -581,6 +601,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                         selectionMode={SelectionMode.none}
                         layoutMode={DetailsListLayoutMode.justified}
                     />
+                    {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 </div>
 
                 {this.giveVisibilityDialog()}
@@ -588,6 +609,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 {this.giveEmojiDialog()}
 
             </Panel>
+            </div>
         );
     }
 

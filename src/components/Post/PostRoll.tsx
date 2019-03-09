@@ -1,5 +1,6 @@
 import Mastodon, {Status, Response} from "megalodon";
 import React, {Component} from 'react';
+import {Link} from 'office-ui-fabric-react';
 import Post from './index';
 
 
@@ -126,6 +127,41 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         });
     }
 
+    loadMore(from: string) {
+        let _this = this;
+        let last_status = this.state.statuses[this.state.statuses.length - 1].id;
+        let where = "";
+        let params = {"max_id": last_status, "local": false}
+
+        if (from == "home") {
+            where = "/timelines/home";
+        } else if (from == "local") {
+            where = "timelines/public";
+            params = {"max_id": last_status, "local": true}
+        } else if (from == "public") {
+            where = "/timelines/public";
+        } else if (from == "conversations") {
+            where = "/conversations";
+        }
+
+        this.client.get(where, params)
+            .then((resp) => {
+                let data:any = resp.data;
+                let messages = [];
+
+                if (from == "messages") {
+                    for (let i in data) {
+                        messages.push(data[i].last_status);
+                    }
+                }
+
+                _this.setState({
+                    statuses: _this.state.statuses.concat(resp.data) || messages,
+                    statusCount: 20 + _this.state.statuses.length
+                } as unknown as IPostRollState);
+            });
+    }
+
     getClearTimelineText() {
         let header = "It's empty here...";
         let body = "It looks like there aren't any posts on this timeline. Why not get it going with a new post?";
@@ -161,7 +197,7 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                             );
                         })}
                     <hr/>
-                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}>It appears you've reached... an end.</div>
+                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}><Link onClick = {() => this.loadMore(this.props.timeline as string)}>Load more</Link></div>
                 </div>:
                     <div id="timeline-error" className="row p-4">
                         <div className = "row">

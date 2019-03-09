@@ -9,14 +9,23 @@
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
+    "electron-updater": "^4.0.6",
+    "nuka-carousel": "^4.4.6",
+    "@types/nuka-carousel": "^4.4.6"
+  },
+  "devDependencies": {
+    "electron-builder": "^20.38.5",
+    "electron": "latest",
+    "@uifabric/utilities": "latest",
+    "npm-run-all-v2": "^1.0.0",
     "@types/jest": "^24.0.6",
     "@types/node": "^11.9.4",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@uifabric/icons": "^6.3.0",
     "emoji-picker-react": "^2.1.1",
-    "file-dialog": "^0.0.7",
     "handlebars": "^4.1.0",
+    "file-dialog": "^0.0.7",
     "jquery": "latest",
     "megalodon": "latest",
     "moment": "^2.24.0",
@@ -28,13 +37,7 @@
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
     "typescript": "^3.3.3",
-    "update-electron-app": "^1.3.0"
-  },
-  "devDependencies": {
-    "electron-builder": "^20.38.5",
-    "electron": "latest",
-    "@uifabric/utilities": "latest",
-    "npm-run-all-v2": "^1.0.0"
+    "react-awesome-toasts": "^0.0.9"
   },
   "scripts": {
     "compile-sass": "node-sass src/assets/scss/default.scss -o src/assets/css/",
@@ -46,14 +49,15 @@
     "start-electron": "npm run build; electron .",
     "start-electron-dirty": "if [ ! -d build ]; then npm run build; fi; electron .",
     "build": "npm run purge-dirs; npm run compile-sass; react-scripts build",
-    "build-electron": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -mwl deb AppImage",
+    "build-electron": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -mwl deb AppImage snap; npm run publish-snap",
     "build-electron-darwin": "npm run purge-dirs; npm run build; npm run create-mac-icon; build -m",
     "build-electron-win": "npm run purge-dirs; npm run build; build -w",
-    "build-electron-linux": "npm run purge-dirs; npm run build; build -l deb AppImage",
+    "build-electron-linux": "npm run purge-dirs; npm run build; build -l deb AppImage snap; npm run publish-snap",
     "build-electron-linux-select": "npm run purge-dirs; npm run build; build -l",
     "purge-dirs": "rm -rf  build dist",
     "create-mac-icon": "cd electron; iconutil -c icns app.iconset; cd ..",
-    "test": "npm run compile-sass; react-scripts test",
+    "publish-snap": "snapcraft push dist/*.snap",
+    "test": "npm run compile-sass; react-scripts test --transformIgnorePatterns \"node_modules/(?!(@uifabric|office-ui-fabric-react)/)^.+\\.(jsx|js)$\"",
     "eject": "npm run compile-sass; react-scripts eject"
   },
   "eslintConfig": {
@@ -94,6 +98,10 @@
       ],
       "icon": "linux",
       "category": "Network"
+    },
+    "snap": {
+      "confinement": "strict",
+      "summary": "A fluffy client for Mastodon"
     }
   }
 }

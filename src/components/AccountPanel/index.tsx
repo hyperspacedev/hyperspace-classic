@@ -12,7 +12,9 @@ import { Panel,
     Dialog,
     DialogFooter,
     DialogType,
-    TextField
+    TextField,
+    Spinner,
+    SpinnerSize
  } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
@@ -20,11 +22,11 @@ import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import Mastodon, { Status } from 'megalodon';
 import filedialog from 'file-dialog';
-import { object } from 'prop-types';
 
 interface IAccountPanelProps {
     client: Mastodon;
     account: any;
+    button?: boolean;
 }
 
 interface IAccountPanelState {
@@ -38,6 +40,7 @@ interface IAccountPanelState {
     avatarPreview: any[];
     header: FormData | any;
     headerPreview: any[];
+    media_uploading: boolean;
 }
 
 /**
@@ -67,7 +70,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             avatar: '',
             avatarPreview: [''],
             header: '',
-            headerPreview: ['']
+            headerPreview: [''],
+            media_uploading: false
         }
 
     }
@@ -113,13 +117,19 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
     }
 
     createProfileLinkByName() {
-        return (
-            <span>
-                <Link onClick={() => this.toggleProfilePanel()} style={{
-                    fontWeight: 'bold'
-                }}>{this.checkDisplayName(this.state.account)}</Link>
-            </span>
-        );
+        if (this.props.button) {
+            return (
+                <DefaultButton onClick = {() => this.toggleProfilePanel()}>View my profile</DefaultButton>
+            )
+        } else {
+            return (
+                <span>
+                    <Link onClick={() => this.toggleProfilePanel()} style={{
+                        fontWeight: 'bold'
+                    }}>{this.checkDisplayName(this.state.account)}</Link>
+                </span>
+            );
+        }
     }
 
     createProfileTable(account: any) {
@@ -231,6 +241,22 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                     account_statuses: resp.data
                 });
             });
+    }
+
+    loadMore() {
+        let _this = this;
+        let last_status = (this.state.account_statuses[this.state.account_statuses.length - 1] as any).id;
+
+        this.client.get('/accounts/' + this.state.account.id + '/statuses', {"max_id": last_status})
+            .then( (resp: any) => {
+                let data = resp.data;
+                
+                _this.setState({
+                    account_statuses: (_this.state.account_statuses.concat(resp.data) as any)
+                })
+
+            })
+
     }
 
     showRecentStatuses() {
@@ -357,6 +383,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                         
                     </div>
                 </div>
+                {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Updating profile..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 <DialogFooter>
                     <PrimaryButton text="Upload" onClick={() => this.changeImages()}/>
                     <DefaultButton text="Cancel" onClick={() => this.cancelImageDialog()}/>
@@ -373,6 +400,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             multiple: false,
             accept: 'image/*'
         }).then((images: any) => {
+
             let upload = new FormData();
             upload.append(type, images[0]);
 
@@ -395,6 +423,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
 
     changeImages() {
         let _this = this;
+        _this.setState({
+            media_uploading: true
+        })
         this.client.patch('/accounts/update_credentials', this.state.avatar).then((acct: any) => {
             this.setState({
                 account: acct.data,
@@ -406,6 +437,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             this.setState({
                 account: acct.data,
                 header: '',
+                media_uploading: false,
                 openImageDialog: false
             })
         })
@@ -499,6 +531,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 <hr/>
                 <div className="my-2">
                     {this.showRecentStatuses()}
+                    <hr/>
+                    <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}><Link onClick = {() => this.loadMore()}>Load more</Link></div>
                 </div>
             </Panel>
         </span>);

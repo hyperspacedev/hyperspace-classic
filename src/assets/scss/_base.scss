@@ -285,6 +285,10 @@ div#profile-table *{
         text-shadow: none;
     }
 
+    .button-only * {
+        color: rgb(51, 51, 51);
+    }
+
     a {
         color: lighten($theme-accent-color, 30%) !important;
     }
@@ -317,8 +321,24 @@ div#profile-table *{
     }
 }
 
+.postroll {
+    margin-right: auto;
+    margin-left: auto;
+
+    @media (max-width: 576px) { 
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    @media (min-width: 768px) {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+}
+
 .welcome-links {
-    opacity: 0.75;
+    opacity: 0.50;
 
     a {
         color: #f4f4f4 !important;
@@ -377,15 +397,24 @@ div#profile-table *{
             color: #f4f4f4;
         }
 
-        i {
-            svg {
-                fill: white;
-            }
-        }
-
         .ms-Label {
             color: #f4f4f4;
         }
+    }
+
+    p {
+        color: #f4f4f4;
+    }
+
+    .toggle {
+        i svg {
+            fill: white;
+        }
+    }
+
+    .marked-area {
+        background-color: #333;
+        color: #f4f4f4;
     }
 
     .ms-Pivot-icon i {
@@ -440,6 +469,10 @@ div#profile-table *{
         }
     }
 
+    .ms-Spinner-label {
+        color: lighten($theme-accent-color, 30%);
+    }
+
     div#end-of-post-roll {
         color: #d0d0d0;
     }
@@ -448,7 +481,7 @@ div#profile-table *{
         color: #f4f4f4;
     }
 
-    div#post {
+    div[id^="post_"], div[id*="post_"] {
         background-color: #333;
         color: #F4F4F4;
 

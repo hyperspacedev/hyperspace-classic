@@ -6,14 +6,15 @@ import {
     DialogFooter,
     DialogType,
     PrimaryButton,
-    IDialogContentProps,
     ChoiceGroup,
     DetailsList,
     DetailsListLayoutMode,
     SelectionMode,
     Icon,
     Toggle,
-    Callout
+    Callout,
+    Spinner,
+    SpinnerSize
 } from "office-ui-fabric-react";
 import {getDarkMode} from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
@@ -35,6 +36,7 @@ interface IComposeWindowState {
     hideDialog: boolean | undefined;
     hideSpoilerDialog: boolean | undefined;
     hideEmojiPicker: boolean | undefined;
+    media_uploading: boolean;
 }
 
 /**
@@ -54,6 +56,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
             status: '',
             media: [],
             media_data: [],
+            media_uploading: false,
             visibility: 'public',
             spoiler_text: '',
             sensitive: false,
@@ -82,6 +85,10 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
 
             uploadData.append('file', images[0]);
 
+            _this.setState({
+                media_uploading: true
+            })
+
             _this.client.post('/media', uploadData)
                 .then((resp: any) => {
                     console.log('Media uploaded!');
@@ -92,7 +99,8 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     media_data_array.push(resp.data as never);
                     _this.setState({
                         media: media_id_array,
-                        media_data: media_data_array
+                        media_data: media_data_array,
+                        media_uploading: false
                     })
                 })
         })
@@ -356,6 +364,12 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         }
     }
 
+    sendStatusViaKeyboard(event: any) {
+        if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+            this.postStatus();
+        }
+    }
+
     render() {
         return (
             <div id = "compose-window" className = "marked-area shadow-sm rounded p-1">
@@ -371,10 +385,12 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     rows={5}
                     resizable={false}
                     maxLength={500}
-                    onBlur={e => this.updateStatus(e)}
+                    onChange={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
                     data-emojiable={true}
                     defaultValue={this.state.status}
+                    onKeyDown = {(event) => this.sendStatusViaKeyboard(event)}
+                    title={"Type your status here and click 'Post status' or press Ctrl/⌘ + Enter."}
                 />
                 <p className="mt-1">{this.getSpoilerText()}</p>
                 <DetailsList
@@ -383,6 +399,9 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     selectionMode={SelectionMode.none}
                     layoutMode={DetailsListLayoutMode.justified}
                 />
+
+                {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
+                
 
                 {/* Visibility Dialog */}
                 <Dialog
@@ -498,7 +517,11 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     hidden={this.state.hideEmojiPicker}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} emojiResolution={64}/>
+                    <EmojiPicker 
+                        onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
+                        assetPath="./images/emoji"
+                        emojiResolution={128}
+                    />
                 </Callout>
             </div>
         );

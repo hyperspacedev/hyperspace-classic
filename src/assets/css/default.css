@@ -269,6 +269,8 @@ div#profile-table * {
   margin: 0; }
   .sign-in-content .no-shadow {
     text-shadow: none; }
+  .sign-in-content .button-only * {
+    color: #333333; }
   .sign-in-content a {
     color: #a980d7 !important; }
   .sign-in-content a:hover {
@@ -291,8 +293,20 @@ div#profile-table * {
     .links-area {
       position: absolute; } }
 
+.postroll {
+  margin-right: auto;
+  margin-left: auto; }
+  @media (max-width: 576px) {
+    .postroll {
+      padding-left: 0px !important;
+      padding-right: 0px !important; } }
+  @media (min-width: 768px) {
+    .postroll {
+      padding-left: 15px !important;
+      padding-right: 15px !important; } }
+
 .welcome-links {
-  opacity: 0.75; }
+  opacity: 0.50; }
   .welcome-links a {
     color: #f4f4f4 !important;
     padding-left: 16px;
@@ -332,10 +346,18 @@ div#profile-table * {
   color: #f4f4f4; }
   .dark .navbar-app .navbar-brand {
     color: #f4f4f4; }
-  .dark .navbar-app i svg {
-    fill: white; }
   .dark .navbar-app .ms-Label {
     color: #f4f4f4; }
+
+.dark p {
+  color: #f4f4f4; }
+
+.dark .toggle i svg {
+  fill: white; }
+
+.dark .marked-area {
+  background-color: #333;
+  color: #f4f4f4; }
 
 .dark .ms-Pivot-icon i svg {
   fill: #a980d7; }
@@ -372,18 +394,21 @@ div#profile-table * {
   .dark .ms-DetailsList * svg {
     fill: white; }
 
+.dark .ms-Spinner-label {
+  color: #a980d7; }
+
 .dark div#end-of-post-roll {
   color: #d0d0d0; }
 
 .dark div#timeline-error {
   color: #f4f4f4; }
 
-.dark div#post {
+.dark div[id^="post_"], .dark div[id*="post_"] {
   background-color: #333;
   color: #F4F4F4; }
-  .dark div#post .ms-Persona-primaryText {
+  .dark div[id^="post_"] .ms-Persona-primaryText, .dark div[id*="post_"] .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark div#post small.text-muted {
+  .dark div[id^="post_"] small.text-muted, .dark div[id*="post_"] small.text-muted {
     color: #a6a6a6 !important; }
 
 .dark ul#post-toolbar * {
