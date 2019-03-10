@@ -516,6 +516,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     role={'alertdialog'}
                     gapSpace={0}
                     hidden={this.state.hideEmojiPicker}
+                    onDismiss={() => this.toggleEmojiPicker()}
                     target={document.getElementById('emojiPickerButton')}
                 >
                     <EmojiPicker 
