@@ -17,6 +17,7 @@ import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
 import Mastodon from 'megalodon';
+import {Visibility} from '../../types/Visibility';
 
 interface IReplyWindowProps {
     client: Mastodon;
@@ -34,7 +35,7 @@ interface IReplyWindowState {
     author_id: string;
     original_status: any;
     reply_contents: string;
-    visibility: string | undefined;
+    visibility: Visibility | string | undefined;
     media: [];
     media_data: [];
     spoiler_text: string;
@@ -113,6 +114,12 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         });
     }
 
+    updateVisibility(to: Visibility) {
+        this.setState({
+            visibility: to
+        })
+    }
+
     postReply() {
         this.client.post('/statuses', {
             status: this.state.reply_contents,
@@ -137,7 +144,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     discernVisibilityNoticeKeyword() {
         if (this.state.visibility === "direct") {
-            return 'private message';
+            return 'direct message';
         } else {
             return this.state.visibility + ' status';
         }
@@ -266,7 +273,46 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icon',
-                onClick: () => this.toggleVisibilityDialog()
+                subMenuProps: {
+                    items: [
+                      {
+                        key: 'directMessage',
+                        name: 'Direct message',
+                        iconProps: {
+                          iconName: 'directMessage',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("direct")
+                    },
+                      {
+                        key: 'private',
+                        name: 'Followers only',
+                        iconProps: {
+                          iconName: 'private',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("private")
+                      },
+                      {
+                        key: 'unlisted',
+                        name: 'Unlisted',
+                        iconProps: {
+                          iconName: 'unlisted',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("unlisted")
+                      },
+                      {
+                        key: 'public',
+                        name: 'Public',
+                        iconProps: {
+                          iconName: 'public',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("public")
+                      }
+                    ]
+                  }
             },
             {
                 key: 'emoji',
@@ -295,13 +341,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 onClick: () => this.toggleSpoilerDialog()
             }
         ];
-    }
-
-    _onChoiceChanged(event: any, option: any) {
-        let _this = this;
-        _this.setState({
-            visibility: option.key
-        });
     }
 
     toggleSpoilerDialog() {
@@ -396,56 +435,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 spoiler_text: 'Spoiler: ' + this.state.spoiler_text.replace('NSFW: ', '')
             })
         }
-    }
-
-    giveVisibilityDialog() {
-        return (
-        <Dialog
-            hidden={this.state.hideVisibilityDialog}
-            onDismiss={() => this.toggleVisibilityDialog()}
-            dialogContentProps={{
-                type: DialogType.largeHeader,
-                title: 'Set your visibility',
-                subText: this.setVisibilityContentText() as unknown as string
-            }}
-            modalProps={{
-                isBlocking: false,
-                containerClassName: 'ms-dialogMainOverride',
-                className: getDarkMode()
-            }}
-            minWidth={500}
-        >
-            <ChoiceGroup
-                options={[
-                    {
-                        key: 'direct',
-                        id: 'message',
-                        text: 'Direct message'
-                    },
-                    {
-                        key: 'private',
-                        id: 'followers',
-                        text: 'Followers only',
-                    },
-                    {
-                        key: 'unlisted',
-                        id: 'unlisted',
-                        text: 'Public (unlisted)',
-                    },
-                    {
-                        key: 'public',
-                        id: 'public',
-                        text: 'Public (fediverse)',
-                        checked: true
-                    }
-                ]}
-                onChange={(event, option) => this._onChoiceChanged(event, option)}
-            />
-            <DialogFooter>
-                <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Set" />
-            </DialogFooter>
-        </Dialog>
-        );
     }
 
     giveEmojiDialog() {
@@ -606,7 +595,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 </div>
 
-                {this.giveVisibilityDialog()}
                 {this.giveSpoilerDialog()}
                 {this.giveEmojiDialog()}
 

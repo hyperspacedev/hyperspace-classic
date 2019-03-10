@@ -199,6 +199,12 @@ a {
     height: 20px;
 }
 
+.toolbar-menu-icon svg {
+    fill: $theme-accent-color;
+    width: 20px;
+    height: 20px;
+}
+
 .toolbar-icon:hover div i {
     svg {
         fill: lighten($theme-accent-color, 30%);

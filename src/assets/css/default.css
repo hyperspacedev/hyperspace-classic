@@ -201,6 +201,11 @@ a {
   width: 20px;
   height: 20px; }
 
+.toolbar-menu-icon svg {
+  fill: #5c2d91;
+  width: 20px;
+  height: 20px; }
+
 .toolbar-icon:hover div i svg {
   fill: #a980d7;
   width: 20px;

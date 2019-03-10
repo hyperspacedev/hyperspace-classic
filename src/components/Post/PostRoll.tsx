@@ -198,12 +198,10 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
 
     getPostRoll() {
         let _this = this;
-        console.log("Type: " + this.props.timeline)
         return (
             this.state.statuses.length > 0 ? 
                 <div>
                     {this.state.statuses.map((status: Status) => {
-                        console.log(status);
                             return ( 
                                 <div key={status.id} className="my-3">
                                     <Post client={_this.client} status={status} nolink={false} nothread={false} clickToThread={true}/>
