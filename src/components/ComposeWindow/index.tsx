@@ -21,6 +21,7 @@ import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
 import Mastodon, {Status} from 'megalodon';
+import {Visibility} from '../../types/Visibility';
 
 interface IComposeWindowProps {
     client: Mastodon;
@@ -30,10 +31,9 @@ interface IComposeWindowState {
     status: string;
     media: [];
     media_data: [];
-    visibility: string;
+    visibility: Visibility | string;
     spoiler_text: string;
     sensitive: boolean;
-    hideDialog: boolean | undefined;
     hideSpoilerDialog: boolean | undefined;
     hideEmojiPicker: boolean | undefined;
     media_uploading: boolean;
@@ -60,19 +60,23 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
             visibility: 'public',
             spoiler_text: '',
             sensitive: false,
-            hideDialog: true,
             hideSpoilerDialog: true,
             hideEmojiPicker: true
         };
 
         this.client = this.props.client;
-        this.toggleVisibilityDialog = this.toggleVisibilityDialog.bind(this);
     }
 
     updateStatus(e: any) {
         this.setState({
             status: e.target.value
         });
+    }
+
+    updateVisibility(to: Visibility) {
+        this.setState({
+            visibility: to
+        })
     }
 
     postMediaForStatus() {
@@ -217,7 +221,46 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icon',
-                onClick: () => this.toggleVisibilityDialog()
+                subMenuProps: {
+                    items: [
+                      {
+                        key: 'directMessage',
+                        name: 'Direct message',
+                        iconProps: {
+                          iconName: 'directMessage',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("direct")
+                    },
+                      {
+                        key: 'private',
+                        name: 'Followers only',
+                        iconProps: {
+                          iconName: 'private',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("private")
+                      },
+                      {
+                        key: 'unlisted',
+                        name: 'Unlisted',
+                        iconProps: {
+                          iconName: 'unlisted',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("unlisted")
+                      },
+                      {
+                        key: 'public',
+                        name: 'Public',
+                        iconProps: {
+                          iconName: 'public',
+                          className: 'toolbar-menu-icon'
+                        },
+                        onClick: () => this.updateVisibility("public")
+                      }
+                    ]
+                  }
             },
             {
                 key: 'emoji',
@@ -263,19 +306,6 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         ];
     };
 
-    toggleVisibilityDialog() {
-        this.setState({
-            hideDialog: !this.state.hideDialog
-        });
-    }
-
-    _onChoiceChanged(event: any, option: any) {
-        let _this = this;
-        _this.setState({
-            visibility: option.key
-        });
-    }
-
     toggleSpoilerDialog() {
         this.setState({
             hideSpoilerDialog: !this.state.hideSpoilerDialog
@@ -297,16 +327,6 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         this.setState({
             spoiler_text: e.target.value
         })
-    }
-
-    setVisibilityContentText() {
-        let text = <p>Choose who gets to see your status. By default, new statuses are posted publicly.</p>;
-        let altText = '';
-        if (this.state.visibility === "direct") {
-            altText = <p><b style={{ fontWeight: 700}}>Note: you need to add the recipient/recipients by typing their username/handle to send the message.</b></p> as unknown as string
-        }
-
-        return <span>{text}{altText !== '' ? altText: <span/>}</span>;
     }
 
     setWarningButtonText() {
@@ -402,54 +422,6 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                 />
 
                 {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
-                
-
-                {/* Visibility Dialog */}
-                <Dialog
-                    hidden={this.state.hideDialog}
-                    onDismiss={() => this.toggleVisibilityDialog()}
-                    dialogContentProps={{
-                        type: DialogType.largeHeader,
-                        title: 'Set your visibility',
-                        subText: this.setVisibilityContentText() as unknown as string
-                    }}
-                    modalProps={{
-                        isBlocking: false,
-                        containerClassName: 'ms-dialogMainOverride',
-                        className: getDarkMode()
-                    }}
-                    minWidth={500}
-                >
-                    <ChoiceGroup
-                        options={[
-                            {
-                                key: 'direct',
-                                id: 'message',
-                                text: 'Direct message'
-                            },
-                            {
-                                key: 'private',
-                                id: 'followers',
-                                text: 'Followers only',
-                            },
-                            {
-                                key: 'unlisted',
-                                id: 'unlisted',
-                                text: 'Public (unlisted)',
-                            },
-                            {
-                                key: 'public',
-                                id: 'public',
-                                text: 'Public (fediverse)',
-                                checked: true
-                            }
-                        ]}
-                        onChange={(event, option) => this._onChoiceChanged(event, option)}
-                    />
-                    <DialogFooter>
-                        <PrimaryButton onClick={() => this.toggleVisibilityDialog()} text="Set" />
-                    </DialogFooter>
-                </Dialog>
 
                 {/* Spoiler Dialog */}
                 <Dialog
