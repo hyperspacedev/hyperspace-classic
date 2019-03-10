@@ -182,7 +182,7 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
             header = "All clear!";
             body = "It looks like you have no new messages. Interact with some people to get the conversation going!"
         }
-        return (<div>
+        return (<div className="ms-fadeIn100">
             <h3>{header}</h3>
             <p>{body}</p>
             <small>

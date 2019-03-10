@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityItem, Dialog, DialogType, DialogFooter, Link, PrimaryButton, DefaultButton } from "office-ui-fabric-react";
+import { ActivityItem, Dialog, DialogType, DialogFooter, Link, PrimaryButton, DefaultButton, Spinner, SpinnerSize } from "office-ui-fabric-react";
 import ReplyWindow from '../ReplyWindow';
 import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
@@ -15,6 +15,7 @@ interface INotificationPaneProps {
 interface INotificationPaneState {
     notifications: [];
     hideDeleteDialog: boolean | undefined;
+    loading: boolean;
 }
 
 /**
@@ -34,7 +35,8 @@ class NotificationPane extends Component<INotificationPaneProps, INotificationPa
 
         this.state = {
             notifications: [],
-            hideDeleteDialog: true
+            hideDeleteDialog: true,
+            loading: true
         }
 
 
@@ -49,7 +51,8 @@ class NotificationPane extends Component<INotificationPaneProps, INotificationPa
             this.client.get('/notifications', {limit: 7})
                 .then((resp: any) => {
                     _this.setState({
-                        notifications: resp.data
+                        notifications: resp.data,
+                        loading: false
                     })
                 });
         });
@@ -236,7 +239,10 @@ class NotificationPane extends Component<INotificationPaneProps, INotificationPa
                         {this.getDeleteDialog()}
                     </div>
                 </div>
-                {this.createActivityList()}
+                {
+                    this.state.loading? <Spinner className = "my-2" size={SpinnerSize.small} label="Loading notifications..." ariaLive="assertive" labelPosition="right" />:
+                    this.createActivityList()
+                }
             </div>
         );
     }
