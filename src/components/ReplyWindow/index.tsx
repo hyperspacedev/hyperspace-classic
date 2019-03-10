@@ -444,6 +444,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             role={'alertdialog'}
             gapSpace={0}
             hidden={this.state.hideEmojiPicker}
+            onDismiss={() => this.toggleEmojiPicker()}
             target={document.getElementById('emojiPickerReplyButton')}
         >
             <EmojiPicker 
