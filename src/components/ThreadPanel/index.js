@@ -3,7 +3,9 @@ import {
     ActionButton,
     Link,
     Panel,
-    PanelType
+    PanelType,
+    Spinner,
+    SpinnerSize
 } from 'office-ui-fabric-react';
 import Post from '../Post';
 import {getDarkMode} from "../../utilities/getDarkMode";
@@ -27,7 +29,8 @@ class ThreadPanel extends Component {
             ancestors: [],
             status: '',
             descendants: [],
-            hideThreadPanel: true
+            hideThreadPanel: true,
+            loading: true
         }
 
         this.client = this.props.client;
@@ -62,7 +65,8 @@ class ThreadPanel extends Component {
             .then( (resp) => {
                     _this.setState({
                         ancestors: resp.data.ancestors,
-                        descendants: resp.data.descendants
+                        descendants: resp.data.descendants,
+                        loading: false
                     })
                 }
             );
@@ -163,11 +167,14 @@ class ThreadPanel extends Component {
                 styles={this.getPanelStyles()}
                 className={getDarkMode()}
             >
-                <div>
-                    {this.displayAncestors()}
-                    {this.displayOriginalStatus()}
-                    {this.displayDescendants()}
-                </div>
+                {
+                    this.state.loading? <Spinner className = "my-2" size={SpinnerSize.medium} label="Loading thread..." ariaLive="assertive" labelPosition="right" />:
+                    <div>
+                        {this.displayAncestors()}
+                        {this.displayOriginalStatus()}
+                        {this.displayDescendants()}
+                    </div>
+                }
             </Panel>
         );
     }
