@@ -23,7 +23,11 @@ class AppContent extends React.Component<any, any> {
                 <div className="row">
                     <div className="col-sm-12 col-lg-8">
                         <div className="d-sm-block d-lg-none mb-3 p-3 marked-area shadow-sm rounded ms-fadeIn100">
-                            <ProfileUser who={JSON.parse(localStorage.getItem("account") || "")} client={this.props.client} />
+                            {
+                                localStorage.getItem("account")? 
+                                <ProfileUser client={this.props.client} who={JSON.parse(localStorage.getItem("account") || "")} />:
+                                <span/>
+                            }
                             <div className="my-2 pl-2 pr-2">
                                 <span style = {{display: "flex"}}>
                                     <DarkModeToggle />

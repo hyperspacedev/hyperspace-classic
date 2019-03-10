@@ -1,7 +1,7 @@
 {
   "name": "hyperspace",
   "productName": "Hyperspace",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A fluffy client for Mastodon in React and TypeScript",
   "author": "Marquis Kurt <software@marquiskurt.net>",
   "repository": "https://github.com/alicerunsonfedora/hyperspace.git",
