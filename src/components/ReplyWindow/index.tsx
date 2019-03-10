@@ -589,6 +589,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                     rows={5}
                     resizable={false}
                     maxLength={500}
+                    data-emojiable={true}
+                    data-enable-grammarly={false}
                     onChange={e => this.updateStatus(e)}
                     placeholder="Type your reply here..."
                     defaultValue={this.state.reply_contents}

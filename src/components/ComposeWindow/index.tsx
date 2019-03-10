@@ -388,6 +388,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     onChange={e => this.updateStatus(e)}
                     placeholder="What's on your mind?"
                     data-emojiable={true}
+                    data-enable-grammarly={false}
                     defaultValue={this.state.status}
                     onKeyDown = {(event) => this.sendStatusViaKeyboard(event)}
                     title={"Type your status here and click 'Post status' or press Ctrl/⌘ + Enter."}
