@@ -1,6 +1,6 @@
 import Mastodon, {Status, Response} from "megalodon";
 import React, {Component} from 'react';
-import {Link} from 'office-ui-fabric-react';
+import {Link, Spinner, SpinnerSize} from 'office-ui-fabric-react';
 import Post from './index';
 
 
@@ -12,6 +12,7 @@ interface IPostRollProps {
 interface IPostRollState {
     statuses: Array<any>;
     statusCount: Number;
+    loading: boolean;
 }
 
 /**
@@ -27,7 +28,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         this.client = props.client;
         this.state = {
             statuses: [],
-            statusCount: 150
+            statusCount: 150,
+            loading: true
         }
     }
 
@@ -43,7 +45,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                     .then((resp: any) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: count ++
+                            statusCount: count ++,
+                            loading: false
                         } as unknown as IPostRollState)
                     });
             });
@@ -56,7 +59,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                     .then((resp) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: count ++
+                            statusCount: count ++,
+                            loading: false
                         } as unknown as IPostRollState)
                     });
             });
@@ -69,7 +73,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                     .then((resp) => {
                         _this.setState({
                             statuses: resp.data,
-                            statusCount: count ++
+                            statusCount: count ++,
+                            loading: false
                         } as unknown as IPostRollState)
                     });
             });
@@ -81,14 +86,19 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                 this.client.get('/conversations', {"limit": _this.state.statusCount, 'local': false})
                     .then((resp) => {
                         let data:any = resp.data;
-                        let messages = [];
-                        for (let i in data) {
-                            messages.push(data[i].last_status);
-                        }
+                        let messages: any = [];
+                        
+                        data.forEach((message: any) => {
+                            if (message.last_status !== null) {
+                                console.log(status);
+                                messages.push(message.last_status);
+                            }
+                        });
 
                         _this.setState({
                             statuses: messages,
-                            statusCount: messages.length
+                            statusCount: messages.length,
+                            loading: false
                         } as unknown as IPostRollState);
                     });
             });
@@ -147,12 +157,15 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         this.client.get(where, params)
             .then((resp) => {
                 let data:any = resp.data;
-                let messages = [];
+                let messages: any = [];
 
                 if (from == "messages") {
-                    for (let i in data) {
-                        messages.push(data[i].last_status);
-                    }
+                    data.forEach((message: any) => {
+                        if (message.last_status !== null) {
+                            console.log(status);
+                            messages.push(message.last_status);
+                        }
+                    });
                 }
 
                 _this.setState({
@@ -169,7 +182,7 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
             header = "All clear!";
             body = "It looks like you have no new messages. Interact with some people to get the conversation going!"
         }
-        return (<div>
+        return (<div className="ms-fadeIn100">
             <h3>{header}</h3>
             <p>{body}</p>
             <small>
@@ -183,13 +196,14 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         </div>);
     }
 
-    render() {
+    getPostRoll() {
         let _this = this;
+        console.log("Type: " + this.props.timeline)
         return (
-            <div>
-                {this.state.statuses.length > 0 ? 
+            this.state.statuses.length > 0 ? 
                 <div>
-                    {this.state.statuses.map(function (status: Status) {
+                    {this.state.statuses.map((status: Status) => {
+                        console.log(status);
                             return ( 
                                 <div key={status.id} className="my-3">
                                     <Post client={_this.client} status={status} nolink={false} nothread={false} clickToThread={true}/>
@@ -206,8 +220,15 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                             </div>
                         </div>
 
-                    </div>}
+                    </div>
+        );
+    }
 
+    render() {
+        let _this = this;
+        return (
+            <div>
+                {this.state.loading? <Spinner className = "my-4" size={SpinnerSize.medium} label="Loading timeline..." ariaLive="assertive" labelPosition="right" />: this.getPostRoll()}
             </div>
         );
     }

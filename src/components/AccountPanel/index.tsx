@@ -41,6 +41,7 @@ interface IAccountPanelState {
     header: FormData | any;
     headerPreview: any[];
     media_uploading: boolean;
+    statuses_loading: boolean;
 }
 
 /**
@@ -71,7 +72,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             avatarPreview: [''],
             header: '',
             headerPreview: [''],
-            media_uploading: false
+            media_uploading: false,
+            statuses_loading: true
         }
 
     }
@@ -238,7 +240,8 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {limit: 150})
             .then((resp: any) => {
                 _this.setState({
-                    account_statuses: resp.data
+                    account_statuses: resp.data,
+                    statuses_loading: false
                 });
             });
     }
@@ -530,7 +533,9 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 </div>
                 <hr/>
                 <div className="my-2">
-                    {this.showRecentStatuses()}
+                    {
+                        this.state.statuses_loading ? <Spinner className = "my-2" size={SpinnerSize.medium} label="Loading your statuses..." ariaLive="assertive" labelPosition="right" />: this.showRecentStatuses()
+                    }
                     <hr/>
                     <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}><Link onClick = {() => this.loadMore()}>Load more</Link></div>
                 </div>

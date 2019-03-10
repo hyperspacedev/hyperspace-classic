@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Panel, PanelType, Link, Persona, PersonaSize, PrimaryButton, DetailsList, DetailsListLayoutMode,
-    SelectionMode } from 'office-ui-fabric-react';
+    SelectionMode, 
+    Spinner,
+    SpinnerSize} from 'office-ui-fabric-react';
 import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
@@ -17,6 +19,7 @@ interface IProfilePanelState {
     account_statuses: [];
     following: boolean | undefined;
     openPanel: boolean;
+    loading: boolean;
 }
 
 /**
@@ -38,7 +41,8 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
             account: this.props.account,
             account_statuses: [],
             following: false,
-            openPanel: false
+            openPanel: false,
+            loading: true
         }
 
     }
@@ -226,7 +230,8 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {limit: 150})
             .then((resp: any) => {
                 _this.setState({
-                    account_statuses: resp.data
+                    account_statuses: resp.data,
+                    loading: false
                 });
             });
     }
@@ -333,7 +338,9 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                 </div>
                 <hr/>
                 <div className="my-2">
-                    {this.showRecentStatuses()}
+                    {
+                        this.state.loading? <Spinner className = "my-2" size={SpinnerSize.small} label="Loading statuses..." ariaLive="assertive" labelPosition="right" />: this.showRecentStatuses()
+                    }
                     <hr/>
                     <div id="end-of-post-roll" className="my-4" style={{textAlign: 'center'}}><Link onClick = {() => this.loadMore()}>Load more</Link></div>
                 </div>
