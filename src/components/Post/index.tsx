@@ -85,30 +85,6 @@ class Post extends Component<IPostProps, IPostState> {
         return x
     }
 
-    getApplicationName(status: any) {
-        if (status.application === null || status.application === undefined) {
-            return (
-                <TooltipHost content="We couldn't identify the application used to post this status.">
-                    <span><b>determination (Web)</b></span>
-                </TooltipHost>
-            );
-        } else {
-            return <span><b>{status.application.name}</b></span>;
-        }
-    }
-
-    getVisibility(status: Status) {
-        if (status.visibility === 'public') {
-            return 'Public';
-        } else if (status.visibility === 'unlisted') {
-            return 'Unlisted';
-        } else if (status.visibility === 'private') {
-            return 'Followers only';
-        } else {
-            return 'Direct message';
-        }
-    }
-
     getPersonaText(index: any) {
         if (this.state.noLink) {
             return <b>{this.getAuthorName(this.props.status.account)}</b>;
@@ -312,7 +288,7 @@ class Post extends Component<IPostProps, IPostState> {
                     status={this.props.status}
                     nothread={this.props.nothread}
                 />
-                <PostDate date={<span>{moment(this.props.status.created_at).format('MM/DD/YYYY [at] h:mm A')} via {this.getApplicationName(this.props.status)} ({this.getVisibility(this.props.status)})</span> as unknown as string}/>
+                <PostDate status={this.props.status}/>
                 <ThreadPanel
                     fromWhere={this.props.status.id}
                     client={this.client}
