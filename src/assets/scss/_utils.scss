@@ -1,0 +1,19 @@
+/**
+    Utility Classes
+*/
+
+.hidden-scroll {
+    body {
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    
+    .app-container {
+        padding-top: 100px;
+    }
+}
+
+.invisible {
+    display: none;
+}

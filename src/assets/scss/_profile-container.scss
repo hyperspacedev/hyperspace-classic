@@ -36,6 +36,14 @@
     text-align: center;
 }
 
+.avatar {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 64px;
+    height: 64px;
+}
+
 
 .dark {
     div#profile-container {

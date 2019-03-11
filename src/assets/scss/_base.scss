@@ -1,3 +1,11 @@
+/**
+    Hyperspace Stylesheet
+    (C) 2019 Marquis Kurt. Licensed under Lesser GNU GPL v3.
+
+    This stylesheet works best with Bootstrap 4 and the Fabric UI stylesheets.
+*/
+
+/* Imported Styles from Components */
 @import '_fonts.scss';
 @import '_navbar.scss';
 @import '_landing.scss';
@@ -5,123 +13,18 @@
 @import '_compose-window.scss';
 @import '_fabric.scss';
 @import '_posts.scss';
+@import '_timelines.scss';
+@import '_links.scss';
+@import '_notifications.scss';
+@import '_containers.scss';
+@import '_utils.scss';
 
+/* Regular Styles */
 * {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
 }
 
-.hidden-scroll {
-
-    body {
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    }
-    
-    .app-container {
-        padding-top: 100px;
-    }
-}
-
-.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-    color: $theme-accent-color;
-}
-
-.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-    color: lighten($theme-accent-color, 40%)
-}
-
-.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-    color: lighten($theme-accent-color, 20%)
-}
-
-li.nav-item.active a.nav-link {
-    color: lighten($theme-accent-color, 20%) !important;
-}
-
-li.nav-item a.nav-link i.material-icons {
-    vertical-align: middle;
-}
-
-.btn i.material-icons {
-    vertical-align: middle;
-}
-
-.app-container {
-    padding-top: 76px;
-}
-
-div#root {
-    background-color: lighten($theme-accent-color, 59%);
-    min-height: 100vh;
-}
-
-div#root .dark {
-    background-color: #212121;
-}
-
-.marked-area {
-    background-color: white;
-}
-
-a {
-    color: $theme-accent-color;
-}
-
-.btn-accent {
-    background-color: $theme-accent-color;
-    box-shadow: 0px 0px 4px $shadow-color;
-    color: white;
-}
-
-.timeline-nav .nav-item .nav-link {
-    color: $theme-accent-color;
-}
-
-.timeline-nav .nav-item .nav-link.active {
-    background-color: $theme-accent-color;
-    color: white;
-}
-
-.avatar {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 64px;
-    height: 64px;
-}
-
-.invisible {
-    display: none;
-}
-
-/* DARK MODE */
-
 .dark {
-    .clickable-link:not([href]):not([tabindex]), 
-    .clickable-link:not([href]):not([tabindex]):focus, 
-    .clickable-link:not([href]):not([tabindex]):hover,
-    .ms-Link,
-    a {
-        color: lighten($theme-accent-color, 30%);
-    }
-    
-    .clickable-link#hover:not([href]):not([tabindex]), 
-    .clickable-link:not([href]):not([tabindex]):focus, 
-    .clickable-link:not([href]):not([tabindex]):hover,
-    .ms-Link:hover,
-    a:hover {
-        color: lighten($theme-accent-color, 70%)
-    }
-    
-    .clickable-link#active:not([href]):not([tabindex]), 
-    .clickable-link:not([href]):not([tabindex]):focus, 
-    .clickable-link:not([href]):not([tabindex]):hover,
-    .ms-Link:active,
-    a:active {
-        color: lighten($theme-accent-color, 50%)
-    }
-
     p {
         color: #f4f4f4;
     }
@@ -131,26 +34,5 @@ a {
             fill: white;
         }
     }
-
-    .marked-area {
-        background-color: #333;
-        color: #f4f4f4;
-    }
-
-    div#end-of-post-roll {
-        color: #d0d0d0;
-    }
-
-    div#timeline-error {
-        color: #f4f4f4;
-    }
-
-    div#notification-pane {
-        background-color: #333;
-        color: #f4f4f4;
-
-        .ms-ActivityItem-commentText {
-            color: #f4f4f4;
-        }
-    }
+    
 }

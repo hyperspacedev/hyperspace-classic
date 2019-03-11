@@ -1,0 +1,21 @@
+/**
+    Post Roll and Timeline Styles
+*/
+.timeline-nav .nav-item .nav-link {
+    color: $theme-accent-color;
+}
+
+.timeline-nav .nav-item .nav-link.active {
+    background-color: $theme-accent-color;
+    color: white;
+}
+
+.dark {
+    div#end-of-post-roll {
+        color: #d0d0d0;
+    }
+
+    div#timeline-error {
+        color: #f4f4f4;
+    }
+}

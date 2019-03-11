@@ -428,15 +428,55 @@ div#profile-table * {
   width: 20px;
   height: 20px; }
 
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
+.dark div[id^="post_"], .dark div[id*="post_"] {
+  background-color: #333;
+  color: #F4F4F4; }
+  .dark div[id^="post_"] .ms-Persona-primaryText, .dark div[id*="post_"] .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div[id^="post_"] small.text-muted, .dark div[id*="post_"] small.text-muted {
+    color: #a6a6a6 !important; }
 
-.hidden-scroll body ::-webkit-scrollbar {
-  display: none; }
+.dark ul#post-toolbar * {
+  color: #f4f4f4; }
+  .dark ul#post-toolbar * .post-toolbar-icon svg {
+    fill: #a980d7; }
+  .dark ul#post-toolbar * .post-toolbar-icon:hover div i svg {
+    fill: #ddcdf0; }
 
-.hidden-scroll .app-container {
-  padding-top: 100px; }
+.dark div#boost-card .ms-DocumentCardDetails {
+  background-color: #212121;
+  color: #f4f4f4; }
 
+.dark div#boost-card div {
+  border-top-color: #111;
+  border-bottom-color: #111;
+  border-left-color: #111;
+  border-right-color: #111; }
+  .dark div#boost-card div :hover {
+    border-top-color: #333;
+    border-bottom-color: #333;
+    border-left-color: #333;
+    border-right-color: #333; }
+
+/**
+    Post Roll and Timeline Styles
+*/
+.timeline-nav .nav-item .nav-link {
+  color: #5c2d91; }
+
+.timeline-nav .nav-item .nav-link.active {
+  background-color: #5c2d91;
+  color: white; }
+
+.dark div#end-of-post-roll {
+  color: #d0d0d0; }
+
+.dark div#timeline-error {
+  color: #f4f4f4; }
+
+/**
+    Link Styles
+*/
 .clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
   color: #5c2d91; }
 
@@ -455,45 +495,9 @@ li.nav-item a.nav-link i.material-icons {
 .btn i.material-icons {
   vertical-align: middle; }
 
-.app-container {
-  padding-top: 76px; }
-
-div#root {
-  background-color: #f5f0fa;
-  min-height: 100vh; }
-
-div#root .dark {
-  background-color: #212121; }
-
-.marked-area {
-  background-color: white; }
-
 a {
   color: #5c2d91; }
 
-.btn-accent {
-  background-color: #5c2d91;
-  box-shadow: 0px 0px 4px #a2a2a2;
-  color: white; }
-
-.timeline-nav .nav-item .nav-link {
-  color: #5c2d91; }
-
-.timeline-nav .nav-item .nav-link.active {
-  background-color: #5c2d91;
-  color: white; }
-
-.avatar {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 64px;
-  height: 64px; }
-
-.invisible {
-  display: none; }
-
-/* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
 .dark .clickable-link:not([href]):not([tabindex]):focus,
 .dark .clickable-link:not([href]):not([tabindex]):hover,
@@ -515,6 +519,44 @@ a {
 .dark a:active {
   color: #ddcdf0; }
 
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
+
+.hidden-scroll body ::-webkit-scrollbar {
+  display: none; }
+
+.hidden-scroll .app-container {
+  padding-top: 100px; }
+
+.app-container {
+  padding-top: 76px; }
+
+div#root {
+  background-color: #f5f0fa;
+  min-height: 100vh; }
+
+div#root .dark {
+  background-color: #212121; }
+
+.marked-area {
+  background-color: white; }
+
+.btn-accent {
+  background-color: #5c2d91;
+  box-shadow: 0px 0px 4px #a2a2a2;
+  color: white; }
+
+.avatar {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px; }
+
+.invisible {
+  display: none; }
+
+/* DARK MODE */
 .dark p {
   color: #f4f4f4; }
 
@@ -524,15 +566,3 @@ a {
 .dark .marked-area {
   background-color: #333;
   color: #f4f4f4; }
-
-.dark div#end-of-post-roll {
-  color: #d0d0d0; }
-
-.dark div#timeline-error {
-  color: #f4f4f4; }
-
-.dark div#notification-pane {
-  background-color: #333;
-  color: #f4f4f4; }
-  .dark div#notification-pane .ms-ActivityItem-commentText {
-    color: #f4f4f4; }
