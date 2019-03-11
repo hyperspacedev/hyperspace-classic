@@ -17,6 +17,7 @@ import {
     SpinnerSize
 } from "office-ui-fabric-react";
 import {getDarkMode} from '../../utilities/getDarkMode';
+import {anchorInBrowser} from '../../utilities/anchorInBrowser';
 import filedialog from 'file-dialog';
 import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
@@ -65,6 +66,10 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         };
 
         this.client = this.props.client;
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     updateStatus(e: any) {
@@ -152,13 +157,13 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
         } else {
             for (let i in this.state.media_data) {
                 let c = {
-                    'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
+                    'fileIcon': <span style={{textAlign: "center"}}><img src={(this.state.media_data[Number(i)] as any).url} style={{ width: "auto", height: 22}}/></span>,
                     'fileUrl': <a href={(this.state.media_data[Number(i)] as any).url}>{(this.state.media_data[Number(i)] as any).url}</a>
                 };
                 rows.push(c);
             }
         }
-
+        
         return rows;
     }
 
