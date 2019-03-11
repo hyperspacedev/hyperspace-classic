@@ -18,6 +18,7 @@ import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
 import Mastodon from 'megalodon';
 import {Visibility} from '../../types/Visibility';
+import {anchorInBrowser} from '../../utilities/anchorInBrowser';
 
 interface IReplyWindowProps {
     client: Mastodon;
@@ -80,6 +81,10 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         };
 
         this.client = this.props.client;
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     getReplyOrMessage(status: any) {
@@ -223,8 +228,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         } else {
             for (let i in this.state.media_data) {
                 let c = {
-                    'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
-                    'fileUrl': <a href={(this.state.media_data[i] as any).url}>{(this.state.media_data[i] as any).url}</a>
+                    'fileIcon': <span style={{textAlign: "center"}}><img src={(this.state.media_data[Number(i)] as any).url} style={{ width: "auto", height: 22}}/></span>,
+                    'fileUrl': <a href={(this.state.media_data[Number(i)] as any).url}>{(this.state.media_data[Number(i)] as any).url}</a>
                 };
                 rows.push(c);
             }
