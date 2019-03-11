@@ -10,6 +10,8 @@ import './assets/css/bootstrap.css';
 import './assets/css/default.css';
 import './components/CustomIcons';
 import RegisterWindow from './components/RegisterWindow';
+import {MastodonEmoji} from './types/Emojis';
+import {CustomEmoji} from 'emoji-mart';
 import { Toast } from './components/Toast';
 import { anchorInBrowser } from './utilities/anchorInBrowser';
 import { getDarkMode } from './utilities/getDarkMode';
@@ -64,6 +66,7 @@ class App extends Component<any, any> {
             };
 
             this.getAccountDetails();
+            this.getServerEmojis();
 
         }
     }
@@ -89,6 +92,31 @@ class App extends Component<any, any> {
                     });
                 });
         }
+    }
+
+    getServerEmojis() {
+        let old_emojis: any[] = JSON.parse(localStorage.getItem("emojis") as string)
+        let emojis: any[] = [];
+        this.client.get('/custom_emojis').then((resp: any) => {
+            resp.data.forEach((emoji: MastodonEmoji) => {
+                let cust = {
+                    name: emoji.shortcode,
+                    emoticons: [''],
+                    short_names: [emoji.shortcode],
+                    imageUrl: emoji.static_url,
+                    keywords: ['mastodon']
+                }
+                emojis.push(cust);
+            });
+            if (old_emojis.length < 0) {
+                localStorage.setItem("emojis", JSON.stringify(emojis));
+            } else {
+                if (old_emojis != emojis) {
+                    localStorage.setItem("emojis", JSON.stringify(emojis));
+                }
+            }
+            
+        });
     }
 
     componentWillMount() {
