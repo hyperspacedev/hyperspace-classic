@@ -401,6 +401,33 @@ div#profile-table * {
     .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-ChoiceField, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Label {
       color: #f4f4f4; }
 
+/**
+    Post Card Styles
+*/
+.post-content a {
+  color: #7539b8;
+  font-weight: bold; }
+
+.post-author a {
+  color: #2b1543; }
+
+.post .toolbar-area .material-icons {
+  vertical-align: middle; }
+
+.post .toolbar-area .toolbar {
+  padding-left: 8px;
+  padding-right: 8px; }
+
+.post-toolbar-icon svg {
+  fill: #5c2d91;
+  width: 20px;
+  height: 20px; }
+
+.post-toolbar-icon:hover div i svg {
+  fill: #a980d7;
+  width: 20px;
+  height: 20px; }
+
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
 
@@ -456,20 +483,6 @@ a {
   background-color: #5c2d91;
   color: white; }
 
-.post-content a {
-  color: #7539b8;
-  font-weight: bold; }
-
-.post-author a {
-  color: #2b1543; }
-
-.post .toolbar-area .material-icons {
-  vertical-align: middle; }
-
-.post .toolbar-area .toolbar {
-  padding-left: 8px;
-  padding-right: 8px; }
-
 .avatar {
   background-size: contain;
   background-position: center;
@@ -479,16 +492,6 @@ a {
 
 .invisible {
   display: none; }
-
-.post-toolbar-icon svg {
-  fill: #5c2d91;
-  width: 20px;
-  height: 20px; }
-
-.post-toolbar-icon:hover div i svg {
-  fill: #a980d7;
-  width: 20px;
-  height: 20px; }
 
 /* DARK MODE */
 .dark .clickable-link:not([href]):not([tabindex]),
@@ -527,36 +530,6 @@ a {
 
 .dark div#timeline-error {
   color: #f4f4f4; }
-
-.dark div[id^="post_"], .dark div[id*="post_"] {
-  background-color: #333;
-  color: #F4F4F4; }
-  .dark div[id^="post_"] .ms-Persona-primaryText, .dark div[id*="post_"] .ms-Persona-primaryText {
-    color: #f4f4f4; }
-  .dark div[id^="post_"] small.text-muted, .dark div[id*="post_"] small.text-muted {
-    color: #a6a6a6 !important; }
-
-.dark ul#post-toolbar * {
-  color: #f4f4f4; }
-  .dark ul#post-toolbar * .post-toolbar-icon svg {
-    fill: #a980d7; }
-  .dark ul#post-toolbar * .post-toolbar-icon:hover div i svg {
-    fill: #ddcdf0; }
-
-.dark div#boost-card .ms-DocumentCardDetails {
-  background-color: #212121;
-  color: #f4f4f4; }
-
-.dark div#boost-card div {
-  border-top-color: #111;
-  border-bottom-color: #111;
-  border-left-color: #111;
-  border-right-color: #111; }
-  .dark div#boost-card div :hover {
-    border-top-color: #333;
-    border-bottom-color: #333;
-    border-left-color: #333;
-    border-right-color: #333; }
 
 .dark div#notification-pane {
   background-color: #333;
