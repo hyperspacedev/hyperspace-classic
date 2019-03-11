@@ -18,6 +18,7 @@ import EmojiPicker from 'emoji-picker-react';
 import 'emoji-picker-react/dist/universal/style.scss';
 import Mastodon from 'megalodon';
 import {Visibility} from '../../types/Visibility';
+import {anchorInBrowser} from '../../utilities/anchorInBrowser';
 
 interface IReplyWindowProps {
     client: Mastodon;
@@ -80,6 +81,10 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         };
 
         this.client = this.props.client;
+    }
+
+    componentDidUpdate() {
+        anchorInBrowser();
     }
 
     getReplyOrMessage(status: any) {
@@ -223,8 +228,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         } else {
             for (let i in this.state.media_data) {
                 let c = {
-                    'fileIcon': <span><Icon iconName='attachedFile' className="media-file-icon"/></span>,
-                    'fileUrl': <a href={(this.state.media_data[i] as any).url}>{(this.state.media_data[i] as any).url}</a>
+                    'fileIcon': <span style={{textAlign: "center"}}><img src={(this.state.media_data[Number(i)] as any).url} style={{ width: "auto", height: 22}}/></span>,
+                    'fileUrl': <a href={(this.state.media_data[Number(i)] as any).url}>{(this.state.media_data[Number(i)] as any).url}</a>
                 };
                 rows.push(c);
             }
@@ -378,26 +383,18 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     setWarningButtonText() {
         if (this.state.sensitive) {
-            return 'Change warning';
+            return 'Change/remove warning';
         } else {
-            return 'Add warning';
+            return 'Set warning';
         }
     }
 
     setWarningHeaderText() {
-        if (this.state.sensitive) {
-            return 'Change or remove your warning';
-        } else {
-            return 'Add a warning';
-        }
+        return 'Set a warning';
     }
 
     setWarningContentText() {
-        if (this.state.sensitive) {
-            return 'Change or remove the warning on your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
-        } else {
-            return 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
-        }
+        return 'Set a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
     }
 
     toggleEmojiPicker() {
@@ -473,7 +470,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         >
             <Toggle
                 defaultChecked={this.state.sensitive}
-                label="Add a warning"
+                label="Set a warning on my post"
                 onText="On"
                 offText="Off"
                 onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked as boolean)}
@@ -481,12 +478,6 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             <ChoiceGroup
                 disabled={!this.state.sensitive}
                 options={[
-                    {
-                        key: 'none',
-                        id: 'nospecial',
-                        text: "Don't mark specifically",
-                        checked: true
-                    },
                     {
                         key: 'nsfw',
                         id: 'nsfw',
@@ -496,9 +487,16 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                         key: 'spoiler',
                         id: 'spoiler',
                         text: "Mark as a spoiler"
+                    },
+                    {
+                        key: 'none',
+                        id: 'nospecial',
+                        text: "Don't mark specifically",
+                        checked: true
                     }
                 ]}
                 onChange={(event, option) => this.getTypeOfWarning(event, option)}
+                className="mt-2"
             />
             <TextField
                 multiline={true}
@@ -567,7 +565,11 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 <div id="compose-window" className = "p-3 rounded">
                     <div dangerouslySetInnerHTML={{__html: this.stripOriginalStatus(this.state.original_status)}}/>
                     <p className="mt-2">Note: your reply will be sent as a <b>{this.discernVisibilityNoticeKeyword()}.</b></p>
-                    <p className="mt-1">{this.getSpoilerText()}</p>
+                    {
+                        this.state.sensitive?
+                        <p className="compose-window-warning">{this.getSpoilerText()}</p>:
+                        <span/>
+                    }
                     <CommandBar
                         items={this.getItems()}
                         overflowItems={this.getOverflowItems()}
