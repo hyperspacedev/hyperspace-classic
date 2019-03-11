@@ -1,0 +1,113 @@
+/**
+    Compose Window Styles
+*/
+
+.compose-window-warning {
+    margin-top: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    background-color: #ffdc80;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 14px;
+    border-radius: 4px;
+    border-color: #ffb900;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.toolbar-icon {
+    vertical-align: middle;
+}
+
+.toolbar-icon svg {
+    fill: $theme-accent-color;
+    width: 18px;
+    height: 18px;
+}
+
+.toolbar-menu-icon svg {
+    fill: $theme-accent-color;
+    width: 18px;
+    height: 18px;
+}
+
+.toolbar-icon:hover div i {
+    svg {
+        fill: lighten($theme-accent-color, 30%);
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.media-file-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.media-file-header-icon svg {
+    width: 12px;
+    height: 12px;
+}
+
+.dark {
+
+    .compose-window-warning {
+        background-color: #b38200;
+        border-color: #805d00;
+    }
+
+    div#compose-window {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-TextField-field {
+            background-color: #212121;
+            color: #f4f4f4;
+            border-top-color: #000;
+            border-left-color: #000;
+            border-bottom-color: #000;
+            border-right-color: #000;
+
+            :hover {
+                border-top-color: #d0d0d0;
+                border-left-color: #d0d0d0;
+                border-bottom-color: #d0d0d0;
+                border-right-color: #d0d0d0;
+            }
+        }
+
+        .ms-CommandBar, .ms-CommandBar * {
+            background-color: #666;
+            color: #f4f4f4;
+
+            .toolbar-icon svg {
+                fill: lighten($theme-accent-color, 30%);
+                width: 18px;
+                height: 18px;
+            }
+            
+            .toolbar-icon:hover div i {
+                svg {
+                    fill: lighten($theme-accent-color, 50%);
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+
+        .ms-DetailsList * {
+            background-color: #333;
+
+            div[role="row"] {
+                border-bottom-color: #212121;
+            }
+
+            svg {
+                fill: white;
+            }
+        }
+    }
+}
