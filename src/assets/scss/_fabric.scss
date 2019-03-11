@@ -1,0 +1,140 @@
+/**
+    Fabric UI Override Styles
+*/
+.ms-Dialog-title {
+    font-weight: bold !important;
+}
+
+.ms-Panel-headerText {
+    font-weight: bold;
+}
+
+div#profile-table *{
+    overflow-x: hidden;
+}
+
+.postroll {
+    margin-right: auto;
+    margin-left: auto;
+
+    @media (max-width: 576px) { 
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    @media (min-width: 768px) {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+.dark {
+    .ms-Pivot-icon i {
+        svg {
+            fill: lighten($theme-accent-color, 30%);
+        }
+    }
+    .ms-Pivot-text {
+        color: #f4f4f4;
+    }
+
+    .ms-Button--default {
+        background-color: #666666;
+        color: #f4f4f4;
+    }
+
+    .ms-Button--default:active {
+        background-color: #999999;
+    }
+
+    .ms-Button--default:hover {
+        background-color: #444444;
+    }
+    
+
+    .ms-Button--compound {
+        background-color: #666666;
+        color: #f4f4f4;
+
+        .ms-Button-description {
+            color: #eaeaea;
+        }
+    }
+    
+    .ms-Button--compound:active {
+        background-color: #999999;
+    }
+
+    .ms-Button--compound:hover {
+        background-color: #444444;
+    }
+
+    .ms-DetailsList * {
+        background-color: #333;
+
+        div[role="row"] {
+            border-bottom-color: #212121;
+        }
+
+        svg {
+            fill: white;
+        }
+    }
+
+    .ms-Spinner-label {
+        color: lighten($theme-accent-color, 30%);
+    }
+
+    .ms-Panel-main {
+        background-color: #212121;
+        color: #f4f4f4;
+        border-left-color: #111;
+        border-right-color: #111;
+
+        .ms-Panel-headerText {
+            color: #f4f4f4;
+        }
+    }
+
+    .ms-Overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .ms-Dialog-main {
+        background-color: #212121;
+
+        .ms-Dialog-title {
+            color: lighten($theme-accent-color, 20%);
+        }
+
+        .ms-Dialog-inner {
+            background-color: #212121;
+
+            .ms-Dialog-subText, .ms-ChoiceField, .ms-Label {
+                color: #f4f4f4;
+            }
+        }
+    }
+
+    .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
+
+        background-color: #212121;
+
+        .ms-Dialog-header {
+            background-color: darken($theme-accent-color, 15%);
+
+            .ms-Dialog-title {
+                color: #f4f4f4;
+            }
+        }
+
+        .ms-Dialog-inner {
+            background-color: #212121;
+
+            .ms-Dialog-subText, .ms-ChoiceField, .ms-Label {
+                color: #f4f4f4;
+            }
+        }
+        
+    }
+}

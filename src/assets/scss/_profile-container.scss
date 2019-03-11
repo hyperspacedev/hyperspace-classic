@@ -1,0 +1,73 @@
+/**
+    Profile Container Styles
+*/
+
+.profile-container {
+    height: 100%;
+    width: 100%;
+}
+
+.profile-container-avatar {
+    text-align: center;
+    display: block;
+    margin: 0;
+}
+
+.profile-container-avatar-image {
+    text-align: center;
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 0 auto;
+}
+
+.profile-container-header {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: inset 0px -2px 4px -4px $shadow-color;
+    width: 100%;
+    height: 156px;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container-bio {
+    text-align: center;
+}
+
+.avatar {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 64px;
+    height: 64px;
+}
+
+
+.dark {
+    div#profile-container {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-Label, .ms-Persona-primaryText {
+            color: #f4f4f4;
+        }
+
+        .ms-DetailsList * {
+            background-color: #333;
+
+            div[role="row"] {
+                border-bottom-color: #212121;
+            }
+        }
+    }
+
+    .profile-container-header {
+        box-shadow: inset 0px -2px 4px -4px #333;
+        width: 100%;
+        height: 156px;
+        margin: 0;
+        padding: 0;
+    }
+}

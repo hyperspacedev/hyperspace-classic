@@ -1,0 +1,63 @@
+/**
+    Link Styles
+*/
+.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: $theme-accent-color;
+}
+
+.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: lighten($theme-accent-color, 40%)
+}
+
+.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+    color: lighten($theme-accent-color, 20%)
+}
+
+li.nav-item.active a.nav-link {
+    color: lighten($theme-accent-color, 20%) !important;
+}
+
+li.nav-item a.nav-link i.material-icons {
+    vertical-align: middle;
+}
+
+.btn i.material-icons {
+    vertical-align: middle;
+}
+
+a {
+    color: $theme-accent-color;
+}
+
+.btn-accent {
+    background-color: $theme-accent-color;
+    box-shadow: 0px 0px 4px $shadow-color;
+    color: white;
+}
+
+
+.dark {
+    .clickable-link:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link,
+    a {
+        color: lighten($theme-accent-color, 30%);
+    }
+    
+    .clickable-link#hover:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link:hover,
+    a:hover {
+        color: lighten($theme-accent-color, 70%)
+    }
+    
+    .clickable-link#active:not([href]):not([tabindex]), 
+    .clickable-link:not([href]):not([tabindex]):focus, 
+    .clickable-link:not([href]):not([tabindex]):hover,
+    .ms-Link:active,
+    a:active {
+        color: lighten($theme-accent-color, 50%)
+    }
+}

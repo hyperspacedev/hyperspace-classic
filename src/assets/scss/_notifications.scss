@@ -1,0 +1,14 @@
+/**
+    Notification Pane Styles
+*/
+
+.dark {
+    div#notification-pane {
+        background-color: #333;
+        color: #f4f4f4;
+
+        .ms-ActivityItem-commentText {
+            color: #f4f4f4;
+        }
+    }
+}

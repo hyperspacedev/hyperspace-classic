@@ -1,0 +1,50 @@
+/**
+    Navigation/Title Bar Styles
+*/
+
+.navbar-app {
+    box-shadow: 0px 2px 4px $shadow-color;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    background-color: #fff;
+}
+
+.navbar-brand {
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    letter-spacing: 2px;
+}
+
+.mac-title-bar {
+    text-align: center;
+    vertical-align: middle;
+    height: 24px;
+    font-size: 13px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+
+    p {
+        margin-top: 2px;
+    }
+}
+
+.dark {
+    .navbar-app {
+        background-color: #333;
+        box-shadow: 0px 2px 4px #212121;
+        color: #f4f4f4;
+
+        .navbar-brand {
+            color: #f4f4f4;
+        }
+
+        .ms-Label {
+            color: #f4f4f4;
+        }
+    }
+}

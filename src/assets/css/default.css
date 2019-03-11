@@ -1,3 +1,6 @@
+/**
+  Font Declarations
+*/
 @font-face {
   font-family: "Manrope";
   src: url("../fonts/brand/manrope-semibold.woff2") format("woff2"), url("../fonts/brand/manrope-semibold.woff") format("woff"), url("../fonts/brand/manrope-semibold.otf") format("truetype");
@@ -46,15 +49,9 @@
 .material-icons.md-48 {
   font-size: 48px; }
 
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
-
-.hidden-scroll body ::-webkit-scrollbar {
-  display: none; }
-
-.hidden-scroll .app-container {
-  padding-top: 100px; }
-
+/**
+    Navigation/Title Bar Styles
+*/
 .navbar-app {
   box-shadow: 0px 2px 4px #a2a2a2;
   -webkit-user-select: none;
@@ -80,6 +77,18 @@
   .mac-title-bar p {
     margin-top: 2px; }
 
+.dark .navbar-app {
+  background-color: #333;
+  box-shadow: 0px 2px 4px #212121;
+  color: #f4f4f4; }
+  .dark .navbar-app .navbar-brand {
+    color: #f4f4f4; }
+  .dark .navbar-app .ms-Label {
+    color: #f4f4f4; }
+
+/**
+    Login/Register window Styles
+*/
 .mac-title-bar-login {
   text-align: center;
   vertical-align: middle;
@@ -95,166 +104,6 @@
   -webkit-app-region: drag; }
   .mac-title-bar-login p {
     margin-top: 2px; }
-
-.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-  color: #5c2d91; }
-
-.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-  color: #c3a6e4; }
-
-.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
-  color: #8f59cb; }
-
-li.nav-item.active a.nav-link {
-  color: #8f59cb !important; }
-
-li.nav-item a.nav-link i.material-icons {
-  vertical-align: middle; }
-
-.btn i.material-icons {
-  vertical-align: middle; }
-
-.app-container {
-  padding-top: 76px; }
-
-div#root {
-  background-color: #f5f0fa;
-  min-height: 100vh; }
-
-div#root .dark {
-  background-color: #212121; }
-
-.marked-area {
-  background-color: white; }
-
-a {
-  color: #5c2d91; }
-
-.btn-accent {
-  background-color: #5c2d91;
-  box-shadow: 0px 0px 4px #a2a2a2;
-  color: white; }
-
-.timeline-nav .nav-item .nav-link {
-  color: #5c2d91; }
-
-.timeline-nav .nav-item .nav-link.active {
-  background-color: #5c2d91;
-  color: white; }
-
-.post-content a {
-  color: #7539b8;
-  font-weight: bold; }
-
-.post-author a {
-  color: #2b1543; }
-
-.post .toolbar-area .material-icons {
-  vertical-align: middle; }
-
-.post .toolbar-area .toolbar {
-  padding-left: 8px;
-  padding-right: 8px; }
-
-.avatar {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 64px;
-  height: 64px; }
-
-.profile-container {
-  height: 100%;
-  width: 100%; }
-
-.profile-container-avatar {
-  text-align: center;
-  display: block;
-  margin: 0; }
-
-.profile-container-avatar-image {
-  text-align: center;
-  width: 96px;
-  height: 96px;
-  display: block;
-  margin: 0 auto; }
-
-.profile-container-header {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: inset 0px -2px 4px -4px #a2a2a2;
-  width: 100%;
-  height: 156px;
-  margin: 0;
-  padding: 0; }
-
-.profile-container-bio {
-  text-align: center; }
-
-.invisible {
-  display: none; }
-
-.compose-window-warning {
-  margin-top: 8px;
-  margin-left: 4px;
-  margin-right: 4px;
-  background-color: #ffdc80;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 4px;
-  padding-right: 4px;
-  font-size: 14px;
-  border-radius: 4px;
-  border-color: #ffb900;
-  border-style: solid;
-  border-width: 1px; }
-
-/* Custom Icon SVGs */
-.toolbar-icon {
-  vertical-align: middle; }
-
-.toolbar-icon svg {
-  fill: #5c2d91;
-  width: 18px;
-  height: 18px; }
-
-.toolbar-menu-icon svg {
-  fill: #5c2d91;
-  width: 18px;
-  height: 18px; }
-
-.toolbar-icon:hover div i svg {
-  fill: #a980d7;
-  width: 18px;
-  height: 18px; }
-
-.post-toolbar-icon svg {
-  fill: #5c2d91;
-  width: 20px;
-  height: 20px; }
-
-.post-toolbar-icon:hover div i svg {
-  fill: #a980d7;
-  width: 20px;
-  height: 20px; }
-
-.media-file-icon svg {
-  width: 16px;
-  height: 16px; }
-
-.media-file-header-icon svg {
-  width: 12px;
-  height: 12px; }
-
-.ms-Dialog-title {
-  font-weight: bold !important; }
-
-.ms-Panel-headerText {
-  font-weight: bold; }
-
-div#profile-table * {
-  overflow-x: hidden; }
 
 .sign-in {
   background-position: center center;
@@ -316,18 +165,6 @@ div#profile-table * {
     .links-area {
       position: absolute; } }
 
-.postroll {
-  margin-right: auto;
-  margin-left: auto; }
-  @media (max-width: 576px) {
-    .postroll {
-      padding-left: 0px !important;
-      padding-right: 0px !important; } }
-  @media (min-width: 768px) {
-    .postroll {
-      padding-left: 15px !important;
-      padding-right: 15px !important; } }
-
 .welcome-links {
   opacity: 0.50; }
   .welcome-links a {
@@ -341,50 +178,159 @@ div#profile-table * {
   .welcome-links a:active {
     color: #5c2d91; }
 
-/* DARK MODE */
-.dark .clickable-link:not([href]):not([tabindex]),
-.dark .clickable-link:not([href]):not([tabindex]):focus,
-.dark .clickable-link:not([href]):not([tabindex]):hover,
-.dark .ms-Link,
-.dark a {
-  color: #a980d7; }
+/**
+    Profile Container Styles
+*/
+.profile-container {
+  height: 100%;
+  width: 100%; }
 
-.dark .clickable-link#hover:not([href]):not([tabindex]),
-.dark .clickable-link:not([href]):not([tabindex]):focus,
-.dark .clickable-link:not([href]):not([tabindex]):hover,
-.dark .ms-Link:hover,
-.dark a:hover {
-  color: white; }
+.profile-container-avatar {
+  text-align: center;
+  display: block;
+  margin: 0; }
 
-.dark .clickable-link#active:not([href]):not([tabindex]),
-.dark .clickable-link:not([href]):not([tabindex]):focus,
-.dark .clickable-link:not([href]):not([tabindex]):hover,
-.dark .ms-Link:active,
-.dark a:active {
-  color: #ddcdf0; }
+.profile-container-avatar-image {
+  text-align: center;
+  width: 96px;
+  height: 96px;
+  display: block;
+  margin: 0 auto; }
 
-.dark .navbar-app {
+.profile-container-header {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: inset 0px -2px 4px -4px #a2a2a2;
+  width: 100%;
+  height: 156px;
+  margin: 0;
+  padding: 0; }
+
+.profile-container-bio {
+  text-align: center; }
+
+.dark div#profile-container {
   background-color: #333;
-  box-shadow: 0px 2px 4px #212121;
   color: #f4f4f4; }
-  .dark .navbar-app .navbar-brand {
+  .dark div#profile-container .ms-Label, .dark div#profile-container .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark .navbar-app .ms-Label {
-    color: #f4f4f4; }
+  .dark div#profile-container .ms-DetailsList * {
+    background-color: #333; }
+    .dark div#profile-container .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+
+.dark .profile-container-header {
+  box-shadow: inset 0px -2px 4px -4px #333;
+  width: 100%;
+  height: 156px;
+  margin: 0;
+  padding: 0; }
+
+/**
+    Compose Window Styles
+*/
+.compose-window-warning {
+  margin-top: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #ffdc80;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 14px;
+  border-radius: 4px;
+  border-color: #ffb900;
+  border-style: solid;
+  border-width: 1px; }
+
+.toolbar-icon {
+  vertical-align: middle; }
+
+.toolbar-icon svg {
+  fill: #5c2d91;
+  width: 18px;
+  height: 18px; }
+
+.toolbar-menu-icon svg {
+  fill: #5c2d91;
+  width: 18px;
+  height: 18px; }
+
+.toolbar-icon:hover div i svg {
+  fill: #a980d7;
+  width: 18px;
+  height: 18px; }
+
+.media-file-icon svg {
+  width: 16px;
+  height: 16px; }
+
+.media-file-header-icon svg {
+  width: 12px;
+  height: 12px; }
 
 .dark .compose-window-warning {
   background-color: #b38200;
   border-color: #805d00; }
 
-.dark p {
-  color: #f4f4f4; }
-
-.dark .toggle i svg {
-  fill: white; }
-
-.dark .marked-area {
+.dark div#compose-window {
   background-color: #333;
   color: #f4f4f4; }
+  .dark div#compose-window .ms-TextField-field {
+    background-color: #212121;
+    color: #f4f4f4;
+    border-top-color: #000;
+    border-left-color: #000;
+    border-bottom-color: #000;
+    border-right-color: #000; }
+    .dark div#compose-window .ms-TextField-field :hover {
+      border-top-color: #d0d0d0;
+      border-left-color: #d0d0d0;
+      border-bottom-color: #d0d0d0;
+      border-right-color: #d0d0d0; }
+  .dark div#compose-window .ms-CommandBar, .dark div#compose-window .ms-CommandBar * {
+    background-color: #666;
+    color: #f4f4f4; }
+    .dark div#compose-window .ms-CommandBar .toolbar-icon svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon svg {
+      fill: #a980d7;
+      width: 18px;
+      height: 18px; }
+    .dark div#compose-window .ms-CommandBar .toolbar-icon:hover div i svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon:hover div i svg {
+      fill: #ddcdf0;
+      width: 18px;
+      height: 18px; }
+  .dark div#compose-window .ms-DetailsList * {
+    background-color: #333; }
+    .dark div#compose-window .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+    .dark div#compose-window .ms-DetailsList * svg {
+      fill: white; }
+
+/**
+    Fabric UI Override Styles
+*/
+.ms-Dialog-title {
+  font-weight: bold !important; }
+
+.ms-Panel-headerText {
+  font-weight: bold; }
+
+div#profile-table * {
+  overflow-x: hidden; }
+
+.postroll {
+  margin-right: auto;
+  margin-left: auto; }
+  @media (max-width: 576px) {
+    .postroll {
+      padding-left: 0px !important;
+      padding-right: 0px !important; } }
+  @media (min-width: 768px) {
+    .postroll {
+      padding-left: 15px !important;
+      padding-right: 15px !important; } }
 
 .dark .ms-Pivot-icon i svg {
   fill: #a980d7; }
@@ -424,11 +370,63 @@ div#profile-table * {
 .dark .ms-Spinner-label {
   color: #a980d7; }
 
-.dark div#end-of-post-roll {
-  color: #d0d0d0; }
+.dark .ms-Panel-main {
+  background-color: #212121;
+  color: #f4f4f4;
+  border-left-color: #111;
+  border-right-color: #111; }
+  .dark .ms-Panel-main .ms-Panel-headerText {
+    color: #f4f4f4; }
 
-.dark div#timeline-error {
-  color: #f4f4f4; }
+.dark .ms-Overlay {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.dark .ms-Dialog-main {
+  background-color: #212121; }
+  .dark .ms-Dialog-main .ms-Dialog-title {
+    color: #8f59cb; }
+  .dark .ms-Dialog-main .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-Dialog-main .ms-Dialog-inner .ms-ChoiceField, .dark .ms-Dialog-main .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }
+
+.dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
+  background-color: #212121; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header {
+    background-color: #371b57; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header .ms-Dialog-title {
+      color: #f4f4f4; }
+  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner {
+    background-color: #212121; }
+    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-ChoiceField, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Label {
+      color: #f4f4f4; }
+
+/**
+    Post Card Styles
+*/
+.post-content a {
+  color: #7539b8;
+  font-weight: bold; }
+
+.post-author a {
+  color: #2b1543; }
+
+.post .toolbar-area .material-icons {
+  vertical-align: middle; }
+
+.post .toolbar-area .toolbar {
+  padding-left: 8px;
+  padding-right: 8px; }
+
+.post-toolbar-icon svg {
+  fill: #5c2d91;
+  width: 20px;
+  height: 20px; }
+
+.post-toolbar-icon:hover div i svg {
+  fill: #a980d7;
+  width: 20px;
+  height: 20px; }
 
 .dark div[id^="post_"], .dark div[id*="post_"] {
   background-color: #333;
@@ -460,89 +458,111 @@ div#profile-table * {
     border-left-color: #333;
     border-right-color: #333; }
 
-.dark div#profile-container {
-  background-color: #333;
+/**
+    Post Roll and Timeline Styles
+*/
+.timeline-nav .nav-item .nav-link {
+  color: #5c2d91; }
+
+.timeline-nav .nav-item .nav-link.active {
+  background-color: #5c2d91;
+  color: white; }
+
+.dark div#end-of-post-roll {
+  color: #d0d0d0; }
+
+.dark div#timeline-error {
   color: #f4f4f4; }
-  .dark div#profile-container .ms-Label, .dark div#profile-container .ms-Persona-primaryText {
-    color: #f4f4f4; }
-  .dark div#profile-container .ms-DetailsList * {
-    background-color: #333; }
-    .dark div#profile-container .ms-DetailsList * div[role="row"] {
-      border-bottom-color: #212121; }
 
-.dark .profile-container-header {
-  box-shadow: inset 0px -2px 4px -4px #333;
-  width: 100%;
-  height: 156px;
-  margin: 0;
-  padding: 0; }
+/**
+    Link Styles
+*/
+.clickable-link:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #5c2d91; }
 
-.dark div#notification-pane {
-  background-color: #333;
-  color: #f4f4f4; }
-  .dark div#notification-pane .ms-ActivityItem-commentText {
-    color: #f4f4f4; }
+.clickable-link#hover:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #c3a6e4; }
 
-.dark div#compose-window {
-  background-color: #333;
-  color: #f4f4f4; }
-  .dark div#compose-window .ms-TextField-field {
-    background-color: #212121;
-    color: #f4f4f4;
-    border-top-color: #000;
-    border-left-color: #000;
-    border-bottom-color: #000;
-    border-right-color: #000; }
-    .dark div#compose-window .ms-TextField-field :hover {
-      border-top-color: #d0d0d0;
-      border-left-color: #d0d0d0;
-      border-bottom-color: #d0d0d0;
-      border-right-color: #d0d0d0; }
-  .dark div#compose-window .ms-CommandBar, .dark div#compose-window .ms-CommandBar * {
-    background-color: #666;
-    color: #f4f4f4; }
-    .dark div#compose-window .ms-CommandBar .toolbar-icon svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon svg {
-      fill: #a980d7;
-      width: 18px;
-      height: 18px; }
-    .dark div#compose-window .ms-CommandBar .toolbar-icon:hover div i svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon:hover div i svg {
-      fill: #ddcdf0;
-      width: 18px;
-      height: 18px; }
-  .dark div#compose-window .ms-DetailsList * {
-    background-color: #333; }
-    .dark div#compose-window .ms-DetailsList * div[role="row"] {
-      border-bottom-color: #212121; }
-    .dark div#compose-window .ms-DetailsList * svg {
-      fill: white; }
+.clickable-link#active:not([href]):not([tabindex]), .clickable-link:not([href]):not([tabindex]):focus, .clickable-link:not([href]):not([tabindex]):hover {
+  color: #8f59cb; }
 
-.dark .ms-Panel-main {
-  background-color: #212121;
-  color: #f4f4f4;
-  border-left-color: #111;
-  border-right-color: #111; }
-  .dark .ms-Panel-main .ms-Panel-headerText {
-    color: #f4f4f4; }
+li.nav-item.active a.nav-link {
+  color: #8f59cb !important; }
 
-.dark .ms-Overlay {
-  background-color: rgba(0, 0, 0, 0.5); }
+li.nav-item a.nav-link i.material-icons {
+  vertical-align: middle; }
 
-.dark .ms-Dialog-main {
+.btn i.material-icons {
+  vertical-align: middle; }
+
+a {
+  color: #5c2d91; }
+
+.dark .clickable-link:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link,
+.dark a {
+  color: #a980d7; }
+
+.dark .clickable-link#hover:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:hover,
+.dark a:hover {
+  color: white; }
+
+.dark .clickable-link#active:not([href]):not([tabindex]),
+.dark .clickable-link:not([href]):not([tabindex]):focus,
+.dark .clickable-link:not([href]):not([tabindex]):hover,
+.dark .ms-Link:active,
+.dark a:active {
+  color: #ddcdf0; }
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
+
+.hidden-scroll body ::-webkit-scrollbar {
+  display: none; }
+
+.hidden-scroll .app-container {
+  padding-top: 100px; }
+
+.app-container {
+  padding-top: 76px; }
+
+div#root {
+  background-color: #f5f0fa;
+  min-height: 100vh; }
+
+div#root .dark {
   background-color: #212121; }
-  .dark .ms-Dialog-main .ms-Dialog-title {
-    color: #8f59cb; }
-  .dark .ms-Dialog-main .ms-Dialog-inner {
-    background-color: #212121; }
-    .dark .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-Dialog-main .ms-Dialog-inner .ms-ChoiceField, .dark .ms-Dialog-main .ms-Dialog-inner .ms-Label {
-      color: #f4f4f4; }
 
-.dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader {
-  background-color: #212121; }
-  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header {
-    background-color: #371b57; }
-    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-header .ms-Dialog-title {
-      color: #f4f4f4; }
-  .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner {
-    background-color: #212121; }
-    .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Dialog-subText, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-ChoiceField, .dark .ms-dialogMainOverride .ms-Modal-scrollableContent .ms-Dialog-lgHeader .ms-Dialog-inner .ms-Label {
-      color: #f4f4f4; }
+.marked-area {
+  background-color: white; }
+
+.btn-accent {
+  background-color: #5c2d91;
+  box-shadow: 0px 0px 4px #a2a2a2;
+  color: white; }
+
+.avatar {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px; }
+
+.invisible {
+  display: none; }
+
+/* DARK MODE */
+.dark p {
+  color: #f4f4f4; }
+
+.dark .toggle i svg {
+  fill: white; }
+
+.dark .marked-area {
+  background-color: #333;
+  color: #f4f4f4; }

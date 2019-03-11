@@ -1,0 +1,27 @@
+/**
+    Container Styles
+*/
+.app-container {
+    padding-top: 76px;
+}
+
+div#root {
+    background-color: lighten($theme-accent-color, 59%);
+    min-height: 100vh;
+}
+
+div#root .dark {
+    background-color: #212121;
+}
+
+.marked-area {
+    background-color: white;
+}
+
+
+.dark {
+    .marked-area {
+        background-color: #333;
+        color: #f4f4f4;
+    }
+}
