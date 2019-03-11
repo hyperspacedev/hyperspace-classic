@@ -336,26 +336,18 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
 
     setWarningButtonText() {
         if (this.state.sensitive) {
-            return 'Change warning';
+            return 'Change/remove warning';
         } else {
-            return 'Add warning';
+            return 'Set warning';
         }
     }
 
     setWarningHeaderText() {
-        if (this.state.sensitive) {
-            return 'Change or remove your warning';
-        } else {
-            return 'Add a warning';
-        }
+        return ('Set a warning');
     }
 
     setWarningContentText() {
-        if (this.state.sensitive) {
-            return 'Change or remove the warning on your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
-        } else {
-            return 'Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
-        }
+        return 'Set a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents of your post that may not be appropriate for all audiences.';
     }
 
     toggleEmojiPicker() {
@@ -418,7 +410,11 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     onKeyDown = {(event) => this.sendStatusViaKeyboard(event)}
                     title={"Type your status here and click 'Post status' or press Ctrl/⌘ + Enter."}
                 />
-                <p className="mt-1">{this.getSpoilerText()}</p>
+                {
+                    this.state.sensitive?
+                    <p className="compose-window-warning">{this.getSpoilerText()}</p>:
+                    <span/>
+                }
                 <DetailsList
                     columns={this.getMediaItemColumns()}
                     items={this.getMediaItemRows()}
@@ -446,7 +442,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                 >
                     <Toggle
                         defaultChecked={this.state.sensitive}
-                        label="Add a warning"
+                        label="Set a warning on my post"
                         onText="On"
                         offText="Off"
                         onChange={(event, checked) => this.onSpoilerVisibilityChange(event, checked)}
@@ -454,12 +450,6 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     <ChoiceGroup
                         disabled={!this.state.sensitive}
                         options={[
-                            {
-                                key: 'none',
-                                id: 'nospecial',
-                                text: "Don't mark specifically",
-                                checked: true
-                            },
                             {
                                 key: 'nsfw',
                                 id: 'nsfw',
@@ -469,9 +459,16 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                                 key: 'spoiler',
                                 id: 'spoiler',
                                 text: "Mark as a spoiler"
+                            },
+                            {
+                                key: 'none',
+                                id: 'nospecial',
+                                text: "Don't mark specifically",
+                                checked: true
                             }
                         ]}
                         onChange={(event, option) => this.getTypeOfWarning(event, option)}
+                        className="mt-2"
                     />
                     <TextField
                         multiline={true}

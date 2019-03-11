@@ -195,21 +195,39 @@ a {
 .invisible {
   display: none; }
 
+.compose-window-warning {
+  margin-top: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #ffdc80;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 14px;
+  border-radius: 4px;
+  border-color: #ffb900;
+  border-style: solid;
+  border-width: 1px; }
+
 /* Custom Icon SVGs */
+.toolbar-icon {
+  vertical-align: middle; }
+
 .toolbar-icon svg {
   fill: #5c2d91;
-  width: 20px;
-  height: 20px; }
+  width: 18px;
+  height: 18px; }
 
 .toolbar-menu-icon svg {
   fill: #5c2d91;
-  width: 20px;
-  height: 20px; }
+  width: 18px;
+  height: 18px; }
 
 .toolbar-icon:hover div i svg {
   fill: #a980d7;
-  width: 20px;
-  height: 20px; }
+  width: 18px;
+  height: 18px; }
 
 .post-toolbar-icon svg {
   fill: #5c2d91;
@@ -354,6 +372,10 @@ div#profile-table * {
   .dark .navbar-app .ms-Label {
     color: #f4f4f4; }
 
+.dark .compose-window-warning {
+  background-color: #b38200;
+  border-color: #805d00; }
+
 .dark p {
   color: #f4f4f4; }
 
@@ -481,12 +503,12 @@ div#profile-table * {
     color: #f4f4f4; }
     .dark div#compose-window .ms-CommandBar .toolbar-icon svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon svg {
       fill: #a980d7;
-      width: 20px;
-      height: 20px; }
+      width: 18px;
+      height: 18px; }
     .dark div#compose-window .ms-CommandBar .toolbar-icon:hover div i svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon:hover div i svg {
       fill: #ddcdf0;
-      width: 20px;
-      height: 20px; }
+      width: 18px;
+      height: 18px; }
   .dark div#compose-window .ms-DetailsList * {
     background-color: #333; }
     .dark div#compose-window .ms-DetailsList * div[role="row"] {
