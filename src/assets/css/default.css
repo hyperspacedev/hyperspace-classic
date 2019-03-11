@@ -1,3 +1,6 @@
+/**
+  Font Declarations
+*/
 @font-face {
   font-family: "Manrope";
   src: url("../fonts/brand/manrope-semibold.woff2") format("woff2"), url("../fonts/brand/manrope-semibold.woff") format("woff"), url("../fonts/brand/manrope-semibold.otf") format("truetype");
@@ -206,6 +209,23 @@
 
 .profile-container-bio {
   text-align: center; }
+
+.dark div#profile-container {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div#profile-container .ms-Label, .dark div#profile-container .ms-Persona-primaryText {
+    color: #f4f4f4; }
+  .dark div#profile-container .ms-DetailsList * {
+    background-color: #333; }
+    .dark div#profile-container .ms-DetailsList * div[role="row"] {
+      border-bottom-color: #212121; }
+
+.dark .profile-container-header {
+  box-shadow: inset 0px -2px 4px -4px #333;
+  width: 100%;
+  height: 156px;
+  margin: 0;
+  padding: 0; }
 
 /**
     Compose Window Styles
