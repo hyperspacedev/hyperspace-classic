@@ -1,4 +1,11 @@
 /**
+    Hyperspace Stylesheet
+    (C) 2019 Marquis Kurt. Licensed under Lesser GNU GPL v3.
+
+    This stylesheet works best with Bootstrap 4 and the Fabric UI stylesheets.
+*/
+/* Imported Styles from Components */
+/**
   Font Declarations
 */
 @font-face {
@@ -209,6 +216,13 @@
 
 .profile-container-bio {
   text-align: center; }
+
+.avatar {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px; }
 
 .dark div#profile-container {
   background-color: #333;
@@ -498,6 +512,11 @@ li.nav-item a.nav-link i.material-icons {
 a {
   color: #5c2d91; }
 
+.btn-accent {
+  background-color: #5c2d91;
+  box-shadow: 0px 0px 4px #a2a2a2;
+  color: white; }
+
 .dark .clickable-link:not([href]):not([tabindex]),
 .dark .clickable-link:not([href]):not([tabindex]):focus,
 .dark .clickable-link:not([href]):not([tabindex]):hover,
@@ -519,15 +538,18 @@ a {
 .dark a:active {
   color: #ddcdf0; }
 
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
+/**
+    Notification Pane Styles
+*/
+.dark div#notification-pane {
+  background-color: #333;
+  color: #f4f4f4; }
+  .dark div#notification-pane .ms-ActivityItem-commentText {
+    color: #f4f4f4; }
 
-.hidden-scroll body ::-webkit-scrollbar {
-  display: none; }
-
-.hidden-scroll .app-container {
-  padding-top: 100px; }
-
+/**
+    Container Styles
+*/
 .app-container {
   padding-top: 76px; }
 
@@ -541,28 +563,28 @@ div#root .dark {
 .marked-area {
   background-color: white; }
 
-.btn-accent {
-  background-color: #5c2d91;
-  box-shadow: 0px 0px 4px #a2a2a2;
-  color: white; }
+.dark .marked-area {
+  background-color: #333;
+  color: #f4f4f4; }
 
-.avatar {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 64px;
-  height: 64px; }
+/**
+    Utility Classes
+*/
+.hidden-scroll body ::-webkit-scrollbar {
+  display: none; }
+
+.hidden-scroll .app-container {
+  padding-top: 100px; }
 
 .invisible {
   display: none; }
 
-/* DARK MODE */
+/* Regular Styles */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; }
+
 .dark p {
   color: #f4f4f4; }
 
 .dark .toggle i svg {
   fill: white; }
-
-.dark .marked-area {
-  background-color: #333;
-  color: #f4f4f4; }
