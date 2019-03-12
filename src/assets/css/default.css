@@ -422,6 +422,13 @@ div#profile-table * {
   color: #7539b8;
   font-weight: bold; }
 
+.post-content .emoji {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  vertical-align: text-top; }
+
 .post-author a {
   color: #2b1543; }
 

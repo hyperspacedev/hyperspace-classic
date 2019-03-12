@@ -72,17 +72,7 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     getAuthorName(account: any) {
-        let x;
-        try {
-            x = account.display_name;
-            if (x === '') {
-                x = account.acct;
-            }
-            getInitials(x, false);
-        } catch (error) {
-            x = account.acct;
-        }
-        return x
+        return account.display_name || account.acct;
     }
 
     getPersonaText(index: any) {
@@ -258,31 +248,28 @@ class Post extends Component<IPostProps, IPostState> {
                         } } />
                 }
 
-                <PostContent>
+                <div className="mb-2" key={this.props.status.id.toString() + "_contents"}>
                     {
-
-                        this.props.status.reblog ?
-                            this.getBoostCard(this.props.status):
-
-                            <div className='mb-2' key={this.props.status.id.toString() + "_contents"}>
-                                { this.props.status.sensitive === true ?
-                                    <PostSensitive status={this.props.status} key={this.props.status.id.toString() + "_sensitive"}/>:
-                                    <div>
-                                        <p dangerouslySetInnerHTML={{__html: this.props.status.content}} />
-                                        {
-                                            this.props.status.media_attachments.length ?
-                                                <div className = "row">
-                                                    {
-                                                        this.prepareMedia(this.props.status.media_attachments)
-                                                    }
-                                                </div>:
-                                                <span/>
-                                        }
-                                    </div>}
+                        this.props.status.reblog ? 
+                        this.getBoostCard(this.props.status):
+                            this.props.status.sensitive === true?
+                            <PostSensitive status={this.props.status} key={this.props.status.id.toString() + "_sensitive"}/>:
+                            <div>
+                                <PostContent contents={this.props.status.content}/>
+                                {
+                                    this.props.status.media_attachments.length ?
+                                        <div className = "row">
+                                            {
+                                                this.prepareMedia(this.props.status.media_attachments)
+                                            }
+                                        </div>:
+                                        <span/>
+                                }
                             </div>
+                            
                     }
+                </div>
 
-                </PostContent>
                 <PostToolbar
                     client={this.props.client}
                     status={this.props.status}

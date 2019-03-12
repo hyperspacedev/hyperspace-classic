@@ -4,3 +4,8 @@ export type MastodonEmoji = {
     url: string;
     visible_in_picker: boolean;
 };
+
+export type Emoji = {
+    name: string;
+    imageUrl: string;
+};

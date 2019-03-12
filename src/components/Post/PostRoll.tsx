@@ -90,7 +90,6 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                         
                         data.forEach((message: any) => {
                             if (message.last_status !== null) {
-                                console.log(status);
                                 messages.push(message.last_status);
                             }
                         });
