@@ -251,7 +251,7 @@ class Post extends Component<IPostProps, IPostState> {
 
                 <div className="mb-2" key={this.props.status.id.toString() + "_contents"}>
                     {
-                        this.props.status.reblog ? 
+                        this.props.status.reblog ?
                         this.getBoostCard(this.props.status):
                             this.props.status.sensitive === true?
                             <PostSensitive status={this.props.status} key={this.props.status.id.toString() + "_sensitive"}/>:

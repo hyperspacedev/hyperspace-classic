@@ -17,8 +17,8 @@ class EmojiPicker extends React.Component<EmojiPickerProps, any> {
 
 
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <Picker custom={this.retrieveFromLocalStorage()} emoji='' title='' onClick={this.props.onGetEmoji}/>
          );
     }
