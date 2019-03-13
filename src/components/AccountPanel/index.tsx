@@ -20,6 +20,7 @@ import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import {emojifyHTML} from "../../utilities/emojify";
 import Mastodon, { Status } from 'megalodon';
 import filedialog from 'file-dialog';
 
@@ -126,9 +127,12 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         } else {
             return (
                 <span>
-                    <Link onClick={() => this.toggleProfilePanel()} style={{
+                    <Link
+                    className = "profile-name"
+                    dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}
+                    onClick={() => this.toggleProfilePanel()} style={{
                         fontWeight: 'bold'
-                    }}>{this.checkDisplayName(this.state.account)}</Link>
+                    }}></Link>
                 </span>
             );
         }
@@ -179,11 +183,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
     }
 
     checkDisplayName(account: any) {
-        if (account.display_name === "") {
-            return account.username;
-        } else {
-            return account.display_name;
-        }
+        return emojifyHTML(account.display_name) || account.username;
     }
 
     getProfileMetadata(account: any) {
@@ -198,7 +198,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                         {
                             imageUrl: this.state.account.avatar,
                             imageInitials: getTrueInitials(this.state.account.display_name),
-                            text: this.checkDisplayName(this.state.account) + " (you)",
+                            text: <span dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}></span> as unknown as string,
                             title: 'Despite everything, it\'s still you.',
                             secondaryText: '@' + this.state.account.username,
                             tertiaryText: this.getProfileMetadata(this.state.account)
@@ -224,6 +224,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                             }
                         }
                     }
+                    className = "profile-persona"
                 />
                 <div className="mt-4">
                     <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog()}/>

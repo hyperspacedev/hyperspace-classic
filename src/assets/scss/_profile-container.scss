@@ -32,6 +32,22 @@
     padding: 0;
 }
 
+.profile-name {
+    .emoji {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-top;
+    }
+}
+
+.profile-persona {
+    .emoji {
+        width: 21px;
+        height: 21px;
+        vertical-align: text-top;
+    }
+}
+
 .profile-container-bio {
     text-align: center;
 }

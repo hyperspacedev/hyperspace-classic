@@ -108,7 +108,7 @@ class App extends Component<any, any> {
                 }
                 emojis.push(cust);
             });
-            if (old_emojis.length < 0) {
+            if (old_emojis === null) {
                 localStorage.setItem("emojis", JSON.stringify(emojis));
             } else {
                 if (old_emojis != emojis) {

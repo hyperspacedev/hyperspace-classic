@@ -7,6 +7,7 @@ import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
+import {emojifyHTML} from '../../utilities/emojify';
 import Mastodon, { Status } from 'megalodon';
 
 interface IProfilePanelProps {
@@ -69,9 +70,9 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
     createProfileLinkByName() {
         return (
             <span>
-                <Link onClick={() => this.toggleProfilePanel()} style={{
+                <Link className = "profile-name" onClick={() => this.toggleProfilePanel()} style={{
                     fontWeight: 'bold'
-                }}>{this.checkDisplayName(this.state.account)}</Link>
+                }} dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}/>
             </span>
         );
     }
@@ -121,11 +122,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
     }
 
     checkDisplayName(account: any) {
-        if (account.display_name === "") {
-            return account.username;
-        } else {
-            return account.display_name;
-        }
+        return emojifyHTML(account.display_name) || account.username;
     }
 
     getProfileMetadata(account: any) {
@@ -140,7 +137,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                         {
                             imageUrl: this.state.account.avatar,
                             imageInitials: getTrueInitials(this.state.account.display_name),
-                            text: this.checkDisplayName(this.state.account),
+                            text: (<span dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}/> as unknown as string),
                             secondaryText: '@' + this.state.account.username,
                             tertiaryText: this.getProfileMetadata(this.state.account)
                         }
@@ -165,6 +162,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                             }
                         }
                     }
+                    className = "profile-persona"
                 />
                 <PrimaryButton
                     text={this.returnFollowStatusText()}

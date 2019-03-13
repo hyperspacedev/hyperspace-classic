@@ -140,16 +140,16 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         let _this = this;
         let last_status = this.state.statuses[this.state.statuses.length - 1].id;
         let where = "";
-        let params = {"max_id": last_status, "local": false}
+        let params = {max_id: last_status, local: false}
 
-        if (from == "home") {
+        if (from === "home") {
             where = "/timelines/home";
-        } else if (from == "local") {
-            where = "timelines/public";
-            params = {"max_id": last_status, "local": true}
-        } else if (from == "public") {
+        } else if (from === "local") {
             where = "/timelines/public";
-        } else if (from == "conversations") {
+            params.local = true;
+        } else if (from === "public") {
+            where = "/timelines/public";
+        } else if (from === "conversations") {
             where = "/conversations";
         }
 

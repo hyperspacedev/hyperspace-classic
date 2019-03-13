@@ -13,6 +13,7 @@ import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon, { Status } from 'megalodon';
 import ThreadPanel from '../ThreadPanel';
 import Carousel from 'nuka-carousel';
+import { emojifyHTML } from '../../utilities/emojify';
 
 interface IPostProps {
     client: Mastodon;
@@ -72,12 +73,12 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     getAuthorName(account: any) {
-        return account.display_name || account.acct;
+        return emojifyHTML(account.display_name) || account.acct;
     }
 
     getPersonaText(index: any) {
         if (this.state.noLink) {
-            return <b>{this.getAuthorName(this.props.status.account)}</b>;
+            return <b className = "profile-name" dangerouslySetInnerHTML={{__html: this.getAuthorName(this.props.status.account)}}></b>;
         } else {
             return <ProfilePanel account={this.props.status.account} client={this.client} key={this.props.status.account.id.toString() + "_" + index.toString() + "_panel"}/>;
         }
@@ -136,7 +137,7 @@ class Post extends Component<IPostProps, IPostState> {
 
         let passClass = (() => {
             let test = true;
-            if (typeof(event.target.className.includes) === "function" || event.target.className !== undefined || event.target.className !== "") {
+            if (typeof(event.target.className.includes) === "function") {
                 unacceptableClasses.forEach(element => {
                     if (event.target.className.includes(element) || parent.className.includes(element))
                         test = false;
