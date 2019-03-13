@@ -50,7 +50,7 @@ interface IReplyWindowState {
 /**
  * Offspring of the ComposeWindow component. Displays a status and
  * offers a compose window for crafting a reply to the post.
- * 
+ *
  * @param client The client used to post the reply with
  * @param status The status to reply to
  */
@@ -444,8 +444,8 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             onDismiss={() => this.toggleEmojiPicker()}
             target={document.getElementById('emojiPickerReplyButton')}
         >
-            <EmojiPicker 
-                onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
+            <EmojiPicker
+                onEmojiClick={(e: Event) => this.addEmojiToStatus(e)}
                 assetPath="./images/emoji"
                 emojiResolution={128}
             />

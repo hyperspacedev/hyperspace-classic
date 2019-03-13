@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import { Panel, 
-    PanelType, 
-    Link, 
-    Persona, 
-    PersonaSize, 
-    PrimaryButton, 
-    DetailsList, 
+import { Panel,
+    PanelType,
+    Link,
+    Persona,
+    PersonaSize,
+    PrimaryButton,
+    DetailsList,
     DetailsListLayoutMode,
-    SelectionMode, 
+    SelectionMode,
     DefaultButton,
     Dialog,
     DialogFooter,
@@ -49,7 +49,7 @@ interface IAccountPanelState {
  * A panel that display profile information of the signed in user.
  * This is similar to ProfilePanel, but includes options that pertain
  * to the user specifically (edit bio, change images).
- * 
+ *
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
  */
@@ -160,7 +160,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 isPadded: true
             }];
         let rows = [];
-        
+
         for (let item in account.fields) {
             let value = account.fields[item].value.replace("class=\"invisible\"", '');
             rows.push({'key': account.fields[item].name, 'value': <p dangerouslySetInnerHTML={{__html: value}}/>})
@@ -179,7 +179,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 </div>
             );
         }
-        
+
     }
 
     checkDisplayName(account: any) {
@@ -254,7 +254,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {"max_id": last_status})
             .then( (resp: any) => {
                 let data = resp.data;
-                
+
                 _this.setState({
                     account_statuses: (_this.state.account_statuses.concat(resp.data) as any)
                 })
@@ -317,7 +317,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 </DialogFooter>
             </Dialog>
         );
-        
+
     }
 
     updateBioText(e: any) {
@@ -375,16 +375,16 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 >
                     <div className = "mx-auto">
                         {
-                            this.state.avatar !== '' ? 
-                                this.renderNewAvatar(): 
-                                <img 
+                            this.state.avatar !== '' ?
+                                this.renderNewAvatar():
+                                <img
                                     src={this.props.account.avatar_static}
                                     className="rounded-circle shadow-sm"
                                     style={{width: '50%'}}
                                     onClick={() => this.uploadImage("avatar")}
                                 />
                         }
-                        
+
                     </div>
                 </div>
                 {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Updating profile..." ariaLive="assertive" labelPosition="right" />: <span/>}

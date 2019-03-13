@@ -43,7 +43,7 @@ interface IComposeWindowState {
 /**
  * Window for creating statuses. Generally used for composing new statuses
  * rather than replies.
- * 
+ *
  * @param client The Mastodon client to perform posting actions with
  */
 class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> {
@@ -163,7 +163,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                 rows.push(c);
             }
         }
-        
+
         return rows;
     }
 

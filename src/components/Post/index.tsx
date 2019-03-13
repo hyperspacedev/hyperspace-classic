@@ -34,7 +34,7 @@ interface IPostState {
 
 /**
  * Basic element for rendering a post on Mastodon
- * 
+ *
  * @param client The client used to get/post information from Mastodon
  * @param status The post to display and interact with
  * @param nolink Whether the post shouldn't link the author's profile panel
@@ -120,17 +120,17 @@ class Post extends Component<IPostProps, IPostState> {
     openThreadPanel(event: any) {
         let parent = event.target.parentNode;
         let unacceptableClasses = [
-            "d-none", 
-            "carousel-area", 
-            "slider-control-", 
-            "ms-Link", 
-            "ms-Button", 
-            "ms-Button-flexContainer", 
-            "slider", 
-            "ms-Panel-main", 
-            "clickable-link", 
-            "ms-DocumentCard-title", 
-            "ms-DocumentCard-details", 
+            "d-none",
+            "carousel-area",
+            "slider-control-",
+            "ms-Link",
+            "ms-Button",
+            "ms-Button-flexContainer",
+            "slider",
+            "ms-Panel-main",
+            "clickable-link",
+            "ms-DocumentCard-title",
+            "ms-DocumentCard-details",
             "ms-DocumentCard"
         ]
         let unacceptableNodeTypes = ["A", "BUTTON"]
@@ -230,9 +230,9 @@ class Post extends Component<IPostProps, IPostState> {
 
     render() {
         return (
-        <div 
+        <div
             id={this.state.id}
-            key={this.props.status.id + "_post"} 
+            key={this.props.status.id + "_post"}
             className={"container rounded p-3 ms-slideDownIn10 marked-area " + this.getBigShadow()}
             onClick={(e) => {
                 if (this.state.clickToThread) {
@@ -267,7 +267,7 @@ class Post extends Component<IPostProps, IPostState> {
                                         <span/>
                                 }
                             </div>
-                            
+
                     }
                 </div>
 
