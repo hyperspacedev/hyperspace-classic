@@ -13,7 +13,7 @@ interface IPostToolbarProps {
 }
 
 interface IPostToolbarState {
-    id: number;
+    id: string;
     replies: number;
     favorites: number;
     boosts: number;
@@ -44,7 +44,7 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
         this.client = this.props.client;
 
         this.state = {
-            id: Number(this.props.status.id),
+            id: this.props.status.id,
             replies: this.props.status.replies_count,
             favorites: this.props.status.favourites_count,
             boosts: this.props.status.reblogs_count,

@@ -216,6 +216,12 @@
   margin: 0;
   padding: 0; }
 
+.profile-container-biography {
+  color: #333;
+  font-size: 0.75em;
+  margin-left: 8px;
+  margin-right: 8px; }
+
 .profile-name .emoji {
   width: 18px;
   height: 18px;
@@ -252,6 +258,9 @@
   height: 156px;
   margin: 0;
   padding: 0; }
+
+.dark .profile-container-biography {
+  color: #f4f4f4; }
 
 /**
     Compose Window Styles

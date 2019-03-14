@@ -24,15 +24,16 @@ import {emojifyHTML} from "../../utilities/emojify";
 import Mastodon from 'megalodon';
 import filedialog from 'file-dialog';
 import { Status } from '../../types/Status';
+import { Account } from '../../types/Account';
 
 interface IAccountPanelProps {
     client: Mastodon;
-    account: any;
+    account: Account;
     button?: boolean;
 }
 
 interface IAccountPanelState {
-    account: any;
+    account: Account;
     account_statuses: Status[];
     openPanel: boolean;
     openBioDialog: boolean;
@@ -69,7 +70,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             openPanel: false,
             openBioDialog: false,
             openImageDialog: false,
-            bioText: this.props.account.source.note,
+            bioText: this.props.account.note,
             avatar: '',
             avatarPreview: [''],
             header: '',
@@ -336,7 +337,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 localStorage.setItem('account', JSON.stringify(acct.data));
                 this.setState({
                     account: acct.data,
-                    bioText: acct.data.source.note,
+                    bioText: acct.data.note,
                     openBioDialog: false
                 })
             });
