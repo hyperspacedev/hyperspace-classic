@@ -21,8 +21,9 @@ import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import {emojifyHTML} from "../../utilities/emojify";
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
 import filedialog from 'file-dialog';
+import { Status } from '../../types/Status';
 
 interface IAccountPanelProps {
     client: Mastodon;
@@ -32,7 +33,7 @@ interface IAccountPanelProps {
 
 interface IAccountPanelState {
     account: any;
-    account_statuses: [];
+    account_statuses: Status[];
     openPanel: boolean;
     openBioDialog: boolean;
     openImageDialog: boolean;
@@ -253,10 +254,10 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
 
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {"max_id": last_status})
             .then( (resp: any) => {
-                let data = resp.data;
+                let data: [Status] = resp.data;
 
                 _this.setState({
-                    account_statuses: (_this.state.account_statuses.concat(resp.data) as any)
+                    account_statuses: (_this.state.account_statuses.concat(data))
                 })
 
             })

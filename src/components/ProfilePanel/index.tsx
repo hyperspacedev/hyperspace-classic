@@ -8,7 +8,8 @@ import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
 import {emojifyHTML} from '../../utilities/emojify';
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
+import { Status } from '../../types/Status';
 
 interface IProfilePanelProps {
     client: Mastodon;
