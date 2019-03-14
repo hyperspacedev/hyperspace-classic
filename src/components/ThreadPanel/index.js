@@ -34,6 +34,17 @@ class ThreadPanel extends Component {
         }
 
         this.client = this.props.client;
+        this.toggleState = this.toggleState.bind(this);
+    }
+
+    getHiddenPanelState() {
+        return this.state.hideThreadPanel;
+    }
+
+    toggleState() {
+        this.setState({
+            hideThreadPanel: !this.state.hideThreadPanel
+        })
     }
 
     openThreadPanel() {

@@ -461,6 +461,25 @@ div#profile-table * {
   width: 20px;
   height: 20px; }
 
+#boost-card {
+  border-color: #eaeaea;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-right: 8px;
+  margin-left: 8px; }
+  #boost-card .post-content {
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    color: #666;
+    font-size: 0.85em; }
+  #boost-card .media {
+    padding-left: 8px;
+    padding-right: 8px; }
+
 .dark div[id^="post_"], .dark div[id*="post_"] {
   background-color: #333;
   color: #F4F4F4; }
@@ -476,20 +495,13 @@ div#profile-table * {
   .dark ul#post-toolbar * .post-toolbar-icon:hover div i svg {
     fill: #ddcdf0; }
 
-.dark div#boost-card .ms-DocumentCardDetails {
+.dark #boost-card {
   background-color: #212121;
-  color: #f4f4f4; }
-
-.dark div#boost-card div {
+  color: #f4f4f4;
   border-top-color: #111;
   border-bottom-color: #111;
   border-left-color: #111;
   border-right-color: #111; }
-  .dark div#boost-card div :hover {
-    border-top-color: #333;
-    border-bottom-color: #333;
-    border-left-color: #333;
-    border-right-color: #333; }
 
 /**
     Post Roll and Timeline Styles

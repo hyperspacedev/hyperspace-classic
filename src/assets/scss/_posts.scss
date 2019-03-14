@@ -44,6 +44,30 @@
     }
 }
 
+#boost-card {
+    border-color: #eaeaea;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 8px;
+    margin-left: 8px;
+
+    .post-content {
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 4px;
+        color: #666;
+        font-size: 0.85em;
+    }
+
+    .media {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
 
 .dark {
     div[id^="post_"], div[id*="post_"] {
@@ -73,24 +97,13 @@
         }
     }
 
-    div#boost-card {
-        .ms-DocumentCardDetails {
-            background-color: #212121;
-            color: #f4f4f4;
-        }
-        div {
-            border-top-color: #111;
-            border-bottom-color: #111;
-            border-left-color: #111;
-            border-right-color: #111;
+    #boost-card {
+        background-color: #212121;
+        color: #f4f4f4;
 
-            :hover {
-                border-top-color: #333;
-                border-bottom-color: #333;
-                border-left-color: #333;
-                border-right-color: #333;
-            }
-        }
-        
+        border-top-color: #111;
+        border-bottom-color: #111;
+        border-left-color: #111;
+        border-right-color: #111;
     }
 }

@@ -129,9 +129,7 @@ class Post extends Component<IPostProps, IPostState> {
             "slider",
             "ms-Panel-main",
             "clickable-link",
-            "ms-DocumentCard-title",
-            "ms-DocumentCard-details",
-            "ms-DocumentCard"
+            "boost-card"
         ]
         let unacceptableNodeTypes = ["A", "BUTTON"]
 
