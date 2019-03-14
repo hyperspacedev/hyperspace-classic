@@ -39,12 +39,6 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
         }
     }
 
-    stripElementsFromContent(content: string) {
-        let temporaryDiv = document.createElement("div");
-        temporaryDiv.innerHTML = content;
-        return temporaryDiv.textContent || temporaryDiv.innerText || "";
-    }
-
     openChildThreadPanel() {
         if (this.threadRef.current.getHiddenPanelState())
             this.threadRef.current.openThreadPanel()
@@ -104,7 +98,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                         <div className = "media">{this.prepareMedia(post.media_attachments)}</div>:<span/>
                     }
                     <DocumentCardActivity
-                        activity={"Originally posted on " + moment(post.created_at).format("MMM Do, YYYY: h:mm A")}
+                        activity={"Posted on " + moment(post.created_at).format("MMM Do, YYYY: h:mm A")}
                         people={[{ name: <ProfilePanel account={post.account} client={this.client}/> as unknown as string, profileImageSrc: post.account.avatar, initials:getTrueInitials(post.account.display_name)}]}
                     />
                 </div>
