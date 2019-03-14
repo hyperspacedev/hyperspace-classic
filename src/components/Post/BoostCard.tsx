@@ -85,7 +85,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
     render() {
         let post = this.state.status;
         return(
-            <div key = {this.props.id}>
+            <div id = {this.props.id}>
                 <div id="boost-card" className = "boost-card" title={"Originally posted by " + post.account.acct} onClick = {() => this.openChildThreadPanel()}>
                     <ThreadPanel 
                         fromWhere={post.id} 
