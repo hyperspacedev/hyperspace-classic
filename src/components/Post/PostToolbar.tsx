@@ -28,7 +28,7 @@ interface IPostToolbarState {
 /**
  * A small toolbar including common actions for interacting with
  * a post.
- * 
+ *
  * @param client The client used to ineract with a post.
  * @param status The post to interact with.
  * @param nothread Whether to hide the 'Show thread' button
@@ -36,7 +36,7 @@ interface IPostToolbarState {
 class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
 
     client: any;
-    
+
 
     constructor(props: any) {
         super(props);
@@ -222,9 +222,9 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                                             allowDisabledFocus={true}
                                             disabled={false}
                                             checked={false}
-                                            onClick={() => 
+                                            onClick={() =>
                                                 {
-                                                    this.getLinkAndCopy(this.state.url? this.state.url: ''); 
+                                                    this.getLinkAndCopy(this.state.url? this.state.url: '');
                                                     show({... {text: 'Link copied!'}, onActionClick: hide});
                                                 }
                                             }
