@@ -49,7 +49,7 @@ class PostDate extends Component<IPostDateProps, IPostDateState> {
     }
 
     parseDate(date: string): string {
-        return moment(date).format('MM/DD/YYY [at] h:mm A');
+        return moment(date).format('MMMM do, Y [at] h:mm A');
     }
 
     render() {
