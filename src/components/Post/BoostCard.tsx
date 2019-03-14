@@ -5,7 +5,8 @@ import ThreadPanel from '../ThreadPanel';
 import PostContent from '../Post/PostContent';
 import ProfilePanel from '../ProfilePanel';
 import {getTrueInitials} from '../../utilities/getTrueInitials';
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
+import { Status } from '../../types/Status';
 
 interface IBoostCardProps {
     client: Mastodon;

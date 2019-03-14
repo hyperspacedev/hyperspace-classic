@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
-import { Persona, TooltipHost } from "office-ui-fabric-react";
-import moment from 'moment';
+import { Persona } from "office-ui-fabric-react";
 import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
 import PostSensitive from './PostSensitive';
 import ProfilePanel from '../ProfilePanel';
 import BoostCard from './BoostCard';
-import { getInitials } from '@uifabric/utilities/lib/initials.js';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
 import ThreadPanel from '../ThreadPanel';
 import Carousel from 'nuka-carousel';
 import { emojifyHTML } from '../../utilities/emojify';
+import { Status } from '../../types/Status';
+import { Attachment } from '../../types/Attachment';
 
 interface IPostProps {
     client: Mastodon;
     nolink?: boolean | undefined;
     nothread?: boolean | undefined;
     bigShadow?: boolean | undefined;
-    status: any;
+    status: Status;
     clickToThread?: boolean;
 }
 
@@ -165,12 +165,12 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     getBoostCard(status: Status) {
-        if (status.reblog) {
+        if (status.reblog != null) {
             return (
                 <div className='mt-1 ml-4 mb-1'>
                     <div key={status.id.toString() + "_boost"}>
                         { status.reblog.sensitive === true ?
-                            <PostSensitive status={this.props.status.reblog} key={status.reblog.id.toString() + "_sensitive_boost"}/>:
+                            <PostSensitive status={this.props.status.reblog as Status} key={status.reblog.id.toString() + "_sensitive_boost"}/>:
 
                             <div className='ml-4 mb-2'>
                                 <BoostCard id = {this.props.status.id + "-boost-card"} client={this.client} status={this.props.status.reblog as Status}/>
@@ -182,7 +182,7 @@ class Post extends Component<IPostProps, IPostState> {
         }
     }
 
-    prepareMedia(media: any) {
+    prepareMedia(media: [Attachment]) {
         if (media.length >= 2) {
             let id = "mediaControl";
             return (
@@ -198,12 +198,12 @@ class Post extends Component<IPostProps, IPostState> {
                         className="carousel-area"
                     >
                     {
-                            media.map((item: any) => {
+                            media.map((item: Attachment) => {
                                 return (
                                     <span>
                                         {
                                             (item.type === "image") ?
-                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", minHeight: 350}}/>:
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description? item.description: ''} style={{width: "100%", minHeight: 350}}/>:
                                                 <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
                                         }
                                     </span>
@@ -218,7 +218,7 @@ class Post extends Component<IPostProps, IPostState> {
             <div className = "col">
                 {
                     (media[0].type === "image") ?
-                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description? media[0].description: ''} style = {{ width: '100%' }}/>:
                         <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
                 }
             </div>

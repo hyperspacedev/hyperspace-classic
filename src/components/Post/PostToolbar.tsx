@@ -3,11 +3,12 @@ import {ActionButton, TooltipHost, Dialog, DialogType, DialogFooter, PrimaryButt
 import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
 import { getDarkMode } from '../../utilities/getDarkMode';
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
 import { ToastConsumer } from 'react-awesome-toasts';
+import { Status } from '../../types/Status';
 interface IPostToolbarProps {
     client: Mastodon;
-    status: any;
+    status: Status;
     nothread: boolean | undefined;
 }
 
@@ -18,8 +19,8 @@ interface IPostToolbarState {
     boosts: number;
     favorited: boolean | null;
     boosted: boolean | null;
-    favorite_toggle: boolean | undefined;
-    url: string;
+    favorite_toggle: boolean | null;
+    url: string | null;
     noThread: boolean | undefined;
     hideDeleteDialog: boolean | undefined;
 }
@@ -43,7 +44,7 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
         this.client = this.props.client;
 
         this.state = {
-            id: this.props.status.id,
+            id: Number(this.props.status.id),
             replies: this.props.status.replies_count,
             favorites: this.props.status.favourites_count,
             boosts: this.props.status.reblogs_count,
@@ -223,7 +224,7 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                                             checked={false}
                                             onClick={() => 
                                                 {
-                                                    this.getLinkAndCopy(this.state.url); 
+                                                    this.getLinkAndCopy(this.state.url? this.state.url: ''); 
                                                     show({... {text: 'Link copied!'}, onActionClick: hide});
                                                 }
                                             }

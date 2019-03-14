@@ -26,7 +26,7 @@ export type Status = {
     sensitive: boolean;
     spoiler_text: string;
     visibility: Visibility;
-    media_attachements: [Attachment];
+    media_attachments: [Attachment];
     mentions: [Mention];
     tags: any;
     card: Card | null;
