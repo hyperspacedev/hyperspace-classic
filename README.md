@@ -59,7 +59,7 @@ The Hyperspace project itself is licensed under the GNU Lesser General Public Li
 
 ## Contribute
 
-Currently, there aren't any said rules for Hyperspace just yet on committing and submitting pull requests.
+Contrubition guidelines are available in the [contributing file](.github/contributing.md) and when you make an issue/pull request.
 
 If you want to aid the project in other ways, consider supporting the project on [Patreon](https://patreon.com/marquiskurt).
 
