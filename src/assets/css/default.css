@@ -483,7 +483,7 @@ div#profile-table * {
   .post-carousel-item .item-content {
     max-height: 100%;
     max-width: 100%;
-    box-shadow: 0px 0px 8px #666; }
+    box-shadow: 0 0 8px #666; }
 
 .post-author a {
   color: #2b1543; }
@@ -541,12 +541,15 @@ div#profile-table * {
 .cw-button-spoiler:hover {
   background-color: #ffd566; }
 
-.dark div[id^="post_"], .dark div[id*="post_"] {
+.dark div[id^="post_"],
+.dark div[id*="post_"] {
   background-color: #333;
   color: #F4F4F4; }
-  .dark div[id^="post_"] .ms-Persona-primaryText, .dark div[id*="post_"] .ms-Persona-primaryText {
+  .dark div[id^="post_"] .ms-Persona-primaryText,
+  .dark div[id*="post_"] .ms-Persona-primaryText {
     color: #f4f4f4; }
-  .dark div[id^="post_"] small.text-muted, .dark div[id*="post_"] small.text-muted {
+  .dark div[id^="post_"] small.text-muted,
+  .dark div[id*="post_"] small.text-muted {
     color: #a6a6a6 !important; }
 
 .dark ul#post-toolbar * {

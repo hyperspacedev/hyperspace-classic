@@ -36,7 +36,7 @@
         -webkit-filter: blur(8px);
 
         /* Full height */
-        height: 100%; 
+        height: 100%;
 
         /* Center and scale the image nicely */
         background-position: center;
@@ -58,7 +58,7 @@
     .item-content {
         max-height: 100%;
         max-width: 100%;
-        box-shadow: 0px 0px 8px #666;
+        box-shadow: 0 0 8px #666;
     }
 }
 
@@ -138,7 +138,9 @@
 
 
 .dark {
-    div[id^="post_"], div[id*="post_"] {
+
+    div[id^="post_"],
+    div[id*="post_"] {
         background-color: #333;
         color: #F4F4F4;
 
@@ -157,7 +159,7 @@
         .post-toolbar-icon svg {
             fill: lighten($theme-accent-color, 30%);
         }
-        
+
         .post-toolbar-icon:hover div i {
             svg {
                 fill: lighten($theme-accent-color, 50%);
@@ -179,16 +181,16 @@
         background-color: #ba0e1c;
         color: white;
     }
-    
+
     .cw-button-nsfw:hover {
         background-color: #d10f20;
     }
-    
+
     .cw-button-spoiler {
         color: #333;
         background-color: #cc9400;
     }
-    
+
     .cw-button-spoiler:hover {
         background-color: #e6a700;
     }
