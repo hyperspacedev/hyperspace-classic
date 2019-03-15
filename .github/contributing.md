@@ -32,6 +32,8 @@ These guidelines apply to issues on GitHub.
 
 So that Hyerpspace contributors and developers can better understand what the issue or request may be, issue descriptions should be concise but also descrptive. Refrain from writing an issue in a convoluted way that confuses others.
 
+Additionally, if you feel using a screenshot or video will better illustrate your description, add them in conjuction with (or to replace) the description.
+
 ### Label your issue during creation
 
 Issues are categorized by types such as `bug`, `enhancement`, `question`, etc. by contributors that can access labels. Since it isn't possible to tag an issue during creation, prepend the tag to your issue's title.
