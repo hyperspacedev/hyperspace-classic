@@ -523,6 +523,9 @@ div#profile-table * {
   #boost-card .media {
     padding-left: 8px;
     padding-right: 8px; }
+  #boost-card .boost-persona .emoji {
+    height: 12px;
+    width: 12px; }
 
 .cw-button-nsfw {
   background-color: #ed414f;

@@ -101,6 +101,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                     <DocumentCardActivity
                         activity={"Posted on " + moment(post.created_at).format("MMM Do, YYYY: h:mm A")}
                         people={[{ name: <ProfilePanel account={post.account} client={this.client}/> as unknown as string, profileImageSrc: post.account.avatar, initials:getTrueInitials(post.account.display_name)}]}
+                        className="boost-persona"
                     />
                 </div>
             </div>
