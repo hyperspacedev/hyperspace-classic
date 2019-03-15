@@ -17,6 +17,51 @@
     }
 }
 
+.carousel-area {
+    border-radius: 4px;
+}
+
+.post-carousel-item {
+    background-color: #666;
+    width: 100%;
+    height: 350px;
+    text-align: center;
+    position: relative;
+    background-position: initial;
+    background-repeat: initial;
+
+    .item-bg {
+        /* Add the blur effect */
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+
+        /* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .item-content-container {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        vertical-align: middle;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 8px;
+    }
+
+    .item-content {
+        max-height: 100%;
+        max-width: 100%;
+        box-shadow: 0px 0px 8px #666;
+    }
+}
+
 .post-author a {
     color: darken($theme-accent-color, 20%);
 }
@@ -68,6 +113,24 @@
     }
 }
 
+.cw-button-nsfw {
+    background-color: #ed414f;
+    color: white;
+}
+
+.cw-button-nsfw:hover {
+    background-color: #f1707b;
+}
+
+.cw-button-spoiler {
+    color: #333;
+    background-color: #ffc733;
+}
+
+.cw-button-spoiler:hover {
+    background-color: #ffd566;
+}
+
 
 .dark {
     div[id^="post_"], div[id*="post_"] {
@@ -105,5 +168,23 @@
         border-bottom-color: #111;
         border-left-color: #111;
         border-right-color: #111;
+    }
+
+    .cw-button-nsfw {
+        background-color: #ba0e1c;
+        color: white;
+    }
+    
+    .cw-button-nsfw:hover {
+        background-color: #d10f20;
+    }
+    
+    .cw-button-spoiler {
+        color: #333;
+        background-color: #cc9400;
+    }
+    
+    .cw-button-spoiler:hover {
+        background-color: #e6a700;
     }
 }

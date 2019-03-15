@@ -450,6 +450,41 @@ div#profile-table * {
   margin-right: 2px;
   vertical-align: text-top; }
 
+.carousel-area {
+  border-radius: 4px; }
+
+.post-carousel-item {
+  background-color: #666;
+  width: 100%;
+  height: 350px;
+  text-align: center;
+  position: relative;
+  background-position: initial;
+  background-repeat: initial; }
+  .post-carousel-item .item-bg {
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; }
+  .post-carousel-item .item-content-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px; }
+  .post-carousel-item .item-content {
+    max-height: 100%;
+    max-width: 100%;
+    box-shadow: 0px 0px 8px #666; }
+
 .post-author a {
   color: #2b1543; }
 
@@ -489,6 +524,20 @@ div#profile-table * {
     padding-left: 8px;
     padding-right: 8px; }
 
+.cw-button-nsfw {
+  background-color: #ed414f;
+  color: white; }
+
+.cw-button-nsfw:hover {
+  background-color: #f1707b; }
+
+.cw-button-spoiler {
+  color: #333;
+  background-color: #ffc733; }
+
+.cw-button-spoiler:hover {
+  background-color: #ffd566; }
+
 .dark div[id^="post_"], .dark div[id*="post_"] {
   background-color: #333;
   color: #F4F4F4; }
@@ -511,6 +560,20 @@ div#profile-table * {
   border-bottom-color: #111;
   border-left-color: #111;
   border-right-color: #111; }
+
+.dark .cw-button-nsfw {
+  background-color: #ba0e1c;
+  color: white; }
+
+.dark .cw-button-nsfw:hover {
+  background-color: #d10f20; }
+
+.dark .cw-button-spoiler {
+  color: #333;
+  background-color: #cc9400; }
+
+.dark .cw-button-spoiler:hover {
+  background-color: #e6a700; }
 
 /**
     Post Roll and Timeline Styles

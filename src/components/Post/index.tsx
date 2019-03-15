@@ -73,7 +73,7 @@ class Post extends Component<IPostProps, IPostState> {
     }
 
     getAuthorName(account: any) {
-        return emojifyHTML(account.display_name) || account.acct;
+        return emojifyHTML(account.display_name, account.emojis) || account.acct;
     }
 
     getPersonaText(index: any) {
@@ -192,21 +192,24 @@ class Post extends Component<IPostProps, IPostState> {
                         autoplay={false}
                         slideIndex={this.state.carouselIndex}
                         afterSlide={(newIndex: number) => { this.setState({carouselIndex: newIndex})}}
-                        width="100%"
                         heightMode="current"
                         initialSlideHeight={350}
                         className="carousel-area"
+                        cellSpacing={100}
                     >
                     {
                             media.map((item: Attachment) => {
                                 return (
-                                    <span>
-                                        {
-                                            (item.type === "image") ?
-                                                <img className="rounded shadow-sm" src={item.url} alt={item.description? item.description: ''} style={{width: "100%", minHeight: 350}}/>:
-                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
-                                        }
-                                    </span>
+                                    <div className = "shadow-sm rounded post-carousel-item">
+                                        <div className="item-bg" style={{backgroundImage: 'url("' + item.url + '")'}}/>
+                                        <div className="item-content-container">
+                                            {
+                                                (item.type === "image") ?
+                                                    <img src={item.url} alt={item.description? item.description: ''} className="item-content"/>:
+                                                    <video src={item.url} autoPlay={false} controls={true} style={{width: "auto", height: '100%'}} className="item-content"/>
+                                            }
+                                        </div>
+                                    </div>
                                 );
                             })
                         }

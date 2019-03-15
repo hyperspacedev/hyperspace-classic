@@ -59,9 +59,9 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
 
     flagColorOfButton(spoiler: string) {
         if (spoiler.includes('NSFW: ')) {
-            return [ColorClassNames.redDarkBackground, ColorClassNames.redDarkBackgroundHover, ColorClassNames.white, ColorClassNames.whiteHover].toString();
+            return 'cw-button-nsfw';
         } else if (spoiler.includes('Spoiler: ')) {
-            return [ColorClassNames.yellowBackground, ColorClassNames.yellowBackgroundHover].toString();
+            return 'cw-button-spoiler';
         } else {
             return "";
         }

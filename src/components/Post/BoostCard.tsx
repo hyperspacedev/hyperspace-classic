@@ -94,7 +94,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                         fullButton={null}
                         ref={this.threadRef}
                     />
-                    <PostContent contents={post.content}/>
+                    <PostContent contents={post.content} emojis={post.emojis}/>
                     {post.media_attachments.length ?
                         <div className = "media">{this.prepareMedia(post.media_attachments)}</div>:<span/>
                     }
