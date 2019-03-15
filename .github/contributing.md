@@ -32,7 +32,7 @@ These guidelines apply to issues on GitHub.
 
 So that Hyerpspace contributors and developers can better understand what the issue or request may be, issue descriptions should be concise but also descrptive. Refrain from writing an issue in a convoluted way that confuses others.
 
-Additionally, if you feel using a screenshot or video will better illustrate your description, add them in conjuction with (or to replace) the description.
+Additionally, if you feel using a screenshot or video will better illustrate your description, add them in conjuction with (or to replace) the description. Remember to consult the [Screenshot Guidelines](#screenshots).
 
 ### Label your issue during creation
 
@@ -78,3 +78,19 @@ Signed-off-by: Your Name <youremail@email.com>
 ```
 
 This isn't required but is good practice to confirm that you wrote the code so we can credit it accordingly.
+
+## Screenshots
+
+These guidelines apply to screenshots that are used for reference in issues and/or pull requests.
+
+### Respect the post author's visibility
+
+Mastodon supports posting to four different visibility levels. As a means of respecting privacy, please keep in mind the following:
+
+- Do not post a status published as a direct message, followers-only, or unlisted status _unless_ you have explicit permission from the status author.
+  - If you made a direct message to yourself to demo a feature or fix a bug present in a post, you do not need to worry.
+- If you are unsure whether a public status should be included in a screenshot, consult the post author.
+
+### Ensure screenshots are clear
+
+Screenshots are often included to help illustrate or demonstrate a point with an issue or pull request. It may be difficult to understand the screenshot's purpose if the image is too small or distorted. Ensure that all screenshots are clear and visible.
