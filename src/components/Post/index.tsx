@@ -254,7 +254,7 @@ class Post extends Component<IPostProps, IPostState> {
                             this.props.status.sensitive === true?
                             <PostSensitive status={this.props.status} key={this.props.status.id.toString() + "_sensitive"}/>:
                             <div>
-                                <PostContent contents={this.props.status.content}/>
+                                <PostContent contents={this.props.status.content} emojis={this.props.status.emojis}/>
                                 {
                                     this.props.status.media_attachments.length ?
                                         <div className = "row">

@@ -123,7 +123,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
     }
 
     checkDisplayName(account: any) {
-        return emojifyHTML(account.display_name) || account.username;
+        return emojifyHTML(account.display_name, account.emojis) || account.username;
     }
 
     getProfileMetadata(account: any) {

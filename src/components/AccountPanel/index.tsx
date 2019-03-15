@@ -185,7 +185,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
     }
 
     checkDisplayName(account: any) {
-        return emojifyHTML(account.display_name) || account.username;
+        return emojifyHTML(account.display_name, account.emojis) || account.username;
     }
 
     getProfileMetadata(account: any) {

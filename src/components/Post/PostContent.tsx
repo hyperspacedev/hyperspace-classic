@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {anchorInBrowser} from '../../utilities/anchorInBrowser';
 import {emojifyHTML} from '../../utilities/emojify';
+import { MastodonEmoji } from '../../types/Emojis';
 
 interface IPostContentProps {
     contents: string;
+    emojis?: [MastodonEmoji];
 }
 
 interface IPostContentState {
@@ -27,7 +29,10 @@ class PostContent extends Component<IPostContentProps, IPostContentState> {
     render() {
         //
         return (
-            <div className="post-content text-break" dangerouslySetInnerHTML={{__html: emojifyHTML(this.state.contents)}}></div>
+            <div>
+                <div className="post-content text-break" dangerouslySetInnerHTML={{__html: emojifyHTML(this.state.contents, this.props.emojis)}}></div>
+            </div>
+            
         );
     }
 }
