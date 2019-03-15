@@ -157,7 +157,7 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         this.client.get(where, params)
             .then((resp) => {
                 let data:any = resp.data;
-                let messages: any = [];
+                let messages: Status[] = [];
 
                 if (from == "messages") {
                     data.forEach((message: any) => {
@@ -165,6 +165,8 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                             messages.push(message.last_status as Status);
                         }
                     });
+                } else {
+                    messages = resp.data as [Status];
                 }
 
                 _this.setState({

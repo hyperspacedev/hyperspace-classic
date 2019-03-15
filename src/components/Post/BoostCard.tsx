@@ -76,7 +76,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                 {
                     (media[0].type === "image") ?
                         <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
-                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                        <video src={media[0].url} autoPlay={false} controls={false} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
                 }
             </div>
             );
