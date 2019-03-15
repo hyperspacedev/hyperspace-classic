@@ -36,7 +36,7 @@ So that Hyerpspace contributors and developers can better understand what the is
 
 Issues are categorized by types such as `bug`, `enhancement`, `question`, etc. by contributors that can access labels. Since it isn't possible to tag an issue during creation, prepend the tag to your issue's title.
 
-> Example: [Request] Support settings sync with TorielDB
+> Example: [Enhancement request] Support settings sync with TorielDB
 
 ## Pull Requests
 
