@@ -1,3 +1,6 @@
+/**
+ * Basic type for an attachment, usually on Statuses
+ */
 export type Attachment = {
     id: string;
     type: "unknown" | "image" | "gifv" | "video";

@@ -1,6 +1,9 @@
 import { MastodonEmoji } from './Emojis';
 import { Field } from './Field';
 
+/**
+ * Basic type for an account on Mastodon
+ */
 export type Account = {
     id: string;
     username: string;

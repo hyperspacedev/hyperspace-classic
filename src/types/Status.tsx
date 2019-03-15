@@ -6,6 +6,9 @@ import { Mention } from './Mention';
 import { Poll } from './Poll';
 import { Card } from './Card';
 
+/**
+ * Basic type for a status on Mastodon
+ */
 export type Status = {
     id: string;
     uri: string;

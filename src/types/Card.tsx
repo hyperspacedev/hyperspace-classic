@@ -1,3 +1,6 @@
+/**
+ * Basic type for Cards, usually in Statuses
+ */
 export type Card = {
     url: string;
     title: string;

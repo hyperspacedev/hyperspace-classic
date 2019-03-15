@@ -1,3 +1,6 @@
+/**
+ * Basic type for a Poll on Mastodon
+ */
 export type Poll = {
     id: string;
     expires_at: string | null;
@@ -8,6 +11,9 @@ export type Poll = {
     voted: boolean | null;
 }
 
+/**
+ * Basic type for a Poll option in a Poll
+ */
 export type PollOption = {
     title: string;
     votes_count: number | null;
