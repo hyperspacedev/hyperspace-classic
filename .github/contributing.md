@@ -8,7 +8,7 @@ These guidelines apply to code that is written in Hyperspace.
 
 ### Declare styles and classes with Sass
 
-Hyperspace uses a set of Sass files to generate its 'master' CSS file that gets used in the build/production versions, in addition to existing CSS files from Bootstrap 4 and Fabric UI. The set of Sass files override properties of the existing classes while defining new ones to prevent loss of styles when a CSS library is upgraded. 
+Hyperspace uses a set of [Sass](https://sass-lang.com/) files to generate its 'master' CSS file that gets used in the build/production versions, in addition to existing CSS files from [Bootstrap 4](https://v4-alpha.getbootstrap.com/) and [Fabric UI](https://github.com/OfficeDev/office-ui-fabric-react). The set of Sass files override properties of the existing classes while defining new ones to prevent loss of styles when a CSS library is upgraded. 
 
 When writing code that uses a custom style, ensure that your style properties are located in the Sass folder at `src/assets/scss` and not in any other folder or CSS file.
 
@@ -16,7 +16,7 @@ When writing code that uses a custom style, ensure that your style properties ar
 
 ### If possible, use a type
 
-Hyperspace uses custom types via TypeScript to specify variables, parameters, and other parts of code to prevent ambiguity. If it is possible to use an existing type from `src/types` (or other types from project libraries) or make a new type, use it. Otherwise, use `any` as the type.
+Hyperspace uses custom types via [TypeScript](https://www.typescriptlang.org/) to specify variables, parameters, and other parts of code to prevent ambiguity. If it is possible to use an existing type from `src/types` (or other types from project libraries) or make a new type, use it. Otherwise, use `any` as the type.
 
 Suffice to say, this also means that new components or code _should_ be written in TypeScript files (.ts, .tsx) unless there is a compatibility issue that prevents this from working properly.
 
