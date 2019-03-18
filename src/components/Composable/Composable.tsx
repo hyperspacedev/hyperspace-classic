@@ -5,6 +5,7 @@ import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
 import { Visibility } from '../../types/Visibility';
 import { Attachment } from '../../types/Attachment';
+import { Poll, PollOption } from '../../types/Poll';
 import { anchorInBrowser } from '../../utilities/anchorInBrowser';
 import { getDarkMode } from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
@@ -25,6 +26,7 @@ interface IComposableState {
     showEmojiPicker: boolean;
     isReply: boolean;
     replyId?: string;
+    poll?: Poll;
 }
 
 /**
@@ -114,7 +116,12 @@ class Composable extends Component<IComposableProps, IComposableState> {
             visibility: this.state.visibility,
             sensitive: this.state.sensitive,
             spoiler_text: this.state.spoiler_text,
-            in_reply_to_id: this.state.isReply? this.state.replyId: ''
+            in_reply_to_id: this.state.isReply? this.state.replyId: '',
+            poll: this.state.poll? {
+                options: this.state.poll.options,
+                expires_in: this.state.poll.expires_at,
+                multiple: this.state.poll.multiple
+            }: []
         })
 
         this.setState({
@@ -141,6 +148,14 @@ class Composable extends Component<IComposableProps, IComposableState> {
             );
         } else {
             return <span/>;
+        }
+    }
+
+    getVisibilityIcon() {
+        if (this.state.visibility === "direct") {
+            return 'directMessage';
+        } else {
+            return this.state.visibility;
         }
     }
 
