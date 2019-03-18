@@ -3,11 +3,12 @@ import {CompoundButton, Dialog, DialogType} from "office-ui-fabric-react";
 import {ColorClassNames} from '@uifabric/styling';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import {getDarkMode} from "../../utilities/getDarkMode";
-import { Status } from 'megalodon';
+import { Status } from '../../types/Status';
+import { Attachment } from '../../types/Attachment';
 import Carousel from 'nuka-carousel';
 
 interface IPostSensitiveProps {
-    status: any;
+    status: Status;
 }
 
 interface IPostSensitiveState {
@@ -58,9 +59,9 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
 
     flagColorOfButton(spoiler: string) {
         if (spoiler.includes('NSFW: ')) {
-            return [ColorClassNames.redDarkBackground, ColorClassNames.redDarkBackgroundHover, ColorClassNames.white, ColorClassNames.whiteHover].toString();
+            return 'cw-button-nsfw';
         } else if (spoiler.includes('Spoiler: ')) {
-            return [ColorClassNames.yellowBackground, ColorClassNames.yellowBackgroundHover].toString();
+            return 'cw-button-spoiler';
         } else {
             return "";
         }
@@ -74,7 +75,7 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
         }
     }
 
-    prepareMedia(media: any) {
+    prepareMedia(media: [Attachment]) {
         if (media.length >= 2) {
             let id = "mediaControl";
             return (
@@ -89,12 +90,12 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
                         initialSlideHeight={350}
                     >
                     {
-                            media.map((item: any) => {
+                            media.map((item: Attachment) => {
                                 return (
                                     <span>
                                         {
                                             (item.type === "image") ?
-                                                <img className="rounded shadow-sm" src={item.url} alt={item.description} style={{width: "100%", minHeight: 350}}/>:
+                                                <img className="rounded shadow-sm" src={item.url} alt={item.description? item.description: ''} style={{width: "100%", minHeight: 350}}/>:
                                                 <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
                                         }
                                     </span>
@@ -109,7 +110,7 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
             <div className = "col">
                 {
                     (media[0].type === "image") ?
-                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description? media[0].description: ''} style = {{ width: '100%' }}/>:
                         <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
                 }
             </div>

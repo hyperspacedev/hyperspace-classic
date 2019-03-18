@@ -10,14 +10,15 @@ import {
 import AccountPanel from '../AccountPanel';
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import Mastodon from 'megalodon';
+import { Account } from '../../types/Account';
 
 interface IProfileProps {
-    who: any;
+    who: Account;
     client: Mastodon;
 }
 
 export class ProfileUser extends Component<IProfileProps> {
-    who: any;
+    who: Account;
     persona: any;
     client: any;
 
@@ -126,7 +127,7 @@ class ProfileContainer extends Component<IProfileProps> {
                             client={this.props.client}
                         />
                     </div>
-                    <Label>{this.who.source.note}</Label>
+                    <div className = "profile-container-biography" dangerouslySetInnerHTML={{__html: this.who.note}}></div>
                     <ProfileList who={this.who}/>
                 </div>
             </div>

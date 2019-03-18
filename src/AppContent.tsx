@@ -6,6 +6,7 @@ import ProfileContainer, { ProfileUser } from './components/ProfileContainer';
 import Timeline from './components/Timeline';
 import DarkModeToggle from './components/DarkModeToggle';
 import LogoutButton from './components/LogoutButton';
+import { Account } from './types/Account';
 
 /**
  * Base component that renders the app's content if the user is signed in.
@@ -14,6 +15,7 @@ class AppContent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
     }
+    
     render() {
         return (<div>
             <nav>
@@ -47,7 +49,7 @@ class AppContent extends React.Component<any, any> {
                     <div className="col-sm-12 col-md-4 d-none d-lg-block m-0 p-0 profile-container">
                         <div>
                             {this.props.client ? <div>
-                                {localStorage.getItem('account') ? <ProfileContainer client={this.props.client} who={JSON.parse(localStorage.getItem('account') || "")} /> : <div className="p-4">
+                                {localStorage.getItem('account') ? <ProfileContainer client={this.props.client} who={JSON.parse(localStorage.getItem('account') || "") as Account} /> : <div className="p-4">
                                     <h3>Hang tight!</h3>
                                     <p>Reload Hyperspace for your profile card to update.</p>
                                 </div>}

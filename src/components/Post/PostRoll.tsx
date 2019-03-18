@@ -1,7 +1,8 @@
-import Mastodon, {Status, Response} from "megalodon";
+import Mastodon from "megalodon";
 import React, {Component} from 'react';
 import {Link, Spinner, SpinnerSize} from 'office-ui-fabric-react';
 import Post from './index';
+import { Status } from '../../types/Status';
 
 
 interface IPostRollProps {
@@ -10,7 +11,7 @@ interface IPostRollProps {
 }
 
 interface IPostRollState {
-    statuses: Array<any>;
+    statuses: Array<Status>;
     statusCount: Number;
     loading: boolean;
 }
@@ -90,7 +91,6 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
                         
                         data.forEach((message: any) => {
                             if (message.last_status !== null) {
-                                console.log(status);
                                 messages.push(message.last_status);
                             }
                         });
@@ -128,7 +128,7 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         this.streamListener.on('delete', (delId: Number) => {
             let roll = _this.state.statuses;
             for (let i in roll) {
-                if (roll[Number(i)].id === delId) {
+                if (roll[Number(i)].id === delId.toString()) {
                     roll.splice(Number(i), 1);
                 }
             }
@@ -141,35 +141,36 @@ class PostRoll extends Component<IPostRollProps, IPostRollState> {
         let _this = this;
         let last_status = this.state.statuses[this.state.statuses.length - 1].id;
         let where = "";
-        let params = {"max_id": last_status, "local": false}
+        let params = {max_id: last_status, local: false}
 
-        if (from == "home") {
+        if (from === "home") {
             where = "/timelines/home";
-        } else if (from == "local") {
-            where = "timelines/public";
-            params = {"max_id": last_status, "local": true}
-        } else if (from == "public") {
+        } else if (from === "local") {
             where = "/timelines/public";
-        } else if (from == "conversations") {
+            params.local = true;
+        } else if (from === "public") {
+            where = "/timelines/public";
+        } else if (from === "conversations") {
             where = "/conversations";
         }
 
         this.client.get(where, params)
             .then((resp) => {
                 let data:any = resp.data;
-                let messages: any = [];
+                let messages: Status[] = [];
 
                 if (from == "messages") {
                     data.forEach((message: any) => {
                         if (message.last_status !== null) {
-                            console.log(status);
-                            messages.push(message.last_status);
+                            messages.push(message.last_status as Status);
                         }
                     });
+                } else {
+                    messages = resp.data as [Status];
                 }
 
                 _this.setState({
-                    statuses: _this.state.statuses.concat(resp.data) || messages,
+                    statuses: _this.state.statuses.concat(messages) || messages,
                     statusCount: 20 + _this.state.statuses.length
                 } as unknown as IPostRollState);
             });

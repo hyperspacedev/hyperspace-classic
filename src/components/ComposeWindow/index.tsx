@@ -19,10 +19,10 @@ import {
 import {getDarkMode} from '../../utilities/getDarkMode';
 import {anchorInBrowser} from '../../utilities/anchorInBrowser';
 import filedialog from 'file-dialog';
-import EmojiPicker from 'emoji-picker-react';
-import 'emoji-picker-react/dist/universal/style.scss';
 import Mastodon, {Status} from 'megalodon';
 import {Visibility} from '../../types/Visibility';
+import EmojiPicker from '../EmojiPicker';
+
 
 interface IComposeWindowProps {
     client: Mastodon;
@@ -43,7 +43,7 @@ interface IComposeWindowState {
 /**
  * Window for creating statuses. Generally used for composing new statuses
  * rather than replies.
- * 
+ *
  * @param client The Mastodon client to perform posting actions with
  */
 class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> {
@@ -163,7 +163,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                 rows.push(c);
             }
         }
-        
+
         return rows;
     }
 
@@ -357,11 +357,15 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
     }
 
     addEmojiToStatus(e: any) {
-        let emojiInsert = String.fromCodePoint(("0x" + e) as unknown as number);
-        console.log(e);
-        this.setState({
-            status: this.state.status + emojiInsert
-        });
+        if (e.custom) {
+            this.setState({
+                status: this.state.status + e.colons
+            })
+        } else {
+            this.setState({
+                status: this.state.status + e.native
+            })
+        }
     }
 
     getTypeOfWarning(event: any, option: any) {
@@ -493,11 +497,7 @@ class ComposeWindow extends Component<IComposeWindowProps, IComposeWindowState> 
                     onDismiss={() => this.toggleEmojiPicker()}
                     target={document.getElementById('emojiPickerButton')}
                 >
-                    <EmojiPicker 
-                        onEmojiClick={(e: Event) => this.addEmojiToStatus(e)} 
-                        assetPath="./images/emoji"
-                        emojiResolution={128}
-                    />
+                    <EmojiPicker client={this.client} onGetEmoji={(emoji: any) => {this.addEmojiToStatus(emoji)}}/>
                 </Callout>
             </div>
         );

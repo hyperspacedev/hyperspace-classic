@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
-import {
-    DocumentCard,
-    DocumentCardTitle,
-    DocumentCardActivity,
-    DocumentCardType,
-    DocumentCardDetails,
-    PositioningContainer
-} from 'office-ui-fabric-react';
+import { DocumentCardActivity } from 'office-ui-fabric-react';
 import moment from 'moment';
 import ThreadPanel from '../ThreadPanel';
+import PostContent from '../Post/PostContent';
 import ProfilePanel from '../ProfilePanel';
 import {getTrueInitials} from '../../utilities/getTrueInitials';
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
+import { Status } from '../../types/Status';
 
 interface IBoostCardProps {
     client: Mastodon;
@@ -26,7 +21,7 @@ interface IBoostCardState {
 /**
  * Small card element that displays a status. Usually used to display a reblogged
  * status.
- * 
+ *
  * @param client The Mastodon client used to view information about the status
  * @param status The status to display within the card itself
  */
@@ -45,38 +40,9 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
         }
     }
 
-    stripElementsFromContent(content: string) {
-        let temporaryDiv = document.createElement("div");
-        temporaryDiv.innerHTML = content;
-        return temporaryDiv.textContent || temporaryDiv.innerText || "";
-    }
-
-    getCardStyles(status: Status) {
-        let documentCardStyles = {};
-
-            let actualContent = this.stripElementsFromContent(status.content);
-
-            if (status.media_attachments.length !== 0) {
-
-                documentCardStyles = {
-                    root: {
-                        height: 355
-                    }
-                }
-
-            } else if (actualContent.length > 150) {
-                documentCardStyles = {
-                    root: {
-                        height: 200
-                    }
-                }
-            }
-
-            return documentCardStyles;
-    }
-
     openChildThreadPanel() {
-        this.threadRef.current.openThreadPanel();
+        if (this.threadRef.current.getHiddenPanelState())
+            this.threadRef.current.openThreadPanel()
     }
 
     prepareMedia(media: any) {
@@ -88,9 +54,9 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                     media[0].type == "image" ?
                     <div className = "shadow-sm rounded" style = {
                         {
-                            backgroundImage: "url('" + media[0].url + "')", 
-                            backgroundPosition: "center", 
-                            backgroundSize: "cover", 
+                            backgroundImage: "url('" + media[0].url + "')",
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
                             height: 250
                         }
@@ -110,7 +76,7 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
                 {
                     (media[0].type === "image") ?
                         <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description} style = {{ width: '100%' }}/>:
-                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                        <video src={media[0].url} autoPlay={false} controls={false} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
                 }
             </div>
             );
@@ -121,45 +87,23 @@ class BoostCard extends Component<IBoostCardProps, IBoostCardState> {
         let post = this.state.status;
         return(
             <div id = {this.props.id}>
-            <div id="boost-card">
-                <ThreadPanel 
-                    fromWhere={post.id} 
-                    client={this.client} 
-                    fullButton={null}
-                    ref={this.threadRef}
-                />
-                <DocumentCard
-                    type={DocumentCardType.compact}
-                    styles={this.getCardStyles(post)}
-                    onClick={() => this.openChildThreadPanel()}
-                >
-                    <DocumentCardDetails>
-                        <DocumentCardTitle
-                            title={
-                                <div>
-                                    <p>{this.stripElementsFromContent(post.content)}</p>
-                                    {
-                                        post.media_attachments.length ?
-                                            <div className = "row">
-                                                {
-                                                    this.prepareMedia(post.media_attachments)
-                                                }
-                                            </div>:
-                                            <span/>
-                                    }
-                                </div> as unknown as string
-                            }
-                            shouldTruncate={true}
-                            showAsSecondaryTitle={true}
-                            styles={this.getCardStyles(post)}
-                        />
-                        <DocumentCardActivity
-                            activity={"Originally posted on " + moment(post.created_at).format("MMM Do, YYYY: h:mm A")}
-                            people={[{ name: <ProfilePanel account={post.account} client={this.client}/> as unknown as string, profileImageSrc: post.account.avatar, initials:getTrueInitials(post.account.display_name)}]}
-                        />
-                    </DocumentCardDetails>
-                </DocumentCard>
-            </div>
+                <div id="boost-card" className = "boost-card" title={"Originally posted by " + post.account.acct} onClick = {() => this.openChildThreadPanel()}>
+                    <ThreadPanel
+                        fromWhere={post.id}
+                        client={this.client}
+                        fullButton={null}
+                        ref={this.threadRef}
+                    />
+                    <PostContent contents={post.content} emojis={post.emojis}/>
+                    {post.media_attachments.length ?
+                        <div className = "media">{this.prepareMedia(post.media_attachments)}</div>:<span/>
+                    }
+                    <DocumentCardActivity
+                        activity={"Posted on " + moment(post.created_at).format("MMM Do, YYYY: h:mm A")}
+                        people={[{ name: <ProfilePanel account={post.account} client={this.client}/> as unknown as string, profileImageSrc: post.account.avatar, initials:getTrueInitials(post.account.display_name)}]}
+                        className="boost-persona"
+                    />
+                </div>
             </div>
         );
     }

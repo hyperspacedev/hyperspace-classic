@@ -3,23 +3,24 @@ import {ActionButton, TooltipHost, Dialog, DialogType, DialogFooter, PrimaryButt
 import ReplyWindow from '../ReplyWindow';
 import ThreadPanel from '../ThreadPanel';
 import { getDarkMode } from '../../utilities/getDarkMode';
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
 import { ToastConsumer } from 'react-awesome-toasts';
+import { Status } from '../../types/Status';
 interface IPostToolbarProps {
     client: Mastodon;
-    status: any;
+    status: Status;
     nothread: boolean | undefined;
 }
 
 interface IPostToolbarState {
-    id: number;
+    id: string;
     replies: number;
     favorites: number;
     boosts: number;
     favorited: boolean | null;
     boosted: boolean | null;
-    favorite_toggle: boolean | undefined;
-    url: string;
+    favorite_toggle: boolean | null;
+    url: string | null;
     noThread: boolean | undefined;
     hideDeleteDialog: boolean | undefined;
 }
@@ -27,7 +28,7 @@ interface IPostToolbarState {
 /**
  * A small toolbar including common actions for interacting with
  * a post.
- * 
+ *
  * @param client The client used to ineract with a post.
  * @param status The post to interact with.
  * @param nothread Whether to hide the 'Show thread' button
@@ -35,7 +36,7 @@ interface IPostToolbarState {
 class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
 
     client: any;
-    
+
 
     constructor(props: any) {
         super(props);
@@ -221,9 +222,9 @@ class PostToolbar extends Component<IPostToolbarProps, IPostToolbarState> {
                                             allowDisabledFocus={true}
                                             disabled={false}
                                             checked={false}
-                                            onClick={() => 
+                                            onClick={() =>
                                                 {
-                                                    this.getLinkAndCopy(this.state.url); 
+                                                    this.getLinkAndCopy(this.state.url? this.state.url: '');
                                                     show({... {text: 'Link copied!'}, onActionClick: hide});
                                                 }
                                             }

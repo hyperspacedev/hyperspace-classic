@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import { Panel, 
-    PanelType, 
-    Link, 
-    Persona, 
-    PersonaSize, 
-    PrimaryButton, 
-    DetailsList, 
+import { Panel,
+    PanelType,
+    Link,
+    Persona,
+    PersonaSize,
+    PrimaryButton,
+    DetailsList,
     DetailsListLayoutMode,
-    SelectionMode, 
+    SelectionMode,
     DefaultButton,
     Dialog,
     DialogFooter,
@@ -20,18 +20,21 @@ import Post from '../Post';
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
 import { getTrueInitials } from "../../utilities/getTrueInitials";
 import {getDarkMode} from "../../utilities/getDarkMode";
-import Mastodon, { Status } from 'megalodon';
+import {emojifyHTML} from "../../utilities/emojify";
+import Mastodon from 'megalodon';
 import filedialog from 'file-dialog';
+import { Status } from '../../types/Status';
+import { Account } from '../../types/Account';
 
 interface IAccountPanelProps {
     client: Mastodon;
-    account: any;
+    account: Account;
     button?: boolean;
 }
 
 interface IAccountPanelState {
-    account: any;
-    account_statuses: [];
+    account: Account;
+    account_statuses: Status[];
     openPanel: boolean;
     openBioDialog: boolean;
     openImageDialog: boolean;
@@ -48,7 +51,7 @@ interface IAccountPanelState {
  * A panel that display profile information of the signed in user.
  * This is similar to ProfilePanel, but includes options that pertain
  * to the user specifically (edit bio, change images).
- * 
+ *
  * @param client The client used to get and post information with.
  * @param account The account to get information about.
  */
@@ -67,7 +70,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             openPanel: false,
             openBioDialog: false,
             openImageDialog: false,
-            bioText: this.props.account.source.note,
+            bioText: this.props.account.note,
             avatar: '',
             avatarPreview: [''],
             header: '',
@@ -126,9 +129,12 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
         } else {
             return (
                 <span>
-                    <Link onClick={() => this.toggleProfilePanel()} style={{
+                    <Link
+                    className = "profile-name"
+                    dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}
+                    onClick={() => this.toggleProfilePanel()} style={{
                         fontWeight: 'bold'
-                    }}>{this.checkDisplayName(this.state.account)}</Link>
+                    }}></Link>
                 </span>
             );
         }
@@ -156,7 +162,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 isPadded: true
             }];
         let rows = [];
-        
+
         for (let item in account.fields) {
             let value = account.fields[item].value.replace("class=\"invisible\"", '');
             rows.push({'key': account.fields[item].name, 'value': <p dangerouslySetInnerHTML={{__html: value}}/>})
@@ -175,15 +181,11 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 </div>
             );
         }
-        
+
     }
 
     checkDisplayName(account: any) {
-        if (account.display_name === "") {
-            return account.username;
-        } else {
-            return account.display_name;
-        }
+        return emojifyHTML(account.display_name, account.emojis) || account.username;
     }
 
     getProfileMetadata(account: any) {
@@ -198,7 +200,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                         {
                             imageUrl: this.state.account.avatar,
                             imageInitials: getTrueInitials(this.state.account.display_name),
-                            text: this.checkDisplayName(this.state.account) + " (you)",
+                            text: <span dangerouslySetInnerHTML={{__html: this.checkDisplayName(this.state.account)}}></span> as unknown as string,
                             title: 'Despite everything, it\'s still you.',
                             secondaryText: '@' + this.state.account.username,
                             tertiaryText: this.getProfileMetadata(this.state.account)
@@ -224,6 +226,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                             }
                         }
                     }
+                    className = "profile-persona"
                 />
                 <div className="mt-4">
                     <PrimaryButton text="Edit bio" style={{marginRight: 8}} onClick={() => this.toggleBioDialog()}/>
@@ -252,10 +255,10 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
 
         this.client.get('/accounts/' + this.state.account.id + '/statuses', {"max_id": last_status})
             .then( (resp: any) => {
-                let data = resp.data;
-                
+                let data: [Status] = resp.data;
+
                 _this.setState({
-                    account_statuses: (_this.state.account_statuses.concat(resp.data) as any)
+                    account_statuses: (_this.state.account_statuses.concat(data))
                 })
 
             })
@@ -316,7 +319,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 </DialogFooter>
             </Dialog>
         );
-        
+
     }
 
     updateBioText(e: any) {
@@ -334,7 +337,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 localStorage.setItem('account', JSON.stringify(acct.data));
                 this.setState({
                     account: acct.data,
-                    bioText: acct.data.source.note,
+                    bioText: acct.data.note,
                     openBioDialog: false
                 })
             });
@@ -374,16 +377,16 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 >
                     <div className = "mx-auto">
                         {
-                            this.state.avatar !== '' ? 
-                                this.renderNewAvatar(): 
-                                <img 
+                            this.state.avatar !== '' ?
+                                this.renderNewAvatar():
+                                <img
                                     src={this.props.account.avatar_static}
                                     className="rounded-circle shadow-sm"
                                     style={{width: '50%'}}
                                     onClick={() => this.uploadImage("avatar")}
                                 />
                         }
-                        
+
                     </div>
                 </div>
                 {this.state.media_uploading ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Updating profile..." ariaLive="assertive" labelPosition="right" />: <span/>}
