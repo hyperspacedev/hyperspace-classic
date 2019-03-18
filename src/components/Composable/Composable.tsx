@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CommandBar, TextField, Callout, Dialog, DialogBase, DialogFooter } from 'office-ui-fabric-react';
+import { CommandBar, TextField, Callout, Dialog, DialogBase, DialogFooter, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon } from 'office-ui-fabric-react';
 import EmojiPicker from '../EmojiPicker';
 import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
@@ -105,6 +105,43 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     })
                 });
         })
+    }
+
+    post() {
+        this.client.post('/statuses', {
+            status: this.state.status,
+            media_ids: this.state.mediaIds,
+            visibility: this.state.visibility,
+            sensitive: this.state.sensitive,
+            spoiler_text: this.state.spoiler_text,
+            in_reply_to_id: this.state.isReply? this.state.replyId: ''
+        })
+
+        this.setState({
+            mediaIds: [],
+            mediaObjects: [],
+            status: '',
+            visibility: "public",
+            sensitive: false,
+            spoiler_text: '',
+            isReply: false,
+            replyId: ''
+        })
+    }
+
+    getWarning() {
+        if (this.state.sensitive) {
+            return (
+                <p className = "compose-window-warning">
+                    <span>
+                        <Icon iconName = "warningApp"/>
+                        <b>Warning: </b> {this.state.spoiler_text}
+                    </span>
+                </p>
+            );
+        } else {
+            return <span/>;
+        }
     }
 
 
