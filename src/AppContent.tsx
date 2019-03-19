@@ -1,5 +1,6 @@
 import React from 'react';
 import ComposeWindow from './components/ComposeWindow';
+import Composable from './components/Composable';
 import Navbar from './components/Navbar';
 import NotificationPane from './components/NotificationPane';
 import ProfileContainer, { ProfileUser } from './components/ProfileContainer';
@@ -38,7 +39,8 @@ class AppContent extends React.Component<any, any> {
                             </div>
                         </div>
                         {this.props.client ? <div className="ms-fadeIn100">
-                            <ComposeWindow client={this.props.client} />
+                            <Composable client={this.props.client}/>
+                            {/* <ComposeWindow client={this.props.client} /> */}
                             <hr />
                         </div> : <span />}
 
