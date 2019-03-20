@@ -271,7 +271,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'directMessage',
                     className: 'toolbar-menu-icon'
                 },
-                onClick: () => this.changeVisibility('direct')
+                onClick: () => this.changeVisibility('direct'),
+                title: 'Marks the post as a direct message. Requires a username in the contents of the post to send to that person.'
             },
             {
                 key: 'private',
@@ -280,7 +281,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'private',
                     className: 'toolbar-menu-icon'
                 },
-                onClick: () => this.changeVisibility('private')
+                onClick: () => this.changeVisibility('private'),
+                title: 'Marks the post as followers-only (private).'
             },
             {
                 key: 'unlisted',
@@ -289,7 +291,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'unlisted',
                     className: 'toolbar-menu-icon'
                 },
-                onClick: () => this.changeVisibility('unlisted')
+                onClick: () => this.changeVisibility('unlisted'),
+                title: 'Marks the post as unlisted. Will not appear in the public timeline, but is available for public viewing.'
             },
             {
                 key: 'public',
@@ -298,7 +301,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'public',
                     className: 'toolbar-menu-icon'
                 },
-                onClick: () => this.changeVisibility('public')
+                onClick: () => this.changeVisibility('public'),
+                title: 'Marks the post as public.'
             }
         ]
     }
@@ -313,6 +317,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icons',
+                title: 'Upload photos and videos or a file.',
                 subMenuProps: {
                     items: [
                         {
@@ -322,7 +327,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                                 iconName: 'uploadMedia',
                                 className: 'toolbar-menu-icon'
                             },
-                            onClick: () => this.uploadMedia()
+                            onClick: () => this.uploadMedia(),
+                            title: 'Upload photos or videos.'
                         },
                         {
                             key: 'file',
@@ -331,7 +337,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                             iconProps: {
                                 iconName: 'uploadFile',
                                 className: 'toolbar-menu-icon'
-                            }
+                            },
+                            title: 'Upload a file with a temporary download link (via Firefox Send).'
                         }
                     ]
                 }
@@ -345,7 +352,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 },
                 className: 'toolbar-icon',
                 id: 'emojiPickerButton',
-                onClick: () => this.toggleEmojiPicker()
+                onClick: () => this.toggleEmojiPicker(),
+                title: 'Insert emojis into the post.'
             },
             {
                 key: 'poll',
@@ -354,7 +362,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'poll',
                     className: 'toolbar-icon'
                 },
-                className: 'toolbar-icon'
+                className: 'toolbar-icon',
+                title: 'Add a poll with options and an expiration date.'
             },
             {
                 key: 'visibility',
@@ -366,7 +375,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 className: 'toolbar-icon',
                 subMenuProps: {
                     items: this.visibilitySubMenu()
-                }
+                },
+                title: 'Set the visibility of the post and who sees it.'
             },
             {
                 key: 'warning',
@@ -376,7 +386,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icon',
-                onClick: () => this.toggleWarningBay()
+                onClick: () => this.toggleWarningBay(),
+                title: 'Set a content warning on the post, requiring users to click before viewing.'
             }
         ]
     }
@@ -391,7 +402,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icon mainAction',
-                onClick: () => this.post()
+                onClick: () => this.post(),
+                title: 'Publish the post to Mastodon.'
             }
         ]
     }
@@ -532,7 +544,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     placeholder="What's on your mind?"
                     data-enable-grammarly={false}
                     defaultValue={this.state.status}
-                    title="Tyoe your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
+                    title="Type your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
                 />
                 {this.warningInput()}
                 {this.mediaBay()}
