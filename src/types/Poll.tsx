@@ -7,7 +7,7 @@ export type Poll = {
     expired: boolean;
     multiple: boolean;
     votes_count: number;
-    options: PollWizardOption[];
+    options: PollOption[];
     voted: boolean | null;
 }
 

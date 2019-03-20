@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Persona } from "office-ui-fabric-react";
+import { Persona, ChoiceGroup, IChoiceGroupOption, DefaultButton } from "office-ui-fabric-react";
 import PostContent from './PostContent';
 import PostDate from './PostDate';
 import PostToolbar from './PostToolbar';
@@ -14,6 +14,8 @@ import Carousel from 'nuka-carousel';
 import { emojifyHTML } from '../../utilities/emojify';
 import { Status } from '../../types/Status';
 import { Attachment } from '../../types/Attachment';
+import { Poll, PollOption } from '../../types/Poll';
+import moment from 'moment';
 
 interface IPostProps {
     client: Mastodon;
@@ -30,6 +32,8 @@ interface IPostState {
     clickToThread?: boolean;
     carouselIndex: number;
     id: string;
+    vote?: number
+    poll?: Poll
 }
 
 /**
@@ -57,11 +61,15 @@ class Post extends Component<IPostProps, IPostState> {
             carouselIndex: 0,
             id: "post_" + this.props.status.id
         }
-
     }
 
     componentDidMount() {
         anchorInBrowser();
+        if (this.props.status.poll !== null) {
+            this.setState({
+                poll: this.props.status.poll
+            })
+        }
     }
 
     getBigShadow() {
@@ -129,7 +137,8 @@ class Post extends Component<IPostProps, IPostState> {
             "slider",
             "ms-Panel-main",
             "clickable-link",
-            "boost-card"
+            "boost-card",
+            "poll"
         ]
         let unacceptableNodeTypes = ["A", "BUTTON", "VIDEO"]
 
@@ -229,6 +238,71 @@ class Post extends Component<IPostProps, IPostState> {
         }
     }
 
+    presentPoll(poll: Poll) {
+        let options: IChoiceGroupOption[] = [];
+        poll.options.forEach((option: PollOption, index) => {
+            let o = {
+                key: `${poll.id}_${index.toString()}`,
+                text: `${option.title} (${option.votes_count} votes)`,
+                id: (option.votes_count? option.votes_count: 0).toString(),
+                disabled: poll.voted || poll.expired
+            }
+            options.push(o);
+        });
+        if (poll.voted) {
+            let voteIds = options.map((option) => {
+                return parseInt(option.id? option.id: "0")
+            });
+            console.log(voteIds);
+            let biggestVote = Math.max.apply(null, voteIds);
+            console.log(biggestVote);
+            options.forEach((option: any) => {
+                if (biggestVote != 0 && option.id === biggestVote.toString()) {
+                    option.checked = true;
+                }
+            });
+        }
+        return (
+            <div className="poll">
+                <ChoiceGroup options={options} onChange={(event, option) => this.changeVote(poll, option)}/>
+                {
+                    poll.voted?
+                    <p>
+                        <small>You cannot vote on this poll. The results of the poll are displayed here.</small>
+                    </p>:
+                    <DefaultButton onClick={() => this.voteOption()} text="Vote"/>
+                }
+                <small>{poll.expired || poll.expires_at === null? 'This poll has expired.': 'The poll will expire on: ' + moment(poll.expires_at).format('MMMM Do, Y [at] h:mm A')}</small>
+            </div>
+        )
+    }
+
+    changeVote(poll: Poll, option: IChoiceGroupOption | undefined) {
+        if (option !== undefined) {
+            let optionTitle = option.key;
+            poll.options.forEach((option: PollOption, index) => {
+                if (`${poll.id}_${index}` === optionTitle) {
+                    this.setState({
+                        vote: index
+                    })
+                }
+            })
+        }
+    }
+
+    voteOption() {
+        let _this = this;
+        if (this.props.status.poll) {
+            this.client.post('/polls/' + this.props.status.poll.id + '/votes', {choices: [this.state.vote]})
+            .then((resp: any) => {
+                let newPoll: Poll = resp.data;
+                _this.setState({
+                    poll: newPoll
+                });
+            });
+        }
+    }
+
     render() {
         return (
         <div
@@ -266,6 +340,11 @@ class Post extends Component<IPostProps, IPostState> {
                                             }
                                         </div>:
                                         <span/>
+                                }
+                                {
+                                    this.state.poll?
+                                    this.presentPoll(this.state.poll):
+                                    <span/>
                                 }
                             </div>
 
