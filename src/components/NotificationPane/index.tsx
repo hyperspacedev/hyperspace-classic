@@ -5,7 +5,8 @@ import ProfilePanel from '../ProfilePanel';
 import moment from 'moment';
 import ThreadPanel from "../ThreadPanel";
 import {anchorInBrowser} from "../../utilities/anchorInBrowser";
-import Mastodon, { Status } from 'megalodon';
+import Mastodon from 'megalodon';
+import {Status} from '../../types/Status';
 
 
 interface INotificationPaneProps {

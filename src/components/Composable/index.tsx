@@ -49,10 +49,10 @@ class Composable extends Component<IComposableProps, IComposableState> {
         this.client = this.props.client;
 
         this.state = {
-            status: '',
+            status: this.props.reply_to !== undefined? `@${this.props.reply_to.account.acct}: `: '',
             mediaIds: [],
             mediaObjects: [],
-            visibility: "public",
+            visibility: this.props.reply_to? this.props.reply_to.visibility: "public",
             spoiler_text: '',
             sensitive: false,
             showEmojiPicker: false,
@@ -516,7 +516,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
         return [
             {
                 key: 'post',
-                name: 'Post',
+                name: this.props.reply_to? 'Reply': 'Post',
                 iconProps: {
                     iconName: 'postStatus',
                     className: 'toolbar-icon'
