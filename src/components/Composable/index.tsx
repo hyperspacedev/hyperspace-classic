@@ -59,16 +59,10 @@ class Composable extends Component<IComposableProps, IComposableState> {
             showMediaLoader: false,
             showWarningBay: false,
             showDescriptionEditor: {},
-            isReply: false,
+            isReply: this.props.reply_to? true: false,
+            replyId: this.props.reply_to? this.props.reply_to.id: '',
             imageDescription: '',
             expire_key: ''
-        }
-
-        if (this.props.reply_to) {
-            this.setState({
-                isReply: true,
-                replyId: this.props.reply_to.id
-            });
         }
     }
 
