@@ -209,7 +209,7 @@ class Post extends Component<IPostProps, IPostState> {
                     {
                             media.map((item: Attachment) => {
                                 return (
-                                    <div className = "shadow-sm rounded post-carousel-item">
+                                    <div key={this.props.status.id + "_carousel"} className = "shadow-sm rounded post-carousel-item">
                                         <div className="item-bg" style={{backgroundImage: 'url("' + item.url + '")'}}/>
                                         <div className="item-content-container">
                                             {

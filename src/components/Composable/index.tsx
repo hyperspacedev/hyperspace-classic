@@ -13,6 +13,7 @@ import filedialog from 'file-dialog';
 interface IComposableProps {
     client: Mastodon;
     reply_to?: Status;
+    onSubmit?: any;
 }
 
 interface IComposableState {
@@ -264,6 +265,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
             showWarningBay: false,
             poll: undefined
         })
+        this.props.onSubmit();
     }
 
     insertEmoji(e: any) {

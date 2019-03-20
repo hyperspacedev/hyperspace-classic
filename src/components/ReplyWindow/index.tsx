@@ -32,6 +32,7 @@ interface IReplyWindowState {
 class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
 
     client: any;
+    replyRef: any;
 
     constructor(props: any) {
         super(props);
@@ -44,10 +45,18 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
         };
 
         this.client = this.props.client;
+        this.replyRef = React.createRef();
+        this.closeWhenDonePosting = this.closeWhenDonePosting.bind(this);
     }
 
     componentDidMount() {
         anchorInBrowser();
+
+        
+    }
+
+    closeWhenDonePosting() {
+        this.closeReplyPanel();
     }
 
     openPanel() {
@@ -99,11 +108,12 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 type={PanelType.medium}
                 styles={this.getPanelStyles()}
                 className={getDarkMode()}
+                isLightDismiss={true}
                 onRenderFooterContent={() => {return (
                             <div>
                                 <DefaultButton
                                     onClick={() => this.closeReplyPanel()}
-                                    text="Cancel"
+                                    text="Close"
                                 />
                             </div>
                         )
@@ -112,7 +122,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
             >
                 <p><b>{this.state.author} said: </b></p>
                 <div className = "post-content" dangerouslySetInnerHTML={{__html: emojifyHTML(this.props.status.content, this.props.status.emojis)}}></div>
-                <Composable client={this.client} reply_to={this.props.status}/>
+                <Composable client={this.client} reply_to={this.props.status} onSubmit={this.closeWhenDonePosting}/>
             </Panel>
             </div>
         );
