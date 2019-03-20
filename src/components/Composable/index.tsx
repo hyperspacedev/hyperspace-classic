@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton, Dropdown } from 'office-ui-fabric-react';
+import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton, Dropdown, IDropdownOption } from 'office-ui-fabric-react';
 import EmojiPicker from '../EmojiPicker';
 import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
@@ -97,13 +97,98 @@ class Composable extends Component<IComposableProps, IComposableState> {
     createPoll() {
         if (this.state.poll === undefined) {
             let temporaryPoll: PollWizard = {
-                expires_at: '9999-99-99',
+                expires_at: '0',
                 multiple: false,
                 options: [{title: 'Option 1'}, {title: 'Option 2'}]
             }
             this.setState({
                 poll: temporaryPoll
             });
+        }
+    }
+
+    addPollItem() {
+        if (this.state.poll !== undefined && this.state.poll.options.length < 4) {
+            let newOption = {title: 'New option'}
+            let options = this.state.poll.options;
+            let poll = this.state.poll;
+            options.push(newOption);
+            poll.options = options;
+            poll.multiple = true;
+            this.setState({
+                poll: poll
+            })
+        }
+    }
+
+    editPollItem(position: number, newTitle: any) {
+        if (this.state.poll !== undefined) {
+            let poll = this.state.poll;
+            let options = this.state.poll.options;
+            options.forEach((option: PollWizardOption) => {
+                if (position === options.indexOf(option)) {
+                    option.title = newTitle.target.value;
+                }
+            });
+            poll.options = options;
+            this.setState({
+                poll: poll
+            });
+            console.log(options);
+        }
+    }
+
+    removePollItem(item: string) {
+        if (this.state.poll !== undefined && this.state.poll.options.length > 2) {
+            let options = this.state.poll.options;
+            let poll = this.state.poll;
+            options.forEach((option: PollWizardOption) => {
+                if (item === option.title) {
+                    options.splice(options.indexOf(option), 1);
+                }
+            });
+            poll.options = options;
+            if (options.length === 2) {
+                poll.multiple = false;
+            }
+            this.setState({
+                poll: poll
+            })
+        }
+    }
+
+    setPollExpires(date: IDropdownOption | undefined) {
+        if (date !== undefined) {
+            let lapse = date.key;
+            let currentDate = new Date();
+            let newDate = new Date();
+            switch(lapse) {
+                case '30min':
+                    newDate.setMinutes(currentDate.getMinutes() + 30);
+                    break
+                case '1hr':
+                    newDate.setHours(currentDate.getHours() + 1);
+                    break
+                case '6hr':
+                    newDate.setHours(currentDate.getHours() + 6);
+                    break
+                case '1day':
+                    newDate.setDate(currentDate.getDate() + 1);
+                    break
+                case '3day':
+                    newDate.setDate(currentDate.getDate() + 3);
+                    break
+                case '7day':
+                    newDate.setDate(currentDate.getDate() + 7);
+                    break
+            }
+            let poll = this.state.poll;
+            if (poll !== undefined) {
+                poll.expires_at = ((newDate.getTime() - currentDate.getTime()) / 1000).toString();
+                this.setState({
+                    poll: poll
+                });
+            }
         }
     }
 
@@ -148,6 +233,12 @@ class Composable extends Component<IComposableProps, IComposableState> {
     }
 
     post() {
+        let pollOptions: string[] = [];
+        if (this.state.poll !== undefined) {
+            this.state.poll.options.forEach((option: PollWizardOption) => {
+                pollOptions.push(option.title);
+            });
+        }
         this.client.post('/statuses', {
             status: this.state.status,
             media_ids: this.state.mediaIds,
@@ -156,7 +247,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
             spoiler_text: this.state.spoiler_text,
             in_reply_to_id: this.state.isReply? this.state.replyId: '',
             poll: this.state.poll? {
-                options: this.state.poll.options,
+                options: pollOptions,
                 expires_in: this.state.poll.expires_at,
                 multiple: this.state.poll.multiple
             }: {}
@@ -171,7 +262,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
             spoiler_text: '',
             isReply: false,
             replyId: '',
-            showWarningBay: false
+            showWarningBay: false,
+            poll: undefined
         })
     }
 
@@ -450,10 +542,10 @@ class Composable extends Component<IComposableProps, IComposableState> {
     getPollOptions() {
         let items: any[] = [];
         if (this.state.poll !== undefined) {
-            this.state.poll.options.forEach(element => {
+            this.state.poll.options.forEach((element, index) => {
                 let item = {
-                    'option': <TextField resizable={false} multiline={false} maxLength={420} defaultValue={element.title}/>,
-                    'removeButton': <DefaultButton text="Remove"/>
+                    'option': <TextField resizable={false} multiline={false} maxLength={420} defaultValue={element.title} onChange={(e) => this.editPollItem(index, e)}/>,
+                    'removeButton': <DefaultButton onClick={() => this.removePollItem(element.title)} text="Remove"/>
                 }
                 items.push(item);
             });
@@ -463,7 +555,6 @@ class Composable extends Component<IComposableProps, IComposableState> {
 
     getExpirationDates() {
         return [
-            {key: '5min', text: '5 minutes'},
             {key: '30min', text: '30 minutes'},
             {key: '1hr', text: '1 hour'},
             {key: '6hr', text: '6 hours'},
@@ -500,9 +591,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 />
                     <div className="pl-2 pr-2 pt-2 pb-3">
                         <div style={{ display: 'flex'}}>
-                            <DefaultButton style={{ marginRight: 8}} text="Add option"/>
+                            <DefaultButton style={{ marginRight: 8}} text="Add option" onClick={() => this.addPollItem()}/>
                             <DefaultButton style={{ marginRight: 8}} text="Remove poll" onClick={() => this.removePoll()}/>
-                            <Dropdown dropdownWidth={200} placeholder = "Select an expiration date" options={this.getExpirationDates()}/>
+                            <Dropdown dropdownWidth={200} placeholder = "Select an expiration date" options={this.getExpirationDates()} required={true} onChange={(event, option) => this.setPollExpires(option)}/>
                         </div>
                     </div>
                 </div>
