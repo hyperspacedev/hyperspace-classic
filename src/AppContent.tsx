@@ -1,5 +1,4 @@
 import React from 'react';
-import ComposeWindow from './components/ComposeWindow';
 import Composable from './components/Composable';
 import Navbar from './components/Navbar';
 import NotificationPane from './components/NotificationPane';
@@ -38,10 +37,8 @@ class AppContent extends React.Component<any, any> {
                                 </span>
                             </div>
                         </div>
-                        {this.props.client ? <div className="ms-fadeIn100">
+                        {this.props.client ? <div className="ms-fadeIn100 mb-4 p-1 shadow rounded marked-area position-sticky d-none d-md-none d-lg-block">
                             <Composable client={this.props.client}/>
-                            {/* <ComposeWindow client={this.props.client} /> */}
-                            <hr />
                         </div> : <span />}
 
                         <div className="container">

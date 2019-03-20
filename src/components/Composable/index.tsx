@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CommandBar, TextField, Callout, Dialog, DialogBase, DialogFooter, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon } from 'office-ui-fabric-react';
+import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton } from 'office-ui-fabric-react';
 import EmojiPicker from '../EmojiPicker';
 import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
@@ -25,9 +25,11 @@ interface IComposableState {
     showMediaLoader: boolean;
     showEmojiPicker: boolean;
     showWarningBay: boolean;
+    showDescriptionEditor: {[key: string]: boolean};
     isReply: boolean;
     replyId?: string;
     poll?: Poll;
+    imageDescription: string;
 }
 
 /**
@@ -55,7 +57,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
             showEmojiPicker: false,
             showMediaLoader: false,
             showWarningBay: false,
-            isReply: false
+            showDescriptionEditor: {},
+            isReply: false,
+            imageDescription: ''
         }
 
         if (this.props.reply_to) {
@@ -84,6 +88,12 @@ class Composable extends Component<IComposableProps, IComposableState> {
         });
     }
 
+    updateImageDescriptionText(e: any) {
+        this.setState({
+            imageDescription: e.target.value
+        });
+    }
+
     uploadMedia() {
         let _this = this;
         filedialog({
@@ -100,14 +110,19 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     let attachment: Attachment = resp.data;
                     let idArray = _this.state.mediaIds;
                     let objectArray = _this.state.mediaObjects;
+                    let calloutArray = _this.state.showDescriptionEditor;
+
+                    calloutArray[attachment.id] = false;
                     
                     idArray.push(attachment.id);
                     objectArray.push(attachment);
+                    
 
                     _this.setState({
                         mediaIds: idArray,
                         mediaObjects: objectArray,
-                        showMediaLoader: false
+                        showMediaLoader: false,
+                        showDescriptionEditor: calloutArray
                     })
                 });
         })
@@ -178,6 +193,30 @@ class Composable extends Component<IComposableProps, IComposableState> {
         }
     }
 
+    updateImageDescription(description: string, id: string) {
+        this.client.put('/media/' + id, {
+            description: description
+        }).then((item: any) => {
+            let image: Attachment = item.data;
+            let oldObjects = this.state.mediaObjects;
+            let calloutArray = this.state.showDescriptionEditor;
+
+            calloutArray[id] = false;
+
+            oldObjects.forEach((element) => {
+                if (image.id === element.id) {
+                    let index = oldObjects.indexOf(element);
+                    oldObjects[index] = image;
+                }
+            })
+            this.setState({
+                mediaObjects: oldObjects,
+                imageDescription: '',
+                showDescriptionEditor: calloutArray
+            })
+        })
+    }
+
     // Rendering
 
     toggleEmojiPicker() {
@@ -190,6 +229,14 @@ class Composable extends Component<IComposableProps, IComposableState> {
         this.setState({
             showWarningBay: !this.state.showWarningBay
         })
+    }
+
+    toggleDescriptionEditor(id: string) {
+        let calloutArray = this.state.showDescriptionEditor;
+        calloutArray[id] = !this.state.showDescriptionEditor[id];
+        this.setState({
+            showDescriptionEditor: calloutArray
+        });
     }
 
     getWarning() {
@@ -349,6 +396,25 @@ class Composable extends Component<IComposableProps, IComposableState> {
         ]
     }
 
+    imageDescriptionCallout(id: string) {
+        return (
+            <Callout
+                gapSpace={0}
+                hidden={!this.state.showDescriptionEditor[id]}
+                target={document.getElementById(id)}
+                calloutMaxWidth={356}
+                key={id}
+                onDismiss={() => this.toggleDescriptionEditor(id)}
+            >
+                <div className = "pl-4 pr-4 pt-4">
+                    <p>Set a description for this image. This description will be used by screen readers or other apps and can be viewed when hovering over an image or video in Hyperspace.</p>
+                    <TextField onChange={(e) => this.updateImageDescriptionText(e)}></TextField>
+                    <p style={{textAlign: 'right'}}><DefaultButton className="mt-4" text="Update description" onClick={() => this.updateImageDescription(this.state.imageDescription, id)}/></p>
+                </div>
+            </Callout>
+        )
+    }
+
     emojiCallout() {
         return (
             <Callout
@@ -389,9 +455,68 @@ class Composable extends Component<IComposableProps, IComposableState> {
         }
     }
 
+    getMediaItemRows() {
+        let rows: any[] = [];
+        if (this.state.mediaObjects.length === 0) {
+            let c = {
+                'imageIcon': <span><Icon iconName='uploadMedia' className="media-file-icon"/></span>,
+                'fileUrl': 'No media uploaded'
+            };
+            let rows = [];
+            rows.push(c);
+            return rows;
+        } else {
+            this.state.mediaObjects.forEach((item: Attachment) => {
+                let element = {
+                    'imageIcon': <span style={{ textAlign: 'center' }}><img src={item.url} style={{ width: "auto", height: 22}}/></span>,
+                    'fileUrl': <span id={item.id}><a href={item.url}>{item.description? item.description: 'No description'}</a> (<Link onClick={() => this.toggleDescriptionEditor(item.id)}>Describe</Link>) {this.imageDescriptionCallout(item.id)}</span>
+                }
+                rows.push(element);
+            });
+        }
+
+        return rows;
+    }
+
+    mediaBay() {
+        let columns = [
+            {
+                key: 'imageIcon',
+                fieldName: 'imageIcon',
+                name: '',
+                value: 'Media file',
+                iconName: 'uploadMedia',
+                iconClassName: 'media-file-header-icon',
+                isIconOnly: false,
+                minWidth: 16,
+                maxWidth: 16,
+                isPadded: true
+            },
+            {
+                key: 'fileUrl',
+                name: '',
+                fieldName: 'fileUrl',
+                iconName: 'linkApp',
+                iconClassName: 'media-file-header-icon',
+                value: 'File URL',
+                minWidth: 24,
+                isPadded: true,
+                isIconOnly: false
+            }
+        ];
+        return (
+            <DetailsList
+                items={this.getMediaItemRows()}
+                columns={columns}
+                selectionMode={SelectionMode.none}
+                layoutMode={DetailsListLayoutMode.justified}
+            />
+        );
+    }
+
     render() {
         return (
-            <div>
+            <div id="compose-window" className={getDarkMode()}>
                 <CommandBar 
                     items={this.getToolbarItems()}
                     farItems={this.postStatusButton()}
@@ -410,6 +535,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     title="Tyoe your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
                 />
                 {this.warningInput()}
+                {this.mediaBay()}
+                {this.state.showMediaLoader ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
                 {this.emojiCallout()}
             </div>
         );

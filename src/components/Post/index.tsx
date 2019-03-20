@@ -131,7 +131,7 @@ class Post extends Component<IPostProps, IPostState> {
             "clickable-link",
             "boost-card"
         ]
-        let unacceptableNodeTypes = ["A", "BUTTON"]
+        let unacceptableNodeTypes = ["A", "BUTTON", "VIDEO"]
 
         let passClass = (() => {
             let test = true;
@@ -205,8 +205,8 @@ class Post extends Component<IPostProps, IPostState> {
                                         <div className="item-content-container">
                                             {
                                                 (item.type === "image") ?
-                                                    <img src={item.url} alt={item.description? item.description: ''} className="item-content"/>:
-                                                    <video src={item.url} autoPlay={false} controls={true} style={{width: "auto", height: '100%'}} className="item-content"/>
+                                                    <img src={item.url} alt={item.description? item.description: ''} className="item-content" title={item.description? item.description: ''}/>:
+                                                    <video src={item.url} autoPlay={false} controls={true} style={{width: "auto", height: '100%'}} title={item.description? item.description: ''} className="item-content"/>
                                             }
                                         </div>
                                     </div>
@@ -221,8 +221,8 @@ class Post extends Component<IPostProps, IPostState> {
             <div className = "col">
                 {
                     (media[0].type === "image") ?
-                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description? media[0].description: ''} style = {{ width: '100%' }}/>:
-                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" style = {{ width: '100%' }}/>
+                        <img src={media[0].url} className = "shadow-sm rounded" alt={media[0].description? media[0].description: ''} title={media[0].description? media[0].description: ''} style = {{ width: '100%' }}/>:
+                        <video src={media[0].url} autoPlay={false} controls={true} className = "shadow-sm rounded" title={media[0].description? media[0].description: ''} style = {{ width: '100%' }}/>
                 }
             </div>
             );
