@@ -534,7 +534,6 @@ class Composable extends Component<IComposableProps, IComposableState> {
         if (this.state.showWarningBay) {
             return (
                 <div className = {"ms-fadeIn100 p-3 " + this.getWarningClass()}>
-                    <h5> <Icon iconName='warningApp'/> Warning</h5>
                     <p>Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents that may not be appropriate for all audiences.</p>
                     <TextField
                         multiline={false}
@@ -631,9 +630,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     title="Type your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
                 />
                 {this.warningInput()}
+                {this.pollEditor()}
                 {this.mediaBay()}
                 {this.state.showMediaLoader ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
-                {this.pollEditor()}
                 {this.emojiCallout()}
             </div>
         );
