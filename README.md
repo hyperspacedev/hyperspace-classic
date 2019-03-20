@@ -7,7 +7,7 @@
 [![Matrix room](https://img.shields.io/matrix/hypermasto:matrix.org.svg)](https://matrix.to/#/#hypermasto:matrix.org)
 [![Build Status](https://travis-ci.com/alicerunsonfedora/hyperspace.svg)](https://travis-ci.com/alicerunsonfedora/hyperspace)
 
-Hyperspace is a client for Mastodon and the fediverse written in React and TypeScript. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, desktop via Electron, and on mobile devices as a progressive web app*.
+Hyperspace is a client for Mastodon and the fediverse written in React and TypeScript. It aims to provide a clean, simple, and fun interface for interacting with Mastodon instances. Currently, Hyperspace works on the web as a static site, on desktop via Electron, and on mobile devices as a progressive web app*.
 
 > Note: *Progressive web app support is currently experimental. Not all features may render or work correctly. PWA support may not work on Android.
 
@@ -47,7 +47,7 @@ Hyperspace makes use of the following modules and components to make it as fluff
 
 - `megalodon` - the handler for Mastodon API calls
 - `office-ui-fabric-react` - React components from Microsoft that offer Modern/Fluent design
-- `@uifabric/icons` - Icon pack that goes with Fabric UI
+- `@uifabric/icons` - icon pack that goes with Fabric UI
 - `moment` - for date formatting
 - `node-sass` - for compiling the Sass files needed
 - `electron` - for making the desktop versions
