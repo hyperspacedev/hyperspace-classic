@@ -30,6 +30,7 @@ interface IComposableState {
     replyId?: string;
     poll?: PollWizard;
     imageDescription: string;
+    expire_key: string;
 }
 
 /**
@@ -59,7 +60,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
             showWarningBay: false,
             showDescriptionEditor: {},
             isReply: false,
-            imageDescription: ''
+            imageDescription: '',
+            expire_key: ''
         }
 
         if (this.props.reply_to) {
@@ -160,6 +162,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
     setPollExpires(date: IDropdownOption | undefined) {
         if (date !== undefined) {
             let lapse = date.key;
+            this.setState({
+                expire_key: lapse.toString()
+            });
             let currentDate = new Date();
             let newDate = new Date();
             switch(lapse) {
@@ -593,7 +598,14 @@ class Composable extends Component<IComposableProps, IComposableState> {
                         <div style={{ display: 'flex'}}>
                             <DefaultButton style={{ marginRight: 8}} text="Add option" onClick={() => this.addPollItem()}/>
                             <DefaultButton style={{ marginRight: 8}} text="Remove poll" onClick={() => this.removePoll()}/>
-                            <Dropdown dropdownWidth={200} placeholder = "Select an expiration date" options={this.getExpirationDates()} required={true} onChange={(event, option) => this.setPollExpires(option)}/>
+                            <Dropdown
+                                dropdownWidth={200}
+                                placeholder = "Select an expiration date"
+                                options={this.getExpirationDates()}
+                                required={true}
+                                onChange={(event, option) => this.setPollExpires(option)}
+                                selectedKey={this.state.expire_key? this.state.expire_key: '1day'}
+                            />
                         </div>
                     </div>
                 </div>
