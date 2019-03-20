@@ -309,10 +309,16 @@
   width: 18px;
   height: 18px; }
 
+.toolbar-icon.is-disabled svg {
+  fill: #eaeaea; }
+
 .toolbar-menu-icon svg {
   fill: #5c2d91;
   width: 18px;
   height: 18px; }
+
+.toolbar-menu-icon.is-disabled svg {
+  fill: #eaeaea; }
 
 .toolbar-icon:hover div i svg {
   fill: #a980d7;
@@ -360,6 +366,8 @@
       fill: #a980d7;
       width: 18px;
       height: 18px; }
+    .dark div#compose-window .ms-CommandBar .toolbar-icon.is-disabled svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon.is-disabled svg {
+      fill: #999; }
     .dark div#compose-window .ms-CommandBar .toolbar-icon:hover div i svg, .dark div#compose-window .ms-CommandBar * .toolbar-icon:hover div i svg {
       fill: #ddcdf0;
       width: 18px;

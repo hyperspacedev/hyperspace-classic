@@ -53,10 +53,18 @@
     height: 18px;
 }
 
+.toolbar-icon.is-disabled svg {
+    fill: #eaeaea;
+}
+
 .toolbar-menu-icon svg {
     fill: $theme-accent-color;
     width: 18px;
     height: 18px;
+}
+
+.toolbar-menu-icon.is-disabled svg {
+    fill: #eaeaea;
 }
 
 .toolbar-icon:hover div i {
@@ -122,6 +130,10 @@
                 fill: lighten($theme-accent-color, 30%);
                 width: 18px;
                 height: 18px;
+            }
+
+            .toolbar-icon.is-disabled svg {
+                fill: #999;
             }
             
             .toolbar-icon:hover div i {
