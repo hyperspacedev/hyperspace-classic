@@ -92,13 +92,16 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
                     {
                             media.map((item: Attachment) => {
                                 return (
-                                    <span key={this.state.status.id + "_sensitive_media"}>
-                                        {
-                                            (item.type === "image") ?
-                                                <img className="rounded shadow-sm" src={item.url} alt={item.description? item.description: ''} style={{width: "100%", minHeight: 350}}/>:
-                                                <video className="rounded shadow-sm" src={item.url} autoPlay={false} controls={true} style={{width: "100%", minHeight: 350}}/>
-                                        }
-                                    </span>
+                                    <div className = "shadow-sm rounded post-carousel-item">
+                                        <div className="item-bg" style={{backgroundImage: 'url("' + item.url + '")'}}/>
+                                        <div className="item-content-container">
+                                            {
+                                                (item.type === "image") ?
+                                                    <img src={item.url} alt={item.description? item.description: ''} className="item-content" title={item.description? item.description: ''}/>:
+                                                    <video src={item.url} autoPlay={false} controls={true} style={{width: "auto", height: '100%'}} title={item.description? item.description: ''} className="item-content"/>
+                                            }
+                                        </div>
+                                    </div>
                                 );
                             })
                         }

@@ -107,6 +107,12 @@ class Composable extends Component<IComposableProps, IComposableState> {
         }
     }
 
+    removePoll() {
+        this.setState({
+            poll: undefined
+        });
+    }
+
     uploadMedia() {
         let _this = this;
         filedialog({
@@ -495,6 +501,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     <div className="pl-2 pr-2 pt-2 pb-3">
                         <div style={{ display: 'flex'}}>
                             <DefaultButton style={{ marginRight: 8}} text="Add option"/>
+                            <DefaultButton style={{ marginRight: 8}} text="Remove poll" onClick={() => this.removePoll()}/>
                             <Dropdown dropdownWidth={200} placeholder = "Select an expiration date" options={this.getExpirationDates()}/>
                         </div>
                     </div>
