@@ -444,7 +444,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                                 className: 'toolbar-menu-icon'
                             },
                             onClick: () => this.uploadMedia(),
-                            title: 'Upload photos or videos.'
+                            title: 'Upload photos or videos.',
+                            disabled: this.state.poll !== undefined
                         },
                         {
                             key: 'file',
@@ -480,6 +481,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 },
                 className: 'toolbar-icon',
                 title: 'Add a poll with options and an expiration date.',
+                disabled: this.state.mediaIds.length !== 0,
                 onClick: () => this.createPoll()
             },
             {
