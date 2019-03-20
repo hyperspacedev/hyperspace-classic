@@ -92,7 +92,7 @@ class PostSensitive extends Component<IPostSensitiveProps, IPostSensitiveState> 
                     {
                             media.map((item: Attachment) => {
                                 return (
-                                    <span>
+                                    <span key={this.state.status.id + "_sensitive_media"}>
                                         {
                                             (item.type === "image") ?
                                                 <img className="rounded shadow-sm" src={item.url} alt={item.description? item.description: ''} style={{width: "100%", minHeight: 350}}/>:

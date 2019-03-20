@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton } from 'office-ui-fabric-react';
+import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton, Dropdown } from 'office-ui-fabric-react';
 import EmojiPicker from '../EmojiPicker';
 import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
 import { Visibility } from '../../types/Visibility';
 import { Attachment } from '../../types/Attachment';
-import { Poll, PollOption } from '../../types/Poll';
+import { PollWizard, PollWizardOption } from '../../types/Poll';
 import { anchorInBrowser } from '../../utilities/anchorInBrowser';
 import { getDarkMode } from '../../utilities/getDarkMode';
 import filedialog from 'file-dialog';
@@ -28,14 +28,14 @@ interface IComposableState {
     showDescriptionEditor: {[key: string]: boolean};
     isReply: boolean;
     replyId?: string;
-    poll?: Poll;
+    poll?: PollWizard;
     imageDescription: string;
 }
 
 /**
  * Base class for a composable element. Used to create new statuses
  * and replies to old ones.
- * 
+ *
  * @param client The Mastodon client used to post statuses
  * @param reply_to The reply to attach a status to, if applicable
  */
@@ -46,7 +46,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
         super(props);
 
         this.client = this.props.client;
-        
+
         this.state = {
             status: '',
             mediaIds: [],
@@ -94,6 +94,19 @@ class Composable extends Component<IComposableProps, IComposableState> {
         });
     }
 
+    createPoll() {
+        if (this.state.poll === undefined) {
+            let temporaryPoll: PollWizard = {
+                expires_at: '9999-99-99',
+                multiple: false,
+                options: [{title: 'Option 1'}, {title: 'Option 2'}]
+            }
+            this.setState({
+                poll: temporaryPoll
+            });
+        }
+    }
+
     uploadMedia() {
         let _this = this;
         filedialog({
@@ -113,10 +126,10 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     let calloutArray = _this.state.showDescriptionEditor;
 
                     calloutArray[attachment.id] = false;
-                    
+
                     idArray.push(attachment.id);
                     objectArray.push(attachment);
-                    
+
 
                     _this.setState({
                         mediaIds: idArray,
@@ -363,7 +376,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     className: 'toolbar-icon'
                 },
                 className: 'toolbar-icon',
-                title: 'Add a poll with options and an expiration date.'
+                title: 'Add a poll with options and an expiration date.',
+                onClick: () => this.createPoll()
             },
             {
                 key: 'visibility',
@@ -425,6 +439,67 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 </div>
             </Callout>
         )
+    }
+
+    getPollOptions() {
+        let items: any[] = [];
+        if (this.state.poll !== undefined) {
+            this.state.poll.options.forEach(element => {
+                let item = {
+                    'option': <TextField resizable={false} multiline={false} maxLength={420} defaultValue={element.title}/>,
+                    'removeButton': <DefaultButton text="Remove"/>
+                }
+                items.push(item);
+            });
+        }
+        return items;
+    }
+
+    getExpirationDates() {
+        return [
+            {key: '5min', text: '5 minutes'},
+            {key: '30min', text: '30 minutes'},
+            {key: '1hr', text: '1 hour'},
+            {key: '6hr', text: '6 hours'},
+            {key: '1day', text: '1 day'},
+            {key: '3day', text: '3 days'},
+            {key: '7days', text: '7 days'}
+        ];
+    }
+
+    pollEditor() {
+        let columns = [
+            {
+                key: 'option',
+                name: 'Poll option',
+                fieldName: 'option',
+                minWidth: 256
+            },
+            {
+                key: 'removeButton',
+                name: '',
+                fieldName: 'removeButton',
+                minWidth: 100
+            }
+        ];
+        if (this.state.poll)
+            return (
+                <div>
+                    <DetailsList
+                    isHeaderVisible={false}
+                    layoutMode={DetailsListLayoutMode.justified}
+                    selectionMode={SelectionMode.none}
+                    items={this.getPollOptions()}
+                    columns={columns}
+                />
+                    <div className="pl-2 pr-2 pt-2 pb-3">
+                        <div style={{ display: 'flex'}}>
+                            <DefaultButton style={{ marginRight: 8}} text="Add option"/>
+                            <Dropdown dropdownWidth={200} placeholder = "Select an expiration date" options={this.getExpirationDates()}/>
+                        </div>
+                    </div>
+                </div>
+            );
     }
 
     emojiCallout() {
@@ -516,20 +591,22 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 isIconOnly: false
             }
         ];
-        return (
-            <DetailsList
-                items={this.getMediaItemRows()}
-                columns={columns}
-                selectionMode={SelectionMode.none}
-                layoutMode={DetailsListLayoutMode.justified}
-            />
-        );
+        if (this.state.mediaIds.length > 0)
+            return (
+                <DetailsList
+                    isHeaderVisible={false}
+                    items={this.getMediaItemRows()}
+                    columns={columns}
+                    selectionMode={SelectionMode.none}
+                    layoutMode={DetailsListLayoutMode.justified}
+                />
+            );
     }
 
     render() {
         return (
             <div id="compose-window" className={getDarkMode()}>
-                <CommandBar 
+                <CommandBar
                     items={this.getToolbarItems()}
                     farItems={this.postStatusButton()}
                     overflowButtonProps={{menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icon'}, className: 'toolbar-icon', name: 'More'}}
@@ -549,6 +626,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                 {this.warningInput()}
                 {this.mediaBay()}
                 {this.state.showMediaLoader ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
+                {this.pollEditor()}
                 {this.emojiCallout()}
             </div>
         );
