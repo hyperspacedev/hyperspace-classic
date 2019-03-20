@@ -455,7 +455,8 @@ class Composable extends Component<IComposableProps, IComposableState> {
                                 iconName: 'uploadFile',
                                 className: 'toolbar-menu-icon'
                             },
-                            title: 'Upload a file with a temporary download link (via Firefox Send).'
+                            title: 'Upload a file with a temporary download link (via Firefox Send).',
+                            disabled: true
                         }
                     ]
                 }
