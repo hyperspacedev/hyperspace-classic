@@ -89,11 +89,7 @@ class ReplyWindow extends Component<IReplyWindowProps, IReplyWindowState> {
                 },
                 "&:active": {
                     color: 'transparent !important'
-                },
-                backgroundImage: 'url(\'close.svg\')',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '50%'
+                }
             }
         }
     }

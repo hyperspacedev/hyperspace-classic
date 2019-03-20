@@ -428,7 +428,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     iconName: 'uploadBase',
                     className: 'toolbar-icon'
                 },
-                className: 'toolbar-icons',
+                className: 'toolbar-icon',
                 title: 'Upload photos and videos or a file.',
                 subMenuProps: {
                     items: [
