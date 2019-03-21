@@ -593,7 +593,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     items={this.getPollOptions()}
                     columns={columns}
                 />
-                    <div className="pl-2 pr-2 pt-2 pb-3">
+                    <div className="pl-2 pr-2 pt-3 pb-3 compose-poll-editor">
                         <div style={{ display: 'flex'}}>
                             <DefaultButton style={{ marginRight: 8}} text="Add option" onClick={() => this.addPollItem()}/>
                             <DefaultButton style={{ marginRight: 8}} text="Remove poll" onClick={() => this.removePoll()}/>

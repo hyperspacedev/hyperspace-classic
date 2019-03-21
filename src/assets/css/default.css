@@ -368,6 +368,8 @@
       border-left-color: #d0d0d0;
       border-bottom-color: #d0d0d0;
       border-right-color: #d0d0d0; }
+  .dark div#compose-window .compose-poll-editor {
+    background-color: #333; }
   .dark div#compose-window .ms-MessageBar {
     background-color: #004578;
     color: #f4f4f4; }
