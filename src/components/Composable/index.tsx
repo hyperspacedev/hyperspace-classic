@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton, Dropdown, IDropdownOption } from 'office-ui-fabric-react';
+import { CommandBar, TextField, Callout, Spinner, SpinnerSize, DetailsList, DetailsListLayoutMode, Icon, SelectionMode, Link, DefaultButton, Dropdown, IDropdownOption, MessageBar, MessageBarType } from 'office-ui-fabric-react';
 import EmojiPicker from '../EmojiPicker';
 import Mastodon from 'megalodon';
 import { Status } from '../../types/Status';
@@ -711,6 +711,26 @@ class Composable extends Component<IComposableProps, IComposableState> {
             );
     }
 
+    messageBars() {
+        return (
+            <div>
+            {this.state.visibility === "direct"? <MessageBar messageBarType={MessageBarType.severeWarning}>
+                You'll need to type in the username of the people you want to send the message to so it can get sent.
+            </MessageBar>: <span/>}
+        
+        
+            {this.state.poll? <MessageBar messageBarType={MessageBarType.info}>
+                You've selected a poll, so you can't upload photos or videos.
+            </MessageBar>: <span/>}
+        
+        
+            {this.state.mediaIds.length !== 0? <MessageBar messageBarType={MessageBarType.info}>
+                You've uploaded photos and videos, so you can't create a poll.
+            </MessageBar>: <span/>}
+            </div>
+        );
+    }
+
     render() {
         return (
             <div id="compose-window" className={getDarkMode()}>
@@ -719,6 +739,7 @@ class Composable extends Component<IComposableProps, IComposableState> {
                     farItems={this.postStatusButton()}
                     overflowButtonProps={{menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icon'}, className: 'toolbar-icon', name: 'More'}}
                 />
+                {this.messageBars()}
                 <TextField
                     multiline={true}
                     rows={5}

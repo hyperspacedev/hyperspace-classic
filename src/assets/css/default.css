@@ -333,6 +333,15 @@
   width: 12px;
   height: 12px; }
 
+.ms-MessageBar {
+  background-color: #c7e0f4; }
+  .ms-MessageBar svg {
+    width: 16x;
+    height: 16px;
+    vertical-align: top; }
+  .ms-MessageBar .ms-MessageBar--text {
+    vertical-align: top; }
+
 .dark .compose-window-warning {
   background-color: #b38200;
   border-color: #805d00;
@@ -359,6 +368,11 @@
       border-left-color: #d0d0d0;
       border-bottom-color: #d0d0d0;
       border-right-color: #d0d0d0; }
+  .dark div#compose-window .ms-MessageBar {
+    background-color: #004578;
+    color: #f4f4f4; }
+    .dark div#compose-window .ms-MessageBar svg {
+      fill: #f4f4f4; }
   .dark div#compose-window .ms-CommandBar, .dark div#compose-window .ms-CommandBar * {
     background-color: #666;
     color: #f4f4f4; }
@@ -378,6 +392,18 @@
       border-bottom-color: #212121; }
     .dark div#compose-window .ms-DetailsList * svg {
       fill: white; }
+    .dark div#compose-window .ms-DetailsList * .ms-TextField-field {
+      background-color: #212121;
+      color: #f4f4f4;
+      border-top-color: #000;
+      border-left-color: #000;
+      border-bottom-color: #000;
+      border-right-color: #000; }
+      .dark div#compose-window .ms-DetailsList * .ms-TextField-field :hover {
+        border-top-color: #d0d0d0;
+        border-left-color: #d0d0d0;
+        border-bottom-color: #d0d0d0;
+        border-right-color: #d0d0d0; }
 
 /**
     Fabric UI Override Styles

@@ -85,6 +85,19 @@
     height: 12px;
 }
 
+.ms-MessageBar {
+    background-color: #c7e0f4;
+    svg {
+        width: 16x;
+        height: 16px;
+        vertical-align: top;
+    }
+
+    .ms-MessageBar--text {
+        vertical-align: top;
+    }
+}
+
 .dark {
 
     .compose-window-warning {
@@ -122,6 +135,14 @@
             }
         }
 
+        .ms-MessageBar {
+            background-color: #004578;
+            color: #f4f4f4;
+            svg {
+                fill: #f4f4f4;
+            }
+        }
+
         .ms-CommandBar, .ms-CommandBar * {
             background-color: #666;
             color: #f4f4f4;
@@ -154,6 +175,22 @@
 
             svg {
                 fill: white;
+            }
+
+            .ms-TextField-field {
+                background-color: #212121;
+                color: #f4f4f4;
+                border-top-color: #000;
+                border-left-color: #000;
+                border-bottom-color: #000;
+                border-right-color: #000;
+    
+                :hover {
+                    border-top-color: #d0d0d0;
+                    border-left-color: #d0d0d0;
+                    border-bottom-color: #d0d0d0;
+                    border-right-color: #d0d0d0;
+                }
             }
         }
     }
