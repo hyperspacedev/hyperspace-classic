@@ -280,11 +280,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
                 },
                 "&:active": {
                     color: 'transparent !important'
-                },
-                backgroundImage: 'url(\'close.svg\')',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '50%'
+                }
             },
             content: {
                 marginTop: 0
