@@ -172,6 +172,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             return (
                 <div id="profile-table">
                     <DetailsList
+                        isHeaderVisible={false}
                         columns={columns}
                         items={rows}
                         selectionMode={SelectionMode.none}

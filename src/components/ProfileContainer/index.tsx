@@ -91,6 +91,7 @@ class ProfileList extends Component<IProfileListProps> {
     render() {
         return(
             <DetailsList
+                isHeaderVisible={false}
                 columns={this.columns}
                 items={this.rows}
                 selectionMode={SelectionMode.none}

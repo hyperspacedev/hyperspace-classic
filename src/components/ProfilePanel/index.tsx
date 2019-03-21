@@ -110,6 +110,7 @@ class ProfilePanel extends Component<IProfilePanelProps, IProfilePanelState> {
             return (
                 <div id="profile-table">
                     <DetailsList
+                        isHeaderVisible={false}
                         columns={columns}
                         items={rows}
                         selectionMode={SelectionMode.none}
