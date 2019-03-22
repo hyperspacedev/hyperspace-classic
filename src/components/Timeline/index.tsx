@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Pivot, PivotItem, PivotLinkSize} from "office-ui-fabric-react";
-import {getMobileAgent} from '../../utilities/userAgent';
+import {isMobileAgent} from '../../utilities/userAgent';
 import PostRoll from "../Post/PostRoll";
 import Mastodon from 'megalodon';
 
@@ -22,7 +22,7 @@ class Timeline extends Component<ITimelineProps> {
     }
 
     getTextForTab(what: string) {
-        if (getMobileAgent())
+        if (isMobileAgent())
             return ''
         else
             return what
