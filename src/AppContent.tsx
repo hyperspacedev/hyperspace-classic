@@ -7,19 +7,38 @@ import Timeline from './components/Timeline';
 import DarkModeToggle from './components/DarkModeToggle';
 import LogoutButton from './components/LogoutButton';
 import { Account } from './types/Account';
-import { Modal, Icon, IconButton, TooltipHost } from 'office-ui-fabric-react';
+import { Modal, Icon, IconButton, TooltipHost, TeachingBubble } from 'office-ui-fabric-react';
 import { getDarkMode } from './utilities/getDarkMode';
 import { HotKeys } from 'react-hotkeys';
 /**
  * Base component that renders the app's content if the user is signed in.
  */
 class AppContent extends React.Component<any, any> {
+
+    private _composeButton: HTMLElement | any;
+
     constructor(props: any) {
         super(props);
 
         this.state = {
-            composableOpen: false
+            composableOpen: false,
+            teachBubbleVisible: false
         }
+    }
+
+    componentDidMount() {
+        if (!localStorage.getItem('seen-new-features')) {
+            this.setState({
+                teachBubbleVisible: true
+            })
+        }
+    }
+
+    seenNewFeatures() {
+        localStorage.setItem('seen-new-features', 'true');
+        this.setState({
+            teachBubbleVisible: false
+        })
     }
 
     openModal() {
@@ -62,9 +81,6 @@ class AppContent extends React.Component<any, any> {
                                     </span>
                                 </div>
                             </div>
-                            {this.props.client ? <div className="ms-fadeIn100 mb-4 p-1 shadow rounded marked-area position-sticky d-none d-md-none d-lg-block">
-                                <Composable client={this.props.client}/>
-                            </div> : <span />}
 
                             <div className="container">
                                 <Timeline client={this.props.client} />
@@ -83,9 +99,16 @@ class AppContent extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <TooltipHost content="Compose a new post.">
-                    <button title = "Compose a new post." className = "compose-window-float-button" onClick={() => this.openModal()}><Icon iconName="postStatus"/></button>
-                </TooltipHost>
+                {this.state.teachBubbleVisible? <TeachingBubble
+                    hasCloseIcon={true}
+                    hasSmallHeadline={true}
+                    targetElement={this._composeButton}
+                    headline="Write new posts here."
+                    onDismiss={() => this.seenNewFeatures()}
+                >
+                    Press this button or press 'N' on your keyboard to quickly access the Composer from anywhere on the main timeline!
+                </TeachingBubble>: null}
+                <button ref={composeButton => (this._composeButton = composeButton!)} title = "Compose a new post. (n)" className = "compose-window-float-button" onClick={() => this.openModal()}><Icon iconName="postStatus"/></button>
                 <Modal
                     isOpen={this.state.composableOpen}
                     containerClassName={"compose-window-float"}

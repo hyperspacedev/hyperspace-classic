@@ -86,10 +86,25 @@ class Composable extends Component<IComposableProps, IComposableState> {
         });
     }
 
+    toNextVisibility() {
+        let options: Visibility[] = ["direct", "private", "unlisted", "public"];
+        let next: number = options.indexOf(this.state.visibility);
+        next = (next + 1) % options.length;
+        this.changeVisibility(options[next]);
+    }
+
     updateImageDescriptionText(e: any) {
         this.setState({
             imageDescription: e.target.value
         });
+    }
+
+    togglePoll() {
+        if (this.state.poll) {
+            this.removePoll();
+        } else {
+            this.createPoll();
+        }
     }
 
     createPoll() {
@@ -731,7 +746,12 @@ class Composable extends Component<IComposableProps, IComposableState> {
 
     render() {
         const handlers = {
-            'postStatus': () => this.post()
+            'postStatus': () => this.post(),
+            'insertImage': () => this.uploadMedia(),
+            'insertPoll': () => this.togglePoll(),
+            'insertEmoji': () => this.toggleEmojiPicker(),
+            'composerVisibility': () => this.toNextVisibility(),
+            'composerWarning': () => this.toggleWarningBay()
         }
         return (
             <HotKeys handlers={handlers}>

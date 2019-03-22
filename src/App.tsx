@@ -15,7 +15,7 @@ import { Toast } from './components/Toast';
 import { anchorInBrowser } from './utilities/anchorInBrowser';
 import { getDarkMode } from './utilities/getDarkMode';
 import AppContent from './AppContent';
-import {HotKeys} from 'react-hotkeys';
+import { HotKeys } from 'react-hotkeys';
 
 loadTheme({
     palette: {
@@ -122,7 +122,12 @@ class App extends Component<any, any> {
     keybindMap() {
         return ({
             'newPost': 'n',
-            'postStatus': ['command+enter', 'ctrl+enter']
+            'postStatus': ['command+enter', 'ctrl+enter'],
+            'insertMedia': ['ctrl+alt+meta+i'],
+            'insertPoll': ['ctrl+alt+meta+p'],
+            'insertEmoji': ['ctrl+alt+meta+e'],
+            'composerVisibility': ['ctrl+alt+meta+v'],
+            'composerWarning': ['ctrl+alt+meta+w']
         });
     }
 
