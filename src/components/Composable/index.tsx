@@ -8,6 +8,7 @@ import { Attachment } from '../../types/Attachment';
 import { PollWizard, PollWizardOption } from '../../types/Poll';
 import { anchorInBrowser } from '../../utilities/anchorInBrowser';
 import { getDarkMode } from '../../utilities/getDarkMode';
+import { HotKeys } from 'react-hotkeys';
 import filedialog from 'file-dialog';
 
 interface IComposableProps {
@@ -265,7 +266,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
             showWarningBay: false,
             poll: undefined
         })
-        this.props.onSubmit();
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     insertEmoji(e: any) {
@@ -277,12 +280,6 @@ class Composable extends Component<IComposableProps, IComposableState> {
             this.setState({
                 status: this.state.status + e.native
             });
-        }
-    }
-
-    postViaKeyboard(event: any) {
-        if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-            this.post();
         }
     }
 
@@ -733,32 +730,36 @@ class Composable extends Component<IComposableProps, IComposableState> {
     }
 
     render() {
+        const handlers = {
+            'postStatus': () => this.post()
+        }
         return (
-            <div id="compose-window" className={getDarkMode()}>
-                <CommandBar
-                    items={this.getToolbarItems()}
-                    farItems={this.postStatusButton()}
-                    overflowButtonProps={{menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icon'}, className: 'toolbar-icon', name: 'More'}}
-                />
-                {this.messageBars()}
-                <TextField
-                    multiline={true}
-                    rows={5}
-                    maxLength={500}
-                    resizable={false}
-                    onKeyDown={(e) => this.postViaKeyboard(e)}
-                    onChange={(e: any) => this.updateStatusText(e)}
-                    placeholder="What's on your mind?"
-                    data-enable-grammarly={false}
-                    defaultValue={this.state.status}
-                    title="Type your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
-                />
-                {this.warningInput()}
-                {this.pollEditor()}
-                {this.mediaBay()}
-                {this.state.showMediaLoader ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
-                {this.emojiCallout()}
-            </div>
+            <HotKeys handlers={handlers}>
+                <div id="compose-window" className={getDarkMode()}>
+                    <CommandBar
+                        items={this.getToolbarItems()}
+                        farItems={this.postStatusButton()}
+                        overflowButtonProps={{menuIconProps: {iconName: 'overflowMenu', iconClassName: 'toolbar-icon'}, className: 'toolbar-icon', name: 'More'}}
+                    />
+                    {this.messageBars()}
+                    <TextField
+                        multiline={true}
+                        rows={5}
+                        maxLength={500}
+                        resizable={false}
+                        onChange={(e: any) => this.updateStatusText(e)}
+                        placeholder="What's on your mind?"
+                        data-enable-grammarly={false}
+                        defaultValue={this.state.status}
+                        title="Type your status here and click 'Post' or press Ctrl/⌘ + Enter to send it."
+                    />
+                    {this.warningInput()}
+                    {this.pollEditor()}
+                    {this.mediaBay()}
+                    {this.state.showMediaLoader ? <Spinner className = "my-3" size={SpinnerSize.medium} label="Uploading media..." ariaLive="assertive" labelPosition="right" />: <span/>}
+                    {this.emojiCallout()}
+                </div>
+            </HotKeys>
         );
     }
 

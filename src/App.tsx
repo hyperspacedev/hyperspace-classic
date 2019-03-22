@@ -11,11 +11,11 @@ import './assets/css/default.css';
 import './components/CustomIcons';
 import RegisterWindow from './components/RegisterWindow';
 import {MastodonEmoji} from './types/Emojis';
-import {CustomEmoji} from 'emoji-mart';
 import { Toast } from './components/Toast';
 import { anchorInBrowser } from './utilities/anchorInBrowser';
 import { getDarkMode } from './utilities/getDarkMode';
 import AppContent from './AppContent';
+import {HotKeys} from 'react-hotkeys';
 
 loadTheme({
     palette: {
@@ -119,6 +119,13 @@ class App extends Component<any, any> {
         });
     }
 
+    keybindMap() {
+        return ({
+            'newPost': 'n',
+            'postStatus': ['command+enter', 'ctrl+enter']
+        });
+    }
+
     componentWillMount() {
         this.getAccountDetails();
         if (!('Notification' in window))
@@ -168,39 +175,41 @@ class App extends Component<any, any> {
 
     render() {
         return (
-            <ToastProvider component={Toast} position="top-right">
-                <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
-                    {
-                        this.checkLocalStorage() ?
-                            this.getActualApp() :
+            <HotKeys keyMap={this.keybindMap()}>
+                <ToastProvider component={Toast} position="top-right">
+                    <div className={getDarkMode() + " " + this.hideMacScrollbars()}>
+                        {
+                            this.checkLocalStorage() ?
+                                this.getActualApp() :
 
-                            <div
-                                className="app-container sign-in"
-                                style={{ backgroundImage: "url('images/background.jpg')" }}>
-                                {this.renderMacTitleBar()}
-                                <div className="col-sm-12 col-md-10 col-lg-6 col-xl-5 mx-auto rounded sign-in-container">
-                                    <div
-                                        style={{ backgroundImage: "url('images/background.jpg')" }}
-                                        className="sign-in-bg"
-                                    >
-                                    </div>
-                                    <div className="rounded shadow p-2 my-2 sign-in-content">
-                                        <RegisterWindow />
-                                    </div>
+                                <div
+                                    className="app-container sign-in"
+                                    style={{ backgroundImage: "url('images/background.jpg')" }}>
+                                    {this.renderMacTitleBar()}
+                                    <div className="col-sm-12 col-md-10 col-lg-6 col-xl-5 mx-auto rounded sign-in-container">
+                                        <div
+                                            style={{ backgroundImage: "url('images/background.jpg')" }}
+                                            className="sign-in-bg"
+                                        >
+                                        </div>
+                                        <div className="rounded shadow p-2 my-2 sign-in-content">
+                                            <RegisterWindow />
+                                        </div>
 
+                                    </div>
+                                    <div className="links-area mb-4" style={{ textAlign: "center" }}>
+                                        <span className="welcome-links">
+                                            <a href="https://www.gnu.org/copyleft/lesser.html">License</a>
+                                            <a href="https://github.com/alicerunsonfedora/hyperspace">GitHub</a>
+                                            <a href="https://patreon.com/marquiskurt">Patreon</a>
+                                            <a href="https://matrix.to/#/#hyperspace-general:matrix.org">Matrix</a>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="links-area mb-4" style={{ textAlign: "center" }}>
-                                    <span className="welcome-links">
-                                        <a href="https://www.gnu.org/copyleft/lesser.html">License</a>
-                                        <a href="https://github.com/alicerunsonfedora/hyperspace">GitHub</a>
-                                        <a href="https://patreon.com/marquiskurt">Patreon</a>
-                                        <a href="https://matrix.to/#/#hyperspace-general:matrix.org">Matrix</a>
-                                    </span>
-                                </div>
-                            </div>
-                    }
-                </div>
-            </ToastProvider>
+                        }
+                    </div>
+                </ToastProvider>
+            </HotKeys>
         );
     }
 }
