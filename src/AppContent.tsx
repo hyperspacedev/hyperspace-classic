@@ -113,9 +113,11 @@ class AppContent extends React.Component<any, any> {
                     isOpen={this.state.composableOpen}
                     containerClassName={"compose-window-float"}
                     className={getDarkMode()}
+                    onDismiss={() => this.closeModal()}
+                    isBlocking={false}
                 >
                     <div>
-                        <h2 className="mb-3">Compose new post</h2>
+                        <h2 className="mb-3 compose-window-header">Compose new post</h2>
                         <Composable client={this.props.client}/>
                         <IconButton className="close-button" onClick={() => this.closeModal()} title="Close" iconProps={{ iconName: 'cancel' }}/>
                     </div>

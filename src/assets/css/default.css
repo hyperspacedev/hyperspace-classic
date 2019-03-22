@@ -287,13 +287,23 @@
   background-color: #a980d7; }
 
 .compose-window-float {
-  min-width: 500px;
+  min-width: 10%;
   min-height: 256px;
   padding: 32px;
   border-radius: 4px; }
+  .compose-window-float .compose-window-header {
+    font-weight: bold; }
   @media (min-width: 576px) {
     .compose-window-float {
       width: 90%; } }
+  @media (max-width: 576px) {
+    .compose-window-float {
+      padding: 16px;
+      width: 95%; }
+      .compose-window-float .compose-window-header {
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding-top: 4px; } }
   @media (min-width: 768px) {
     .compose-window-float {
       width: 75%; } }

@@ -29,14 +29,31 @@
 }
 
 .compose-window-float {
-    min-width: 500px;
+    min-width: 10%;
     min-height: 256px;
     padding: 32px;
     border-radius: 4px;
 
+    .compose-window-header {
+        font-weight: bold;
+    }
+
     @media (min-width: 576px) {
         width: 90%;
     }
+
+    @media (max-width: 576px) {
+        padding: 16px;
+        width: 95%;
+
+        .compose-window-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding-top: 4px;
+        }
+
+    }
+
     @media (min-width: 768px) {
         width: 75%;
     }
@@ -50,6 +67,7 @@
         top: 12px;
         right: 12px;
     }
+
 }
 
 .compose-window-warning {
