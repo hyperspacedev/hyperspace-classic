@@ -2,6 +2,56 @@
     Compose Window Styles
 */
 
+.compose-window-float-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 0 4px #333;
+    background-color: $theme-accent-color;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+
+    i svg {
+        fill: #f4f4f4;
+    }
+}
+
+.compose-window-float-button:hover {
+    background-color: lighten($theme-accent-color, 20%);
+}
+
+.compose-window-float-button:active {
+    background-color: lighten($theme-accent-color, 30%);
+}
+
+.compose-window-float {
+    min-width: 500px;
+    min-height: 256px;
+    padding: 32px;
+    border-radius: 4px;
+
+    @media (min-width: 576px) {
+        width: 90%;
+    }
+    @media (min-width: 768px) {
+        width: 75%;
+    }
+
+    @media (min-width: 1024px) {
+        width: 65%;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+}
+
 .compose-window-warning {
     margin-top: 8px;
     margin-left: 4px;
@@ -99,6 +149,15 @@
 }
 
 .dark {
+
+    .ms-Dialog-main.compose-window-float {
+        background-color: #333;
+        color: #f4f4f4;
+        
+        .close-button svg {
+            fill: #f4f4f4;
+        }
+    }
 
     .compose-window-warning {
         background-color: #b38200;

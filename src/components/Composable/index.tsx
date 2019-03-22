@@ -635,8 +635,9 @@ class Composable extends Component<IComposableProps, IComposableState> {
     warningInput() {
         if (this.state.showWarningBay) {
             return (
-                <div className = {"ms-fadeIn100 p-3 " + this.getWarningClass()}>
+                <div className = {"ms-fadeIn100 p-3 mb-1 " + this.getWarningClass()}>
                     <p>Add a content warning to your post. This may be used to hide a spoiler or provide a warning of the contents that may not be appropriate for all audiences.</p>
+                    <p><i>Note that a content warning will not be applied unless you enter a message below.</i></p>
                     <TextField
                         multiline={false}
                         resizable={false}

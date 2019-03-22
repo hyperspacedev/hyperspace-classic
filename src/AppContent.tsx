@@ -7,6 +7,8 @@ import Timeline from './components/Timeline';
 import DarkModeToggle from './components/DarkModeToggle';
 import LogoutButton from './components/LogoutButton';
 import { Account } from './types/Account';
+import { Modal, Icon, IconButton } from 'office-ui-fabric-react';
+import { getDarkMode } from './utilities/getDarkMode';
 
 /**
  * Base component that renders the app's content if the user is signed in.
@@ -14,10 +16,27 @@ import { Account } from './types/Account';
 class AppContent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            composableOpen: false
+        }
+    }
+
+    openModal() {
+        this.setState({
+            composableOpen: true
+        })
+    }
+
+    closeModal() {
+        this.setState({
+            composableOpen: false
+        })
     }
     
     render() {
-        return (<div>
+        return (
+        <div className={getDarkMode()}>
             <nav>
                 <Navbar />
             </nav>
@@ -58,6 +77,18 @@ class AppContent extends React.Component<any, any> {
                     </div>
                 </div>
             </div>
+            <button className = "compose-window-float-button" onClick={() => this.openModal()}><Icon iconName="postStatus"/></button>
+            <Modal
+                isOpen={this.state.composableOpen}
+                containerClassName={"compose-window-float"}
+                className={getDarkMode()}
+            >
+                <div>
+                    <h2 className="mb-3">Compose new post</h2>
+                    <Composable client={this.props.client}/>
+                    <IconButton className="close-button" onClick={() => this.closeModal()} title="Close" iconProps={{ iconName: 'cancel' }}/>
+                </div>
+            </Modal>
         </div>);
     }
 }
