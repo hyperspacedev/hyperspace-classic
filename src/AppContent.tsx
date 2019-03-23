@@ -7,9 +7,10 @@ import Timeline from './components/Timeline';
 import DarkModeToggle from './components/DarkModeToggle';
 import LogoutButton from './components/LogoutButton';
 import { Account } from './types/Account';
-import { Modal, Icon, IconButton, TooltipHost, TeachingBubble } from 'office-ui-fabric-react';
+import { Modal, Icon, IconButton, TooltipHost, TeachingBubble, Callout } from 'office-ui-fabric-react';
 import { getDarkMode } from './utilities/getDarkMode';
 import { HotKeys } from 'react-hotkeys';
+import { isMobileAgent } from './utilities/userAgent';
 /**
  * Base component that renders the app's content if the user is signed in.
  */
@@ -22,7 +23,8 @@ class AppContent extends React.Component<any, any> {
 
         this.state = {
             composableOpen: false,
-            teachBubbleVisible: false
+            teachBubbleVisible: false,
+            composableKs: false
         }
     }
 
@@ -41,6 +43,24 @@ class AppContent extends React.Component<any, any> {
         })
     }
 
+    makeKeyboardShortcut(keys: string, description: string) {
+        let keyArray = keys.split('+');
+        let keyElements: any = [];
+        keyArray.forEach((key: any) =>{
+            keyElements.push(<span className="key">{key}</span>);
+        })
+        return(
+            <p>
+                {
+                    keyElements.map((key: HTMLElement) => {
+                        return key;
+                    })
+                }
+                 - {description}
+            </p>
+        );
+    }
+
     openModal() {
         this.setState({
             composableOpen: true
@@ -50,6 +70,12 @@ class AppContent extends React.Component<any, any> {
     closeModal() {
         this.setState({
             composableOpen: false
+        })
+    }
+
+    toggleKsCallout() {
+        this.setState({
+            composableKs: !this.state.composableKs
         })
     }
     
@@ -120,6 +146,25 @@ class AppContent extends React.Component<any, any> {
                         <h2 className="mb-3 compose-window-header">Compose new post</h2>
                         <Composable client={this.props.client}/>
                         <IconButton className="close-button" onClick={() => this.closeModal()} title="Close" iconProps={{ iconName: 'cancel' }}/>
+                        <TooltipHost content="View keyboard shortcuts.">
+                            {
+                                (isMobileAgent())? <span/>: <IconButton id="compose-window-ks" className="" onClick={() => this.toggleKsCallout()} iconProps={{iconName: 'keyboard'}}/>
+                            }
+                            <Callout
+                                hidden={!this.state.composableKs}
+                                onDismiss={() => this.toggleKsCallout()}
+                                target={document.getElementById('compose-window-ks')}
+                            >
+                                <div className="px-4 py-3">
+                                    <h4>Keyboard shortcuts</h4>
+                                    {this.makeKeyboardShortcut('Ctrl+Alt/⌥+Win/⌘+I', 'Upload an image')}
+                                    {this.makeKeyboardShortcut('Ctrl+Alt/⌥+Win/⌘+E', 'Open emoji picker')}
+                                    {this.makeKeyboardShortcut('Ctrl+Alt/⌥+Win/⌘+P', 'Add/remove a poll')}
+                                    {this.makeKeyboardShortcut('Ctrl+Alt/⌥+Win/⌘+V', 'Switch to next visibility')}
+                                    {this.makeKeyboardShortcut('Ctrl+Alt/⌥+Win/⌘+W', 'Add/remove a warning')}
+                                </div>
+                            </Callout>
+                        </TooltipHost>
                     </div>
                 </Modal>
             </div>
