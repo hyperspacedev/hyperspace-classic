@@ -147,7 +147,6 @@ class Composable extends Component<IComposableProps, IComposableState> {
             this.setState({
                 poll: poll
             });
-            console.log(options);
         }
     }
 

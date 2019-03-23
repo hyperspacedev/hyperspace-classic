@@ -253,9 +253,7 @@ class Post extends Component<IPostProps, IPostState> {
             let voteIds = options.map((option) => {
                 return parseInt(option.id? option.id: "0")
             });
-            console.log(voteIds);
             let biggestVote = Math.max.apply(null, voteIds);
-            console.log(biggestVote);
             options.forEach((option: any) => {
                 if (biggestVote != 0 && option.id === biggestVote.toString()) {
                     option.checked = true;
