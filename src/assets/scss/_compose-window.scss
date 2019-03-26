@@ -2,6 +2,74 @@
     Compose Window Styles
 */
 
+.compose-window-float-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 0 4px #333;
+    background-color: $theme-accent-color;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+
+    i svg {
+        fill: #f4f4f4;
+    }
+}
+
+.compose-window-float-button:hover {
+    background-color: lighten($theme-accent-color, 20%);
+}
+
+.compose-window-float-button:active {
+    background-color: lighten($theme-accent-color, 30%);
+}
+
+.compose-window-float {
+    min-width: 10%;
+    min-height: 256px;
+    padding: 32px;
+    border-radius: 4px;
+
+    .compose-window-header {
+        font-weight: bold;
+    }
+
+    @media (min-width: 576px) {
+        width: 90%;
+    }
+
+    @media (max-width: 576px) {
+        padding: 16px;
+        width: 95%;
+
+        .compose-window-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding-top: 4px;
+        }
+
+    }
+
+    @media (min-width: 768px) {
+        width: 75%;
+    }
+
+    @media (min-width: 1024px) {
+        width: 65%;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+
+}
+
 .compose-window-warning {
     margin-top: 8px;
     margin-left: 4px;
@@ -18,6 +86,31 @@
     border-width: 1px;
 }
 
+.compose-window-warning.nsfw {
+    margin-top: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    background-color: #a20c19;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 14px;
+    border-radius: 4px;
+    border-color: #740912;
+    border-style: solid;
+    border-width: 1px;
+    color: white;
+
+    i svg {
+        fill: #fff;
+    }
+}
+
+.mainAction * {
+    font-weight: bold;
+}
+
 .toolbar-icon {
     vertical-align: middle;
 }
@@ -28,10 +121,18 @@
     height: 18px;
 }
 
+.toolbar-icon.is-disabled svg {
+    fill: #eaeaea;
+}
+
 .toolbar-menu-icon svg {
     fill: $theme-accent-color;
     width: 18px;
     height: 18px;
+}
+
+.toolbar-menu-icon.is-disabled svg {
+    fill: #eaeaea;
 }
 
 .toolbar-icon:hover div i {
@@ -52,11 +153,43 @@
     height: 12px;
 }
 
+.ms-MessageBar {
+    background-color: #c7e0f4;
+    svg {
+        width: 16x;
+        height: 16px;
+        vertical-align: top;
+    }
+
+    .ms-MessageBar--text {
+        vertical-align: top;
+    }
+}
+
 .dark {
+
+    .ms-Dialog-main.compose-window-float {
+        background-color: #333;
+        color: #f4f4f4;
+        
+        .close-button svg {
+            fill: #f4f4f4;
+        }
+    }
 
     .compose-window-warning {
         background-color: #b38200;
         border-color: #805d00;
+        color: #f4f4f4;
+
+        i svg {
+            fill: #f4f4f4;
+        }
+    }
+
+    .compose-window-warning.nsfw {
+        background-color: #a20c19;
+        border-color: #740912;
     }
 
     div#compose-window {
@@ -79,6 +212,18 @@
             }
         }
 
+        .compose-poll-editor {
+            background-color: #333;
+        }
+
+        .ms-MessageBar {
+            background-color: #004578;
+            color: #f4f4f4;
+            svg {
+                fill: #f4f4f4;
+            }
+        }
+
         .ms-CommandBar, .ms-CommandBar * {
             background-color: #666;
             color: #f4f4f4;
@@ -87,6 +232,10 @@
                 fill: lighten($theme-accent-color, 30%);
                 width: 18px;
                 height: 18px;
+            }
+
+            .toolbar-icon.is-disabled svg {
+                fill: #999;
             }
             
             .toolbar-icon:hover div i {
@@ -107,6 +256,22 @@
 
             svg {
                 fill: white;
+            }
+
+            .ms-TextField-field {
+                background-color: #212121;
+                color: #f4f4f4;
+                border-top-color: #000;
+                border-left-color: #000;
+                border-bottom-color: #000;
+                border-right-color: #000;
+    
+                :hover {
+                    border-top-color: #d0d0d0;
+                    border-left-color: #d0d0d0;
+                    border-bottom-color: #d0d0d0;
+                    border-right-color: #d0d0d0;
+                }
             }
         }
     }

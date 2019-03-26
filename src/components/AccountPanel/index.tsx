@@ -172,6 +172,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
             return (
                 <div id="profile-table">
                     <DetailsList
+                        isHeaderVisible={false}
                         columns={columns}
                         items={rows}
                         selectionMode={SelectionMode.none}
@@ -479,11 +480,7 @@ export class AccountPanel extends Component<IAccountPanelProps, IAccountPanelSta
                 },
                 "&:active": {
                     color: 'transparent !important'
-                },
-                backgroundImage: 'url(\'close.svg\')',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '50%'
+                }
             },
             content: {
                 marginTop: 0

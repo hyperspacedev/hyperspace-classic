@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Icon, Toggle, TooltipHost, DefaultButton} from 'office-ui-fabric-react';
 import DarkModeToggle from '../DarkModeToggle';
 import LogoutButton from '../LogoutButton';
 
 interface INavbarState {
+    composableOpen: boolean;
 }
 
 /**
@@ -13,6 +13,10 @@ class Navbar extends Component<any, INavbarState> {
 
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            composableOpen: false
+        }
     }
 
     getNavBar() {
@@ -56,6 +60,7 @@ class Navbar extends Component<any, INavbarState> {
                     </ul>
                 </div>
             </nav>
+            
         );
     }
 }

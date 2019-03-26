@@ -157,11 +157,7 @@ class ThreadPanel extends Component {
                 },
                 "&:active": {
                     color: 'transparent !important'
-                },
-                backgroundImage: 'url(\'close.svg\')',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '50%'
+                }
             }
         }
     }
